@@ -28,6 +28,7 @@
 
     <modules>
         <module>core</module>
+        <module>webui</module>
     </modules>
 
     <repositories>

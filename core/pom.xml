@@ -38,6 +38,13 @@
             <version>${macwire.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- HTTP -->
+        <dependency>
+            <groupId>com.github.finagle</groupId>
+            <artifactId>finch-core_2.11</artifactId>
+            <version>0.15.1</version>
+        </dependency>
     </dependencies>
 
     <build>

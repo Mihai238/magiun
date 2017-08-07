@@ -1,20 +1,15 @@
 package at.magiun.core
 
+import at.magiun.core.rest.{OtherController, RestApi, UserController}
 import com.softwaremill.macwire._
-import io.finch._
-import com.twitter.finagle.Http
-import com.twitter.util.Await
 
 //noinspection TypeAnnotation
-object MainModule {
+trait MainModule {
 
   lazy val magiunContext = wire[MagiunContext]
-  lazy val exampleController = wire[ExampleController]
 
-  def main(args: Array[String]): Unit = {
-    magiunContext.sayHello()
-
-    Await.ready(Http.server.serve(":8080", exampleController.api.toServiceAs[Text.Plain]))
-  }
+  lazy val userController = wire[UserController]
+  lazy val otherController = wire[OtherController]
+  lazy val restApi = wire[RestApi]
 
 }

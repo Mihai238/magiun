@@ -1,8 +1,8 @@
-package at.magiun.core
+package at.magiun.core.rest
 
 import io.finch._
 
-class ExampleController {
+class OtherController {
 
   val api: Endpoint[String] = get("hello") {
     Ok("Hello World!")

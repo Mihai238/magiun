@@ -56,6 +56,15 @@
             <artifactId>circe-generic_2.11</artifactId>
             <version>0.8.0</version>
         </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.11</artifactId>
+            <version>3.0.3</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

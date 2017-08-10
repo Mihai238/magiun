@@ -15,6 +15,7 @@
     <name>Magiun - Core</name>
 
     <properties>
+        <compiled.with.scala.version>2.11</compiled.with.scala.version>
         <macwire.version>2.3.0</macwire.version>
         <finch.version>0.15.1</finch.version>
     </properties>
@@ -35,7 +36,7 @@
         <!-- MacWire DI -->
         <dependency>
             <groupId>com.softwaremill.macwire</groupId>
-            <artifactId>macros_2.11</artifactId>
+            <artifactId>macros_${compiled.with.scala.version}</artifactId>
             <version>${macwire.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -43,17 +44,17 @@
         <!-- HTTP -->
         <dependency>
             <groupId>com.github.finagle</groupId>
-            <artifactId>finch-core_2.11</artifactId>
+            <artifactId>finch-core_${compiled.with.scala.version}</artifactId>
             <version>${finch.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.finagle</groupId>
-            <artifactId>finch-circe_2.11</artifactId>
+            <artifactId>finch-circe_${compiled.with.scala.version}</artifactId>
             <version>${finch.version}</version>
         </dependency>
         <dependency>
             <groupId>io.circe</groupId>
-            <artifactId>circe-generic_2.11</artifactId>
+            <artifactId>circe-generic_${compiled.with.scala.version}</artifactId>
             <version>0.8.0</version>
         </dependency>
 
@@ -66,7 +67,7 @@
         </dependency>
         <dependency>
             <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.11</artifactId>
+            <artifactId>scalatest_${compiled.with.scala.version}</artifactId>
             <version>3.0.3</version>
             <scope>test</scope>
         </dependency>

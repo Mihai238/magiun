@@ -3,6 +3,7 @@
 #### preconditions:
 * `node >= 6.9.4`
 * `npm >= 5.3.0`
+* `@angular/cli`
 
 #### installing the dependencies:
 * `npm install`

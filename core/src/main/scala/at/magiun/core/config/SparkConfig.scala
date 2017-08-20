@@ -12,4 +12,5 @@ class SparkConfig {
     .appName(baseConfig.config.getString("spark.app_name"))
     .master(baseConfig.config.getString("spark.master"))
     .config("spark.serializer", baseConfig.config.getString("spark.serializer"))
+    .getOrCreate()
 }

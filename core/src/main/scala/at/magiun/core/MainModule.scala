@@ -16,5 +16,5 @@ trait MainModule {
 
   lazy val spark: SparkSession = wire[SparkConfig].spark
 
-  println(spark.conf.toString)
+  println(spark.conf.getAll)
 }

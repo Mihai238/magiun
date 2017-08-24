@@ -119,6 +119,12 @@
             <version>3.0.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.scalamock</groupId>
+            <artifactId>scalamock-scalatest-support_${compiled.with.scala.version}</artifactId>
+            <version>3.6.0</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

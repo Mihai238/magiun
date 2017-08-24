@@ -11,7 +11,7 @@ class UserControllerTest extends FlatSpec with Matchers {
   it should "test a simple test :)" in {
     val input = Input.get("/users/1")
 
-    val result = new UserController().getUser(input)
+    val result = new UserController(null).getUser(input) // TODO
 
     result.awaitValueUnsafe().get should be (UserDto("John"))
   }

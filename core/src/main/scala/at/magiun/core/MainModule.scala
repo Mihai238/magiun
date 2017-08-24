@@ -1,6 +1,6 @@
 package at.magiun.core
 
-import at.magiun.core.config.SparkConfig
+import at.magiun.core.config.{BaseConfig, SparkConfig}
 import at.magiun.core.rest.{OtherController, RestApi, UserController}
 import com.softwaremill.macwire._
 import org.apache.spark.sql.SparkSession
@@ -14,7 +14,7 @@ trait MainModule {
   lazy val otherController = wire[OtherController]
   lazy val restApi = wire[RestApi]
 
-  lazy val spark: SparkSession = wire[SparkConfig].spark
-
-  println(spark.conf.getAll)
+  // Configs
+  lazy val baseConfig = wire[BaseConfig]
+  lazy val spark: SparkSession = wireWith(SparkConfig.create _)
 }

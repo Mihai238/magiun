@@ -2,7 +2,6 @@ package at.magiun.core.rest
 
 import at.magiun.core.MainModule
 import io.finch.Input
-import org.apache.spark.sql.SparkSession
 import org.junit.runner.RunWith
 import org.scalamock.scalatest.MockFactory
 import org.scalatest._

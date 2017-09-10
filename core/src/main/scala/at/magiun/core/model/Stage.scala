@@ -4,11 +4,11 @@ import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 
 abstract class Stage {
-  def perform: Output
+  def perform: StageOutput
 }
 
 class ReaderStage(spark: SparkSession, fileName: String) extends Stage {
-  override def perform: Output = {
+  override def perform: StageOutput = {
     val options = Map(
       "sep" -> ",",
       "header" -> "true"
@@ -18,11 +18,15 @@ class ReaderStage(spark: SparkSession, fileName: String) extends Stage {
   }
 }
 
-abstract class Decorator(stage: Stage) extends Stage {
+// ***
+// Decorators
+// ***
+
+abstract class StageDecorator(stage: Stage) extends Stage {
 }
 
-class DropColumnDecorator(stage: Stage, columnName: String) extends Decorator(stage) {
-  override def perform: Output = {
+class DropColumnDecorator(stage: Stage, columnName: String) extends StageDecorator(stage) {
+  override def perform: StageOutput = {
     val output = stage.perform
 
     output match {
@@ -33,7 +37,3 @@ class DropColumnDecorator(stage: Stage, columnName: String) extends Decorator(st
     }
   }
 }
-
-
-abstract class Output
-case class DatasetOutput(dataSet: Dataset[Row]) extends Output

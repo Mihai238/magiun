@@ -4,17 +4,17 @@ import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 
 abstract class Stage {
-  def perform: List[Output]
+  def perform: Output
 }
 
 class ReaderStage(spark: SparkSession, fileName: String) extends Stage {
-  override def perform: List[Output] = {
+  override def perform: Output = {
     val options = Map(
       "sep" -> ",",
       "header" -> "true"
     )
     val frame = spark.read.options(options).csv(fileName)
-    List(DatasetOutput(frame))
+    DatasetOutput(frame)
   }
 }
 
@@ -22,15 +22,13 @@ abstract class Decorator(stage: Stage) extends Stage {
 }
 
 class DropColumnDecorator(stage: Stage, columnName: String) extends Decorator(stage) {
-  override def perform: List[Output] = {
-    val outputs = stage.perform
-    require(outputs.size == 1)
+  override def perform: Output = {
+    val output = stage.perform
 
-    val output = outputs.head
     output match {
       case DatasetOutput(dataSet) =>
         val frame = dataSet.drop(columnName)
-        List(DatasetOutput(frame))
+        DatasetOutput(frame)
       case _ => throw new RuntimeException
     }
   }

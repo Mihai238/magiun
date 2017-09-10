@@ -17,7 +17,7 @@ class StageTest extends FlatSpec with Matchers {
       "statecode"
     )
 
-    task.perform.head match {
+    task.perform match {
       case DatasetOutput(dataSet) =>
         dataSet.columns.length should be(17)
     }

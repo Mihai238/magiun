@@ -6,7 +6,7 @@ import io.circe.generic.auto._
 import io.finch.Application
 import io.finch.circe._
 
-class RestApi(userController: UserController, otherController: OtherController) {
+class RestApi(userController: UserController, otherController: StageController) {
 
   private val api = userController.api :+:
     otherController.api

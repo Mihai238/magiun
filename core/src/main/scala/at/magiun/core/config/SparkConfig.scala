@@ -1,15 +1,16 @@
 package at.magiun.core.config
 
+import com.typesafe.config.Config
 import org.apache.spark.sql.SparkSession
 
 object SparkConfig {
 
-  def create(baseConfig: BaseConfig): SparkSession = {
+  def create(config: Config): SparkSession = {
     SparkSession
       .builder()
-      .appName(baseConfig.config.getString("spark.app_name"))
-      .master(baseConfig.config.getString("spark.master"))
-      .config("spark.serializer", baseConfig.config.getString("spark.serializer"))
+      .appName(config.getString("spark.app_name"))
+      .master(config.getString("spark.master"))
+      .config("spark.serializer", config.getString("spark.serializer"))
       .getOrCreate()
   }
 

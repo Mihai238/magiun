@@ -25,7 +25,7 @@ class ReaderStage(spark: SparkSession, fileName: String) extends Stage {
 abstract class StageDecorator(stage: Stage) extends Stage {
 }
 
-class DropColumnDecorator(stage: Stage, columnName: String) extends StageDecorator(stage) {
+class DropColumnStage(stage: Stage, columnName: String) extends StageDecorator(stage) {
   override def perform: StageOutput = {
     val output = stage.perform
 

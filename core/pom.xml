@@ -22,10 +22,12 @@
         <macwire.version>2.3.0</macwire.version>
         <finch.version>0.15.1</finch.version>
         <typesafe.version>1.2.1</typesafe.version>
+        <slick.version>3.2.1</slick.version>
+        <h2.version>1.4.196</h2.version>
     </properties>
 
     <dependencies>
-        <!-- SCALA -->
+        <!-- Scala -->
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
@@ -45,7 +47,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- SPARK -->
+        <!-- Spark -->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_${compiled.with.scala.version}</artifactId>
@@ -78,14 +80,26 @@
             </exclusions>
         </dependency>
 
-        <!-- TYPESAFE CONFIG -->
+        <!-- Database -->
+        <dependency>
+            <groupId>com.typesafe.slick</groupId>
+            <artifactId>slick_${compiled.with.scala.version}</artifactId>
+            <version>${slick.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+
+        <!-- Others -->
         <dependency>
             <groupId>com.typesafe</groupId>
             <artifactId>config</artifactId>
             <version>${typesafe.version}</version>
         </dependency>
 
-        <!-- HTTP -->
+        <!-- REST -->
         <dependency>
             <groupId>com.github.finagle</groupId>
             <artifactId>finch-core_${compiled.with.scala.version}</artifactId>

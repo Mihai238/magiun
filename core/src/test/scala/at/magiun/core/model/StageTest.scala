@@ -12,7 +12,7 @@ class StageTest extends FlatSpec with Matchers {
   private val sampleCsvPath = getClass.getClassLoader.getResource("insurance_sample.csv").getFile
 
   it should "remove the column called 'statecode'" in {
-    val task = new DropColumnDecorator(
+    val task = new DropColumnStage(
       new ReaderStage(mainModule.spark, sampleCsvPath),
       "statecode"
     )

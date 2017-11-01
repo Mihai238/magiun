@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-data',
   templateUrl: './data.component.html',
-  styleUrls: ['./data.component.css']
+  styleUrls: ['./data.component.css'],
+  providers: [NGXLogger]
 })
 export class DataComponent implements OnInit {
 
-  constructor() { }
+  constructor(private logger: NGXLogger) { }
 
   ngOnInit() {
   }
 
   loadDataSet(dataSetName: String) {
-    console.log('Loading data set ' + dataSetName);
+    this.logger.info('Loading data set: ' + dataSetName);
   }
 }

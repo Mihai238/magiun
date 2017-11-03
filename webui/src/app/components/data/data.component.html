@@ -8,4 +8,12 @@
     </div>
   </form>
 
+  <div>
+    <ol>
+      <li *ngFor="let row of rowObservable | async as rows">
+        {{row.values}}
+      </li>
+    </ol>
+  </div>
+
 </div>

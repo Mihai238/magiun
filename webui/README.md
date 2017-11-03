@@ -12,3 +12,6 @@
 * `ng serve` - standard command 
 * `ng serve --open --port 4200 --host 0.0.0.0 --disable-host-check` - command with parameters
 
+#### running fake backend
+* install json-server `sudo npm install -g json-server `
+* `cd fake-backend && json-server fake-db.json` 

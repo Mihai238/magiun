@@ -1,9 +1,4 @@
-export class DataRow {
+export interface DataRow {
   index: number;
   values: any[];
-
-  constructor(index: number, values: any[]) {
-    this.index = index;
-    this.values = values;
-  }
 }

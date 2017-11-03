@@ -17,7 +17,7 @@ import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
     BrowserModule,
     FormsModule,
     HttpModule,
-    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.OFF})
+    LoggerModule.forRoot({level: NgxLoggerLevel.INFO, serverLogLevel: NgxLoggerLevel.OFF})
   ],
   providers: [
     DataService

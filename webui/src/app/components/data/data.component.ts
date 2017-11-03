@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {DataService} from '../../services/data.service';
+import {DataRow} from '../../model/data-row';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-data',
@@ -9,6 +11,8 @@ import {DataService} from '../../services/data.service';
   providers: [NGXLogger]
 })
 export class DataComponent implements OnInit {
+
+  rowObservable: Observable<DataRow>;
 
   constructor(private logger: NGXLogger,
               private dataService: DataService) { }
@@ -19,6 +23,6 @@ export class DataComponent implements OnInit {
   loadDataSet(dataSetName: String) {
     this.logger.info('Loading data set: ' + dataSetName);
 
-    this.dataService.getData();
+    this.rowObservable = this.dataService.getData();
   }
 }

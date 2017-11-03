@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
+import {DataService} from '../../services/data.service';
 
 @Component({
   selector: 'app-data',
@@ -9,12 +10,15 @@ import {NGXLogger} from 'ngx-logger';
 })
 export class DataComponent implements OnInit {
 
-  constructor(private logger: NGXLogger) { }
+  constructor(private logger: NGXLogger,
+              private dataService: DataService) { }
 
   ngOnInit() {
   }
 
   loadDataSet(dataSetName: String) {
     this.logger.info('Loading data set: ' + dataSetName);
+
+    this.dataService.getData();
   }
 }

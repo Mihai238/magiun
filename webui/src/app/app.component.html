@@ -1,9 +1,24 @@
-<ul>
-  <li>
-    <a routerLink="/">Datasets</a>
-  </li>
-  <li>
-    <a routerLink="/about">About</a>
-  </li>
-</ul>
-<router-outlet></router-outlet>
+<mat-toolbar color="primary">
+  <span (click)="sidenav.open()">
+    <span class="glyphicon glyphicon-home"></span> Magiun
+  </span>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <ul>
+      <li>
+        <a routerLink="/" (click)="sidenav.close()">Data Visualization</a>
+      </li>
+      <li>
+        <a routerLink="/workflows" (click)="sidenav.close()">Workflows</a>
+      </li>
+      <li>
+        <a routerLink="/about" (click)="sidenav.close()">About</a>
+      </li>
+    </ul>
+  </mat-sidenav>
+
+  <router-outlet></router-outlet>
+
+</mat-sidenav-container>

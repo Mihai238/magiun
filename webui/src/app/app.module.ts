@@ -11,8 +11,6 @@ import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {AboutComponent} from './components/about/about.component';
 import {WorkflowsComponent} from './components/workflows/workflows.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
-import {MatIconModule, MatSidenavModule, MatToolbarModule} from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
   {path: '', component: DataComponent},
@@ -33,10 +31,6 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    BrowserAnimationsModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
     LoggerModule.forRoot({level: NgxLoggerLevel.INFO, serverLogLevel: NgxLoggerLevel.OFF}),
     RouterModule.forRoot(appRoutes)
   ],

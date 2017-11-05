@@ -1,24 +1,14 @@
-<mat-toolbar color="primary">
-  <span (click)="sidenav.open()">
-    <span class="glyphicon glyphicon-home"></span> Magiun
-  </span>
-</mat-toolbar>
-
-<mat-sidenav-container>
-  <mat-sidenav #sidenav>
-    <ul>
-      <li>
-        <a routerLink="/" (click)="sidenav.close()">Data Visualization</a>
-      </li>
-      <li>
-        <a routerLink="/workflows" (click)="sidenav.close()">Workflows</a>
-      </li>
-      <li>
-        <a routerLink="/about" (click)="sidenav.close()">About</a>
-      </li>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Magiun</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a routerLink="/">Data visualization</a></li>
+      <li><a routerLink="/workflows">Workflows</a></li>
+      <li><a routerLink="/about">About</a></li>
     </ul>
-  </mat-sidenav>
+  </div>
+</nav>
 
-  <router-outlet></router-outlet>
-
-</mat-sidenav-container>
+<router-outlet></router-outlet>

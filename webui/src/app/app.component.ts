@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Welcome to Magiun!';
+  currTabIndex = 0;
+
+  tabs = [
+    {text: 'Data visualization', link: '/'},
+    {text: 'Workflows', link: '/workflows'},
+    {text: 'About', link: '/about'}
+  ];
 }

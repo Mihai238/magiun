@@ -17,8 +17,9 @@
 ## Tips
 
 #### Running fake backend
-* install json-server `sudo npm install -g json-server `
-* `cd fake-backend && json-server fake-db.json`
+* install json-server `sudo npm install -g json-server`
+* `cd fake-backend`
+* `json-server fake.js`
 
 #### Create a component via angular cli
 

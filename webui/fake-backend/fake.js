@@ -18,7 +18,19 @@ module.exports = () => {
         faker.date.past(),
         faker.random.boolean()
       ]
-    })
+    });
+  }
+
+  for (let i = 1000; i < 1100; i++) {
+    data.rows.push({
+      datasetId: "2",
+      id: i,
+      values: [
+        faker.lorem.word(),
+        faker.random.number({min: 1, max: 15}),
+        faker.internet.color()
+      ]
+    });
   }
 
   return data;

@@ -16,7 +16,7 @@ export class DataService {
               private logger: NGXLogger) {
   }
 
-  getDataSets(): Observable<DataSet> {
+  getDataSets(): Observable<DataSet[]> {
     return this.http.get(environment.baseUrl + '/datasets/')
       .map(resp => resp.json())
       .map(resp => {
@@ -30,10 +30,8 @@ export class DataService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getData(dataSet: DataSet): Observable<DataRow> {
-    // TODO param dataset id
-
-    return this.http.get(environment.baseUrl + '/datasets/1/rows')
+  getData(dataSet: DataSet): Observable<DataRow[]> {
+    return this.http.get(environment.baseUrl + '/datasets/' +  dataSet.id + '/rows')
       .map(resp => {
         this.logger.debug('Got data for data set' +  resp);
         return resp.json();

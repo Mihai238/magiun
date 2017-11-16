@@ -10,10 +10,18 @@
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-      <li *ngFor="let dataSet of dataSetObservable | async">
+      <li *ngFor="let dataSet of dataSets">
         <a href="#" (click)="onSelectDataSet(dataSet)">{{dataSet.name}}</a>
       </li>
     </ul>
+  </div>
+
+  <div>
+    <ol>
+      <li *ngFor="let row of rows">
+        {{row.values}}
+      </li>
+    </ol>
   </div>
 
 </div>

@@ -1,19 +1,19 @@
 <div>
-  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 
-  <form (submit)="loadDataSet(dataSetName.value)">
-    <div>
-      <label>Data set name: </label>
-      <input type="text" #dataSetName>
-    </div>
-  </form>
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
 
-  <div>
-    <ol>
-      <li *ngFor="let row of rowObservable | async as rows">
-        {{row.values}}
+      <span *ngIf="selectedDataSet; else noDataSetSelected">{{selectedDataSet.name}}</span>
+      <ng-template #noDataSetSelected>No data set selected</ng-template>
+      <!--{{selectedDataSet || "f"}}-->
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li *ngFor="let dataSet of dataSetObservable | async">
+        <a href="#" (click)="onSelectDataSet(dataSet)">{{dataSet.name}}</a>
       </li>
-    </ol>
+    </ul>
   </div>
 
 </div>

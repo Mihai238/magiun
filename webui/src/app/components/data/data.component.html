@@ -16,12 +16,19 @@
     </ul>
   </div>
 
-  <div>
-    <ol>
-      <li *ngFor="let row of rows">
-        {{row.values}}
-      </li>
-    </ol>
+  <div id="data-table" *ngIf="selectedDataSet" class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th *ngFor="let column of selectedDataSet.schema.columns">{{column.name}} ({{column.type}})</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of rows">
+        <td *ngFor="let value of row.values">{{value}}</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 
 </div>

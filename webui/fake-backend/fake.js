@@ -5,7 +5,7 @@ const faker = require('faker');
 module.exports = () => {
   const data = {
     rows: [],
-    datasets: [dataset1, dataset2, dataset3]
+    datasets: [dataset1, dataset2]
   };
 
   for (let i = 0; i < 1000; i++) {
@@ -42,16 +42,20 @@ const dataset1 = {
   schema: {
     columns: [
       {
-        name: "string"
+        name: "name",
+        type: "string"
       },
       {
-        age: "int"
+        name: "age",
+        type: "int"
       },
       {
-        dateOfBirth: "date"
+        name: "dateOfBirth",
+        type: "date"
       },
       {
-        happy: "boolean"
+        name: "happy",
+        type: "boolean"
       }
     ]
   }
@@ -63,33 +67,17 @@ const dataset2 = {
   "schema": {
     "columns": [
       {
-        "breed": "string"
+        "name": "breed",
+        "type": "string"
       },
       {
-        "age": "int"
+        "name": "age",
+        "type": "int",
       },
       {
-        "color": "string"
+        "name": "color",
+        "type": "string"
       }
     ]
   }
 };
-
-const dataset3 = {
-  "id": 3,
-  "name": "another_test dataset",
-  "schema": {
-    "columns": [
-      {
-        "column1": "string"
-      },
-      {
-        "column2": "int"
-      },
-      {
-        "column3": "boolean"
-      }
-    ]
-  }
-};
-

@@ -16,7 +16,11 @@
     </ul>
   </div>
 
-  <div id="data-table" *ngIf="selectedDataSet" class="panel panel-default">
+  <div infinite-scroll [infiniteScrollDistance]="2"
+       [infiniteScrollUpDistance]="1.5"
+       [infiniteScrollThrottle]="50"
+       (scrolled)="onScrollDown()"
+       id="data-table" *ngIf="selectedDataSet" class="panel panel-default">
     <table class="table table-striped">
       <thead>
       <tr>

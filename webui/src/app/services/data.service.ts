@@ -12,6 +12,8 @@ import {ColumnType, DataSet, Schema} from '../model/data-set';
 @Injectable()
 export class DataService {
 
+  sizePerPage = 100;
+
   constructor(private http: Http,
               private logger: NGXLogger) {
   }
@@ -53,8 +55,8 @@ export class DataService {
     return {columns: columns};
   }
 
-  getData(dataSet: DataSet): Observable<DataRow[]> {
-    return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows')
+  getData(dataSet: DataSet, page = 1): Observable<DataRow[]> {
+    return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows?_limit=' + this.sizePerPage + '&_page=' + page)
       .map(resp => {
         this.logger.debug('Got data for data set' + resp);
         return resp.json();

@@ -16,7 +16,7 @@ export class DataComponent implements OnInit {
   dataSets: DataSet[];
 
   selectedDataSet: DataSet;
-  rowsLoaded: boolean;
+  loadedPages = 0;
 
   constructor(private logger: NGXLogger,
               private dataService: DataService) {
@@ -25,7 +25,6 @@ export class DataComponent implements OnInit {
   ngOnInit() {
     this.getDataSets();
     this.selectedDataSet = undefined;
-    this.rowsLoaded = true;
   }
 
   getDataSets() {
@@ -39,23 +38,29 @@ export class DataComponent implements OnInit {
     this.logger.info('Data Set selected: ' + dataSet.name);
 
     this.selectedDataSet = dataSet;
-    this.loadDataSet(dataSet);
+
+    this.loadedPages = 0;
+    this.rows = [];
+    this.loadDataSet(dataSet, ++this.loadedPages);
   }
 
-  private loadDataSet(dataSet: DataSet) {
+  onScrollDown() {
+    this.loadDataSet(this.selectedDataSet, ++this.loadedPages);
+    this.logger.info('Loading more rows');
+  }
+
+  private loadDataSet(dataSet: DataSet, pageToLoad: number) {
     this.logger.info('Loading data set: ' + dataSet.name);
 
-    this.dataService.getData(dataSet)
+    this.dataService.getData(dataSet, pageToLoad)
       .subscribe(
         resp => {
-          this.rows = resp;
+          this.rows.push(...resp);
         },
         err => {
-          console.log(err);
-          this.rowsLoaded = true;
+          this.logger.error(err);
         },
         () => {
-          this.rowsLoaded = true;
         }
       );
 

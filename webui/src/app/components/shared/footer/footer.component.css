@@ -2,6 +2,10 @@ footer {
   background-color: #F8F8F8;
   border-color: #E7E7E7;
   color: #777;
+
+  position:absolute;
+  bottom:0;
+  width: 100%;
 }
 
 a {
@@ -11,4 +15,8 @@ a {
 
 ul {
   list-style-type: none;
+}
+
+.row {
+  margin-top: 5px;
 }

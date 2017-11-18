@@ -4,8 +4,8 @@ nav {
 }
 
 .img-responsive {
-  display: inline-block;
-  height: inherit;
+  display: inline-flex;
+  max-height: 40px;
+  height: auto;
   width: auto;
-  padding-bottom: 7.5%;
 }

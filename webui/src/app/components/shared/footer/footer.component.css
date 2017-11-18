@@ -5,7 +5,7 @@ footer {
 
   position:absolute;
   bottom:0;
-  margin-top: 5px;
+  width: 100%;
 }
 
 a {
@@ -15,4 +15,8 @@ a {
 
 ul {
   list-style-type: none;
+}
+
+.row {
+  margin-top: 5px;
 }

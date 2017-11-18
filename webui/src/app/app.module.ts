@@ -13,12 +13,14 @@ import {AboutComponent} from './components/about/about.component';
 import {WorkflowsComponent} from './components/workflows/workflows.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {NavbarComponent} from "./components/shared/navbar/navbar.component";
+import {FooterComponent} from "./components/shared/footer/footer.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
+    FooterComponent,
     DataComponent,
     AboutComponent,
     WorkflowsComponent,

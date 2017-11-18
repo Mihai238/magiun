@@ -1,0 +1,14 @@
+footer {
+  background-color: #F8F8F8;
+  border-color: #E7E7E7;
+  color: #777;
+}
+
+a {
+  color: #777;
+  text-decoration: inherit;
+}
+
+ul {
+  list-style-type: none;
+}

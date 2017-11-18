@@ -13,7 +13,7 @@ import {WorkflowsComponent} from './components/workflows/workflows.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {NavbarComponent} from './components/shared/navbar/navbar.component';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
-import {FooterComponent} from "./components/shared/footer/footer.component";
+import {FooterComponent} from './components/shared/footer/footer.component';
 
 
 @NgModule({

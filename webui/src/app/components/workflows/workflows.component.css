@@ -1,0 +1,14 @@
+.sidebar-wrapper {
+  background-color: #F8F8F8;
+  border-color: #E7E7E7;
+  color: #777;
+  position: fixed;
+  height: 100%;
+  width: 150px;
+  text-align: center;
+}
+
+
+ul {
+  list-style-type: none;
+}

@@ -10,3 +10,6 @@ addons:
 
 before_script:
   - npm install -g @angular/cli
+
+script:
+  - cd webui && npm run test

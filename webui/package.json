@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-dev": "ng serve & cd fake-backend/ && json-server fake.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

@@ -1,3 +1,12 @@
-language: java
-jdk:
-  - oraclejdk8
+language: node_js
+
+node_js:
+  - "9.2"
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-set-default
+
+before_script:
+  - npm install -g @angular/cli

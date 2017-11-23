@@ -11,7 +11,7 @@
     </button>
     <ul class="dropdown-menu">
       <li *ngFor="let dataSet of dataSets">
-        <a href="#" (click)="onSelectDataSet(dataSet)">{{dataSet.name}}</a>
+        <a (click)="onSelectDataSet(dataSet)">{{dataSet.name}}</a>
       </li>
     </ul>
   </div>

@@ -4,7 +4,7 @@ import {AppComponent} from './app.component';
 import {NavbarComponent} from './components/shared/navbar/navbar.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {FooterComponent} from './components/shared/footer/footer.component';
-import {translate} from './app.translate';
+import {TranslateModule} from '@ngx-translate/core';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -16,7 +16,7 @@ describe('AppComponent', () => {
       ],
       imports: [
         RouterTestingModule,
-        translate
+        TranslateModule.forRoot()
       ]
     }).compileComponents();
   }));

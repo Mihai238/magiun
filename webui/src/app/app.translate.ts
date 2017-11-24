@@ -1,12 +1,15 @@
-import {TranslateLoader, TranslateModule, TranslateStaticLoader} from 'ng2-translate';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 export const translate = TranslateModule.forRoot({
-  provide: TranslateLoader,
-  useFactory: (createTranslateLoader),
-  deps: [Http]
+  loader: {
+    provide: TranslateLoader,
+    useFactory: (createTranslateLoader),
+    deps: [HttpClient]
+  }
 });
 
-export function createTranslateLoader(http: Http) {
-  return new TranslateStaticLoader(http, '../assets/locale', '.json');
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, '../assets/locale/', '.json');
 }

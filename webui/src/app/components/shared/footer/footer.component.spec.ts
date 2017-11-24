@@ -1,8 +1,8 @@
 import {async, ComponentFixture, ComponentFixtureAutoDetect, TestBed} from '@angular/core/testing';
 import {FooterComponent} from './footer.component';
-import {translate} from '../../../app.translate';
 import {DebugElement} from '@angular/core';
 import {By} from '@angular/platform-browser';
+import {TranslateModule} from '@ngx-translate/core';
 
 describe('FooterComponent', () => {
 
@@ -12,7 +12,7 @@ describe('FooterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FooterComponent],
-      imports: [translate],
+      imports: [TranslateModule.forRoot()],
       providers: [
         {provide: ComponentFixtureAutoDetect, useValue: true}
       ]

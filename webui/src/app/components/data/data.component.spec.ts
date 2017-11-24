@@ -5,8 +5,8 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {DataService} from '../../services/data.service';
 import {HttpClientModule} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {HttpModule} from '@angular/http';
 import {logging} from '../../app.logging';
+import 'rxjs/add/observable/of';
 
 describe('DataComponent', () => {
   let component: DataComponent;
@@ -19,7 +19,6 @@ describe('DataComponent', () => {
       imports: [
         InfiniteScrollModule,
         HttpClientModule,
-        HttpModule,
         logging
       ],
       providers: [

@@ -3,7 +3,7 @@ footer {
   border-color: #E7E7E7;
   color: #777;
 
-  position:absolute;
+  position:fixed;
   bottom:0;
   width: 100%;
 }

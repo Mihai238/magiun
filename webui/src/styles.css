@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  height: 100%;
+}
+
+a, i, span {
+  display: inline-block;
+  text-decoration: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+a:hover, a:focus, i:hover, i:focus, span:hover, span:focus {
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  padding: 50px 0;
+}
+
+canvas {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container-fluid {
+  padding: 0 30px;
+}
+
+header.page-header {
+  padding: 20px 0;
+}
+
+table {
+  font-size: 0.9em;
+  color: #666;
+}

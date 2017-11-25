@@ -15,6 +15,7 @@ import {FooterComponent} from './components/shared/footer/footer.component';
 import {logging} from './app.logging';
 import {HttpClientModule} from '@angular/common/http';
 import {translate} from './app.translate';
+import {SidebarComponent} from './components/workflows/sidebar/sidebar.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import {translate} from './app.translate';
     DataComponent,
     AboutComponent,
     WorkflowsComponent,
+    SidebarComponent,
     PageNotFoundComponent
   ],
   imports: [

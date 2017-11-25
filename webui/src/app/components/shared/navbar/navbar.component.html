@@ -1,23 +1,22 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">
-        <img alt="Brand" src="../../../../assets/images/logo.jpg" class="img-responsive">
-        <span>Magiun</span>
-      </a>
-    </div>
+<header class="header">
+  <nav class="navbar">
+    <div class="container-fluid">
+      <div class="navbar-holder d-flex align-items-center justify-content-between">
+        <div class="navbar-header">
+          <!-- Navbar Brand -->
+          <a routerLink="" class="navbar-brand">
+            <div class="brand-text brand-big">
+              <img alt="Brand" src="../../../../assets/images/logo.jpg" class="img-responsive">
+              <span>Magiun </span>
+            </div>
+          </a>
+        </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a routerLink="data">{{ 'NAVBAR.DATA' | translate }}</a></li>
-        <li><a routerLink="workflows">{{ 'NAVBAR.WORKFLOWS' | translate }}</a></li>
-      </ul>
+        <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+          <li class="nav-item"><a routerLink="data">{{ 'NAVBAR.DATA' | translate }}</a></li>
+          <li class="nav-item"><a routerLink="workflows">{{ 'NAVBAR.WORKFLOWS' | translate }}</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>

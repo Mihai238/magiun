@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkflowsComponent } from './workflows.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 describe('WorkflowsComponent', () => {
   let component: WorkflowsComponent;
@@ -8,7 +9,7 @@ describe('WorkflowsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WorkflowsComponent ]
+      declarations: [ WorkflowsComponent , SidebarComponent]
     })
     .compileComponents();
   }));

@@ -16,7 +16,8 @@ import {logging} from './app.logging';
 import {HttpClientModule} from '@angular/common/http';
 import {translate} from './app.translate';
 import {SidebarComponent} from './components/workflows/sidebar/sidebar.component';
-import { HistogramComponent } from './components/data/charts/histogram/histogram.component';
+import { HistogramComponent } from './components/data/chart/histogram/histogram.component';
+import { ChartComponent } from './components/data/chart/chart.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { HistogramComponent } from './components/data/charts/histogram/histogram
     WorkflowsComponent,
     SidebarComponent,
     PageNotFoundComponent,
-    HistogramComponent
+    HistogramComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,

@@ -8,9 +8,13 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 export class HistogramComponent implements OnInit {
 
   @ViewChild('chart') chartEl: ElementRef;
-  @Input() values: any;
 
-  constructor() { }
+  @Input() values: any;
+  @Input() xLabel: string;
+  @Input() yLabel: string;
+
+  constructor() {
+  }
 
   ngOnInit() {
     const element = this.chartEl.nativeElement;
@@ -21,12 +25,13 @@ export class HistogramComponent implements OnInit {
     }];
 
     const layout = {
-      title: 'some title',
+      title: 'Histogram ' + (this.xLabel || '') + ' - ' + (this.yLabel || ''),
+      autosize: true,
       xaxis: {
-        title: 'x axis title',
+        title: this.xLabel,
       },
       yaxis: {
-        title: 'y axis title'
+        title: this.yLabel
       }
     };
 

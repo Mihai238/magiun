@@ -8,15 +8,22 @@ import {Observable} from 'rxjs/Observable';
 import {logging} from '../../app.logging';
 import 'rxjs/add/observable/of';
 import {TranslateModule} from '@ngx-translate/core';
+import {Component} from '@angular/core';
 
 describe('DataComponent', () => {
   let component: DataComponent;
   let fixture: ComponentFixture<DataComponent>;
   let dataService: DataService;
 
+  @Component({
+    selector: 'app-chart',
+    template: ''
+  })
+  class ChartStubComponent {}
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataComponent ],
+      declarations: [DataComponent, ChartStubComponent],
       imports: [
         InfiniteScrollModule,
         HttpClientModule,
@@ -27,7 +34,7 @@ describe('DataComponent', () => {
         DataService
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

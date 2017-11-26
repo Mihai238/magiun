@@ -7,6 +7,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {logging} from '../../app.logging';
 import 'rxjs/add/observable/of';
+import {TranslateModule} from '@ngx-translate/core';
 
 describe('DataComponent', () => {
   let component: DataComponent;
@@ -19,7 +20,8 @@ describe('DataComponent', () => {
       imports: [
         InfiniteScrollModule,
         HttpClientModule,
-        logging
+        logging,
+        TranslateModule.forRoot()
       ],
       providers: [
         DataService

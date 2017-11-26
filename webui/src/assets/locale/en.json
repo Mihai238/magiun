@@ -11,5 +11,8 @@
   "PAGE_NOT_FOUND": {
     "MESSAGE1": "Oh no, you’ve found our junior developer’s homepage!",
     "MESSAGE2": "Despite sleeping on the couch most of the day, our junior web developer still finds time to do some coding…"
+  },
+  "DATA": {
+    "NO_DATA_SET": "No data set selected"
   }
 }

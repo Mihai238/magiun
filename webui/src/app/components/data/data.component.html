@@ -1,20 +1,19 @@
 <div class="container">
 
-  <div class="btn-group">
+  <div class="dropdown">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
+            aria-expanded="false" id="dropdownDataSetButton">
 
       <span *ngIf="selectedDataSet; else noDataSetSelected">{{selectedDataSet.name}}</span>
-      <ng-template #noDataSetSelected>No data set selected</ng-template>
-      <!--{{selectedDataSet || "f"}}-->
+      <ng-template #noDataSetSelected>{{'DATA.NO_DATA_SET' | translate}}</ng-template>
       <span class="caret"></span>
     </button>
-    <ul class="dropdown-menu">
-      <li *ngFor="let dataSet of dataSets">
-        <a (click)="onSelectDataSet(dataSet)">{{dataSet.name}}</a>
-      </li>
-    </ul>
+    <div class="dropdown-menu" aria-labelledby="dropdownDataSetButton">
+      <a class="dropdown-item clickable" *ngFor="let dataSet of dataSets" (click)="onSelectDataSet(dataSet)">{{dataSet.name}}</a>
+    </div>
   </div>
+
+  <!--<app-histogram [values]="histogramValues"></app-histogram>-->
 
   <div infinite-scroll [infiniteScrollDistance]="2"
        [infiniteScrollUpDistance]="1.5"

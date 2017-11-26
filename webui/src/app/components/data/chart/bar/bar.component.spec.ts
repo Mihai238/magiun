@@ -16,6 +16,9 @@ describe('BarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BarComponent);
     component = fixture.componentInstance;
+
+    component.chartData = {xValues: [], yValues: []};
+
     fixture.detectChanges();
   });
 

@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-8">
     <app-histogram *ngIf="selectedChartType === ChartType.histogram" [chartData]="chartData" xLabel="xlab" yLabel="y"></app-histogram>
-    <app-bar *ngIf="selectedChartType === ChartType.bar" [chartData]="chartData" xLabel="xlab" yLabel="y"></app-bar>
+    <app-bar *ngIf="selectedChartType === ChartType.bar" [chartData]="chartData"></app-bar>
   </div>
   <div class="col-4">
     <h5>Chart settings</h5>

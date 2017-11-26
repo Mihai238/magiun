@@ -16,6 +16,7 @@ describe('HistogramComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HistogramComponent);
     component = fixture.componentInstance;
+    component.chartData = {xValues: [], yValues: []};
     fixture.detectChanges();
   });
 

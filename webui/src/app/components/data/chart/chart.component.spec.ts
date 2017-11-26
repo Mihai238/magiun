@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ChartComponent} from './chart.component';
-import {HistogramComponent} from './histogram/histogram.component';
+import {ChartComponent, ChartData} from './chart.component';
+import {Component, Input} from '@angular/core';
 
 describe('ChartComponent', () => {
   let component: ChartComponent;
@@ -11,7 +11,8 @@ describe('ChartComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ChartComponent,
-        HistogramComponent
+        HistogramStubComponent,
+        BarStubComponent
       ]
     })
       .compileComponents();
@@ -27,3 +28,19 @@ describe('ChartComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'app-histogram',
+  template: ''
+})
+class HistogramStubComponent {
+  @Input() chartData: ChartData;
+}
+
+@Component({
+  selector: 'app-bar',
+  template: ''
+})
+class BarStubComponent {
+  @Input() chartData: ChartData;
+}

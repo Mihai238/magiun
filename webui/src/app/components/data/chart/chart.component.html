@@ -1,8 +1,19 @@
 <div class="row">
   <div class="col-8">
-    <app-histogram [values]="histogramValues" xLabel="xlab" yLabel="y"></app-histogram>
+    <app-histogram *ngIf="selectedChartType === ChartType.histogram" [chartData]="chartData" xLabel="xlab" yLabel="y"></app-histogram>
+    <app-bar *ngIf="selectedChartType === ChartType.bar" [chartData]="chartData" xLabel="xlab" yLabel="y"></app-bar>
   </div>
   <div class="col-4">
-    <p>settings</p>
+    <h5>Chart settings</h5>
+
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{selectedChartType}}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a *ngFor="let chartType of chartTypes()" (click)="onSelectChart(chartType)" class="dropdown-item clickable">{{chartType}}</a>
+      </div>
+    </div>
+
   </div>
 </div>

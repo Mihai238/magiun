@@ -1,4 +1,5 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {ChartData} from '../chart.component';
 
 @Component({
   selector: 'app-histogram',
@@ -9,7 +10,7 @@ export class HistogramComponent implements OnInit {
 
   @ViewChild('chart') chartEl: ElementRef;
 
-  @Input() values: any;
+  @Input() chartData: ChartData;
   @Input() xLabel: string;
   @Input() yLabel: string;
 
@@ -17,10 +18,8 @@ export class HistogramComponent implements OnInit {
   }
 
   ngOnInit() {
-    const element = this.chartEl.nativeElement;
-
     const data = [{
-      x: this.values,
+      x: this.chartData.xValues,
       type: 'histogram'
     }];
 
@@ -35,7 +34,7 @@ export class HistogramComponent implements OnInit {
       }
     };
 
-    Plotly.plot(element, data, layout, {displayModeBar: false});
+    Plotly.plot(this.chartEl.nativeElement, data, layout, {displayModeBar: false});
   }
 
 }

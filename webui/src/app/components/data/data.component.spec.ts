@@ -15,12 +15,6 @@ describe('DataComponent', () => {
   let fixture: ComponentFixture<DataComponent>;
   let dataService: DataService;
 
-  @Component({
-    selector: 'app-chart',
-    template: ''
-  })
-  class ChartStubComponent {}
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DataComponent, ChartStubComponent],
@@ -55,3 +49,9 @@ describe('DataComponent', () => {
     expect(component.dataSets.length).toBe(2);
   });
 });
+
+@Component({
+  selector: 'app-chart',
+  template: ''
+})
+class ChartStubComponent {}

@@ -26,6 +26,7 @@
     "faker": "^4.1.0",
     "ngx-infinite-scroll": "^0.6.1",
     "ngx-logger": "^0.2.9",
+    "plotly.js": "^1.31.2",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.18"
   },

@@ -2,6 +2,10 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ChartComponent, ChartData} from './chart.component';
 import {Component, Input} from '@angular/core';
+import {PieComponent} from './pie/pie.component';
+import {PieSettingsComponent} from './pie/pie-settings.component';
+import {BarSettingsComponent} from './bar/bar-settings.component';
+import {HistogramSettingsComponent} from './histogram/histogram-settings.component';
 
 describe('ChartComponent', () => {
   let component: ChartComponent;
@@ -12,7 +16,11 @@ describe('ChartComponent', () => {
       declarations: [
         ChartComponent,
         HistogramStubComponent,
-        BarStubComponent
+        BarStubComponent,
+        PieComponent,
+        PieSettingsComponent,
+        BarSettingsComponent,
+        HistogramSettingsComponent
       ]
     })
       .compileComponents();

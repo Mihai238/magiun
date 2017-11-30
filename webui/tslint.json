@@ -111,7 +111,7 @@
     "component-selector": [
       true,
       "element",
-      "app",
+      ["app", "chart", "data"],
       "kebab-case"
     ],
     "use-input-property-decorator": true,

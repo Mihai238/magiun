@@ -36,5 +36,6 @@ export class ChartData {
 
 export enum ChartType {
   histogram = 'Histogram',
-  bar = 'Bar'
+  bar = 'Bar',
+  pie = 'Pie'
 }

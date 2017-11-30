@@ -1,23 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BarComponent } from './bar.component';
+import { HistogramSettingsComponent } from './histogram-settings.component';
 
-describe('BarComponent', () => {
-  let component: BarComponent;
-  let fixture: ComponentFixture<BarComponent>;
+describe('HistogramSettingsComponent', () => {
+  let component: HistogramSettingsComponent;
+  let fixture: ComponentFixture<HistogramSettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BarComponent ]
+      declarations: [ HistogramSettingsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BarComponent);
+    fixture = TestBed.createComponent(HistogramSettingsComponent);
     component = fixture.componentInstance;
-
-    component.chartData = {xValues: [], yValues: []};
     fixture.detectChanges();
   });
 

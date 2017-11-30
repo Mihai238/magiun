@@ -16,9 +16,13 @@ import {logging} from './app.logging';
 import {HttpClientModule} from '@angular/common/http';
 import {translate} from './app.translate';
 import {SidebarComponent} from './components/workflows/sidebar/sidebar.component';
-import { HistogramComponent } from './components/data/chart/histogram/histogram.component';
-import { ChartComponent } from './components/data/chart/chart.component';
-import { BarComponent } from './components/data/chart/bar/bar.component';
+import {HistogramComponent} from './components/data/chart/histogram/histogram.component';
+import {ChartComponent} from './components/data/chart/chart.component';
+import {BarComponent} from './components/data/chart/bar/bar.component';
+import {PieComponent} from './components/data/chart/pie/pie.component';
+import {PieSettingsComponent} from './components/data/chart/pie/pie-settings.component';
+import {BarSettingsComponent} from './components/data/chart/bar/bar-settings.component';
+import {HistogramSettingsComponent} from './components/data/chart/histogram/histogram-settings.component';
 
 
 @NgModule({
@@ -31,9 +35,13 @@ import { BarComponent } from './components/data/chart/bar/bar.component';
     WorkflowsComponent,
     SidebarComponent,
     PageNotFoundComponent,
-    HistogramComponent,
     ChartComponent,
-    BarComponent
+    HistogramComponent,
+    HistogramSettingsComponent,
+    BarComponent,
+    BarSettingsComponent,
+    PieComponent,
+    PieSettingsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,29 @@
-<p>
-  histogram-settings works!
-</p>
+<div>
+  <div class="dropdown">
+    Column:
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownColumnButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+      {{selectedColumn.name}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownColumnButton">
+      <a *ngFor="let column of dataSet.schema.columns" (click)="onSelectColumn(column)" class="dropdown-item clickable">{{column.name}}</a>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    Histogram norm:
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownHistNormButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+      {{selectedHistNorm}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownHistNormButton">
+      <a *ngFor="let histNorm of HistNorm.values()" (click)="onSelectHistNorm(histNorm)" class="dropdown-item clickable">{{histNorm}}</a>
+    </div>
+  </div>
+
+  <div class="checkbox">
+    <label>Cumulative<input type="checkbox" value="" [(ngModel)]="isCumulativeEnabled" (click)="onChangeCumulative()"></label>
+  </div>
+
+
+</div>

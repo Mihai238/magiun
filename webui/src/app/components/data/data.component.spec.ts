@@ -8,7 +8,8 @@ import {Observable} from 'rxjs/Observable';
 import {logging} from '../../app.logging';
 import 'rxjs/add/observable/of';
 import {TranslateModule} from '@ngx-translate/core';
-import {Component} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {DataSet} from '../../model/data-set';
 
 describe('DataComponent', () => {
   let component: DataComponent;
@@ -54,4 +55,7 @@ describe('DataComponent', () => {
   selector: 'app-chart',
   template: ''
 })
-class ChartStubComponent {}
+class ChartStubComponent {
+  @Input() dataSet: DataSet;
+  @ViewChild('chart') chartEl: ElementRef;
+}

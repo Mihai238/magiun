@@ -1,5 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ChartData} from '../../../model/chart-data';
+import {DataSet} from '../../../model/data-set';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-chart',
@@ -8,16 +10,18 @@ import {ChartData} from '../../../model/chart-data';
 })
 export class ChartComponent implements OnInit {
 
+  @Input() dataSet: DataSet;
   @ViewChild('chart') chartEl: ElementRef;
 
   public ChartType = ChartType;
   selectedChartType: ChartType;
 
-  constructor() {
+  constructor(private logger: NGXLogger) {
   }
 
   ngOnInit() {
     this.selectedChartType = ChartType.histogram;
+    this.logger.debug('DataSet: ' +  this.dataSet);
   }
 
   chartTypes(): Array<string> {

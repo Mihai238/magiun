@@ -9,6 +9,7 @@ export interface Schema {
 }
 
 export interface Column {
+  index: number;
   name: string;
   type: ColumnType;
 }

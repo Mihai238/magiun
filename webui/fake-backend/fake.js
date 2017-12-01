@@ -42,18 +42,22 @@ const dataset1 = {
   schema: {
     columns: [
       {
+        index: 0,
         name: "name",
         type: "string"
       },
       {
+        index: 1,
         name: "age",
         type: "int"
       },
       {
+        index: 2,
         name: "dateOfBirth",
         type: "date"
       },
       {
+        index: 3,
         name: "happy",
         type: "boolean"
       }
@@ -62,21 +66,24 @@ const dataset1 = {
 };
 
 const dataset2 = {
-  "id": 2,
-  "name": "animals",
-  "schema": {
-    "columns": [
+  id: 2,
+  name: "animals",
+  schema: {
+    columns: [
       {
-        "name": "breed",
-        "type": "string"
+        index: 0,
+        name: "breed",
+        type: "string"
       },
       {
-        "name": "age",
-        "type": "int",
+        index: 1,
+        name: "age",
+        type: "int",
       },
       {
-        "name": "color",
-        "type": "string"
+        index: 2,
+        name: "color",
+        type: "string"
       }
     ]
   }

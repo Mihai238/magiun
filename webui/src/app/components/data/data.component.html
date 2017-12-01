@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <app-chart></app-chart>
+  <app-chart *ngIf="selectedDataSet" [dataSet]="selectedDataSet"></app-chart>
 
   <div infinite-scroll [infiniteScrollDistance]="2"
        [infiniteScrollUpDistance]="1.5"

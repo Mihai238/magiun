@@ -3,7 +3,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ChartComponent} from './chart.component';
 import {PieSettingsComponent} from './pie/pie-settings.component';
 import {BarSettingsComponent} from './bar/bar-settings.component';
-import {HistogramSettingsComponent} from './histogram/histogram-settings.component';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {DataSet} from '../../../model/data-set';
+import {logging} from '../../../app.logging';
 
 describe('ChartComponent', () => {
   let component: ChartComponent;
@@ -15,7 +17,10 @@ describe('ChartComponent', () => {
         ChartComponent,
         PieSettingsComponent,
         BarSettingsComponent,
-        HistogramSettingsComponent
+        StubHistogramSettingsComponent
+      ],
+      imports: [
+        logging
       ]
     })
       .compileComponents();
@@ -31,3 +36,12 @@ describe('ChartComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'chart-histogram-settings',
+  template: ''
+})
+class StubHistogramSettingsComponent {
+  @Input() dataSet: DataSet;
+  @Output() settingsUpdated = new EventEmitter();
+}

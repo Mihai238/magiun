@@ -1,5 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ChartData} from '../../../../model/chart-data';
+import {Column, DataSet} from '../../../../model/data-set';
+import {DataService} from '../../../../services/data.service';
 
 @Component({
   selector: 'chart-histogram-settings',
@@ -8,14 +10,56 @@ import {ChartData} from '../../../../model/chart-data';
 })
 export class HistogramSettingsComponent implements OnInit {
 
+  @Input() dataSet: DataSet;
   @Output() settingsUpdated = new EventEmitter();
 
-  constructor() { }
+  public HistNorm = HistNorm;
+
+  selectedColumn;
+  selectedHistNorm;
+  isCumulativeEnabled;
+
+  constructor(private dataService: DataService) {
+  }
 
   ngOnInit() {
+    this.selectedColumn = this.dataSet.schema.columns[0];
+    this.selectedHistNorm = HistNorm.default;
+    this.isCumulativeEnabled = false;
+
+    this.getDataAndUpdate();
+  }
+
+  onSelectColumn(column: Column) {
+    this.selectedColumn = column;
+    this.getDataAndUpdate();
+  }
+
+  onSelectHistNorm(histNorm: HistNorm) {
+    this.selectedHistNorm = histNorm;
+    this.getDataAndUpdate();
+  }
+
+  onChangeCumulative() {
+    this.getDataAndUpdate();
+  }
+
+  private getDataAndUpdate() {
+    this.dataService.getAllData(this.dataSet)
+      .subscribe(dataRows => {
+        const values = dataRows.map(e => e.values[this.selectedColumn.index]);
+        this.update(values);
+      });
+  }
+
+  private update(values: any[]) {
     const data = [{
-      x: [1, 2, 3, 0, 9, 12],
-      type: 'histogram'
+      x: values,
+      type: 'histogram',
+      histnorm: this.selectedHistNorm.value,
+      cumulative: {
+        enabled: this.isCumulativeEnabled
+      }
     }];
 
     const layout = {
@@ -36,4 +80,21 @@ export class HistogramSettingsComponent implements OnInit {
     this.settingsUpdated.emit(chartData);
   }
 
+}
+
+class HistNorm {
+  static default = new HistNorm('', 'default');
+  static percent = new HistNorm('percent', 'percent');
+  static density = new HistNorm('density', 'density');
+
+  static values(): HistNorm[] {
+    return [this.default, this.percent, this.density];
+  }
+
+  private constructor(public value: string, public text: string) {
+  }
+
+  toString() {
+    return this.text;
+  }
 }

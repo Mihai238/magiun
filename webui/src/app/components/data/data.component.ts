@@ -18,8 +18,6 @@ export class DataComponent implements OnInit {
   selectedDataSet: DataSet;
   loadedPages = 0;
 
-  histogramValues;
-
   constructor(private logger: NGXLogger,
               private dataService: DataService) {
   }
@@ -27,8 +25,6 @@ export class DataComponent implements OnInit {
   ngOnInit() {
     this.getDataSets();
     this.selectedDataSet = undefined;
-
-    this.histogramValues = [1, 2, 3, 0, 9 , 12];
   }
 
   getDataSets() {

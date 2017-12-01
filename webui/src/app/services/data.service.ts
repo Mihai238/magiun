@@ -46,6 +46,7 @@ export class DataService {
       }
 
       return {
+        index: column.index,
         name: column.name,
         type: ColumnType[column.type]
       };
@@ -60,6 +61,13 @@ export class DataService {
         this.logger.debug('Got data for data set' + resp);
         return resp;
       })
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  // not really wise to fetch all the data if we deal with GBs of data
+  // should be refactored in further versions
+  getAllData(dataSet: DataSet): Observable<DataRow[]> {
+    return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows')
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 

@@ -42,8 +42,20 @@ describe('DataComponent', () => {
   it('should be created', () => {
     spyOn(dataService, 'getDataSets')
       .and.returnValue(Observable.of([
-      {id: '1', name: 'people', schema: null},
-      {id: '2', name: 'plants', schema: null}
+      {
+        id: '1',
+        name: 'people',
+        schema: {
+          columns: []
+        }
+      },
+      {
+        id: '2',
+        name: 'plants',
+        schema: {
+          columns: []
+        }
+      }
     ]));
 
     fixture.detectChanges();

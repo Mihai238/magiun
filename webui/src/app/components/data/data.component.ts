@@ -3,6 +3,7 @@ import {NGXLogger} from 'ngx-logger';
 import {DataService} from '../../services/data.service';
 import {DataRow} from '../../model/data-row';
 import {DataSet} from '../../model/data-set';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-data',
@@ -24,14 +25,18 @@ export class DataComponent implements OnInit {
 
   ngOnInit() {
     this.getDataSets();
-    this.selectedDataSet = undefined;
   }
 
   getDataSets() {
     this.logger.info('Loading datasets');
 
     this.dataService.getDataSets()
-      .subscribe(resp => this.dataSets = resp);
+      .subscribe(resp => {
+        this.dataSets = resp;
+        if (!environment.production) {
+          this.selectedDataSet = this.dataSets[0];
+        }
+      });
   }
 
   onSelectDataSet(dataSet: DataSet) {

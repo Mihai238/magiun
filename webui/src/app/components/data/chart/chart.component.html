@@ -1,10 +1,7 @@
 <div class="card">
   <div class="card-body">
     <div class="row">
-      <div class="col-8">
-        <app-histogram *ngIf="selectedChartType === ChartType.histogram" [chartData]="chartData"></app-histogram>
-        <app-bar *ngIf="selectedChartType === ChartType.bar" [chartData]="chartData"></app-bar>
-        <chart-pie *ngIf="selectedChartType === ChartType.pie" [chartData]="chartData"></chart-pie>
+      <div #chart class="col-8">
       </div>
       <div class="col-4">
         <h5>Chart settings</h5>
@@ -19,9 +16,9 @@
           </div>
         </div>
 
-        <chart-histogram-settings *ngIf="selectedChartType === ChartType.histogram"></chart-histogram-settings>
-        <chart-bar-settings *ngIf="selectedChartType === ChartType.bar"></chart-bar-settings>
-        <chart-pie-settings *ngIf="selectedChartType === ChartType.pie"></chart-pie-settings>
+        <chart-histogram-settings (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.histogram"></chart-histogram-settings>
+        <chart-bar-settings (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.bar"></chart-bar-settings>
+        <chart-pie-settings (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.pie"></chart-pie-settings>
 
       </div>
     </div>

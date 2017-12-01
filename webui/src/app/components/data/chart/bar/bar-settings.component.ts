@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ChartData} from '../../../../model/chart-data';
 
 @Component({
   selector: 'chart-bar-settings',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BarSettingsComponent implements OnInit {
 
+  @Output() settingsUpdated = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
+    const data = [{
+      x: ['true', 'fase'],
+      y: [14, 29],
+      type: 'bar'
+    }];
+
+    const layout = {
+      title: 'Bar chart title'
+    };
+
+    const chartData: ChartData = {
+      data: data,
+      layout: layout
+    };
+
+    this.settingsUpdated.emit(chartData);
   }
 
 }

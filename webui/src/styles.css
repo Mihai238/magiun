@@ -51,3 +51,7 @@ table {
 .clickable {
   cursor: pointer;
 }
+
+.chart-settings-entry {
+  margin: 0.3rem
+}

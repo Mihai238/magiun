@@ -1,20 +1,24 @@
 <div class="card">
   <div class="card-body">
     <div class="row">
-      <div #chart class="col-8">
-      </div>
-      <div class="col-4">
+      <div #chart class="col-8"></div>
+
+      <div id="chart-settings" class="col">
         <h5>Chart settings</h5>
 
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-            {{selectedChartType}}
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a *ngFor="let chartType of chartTypes()" (click)="onSelectChart(chartType)" class="dropdown-item clickable">{{chartType}}</a>
+        <div class="row chart-settings-entry">
+          <span class="col">Chart type:</span>
+          <div class="col dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+              {{selectedChartType}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a *ngFor="let chartType of chartTypes()" (click)="onSelectChart(chartType)" class="dropdown-item clickable">{{chartType}}</a>
+            </div>
           </div>
         </div>
+
 
         <chart-histogram-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.histogram"></chart-histogram-settings>
         <chart-bar-settings (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.bar"></chart-bar-settings>

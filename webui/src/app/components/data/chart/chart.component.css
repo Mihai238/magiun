@@ -1,3 +1,7 @@
 .card {
   margin: 1rem;
 }
+
+#chart-settings {
+  padding: 1rem;
+}

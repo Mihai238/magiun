@@ -60,12 +60,12 @@ export class HistogramSettingsComponent implements OnInit {
     }];
 
     const layout = {
-      title: 'Histogram title',
+      title: `Histogram "${this.selectedColumn.name}" feature`,
       xaxis: {
-        title: 'label X',
+        title: this.selectedColumn.name,
       },
       yaxis: {
-        title: 'label Y'
+        title: this.selectedHistNorm.labelText
       }
     };
 
@@ -80,18 +80,18 @@ export class HistogramSettingsComponent implements OnInit {
 }
 
 class HistNorm {
-  static default = new HistNorm('', 'default');
-  static percent = new HistNorm('percent', 'percent');
-  static density = new HistNorm('density', 'density');
+  static default = new HistNorm('', 'default', 'occurrences');
+  static percent = new HistNorm('percent', 'percent', 'percentage');
+  static density = new HistNorm('density', 'density', 'density');
 
   static values(): HistNorm[] {
     return [this.default, this.percent, this.density];
   }
 
-  private constructor(public value: string, public text: string) {
+  private constructor(public value: string, public optionText: string, public labelText: String) {
   }
 
   toString() {
-    return this.text;
+    return this.optionText;
   }
 }

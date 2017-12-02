@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {DataService} from '../../services/data.service';
 import {DataRow} from '../../model/data-row';
-import {DataSet} from '../../model/data-set';
+import {ColumnType, DataSet} from '../../model/data-set';
 import {environment} from '../../../environments/environment';
 
 @Component({
@@ -12,6 +12,8 @@ import {environment} from '../../../environments/environment';
   providers: [NGXLogger]
 })
 export class DataComponent implements OnInit {
+
+  public ColumnType = ColumnType;
 
   rows: DataRow[];
   dataSets: DataSet[];

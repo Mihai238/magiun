@@ -1,21 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HistogramSettingsComponent } from './histogram-settings.component';
-import {FormsModule} from '@angular/forms';
+import { ScatterSettingsComponent } from './scatter-settings.component';
 import {DataService} from '../../../../services/data.service';
 import {HttpClientModule} from '@angular/common/http';
 import {logging} from '../../../../app.logging';
 
-describe('HistogramSettingsComponent', () => {
-  let component: HistogramSettingsComponent;
-  let fixture: ComponentFixture<HistogramSettingsComponent>;
+describe('ScatterSettingsComponent', () => {
+  let component: ScatterSettingsComponent;
+  let fixture: ComponentFixture<ScatterSettingsComponent>;
   let dataService: DataService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HistogramSettingsComponent ],
+      declarations: [ ScatterSettingsComponent ],
       imports: [
-        FormsModule,
         HttpClientModule,
         logging
       ],
@@ -27,14 +25,13 @@ describe('HistogramSettingsComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HistogramSettingsComponent);
+    fixture = TestBed.createComponent(ScatterSettingsComponent);
     component = fixture.componentInstance;
-
 
     dataService = fixture.debugElement.injector.get(DataService);
   });
 
-  it('should be created', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

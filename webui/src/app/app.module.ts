@@ -18,8 +18,8 @@ import {translate} from './app.translate';
 import {SidebarComponent} from './components/workflows/sidebar/sidebar.component';
 import {ChartComponent} from './components/data/chart/chart.component';
 import {PieSettingsComponent} from './components/data/chart/pie/pie-settings.component';
-import {BarSettingsComponent} from './components/data/chart/bar/bar-settings.component';
 import {HistogramSettingsComponent} from './components/data/chart/histogram/histogram-settings.component';
+import { ScatterSettingsComponent } from './components/data/chart/scatter/scatter-settings.component';
 
 
 @NgModule({
@@ -34,8 +34,8 @@ import {HistogramSettingsComponent} from './components/data/chart/histogram/hist
     PageNotFoundComponent,
     ChartComponent,
     HistogramSettingsComponent,
-    BarSettingsComponent,
-    PieSettingsComponent
+    PieSettingsComponent,
+    ScatterSettingsComponent
   ],
   imports: [
     BrowserModule,

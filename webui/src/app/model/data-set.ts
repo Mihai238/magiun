@@ -18,5 +18,6 @@ export enum ColumnType {
   string = 'string',
   boolean = 'boolean',
   date = 'date',
-  int = 'int'
+  int = 'int',
+  double = 'double'
 }

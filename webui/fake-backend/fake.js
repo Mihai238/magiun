@@ -9,6 +9,10 @@ module.exports = () => {
   };
 
   for (let i = 0; i < 1000; i++) {
+    let height = faker.random.number({min: 1.40, max: 2.20, precision: 0.01});
+
+    let sportLevel = ['low', 'medium', 'high'];
+
     data.rows.push({
       datasetId: "1",
       id: i,
@@ -16,7 +20,10 @@ module.exports = () => {
         faker.name.findName(),
         faker.random.number({min: 18, max: 99}),
         faker.date.past(),
-        faker.random.boolean()
+        faker.random.boolean(),
+        height,
+        ((height * 100) - 100) + faker.random.number({min: -20, max: 20}),
+        sportLevel[faker.random.number({min: 0, max: 2})]
       ]
     });
   }
@@ -60,6 +67,21 @@ const dataset1 = {
         index: 3,
         name: "happy",
         type: "boolean"
+      },
+      {
+        index: 4,
+        name: "height",
+        type: "double"
+      },
+      {
+        index: 6,
+        name: "weight",
+        type: "double"
+      },
+      {
+        index: 7,
+        name: "sport level",
+        type: "string"
       }
     ]
   }

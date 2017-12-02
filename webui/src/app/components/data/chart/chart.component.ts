@@ -33,6 +33,8 @@ export class ChartComponent implements OnInit {
   }
 
   handleSettingsUpdated(chartData: ChartData) {
+    this.logger.info('Settings updated');
+
     chartData.layout.height = 400;
     chartData.layout.width = 500;
 
@@ -43,6 +45,6 @@ export class ChartComponent implements OnInit {
 
 enum ChartType {
   histogram = 'Histogram',
-  bar = 'Bar',
-  pie = 'Pie'
+  pie = 'Pie',
+  scatter = 'Scatter'
 }

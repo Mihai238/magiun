@@ -15,9 +15,9 @@ export class HistogramSettingsComponent implements OnInit {
 
   public HistNorm = HistNorm;
 
-  selectedColumn;
-  selectedHistNorm;
-  isCumulativeEnabled;
+  selectedColumn: Column;
+  selectedHistNorm: HistNorm;
+  isCumulativeEnabled: boolean;
 
   constructor(private dataService: DataService) {
   }
@@ -44,7 +44,7 @@ export class HistogramSettingsComponent implements OnInit {
   private getDataAndUpdate() {
     this.dataService.getAllData(this.dataSet)
       .subscribe(dataRows => {
-        const values = dataRows.map(e => e.values[this.selectedColumn.index]);
+        const values = dataRows.map(row => row.values[this.selectedColumn.index]);
         this.update(values);
       });
   }

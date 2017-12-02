@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DataSet} from '../../../../model/data-set';
+import {Column, DataSet} from '../../../../model/data-set';
 import {DataService} from '../../../../services/data.service';
 import {ChartData} from '../../../../model/chart-data';
 
@@ -13,18 +13,49 @@ export class ScatterSettingsComponent implements OnInit {
   @Input() dataSet: DataSet;
   @Output() settingsUpdated = new EventEmitter();
 
+  selectedFirstColumn: Column;
+  selectedSecondColumn: Column;
+
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
+  }
+
+  onUpdateFirstColumn(column: Column) {
+    this.selectedFirstColumn = column;
+    this.getDataAndUpdate();
+  }
+
+  onUpdateSecondColumn(column: Column) {
+    this.selectedSecondColumn = column;
+    this.getDataAndUpdate();
+  }
+
+  getDataAndUpdate() {
+    this.dataService.getAllData(this.dataSet)
+      .subscribe(dataRows => {
+        const values1 = dataRows.map(row => row.values[this.selectedFirstColumn.index]);
+        const values2 = dataRows.map(row => row.values[this.selectedSecondColumn.index]);
+        this.update(values1, values2);
+      });
+  }
+
+  update(x, y: any[]) {
     const data = [{
-      x: [1, 2, 3, 4],
-      y: [10, 15, 13, 17],
+      x: x,
+      y: y,
       mode: 'markers',
       type: 'scatter'
     }];
 
     const layout = {
-      title: 'Scatter plot title'
+      title: `Scatter plot ${this.selectedFirstColumn.name} x ${this.selectedSecondColumn.name}`,
+      xaxis: {
+        title: this.selectedFirstColumn.name,
+      },
+      yaxis: {
+        title: this.selectedSecondColumn.name
+      }
     };
 
     const chartData: ChartData = {

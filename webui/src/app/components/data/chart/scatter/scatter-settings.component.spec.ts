@@ -4,6 +4,7 @@ import { ScatterSettingsComponent } from './scatter-settings.component';
 import {DataService} from '../../../../services/data.service';
 import {HttpClientModule} from '@angular/common/http';
 import {logging} from '../../../../app.logging';
+import {StubColumnSelectorComponent} from '../../../../../testing/stub-column-selector.component';
 
 describe('ScatterSettingsComponent', () => {
   let component: ScatterSettingsComponent;
@@ -12,7 +13,10 @@ describe('ScatterSettingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScatterSettingsComponent ],
+      declarations: [
+        ScatterSettingsComponent,
+        StubColumnSelectorComponent
+      ],
       imports: [
         HttpClientModule,
         logging

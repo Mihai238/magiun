@@ -5,8 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {DataService} from '../../../../services/data.service';
 import {HttpClientModule} from '@angular/common/http';
 import {logging} from '../../../../app.logging';
-import {Component, Input} from '@angular/core';
-import {Column} from '../../../../model/data-set';
+import {StubColumnSelectorComponent} from '../../../../../testing/stub-column-selector.component';
 
 describe('HistogramSettingsComponent', () => {
   let component: HistogramSettingsComponent;
@@ -42,11 +41,3 @@ describe('HistogramSettingsComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-
-@Component({
-  selector: 'chart-column-selector',
-  template: ''
-})
-class StubColumnSelectorComponent {
-  @Input() columns: Column[];
-}

@@ -1,28 +1,18 @@
 <nav class="side-navbar">
-  <!-- Sidebar Header-->
-  <div class="sidebar-header d-flex align-items-center">
-    <div class="title">
-      <h1 class="h4">TEST</h1>
-      <p>TEST</p>
-    </div>
-  </div>
-  <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
   <ul class="list-unstyled">
-    <li><a><i class="fa fa-upload" aria-hidden="true"></i>Import Data</a>
-      <ul class="list-unstyled">
-        <li><a><i class="fa fa-database" aria-hidden="true"></i>Database</a></li>
-        <li><a><i class="fa fa-file-excel-o" aria-hidden="true"></i>File</a></li>
+    <li><a href="#import-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-upload" aria-hidden="true"></i>Import Data<i class="icon-interface-windows"></i></a>
+      <ul id="import-variants" class="collapse list-unstyled">
+        <li [dragDirective]='li' [dragHightlight]="'highlight'"><a><i class="fa fa-database" aria-hidden="true"></i>Database</a></li>
+        <li [dragDirective]='li' [dragHightlight]="'highlight'"><a><i class="fa fa-file-excel-o" aria-hidden="true"></i>File</a></li>
       </ul>
     </li>
-    <li> <a> <i class="icon-grid"></i>TEST</a></li>
-    <li> <a> <i class="fa fa-bar-chart"></i>TEST</a></li>
-    <li> <a> <i class="icon-padnote"></i>TEST </a></li>
-    <li> <a> <i class="icon-interface-windows"></i>TEST</a></li>
-  </ul><span class="heading">TEST</span>
-  <ul class="list-unstyled">
-    <li> <a> <i class="icon-flask"></i>TEST </a></li>
-    <li> <a> <i class="icon-screen"></i>TEST </a></li>
-    <li> <a> <i class="icon-mail"></i>TEST </a></li>
-    <li> <a> <i class="icon-picture"></i>TEST </a></li>
+    <li><a href="#transformation-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-ambulance" aria-hidden="true"></i>Data Transformation<i class="icon-interface-windows"></i></a>
+      <ul id="transformation-variants" class="collapse list-unstyled">
+      </ul>
+    </li>
+    <li><a href="#features-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-search" aria-hidden="true"></i>Feature Selection<i class="icon-interface-windows"></i></a>
+      <ul id="features-variants" class="collapse list-unstyled">
+      </ul>
+    </li>
   </ul>
 </nav>

@@ -1,0 +1,9 @@
+.droppingarea {
+  margin: auto;
+  min-height: 100%;
+  border: 1px #E7E7E7;
+}
+
+.container-inner {
+  background: #EEF5F9;
+}

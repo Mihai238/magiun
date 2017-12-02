@@ -21,6 +21,7 @@ import {PieSettingsComponent} from './components/data/chart/pie/pie-settings.com
 import {HistogramSettingsComponent} from './components/data/chart/histogram/histogram-settings.component';
 import { ScatterSettingsComponent } from './components/data/chart/scatter/scatter-settings.component';
 import { ColumnSelectorComponent } from './components/data/chart/shared/column-selector/column-selector.component';
+import {DragDropDirectiveModule} from 'angular4-drag-drop';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { ColumnSelectorComponent } from './components/data/chart/shared/column-s
     FormsModule,
     HttpClientModule,
     InfiniteScrollModule,
+    DragDropDirectiveModule,
     translate,
     logging,
     routing

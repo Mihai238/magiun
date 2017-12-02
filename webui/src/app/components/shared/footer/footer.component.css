@@ -3,8 +3,6 @@ footer {
   border-color: #E7E7E7;
   color: #777;
 
-  position:fixed;
-  bottom:0;
   width: 100%;
 }
 
@@ -18,5 +16,6 @@ ul {
 }
 
 .row {
-  margin-top: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

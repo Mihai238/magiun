@@ -31,7 +31,7 @@ export class ScatterSettingsComponent implements OnInit {
     this.getDataAndUpdate();
   }
 
-  getDataAndUpdate() {
+  private getDataAndUpdate() {
     this.dataService.getAllData(this.dataSet)
       .subscribe(dataRows => {
         const values1 = dataRows.map(row => row.values[this.selectedFirstColumn.index]);
@@ -40,7 +40,7 @@ export class ScatterSettingsComponent implements OnInit {
       });
   }
 
-  update(x, y: any[]) {
+  private update(x, y: any[]) {
     const data = [{
       x: x,
       y: y,

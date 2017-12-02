@@ -1,0 +1,12 @@
+<div class="row chart-settings-entry">
+  <span class="col">Column:</span>
+  <div class="col dropdown">
+    <button id="column-selector-dropdown" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+      {{selectedColumn.name}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="column-selector-dropdown">
+      <a *ngFor="let column of columns" (click)="onSelectColumn(column)" class="dropdown-item clickable">{{column.name}}</a>
+    </div>
+  </div>
+</div>

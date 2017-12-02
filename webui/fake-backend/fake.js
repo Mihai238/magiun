@@ -74,12 +74,12 @@ const dataset1 = {
         type: "double"
       },
       {
-        index: 6,
+        index: 5,
         name: "weight",
         type: "double"
       },
       {
-        index: 7,
+        index: 6,
         name: "sport level",
         type: "string"
       }

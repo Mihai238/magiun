@@ -1,5 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ChartData} from '../../../../model/chart-data';
+import {DataService} from '../../../../services/data.service';
+import {DataSet} from '../../../../model/data-set';
 
 @Component({
   selector: 'chart-pie-settings',
@@ -7,7 +9,11 @@ import {ChartData} from '../../../../model/chart-data';
 })
 export class PieSettingsComponent implements OnInit {
 
+  @Input() dataSet: DataSet;
   @Output() settingsUpdated = new EventEmitter();
+
+  constructor(private dataService: DataService) {
+  }
 
   ngOnInit(): void {
     const data = [{

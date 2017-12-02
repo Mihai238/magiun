@@ -1,10 +1,12 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HistogramSettingsComponent } from './histogram-settings.component';
+import {HistogramSettingsComponent} from './histogram-settings.component';
 import {FormsModule} from '@angular/forms';
 import {DataService} from '../../../../services/data.service';
 import {HttpClientModule} from '@angular/common/http';
 import {logging} from '../../../../app.logging';
+import {Component, Input} from '@angular/core';
+import {Column} from '../../../../model/data-set';
 
 describe('HistogramSettingsComponent', () => {
   let component: HistogramSettingsComponent;
@@ -13,7 +15,10 @@ describe('HistogramSettingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HistogramSettingsComponent ],
+      declarations: [
+        HistogramSettingsComponent,
+        StubColumnSelectorComponent
+      ],
       imports: [
         FormsModule,
         HttpClientModule,
@@ -30,7 +35,6 @@ describe('HistogramSettingsComponent', () => {
     fixture = TestBed.createComponent(HistogramSettingsComponent);
     component = fixture.componentInstance;
 
-
     dataService = fixture.debugElement.injector.get(DataService);
   });
 
@@ -38,3 +42,11 @@ describe('HistogramSettingsComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'chart-column-selector',
+  template: ''
+})
+class StubColumnSelectorComponent {
+  @Input() columns: Column[];
+}

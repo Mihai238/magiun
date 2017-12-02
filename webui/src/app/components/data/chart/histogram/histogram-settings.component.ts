@@ -23,14 +23,11 @@ export class HistogramSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedColumn = this.dataSet.schema.columns[0];
     this.selectedHistNorm = HistNorm.default;
     this.isCumulativeEnabled = false;
-
-    this.getDataAndUpdate();
   }
 
-  onSelectColumn(column: Column) {
+  onUpdateColumn(column: Column) {
     this.selectedColumn = column;
     this.getDataAndUpdate();
   }

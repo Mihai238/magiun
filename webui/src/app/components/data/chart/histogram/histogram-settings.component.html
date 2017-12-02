@@ -1,17 +1,7 @@
 <div>
 
-  <div class="row chart-settings-entry">
-    <span class="col">Column:</span>
-    <div class="col dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownColumnButton" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-        {{selectedColumn.name}}
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownColumnButton">
-        <a *ngFor="let column of dataSet.schema.columns" (click)="onSelectColumn(column)" class="dropdown-item clickable">{{column.name}}</a>
-      </div>
-    </div>
-  </div>
+  <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateColumn($event)">
+  </chart-column-selector>
 
 
   <div class="row chart-settings-entry">
@@ -22,7 +12,8 @@
         {{selectedHistNorm}}
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownHistNormButton">
-        <a *ngFor="let histNorm of HistNorm.values()" (click)="onSelectHistNorm(histNorm)" class="dropdown-item clickable">{{histNorm}}</a>
+        <a *ngFor="let histNorm of HistNorm.values()" (click)="onSelectHistNorm(histNorm)"
+           class="dropdown-item clickable">{{histNorm}}</a>
       </div>
     </div>
   </div>

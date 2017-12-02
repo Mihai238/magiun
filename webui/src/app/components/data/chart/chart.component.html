@@ -21,7 +21,7 @@
 
 
         <chart-histogram-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.histogram"></chart-histogram-settings>
-        <chart-pie-settings (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.pie"></chart-pie-settings>
+        <chart-pie-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.pie"></chart-pie-settings>
         <chart-scatter-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.scatter"></chart-scatter-settings>
 
       </div>

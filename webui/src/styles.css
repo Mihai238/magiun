@@ -4,12 +4,13 @@ html, body {
   height: 100vh;
   margin:0;
   padding:0;
-  overflow: auto;
+  overflow: hidden;
 }
 
 app-root {
   display: block;
   height: 100%;
+  overflow: hidden;
 }
 
 a, i, span {

@@ -16,6 +16,11 @@
 
 ## Tips
 
+#### Changes are not detected automatically
+
+Run `echo 65536 | sudo tee -a /proc/sys/fs/inotify/max_user_watches`
+so that the system has enough watchers to handle changes on all files
+
 #### Running fake backend
 * install json-server `sudo npm install -g json-server`
 * `cd fake-backend`

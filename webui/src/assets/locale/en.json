@@ -13,6 +13,13 @@
     "MESSAGE2": "Despite sleeping on the couch most of the day, our junior web developer still finds time to do some coding…"
   },
   "DATA": {
-    "NO_DATA_SET": "No data set selected"
+    "NO_DATA_SET": "No data set selected",
+    "FEATURE": "Feature",
+    "NORMALIZATION": "Normalization",
+    "CUMULATIVE": "Cumulative",
+    "HISTOGRAM": "Histogram",
+    "CHART_SETTINGS": "Chart settings:",
+    "CHART_TYPE": "Chart type:",
+    "WARN_TOO_MANY_LABELS": "Chart was not updated since there are more than {{max_labels}} labels on this feature."
   }
 }

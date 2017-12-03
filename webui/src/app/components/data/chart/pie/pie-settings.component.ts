@@ -36,7 +36,7 @@ export class PieSettingsComponent implements OnInit {
         const keys: any[] = dataRows.map(row => row.values[this.selectedColumn.index]);
 
         const keyWithOccurrences = Utils.countOccurrences(keys);
-        if (this.checks(keyWithOccurrences)) {
+        if (this.check(keyWithOccurrences)) {
           this.update(keyWithOccurrences);
           this.tooManyLabels = false;
         } else {
@@ -45,7 +45,7 @@ export class PieSettingsComponent implements OnInit {
       });
   }
 
-  private checks(keyWithOccurrences: Map<any, number>): boolean {
+  private check(keyWithOccurrences: Map<any, number>): boolean {
     return keyWithOccurrences.size <= this.MAX_LABELS;
   }
 

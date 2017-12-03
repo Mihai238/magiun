@@ -6,6 +6,7 @@ import {DataService} from '../../../../services/data.service';
 import {HttpClientModule} from '@angular/common/http';
 import {logging} from '../../../../app.logging';
 import {StubColumnSelectorComponent} from '../../../../../testing/stub-column-selector.component';
+import {translate} from '../../../../app.translate';
 
 describe('HistogramSettingsComponent', () => {
   let component: HistogramSettingsComponent;
@@ -21,7 +22,8 @@ describe('HistogramSettingsComponent', () => {
       imports: [
         FormsModule,
         HttpClientModule,
-        logging
+        logging,
+        translate
       ],
       providers: [
         DataService

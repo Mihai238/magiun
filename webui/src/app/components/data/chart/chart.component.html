@@ -4,24 +4,29 @@
       <div #chart class="col-8"></div>
 
       <div id="chart-settings" class="col">
-        <h5>Chart settings</h5>
+        <h5>{{'DATA.CHART_SETTINGS' | translate}}</h5>
 
         <div class="row chart-settings-entry">
-          <span class="col">Chart type:</span>
+          <span class="col">{{'DATA.CHART_TYPE' | translate}}</span>
           <div class="col dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
               {{selectedChartType}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a *ngFor="let chartType of chartTypes()" (click)="onSelectChart(chartType)" class="dropdown-item clickable">{{chartType}}</a>
+              <a *ngFor="let chartType of chartTypes()" (click)="onSelectChart(chartType)"
+                 class="dropdown-item clickable">{{chartType}}</a>
             </div>
           </div>
         </div>
 
-        <chart-histogram-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.histogram"></chart-histogram-settings>
-        <chart-pie-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.pie"></chart-pie-settings>
-        <chart-scatter-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)" *ngIf="selectedChartType === ChartType.scatter"></chart-scatter-settings>
+        <chart-histogram-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)"
+                                  *ngIf="selectedChartType === ChartType.histogram"></chart-histogram-settings>
+        <chart-pie-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)"
+                            *ngIf="selectedChartType === ChartType.pie"></chart-pie-settings>
+        <chart-scatter-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)"
+                                *ngIf="selectedChartType === ChartType.scatter"></chart-scatter-settings>
 
       </div>
     </div>

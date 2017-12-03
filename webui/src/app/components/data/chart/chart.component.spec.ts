@@ -4,6 +4,7 @@ import {ChartComponent} from './chart.component';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {DataSet} from '../../../model/data-set';
 import {logging} from '../../../app.logging';
+import {translate} from '../../../app.translate';
 
 describe('ChartComponent', () => {
   let component: ChartComponent;
@@ -18,7 +19,8 @@ describe('ChartComponent', () => {
         StubScatterSettingsComponent
       ],
       imports: [
-        logging
+        logging,
+        translate
       ]
     })
       .compileComponents();

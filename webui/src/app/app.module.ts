@@ -22,6 +22,8 @@ import {HistogramSettingsComponent} from './components/data/chart/histogram/hist
 import { ScatterSettingsComponent } from './components/data/chart/scatter/scatter-settings.component';
 import { ColumnSelectorComponent } from './components/data/chart/shared/column-selector/column-selector.component';
 import {DragDropDirectiveModule} from 'angular4-drag-drop';
+import {LinearRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/linear-regression-block.component';
+import {PoissonRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/poisson-regression-block.component';
 
 
 @NgModule({
@@ -38,7 +40,9 @@ import {DragDropDirectiveModule} from 'angular4-drag-drop';
     HistogramSettingsComponent,
     PieSettingsComponent,
     ScatterSettingsComponent,
-    ColumnSelectorComponent
+    ColumnSelectorComponent,
+    LinearRegressionBlockComponent,
+    PoissonRegressionBlockComponent
   ],
   imports: [
     BrowserModule,

@@ -21,5 +21,8 @@
     "CHART_SETTINGS": "Chart settings:",
     "CHART_TYPE": "Chart type:",
     "WARN_TOO_MANY_LABELS": "Chart was not updated since there are more than {{max_labels}} labels on this feature."
+  },
+  "WORKFLOWS": {
+    "PLACE_HOLDER": "To create your workflow, drag and drop datasets and modules here!"
   }
 }

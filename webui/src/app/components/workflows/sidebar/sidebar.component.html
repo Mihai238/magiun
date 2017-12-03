@@ -1,4 +1,5 @@
 <nav class="side-navbar">
+  <span class="heading"><i class="fa fa-table" aria-hidden="true"></i> Data</span>
   <ul class="list-unstyled">
     <li><a href="#import-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-upload" aria-hidden="true"></i>Import Data<i class="icon-interface-windows"></i></a>
       <ul id="import-variants" class="collapse list-unstyled">
@@ -12,6 +13,18 @@
     </li>
     <li><a href="#features-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-search" aria-hidden="true"></i>Feature Selection<i class="icon-interface-windows"></i></a>
       <ul id="features-variants" class="collapse list-unstyled">
+      </ul>
+    </li>
+  </ul>
+  <span class="heading"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Machine Learning</span>
+  <ul class="list-unstyled">
+    <li><a href="#mi-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-codepen" aria-hidden="true"></i>Model Initialization<i class="icon-interface-windows"></i></a>
+      <ul id="mi-variants" class="collapse list-unstyled">
+        <li><a href="#regression-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-line-chart" aria-hidden="true"></i>Regression<i class="icon-interface-windows"></i></a></li>
+        <ul id="regression-variants" class="collapse list-unstyled">
+          <li [dragDirective]='"linearRegression"' [dragHightlight]="'highlight'"><a>Linear Regression</a></li>
+          <li [dragDirective]='"poissonRegression"' [dragHightlight]="'highlight'"><a>Poisson Regression</a></li>
+        </ul>
       </ul>
     </li>
   </ul>

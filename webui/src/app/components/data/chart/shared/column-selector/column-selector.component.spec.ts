@@ -4,6 +4,8 @@ import {ColumnSelectorComponent} from './column-selector.component';
 import {Column, ColumnType} from '../../../../../model/data-set';
 import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
+import {translate} from '../../../../../app.translate';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('ColumnSelectorComponent', () => {
   let component: ColumnSelectorComponent;
@@ -26,7 +28,13 @@ describe('ColumnSelectorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ColumnSelectorComponent]
+      declarations: [
+        ColumnSelectorComponent
+      ],
+      imports: [
+        translate,
+        HttpClientModule
+      ]
     })
       .compileComponents();
   }));
@@ -65,6 +73,7 @@ describe('ColumnSelectorComponent', () => {
     component.onSelectColumn(columns[1]);
     fixture.detectChanges();
 
+    // noinspection JSUnusedAssignment
     expect(column.name).toBe('col2');
   });
 

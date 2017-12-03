@@ -2,7 +2,7 @@
   <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateFirstColumn($event)">
   </chart-column-selector>
 
-  <div *ngIf="tooManyLabels" class="alert alert-warning" role="alert">
-    Chart was not updated since there are more than {{MAX_LABELS}} labels on this feature.
+  <div [translate]="'DATA.WARN_TOO_MANY_LABELS'" [translateParams]="{max_labels: MAX_LABELS}" *ngIf="tooManyLabels"
+       class="alert alert-warning" role="alert">
   </div>
 </div>

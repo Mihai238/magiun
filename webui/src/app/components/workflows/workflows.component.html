@@ -1,14 +1,14 @@
 <div class="page-content d-flex align-items-stretch">
   <app-workflow-sidebar></app-workflow-sidebar>
-  <div class="content-inner">
+  <div class="page-content">
     <header class="page-header">
       <div class="container-fluid">
         <h2>My Pipeline</h2>
       </div>
     </header>
     <section class="no-padding-bottom">
-      <div class="container droppingarea">
-        <div dropDirective>
+      <div dropDirective class="container droppingarea" (dropEvent)="addDropItem($event)">
+        <div *ngIf="showPlaceholder">
           sdassdadadasdasdasdasdasdasdasdasdasdasdasd asd sad asd asd as dsa dsa das dsad sa asd asd asd asd asd as asd as s
         </div>
       </div>

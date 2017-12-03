@@ -2,8 +2,8 @@
   <ul class="list-unstyled">
     <li><a href="#import-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-upload" aria-hidden="true"></i>Import Data<i class="icon-interface-windows"></i></a>
       <ul id="import-variants" class="collapse list-unstyled">
-        <li><a><i class="fa fa-database" aria-hidden="true"></i>Database</a></li>
-        <li><a><i class="fa fa-file-excel-o" aria-hidden="true"></i>File</a></li>
+        <li [dragDirective]='"database"' [dragHightlight]="'highlight'"><a><i class="fa fa-database" aria-hidden="true"></i>Database</a></li>
+        <li [dragDirective]='"file"' [dragHightlight]="'highlight'"><a><i class="fa fa-file-excel-o" aria-hidden="true"></i>File</a></li>
       </ul>
     </li>
     <li><a href="#transformation-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-ambulance" aria-hidden="true"></i>Data Transformation<i class="icon-interface-windows"></i></a>

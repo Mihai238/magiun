@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorkflowsComponent implements OnInit {
 
+  private showPlaceholder = true;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  private addDropItem(event) {
+    if (this.showPlaceholder) {
+      this.showPlaceholder = false;
+    }
+    console.log(event)
   }
 
 }

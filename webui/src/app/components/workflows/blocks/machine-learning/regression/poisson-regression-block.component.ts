@@ -6,16 +6,14 @@ import {BlockComponent} from '../../block.component';
   templateUrl: './regression-block.component.html',
   styleUrls: ['./regression-block.component.css']
 })
-export class PoissonRegressionBlockComponent implements OnInit, BlockComponent {
+export class PoissonRegressionBlockComponent extends BlockComponent {
   name: string;
   id: string;
   code: string;
 
   constructor() {
+    super();
     this.name = 'Poisson Regression';
     this.code = 'poissonRegression';
-  }
-
-  ngOnInit() {
   }
 }

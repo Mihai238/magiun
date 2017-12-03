@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkflowsComponent } from './workflows.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import {DragDropDirectiveModule} from 'angular4-drag-drop';
 
 describe('WorkflowsComponent', () => {
   let component: WorkflowsComponent;
@@ -9,7 +10,8 @@ describe('WorkflowsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WorkflowsComponent , SidebarComponent]
+      declarations: [ WorkflowsComponent , SidebarComponent],
+      imports: [DragDropDirectiveModule]
     })
     .compileComponents();
   }));

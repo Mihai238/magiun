@@ -22,3 +22,12 @@ header {
   width: 100%;
   background: #EEF5F9;
 }
+
+input {
+  outline: none;
+  border: none;
+  width: auto;
+  min-width: 450px;
+  max-width: 100%;
+  font-size: 19px;
+}

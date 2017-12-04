@@ -10,6 +10,8 @@ import {PoissonRegressionBlockComponent} from './blocks/machine-learning/regress
 })
 export class WorkflowsComponent implements OnInit {
 
+  private defaultWorkflowTitle = 'My workflow created on '.concat(new Date().toJSON().slice(0, 10).replace(/-/g, '/'));
+  private title = this.defaultWorkflowTitle;
   private showPlaceholder = true;
   private blocksDropped: Array<BlockComponent> = [];
 
@@ -32,5 +34,11 @@ export class WorkflowsComponent implements OnInit {
       case 'poissonRegression': return new PoissonRegressionBlockComponent();
       default: return null;
     }
+  }
+
+  private updateTitle(event: any) {
+    this.title = event.target.value;
+
+    console.log(this.title)
   }
 }

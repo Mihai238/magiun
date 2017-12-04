@@ -3,7 +3,9 @@
   <div class="page-content">
     <header class="page-header">
       <div class="container-fluid">
-        <h3>My Pipeline</h3>
+        <label>
+          <input #title placeholder="{{defaultWorkflowTitle}}" (keyup)="updateTitle($event)">
+        </label>
       </div>
     </header>
     <section class="no-padding-bottom">

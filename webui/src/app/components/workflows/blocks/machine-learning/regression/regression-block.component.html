@@ -1,7 +1,7 @@
-<div class="block regression-block">
+<div class="block regression-block container">
   <div class="row">
     <div class="col">
-      <i class="fa fa-sliders float-right" aria-hidden="true"></i>
+      <i class="fa fa-sliders float-right" aria-hidden="true" (click)="showSettingsPopUp()"></i>
     </div>
   </div>
   <div class="row">
@@ -11,10 +11,10 @@
   </div>
   <div class="row">
     <div class="col">
-      <i *ngIf="!valid" class="fa fa-exclamation-circle float-right" aria-hidden="true" (mouseenter)="showPopUp()" (mouseleave) ="hidePopUp()"></i>
+      <i *ngIf="!valid" class="fa fa-exclamation-circle float-right" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.STEP_IS_NOT_COMPLETE' | translate }}"></i>
     </div>
   </div>
-</div>
-<div *ngIf="popUp" style="z-index: 10000; position: relative;">
-  The step is not complete!
+  <div *ngIf="popUp" class="overlay">
+    <div class="text">The step is not complete!</div>
+  </div>
 </div>

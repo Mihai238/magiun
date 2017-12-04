@@ -6,6 +6,8 @@
   box-sizing: border-box;
   text-align: center;
   margin: 10px;
+  position: relative;
+  border-radius: 25px;
 }
 
 i.fa {
@@ -15,3 +17,4 @@ i.fa {
 i.fa.fa-exclamation-circle {
   color: red;
 }
+

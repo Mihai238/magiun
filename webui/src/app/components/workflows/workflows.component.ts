@@ -13,7 +13,8 @@ export class WorkflowsComponent implements OnInit {
   private showPlaceholder = true;
   private blocksDropped: Array<BlockComponent> = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

@@ -30,4 +30,9 @@ input {
   min-width: 450px;
   max-width: 100%;
   font-size: 19px;
+  padding-left: 10px;
+}
+
+.col-md-1 {
+  text-align: center;
 }

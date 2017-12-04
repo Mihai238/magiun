@@ -2,10 +2,18 @@
   <app-workflow-sidebar></app-workflow-sidebar>
   <div class="page-content">
     <header class="page-header">
-      <div class="container-fluid">
-        <label>
-          <input #title placeholder="{{defaultWorkflowTitle}}" (keyup)="updateTitle($event)">
-        </label>
+      <div class="row">
+        <div class="col-md-10">
+          <label>
+            <input #title placeholder="{{defaultWorkflowTitle}}" (keyup)="updateTitle($event)">
+          </label>
+        </div>
+        <div class="col-sm-1 col-md-offset-*">
+          <i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i>
+        </div>
+        <div class="col-sm-1 col-md-offset-*">
+          <i class="fa fa-upload fa-lg" aria-hidden="true"></i>
+        </div>
       </div>
     </header>
     <section class="no-padding-bottom">

@@ -35,9 +35,6 @@ export class DataComponent implements OnInit {
     this.dataService.getDataSets()
       .subscribe(resp => {
         this.dataSets = resp;
-        if (!environment.production) {
-          this.selectedDataSet = this.dataSets[0];
-        }
       });
   }
 

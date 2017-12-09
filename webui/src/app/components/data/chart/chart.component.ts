@@ -20,11 +20,12 @@ export class ChartComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.selectedChartType = ChartType.histogram;
+    this.logger.debug('DataSet: ' +  this.dataSet);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.selectedChartType = ChartType.histogram;
-    this.logger.debug('DataSet: ' +  this.dataSet);
+    this.ngOnInit();
   }
 
   chartTypes(): Array<string> {

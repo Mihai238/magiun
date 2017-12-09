@@ -16,11 +16,12 @@ export class ColumnSelectorComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
     this.selectedColumn = this.columns[0];
     this.columnUpdated.emit(this.selectedColumn);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.ngOnInit()
   }
 
   onSelectColumn(column: Column) {

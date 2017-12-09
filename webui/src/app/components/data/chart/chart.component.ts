@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {ChartData} from '../../../model/chart-data';
 import {DataSet} from '../../../model/data-set';
 import {NGXLogger} from 'ngx-logger';
@@ -8,7 +8,7 @@ import {NGXLogger} from 'ngx-logger';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
 
   @Input() dataSet: DataSet;
   @ViewChild('chart') chartEl: ElementRef;
@@ -20,6 +20,9 @@ export class ChartComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.selectedChartType = ChartType.histogram;
     this.logger.debug('DataSet: ' +  this.dataSet);
   }

@@ -23,13 +23,17 @@
     <table class="table table-striped">
       <thead>
       <tr>
-        <th *ngFor="let column of selectedDataSet.schema.columns">{{column.name}} ({{column.type}})</th>
+        <th *ngFor="let column of selectedDataSet.schema.columns">
+          {{column.name}} ({{column.type}})
+        </th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let row of rows">
         <td *ngFor="let value of row.values; index as i">
-          <span *ngIf="selectedDataSet.schema.columns[i].type == ColumnType.double; else notDouble">{{value | number : '1.2-2'}}</span>
+          <span *ngIf="selectedDataSet.schema.columns[i].type == ColumnType.double; else notDouble">
+            {{value | number : '1.2-2'}}
+          </span>
           <ng-template #notDouble>{{value}}</ng-template>
         </td>
       </tr>

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ChartData} from '../../../../model/chart-data';
 import {Column, DataSet} from '../../../../model/data-set';
 import {DataService} from '../../../../services/data.service';
@@ -8,7 +8,7 @@ import {DataService} from '../../../../services/data.service';
   templateUrl: './histogram-settings.component.html',
   styleUrls: ['./histogram-settings.component.css']
 })
-export class HistogramSettingsComponent implements OnInit {
+export class HistogramSettingsComponent implements OnInit, OnChanges {
 
   @Input() dataSet: DataSet;
   @Output() settingsUpdated = new EventEmitter();
@@ -23,6 +23,9 @@ export class HistogramSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.selectedHistNorm = HistNorm.default;
     this.isCumulativeEnabled = false;
   }

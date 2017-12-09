@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Column} from '../../../../../model/data-set';
 
 @Component({
@@ -6,7 +6,7 @@ import {Column} from '../../../../../model/data-set';
   templateUrl: './column-selector.component.html',
   styleUrls: ['./column-selector.component.css']
 })
-export class ColumnSelectorComponent implements OnInit {
+export class ColumnSelectorComponent implements OnInit, OnChanges {
 
   @Input() columns: Column[];
   @Output() columnUpdated = new EventEmitter();
@@ -16,6 +16,9 @@ export class ColumnSelectorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.selectedColumn = this.columns[0];
     this.columnUpdated.emit(this.selectedColumn);
   }

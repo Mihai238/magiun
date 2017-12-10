@@ -25,6 +25,8 @@ import {DragDropDirectiveModule} from 'angular4-drag-drop';
 import {LinearRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/linear-regression-block.component';
 // noinspection TsLint
 import {PoissonRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/poisson-regression-block.component';
+import {ClickOutsideModule} from 'ng-click-outside';
+import { NewColumnSettingsComponent } from './components/data/new-column-settings/new-column-settings.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import {PoissonRegressionBlockComponent} from './components/workflows/blocks/mac
     ScatterSettingsComponent,
     ColumnSelectorComponent,
     LinearRegressionBlockComponent,
-    PoissonRegressionBlockComponent
+    PoissonRegressionBlockComponent,
+    NewColumnSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import {PoissonRegressionBlockComponent} from './components/workflows/blocks/mac
     HttpClientModule,
     InfiniteScrollModule,
     DragDropDirectiveModule,
+    ClickOutsideModule,
     translate,
     logging,
     routing

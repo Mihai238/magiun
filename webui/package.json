@@ -26,6 +26,7 @@
     "core-js": "^2.5.1",
     "faker": "^4.1.0",
     "font-awesome": "^4.7.0",
+    "ng-click-outside": "^3.1.1",
     "ngx-infinite-scroll": "^0.6.1",
     "ngx-logger": "^0.2.9",
     "plotly.js": "^1.31.2",

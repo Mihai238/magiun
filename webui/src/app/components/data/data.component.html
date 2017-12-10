@@ -25,8 +25,17 @@
           {{column.name}}
           <br>
           ({{column.type}})
-          <i class="fa fa-wrench" aria-hidden="true" (click)="onClickColumnSettings(column)"></i>
-          <i class="fa fa-times" aria-hidden="true" (click)="onSelectColumn(column)"
+
+          <div class="dropdown" (clickOutside)="onClickedOutside(column)">
+            <span (click)="onClickedColumnSettings(column)" class="columnSettingsIcon fa fa-wrench clickable"></span>
+            <div id="myDropdown" class="dropdown-content" [ngClass]="{'show': showColumnSettings[column.index]}">
+              <a class="clickable" (click)="onClickedProcessFeature(column)">Process feature</a>
+              <a class="clickable" (click)="onClickAddColumn(column, 0)">Add column the the left</a>
+              <a class="clickable" (click)="onClickAddColumn(column, 1)">Add column the the right</a>
+            </div>
+          </div>
+
+          <i class="fa fa-times clickable" aria-hidden="true" (click)="onSelectColumn(column)"
              data-toggle="modal" data-target="#removeColumnModal"></i>
         </th>
       </tr>
@@ -43,6 +52,8 @@
       </tbody>
     </table>
   </div>
+
+  <data-new-column-settings [visible]="showNewColumnSettings" [index]="newColumnIndex"></data-new-column-settings>
 
   <!-- Modal -->
   <div class="modal fade" id="removeColumnModal" tabindex="-1" role="dialog" aria-labelledby="removeColumnModalLabel"

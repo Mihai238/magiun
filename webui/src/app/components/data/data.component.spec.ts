@@ -8,7 +8,7 @@ import {Observable} from 'rxjs/Observable';
 import {logging} from '../../app.logging';
 import 'rxjs/add/observable/of';
 import {TranslateModule} from '@ngx-translate/core';
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {DataSet} from '../../model/data-set';
 
 describe('DataComponent', () => {
@@ -18,7 +18,11 @@ describe('DataComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DataComponent, ChartStubComponent],
+      declarations: [
+        DataComponent,
+        ChartStubComponent,
+        NewColumnSettingsStubComponent
+      ],
       imports: [
         InfiniteScrollModule,
         HttpClientModule,
@@ -69,5 +73,13 @@ describe('DataComponent', () => {
 })
 class ChartStubComponent {
   @Input() dataSet: DataSet;
-  @ViewChild('chart') chartEl: ElementRef;
+}
+
+@Component({
+  selector: 'data-new-column-settings',
+  template: ''
+})
+class NewColumnSettingsStubComponent {
+  @Input() visible: boolean;
+  @Input() index: number;
 }

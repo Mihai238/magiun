@@ -22,12 +22,17 @@ export class DataComponent implements OnInit {
   loadedPages = 0;
   selectedColumn: Column;
 
+  showColumnSettings: boolean[];
+  showNewColumnSettings: boolean;
+  newColumnIndex: number;
+
   constructor(private logger: NGXLogger,
               private dataService: DataService) {
   }
 
   ngOnInit() {
     this.getDataSets();
+    this.showNewColumnSettings = false;
   }
 
   getDataSets() {
@@ -44,6 +49,11 @@ export class DataComponent implements OnInit {
 
   onSelectDataSet(dataSet: DataSet) {
     this.logger.info('Data Set selected: ' + dataSet.name);
+
+    this.showColumnSettings = Array(dataSet.schema.columns.length);
+    for (let i = 0; i < this.showColumnSettings.length; i++) {
+      this.showColumnSettings[i] = false;
+    }
 
     this.selectedDataSet = dataSet;
 
@@ -73,10 +83,6 @@ export class DataComponent implements OnInit {
       );
   }
 
-  onClickColumnSettings(column: Column) {
-    this.logger.info('Setting column: ' + column.name);
-  }
-
   onSelectColumn(column: Column) {
     this.selectedColumn = column;
   }
@@ -89,5 +95,31 @@ export class DataComponent implements OnInit {
     columns.splice(index, 1);
 
     this.rows.forEach(row => row.values.splice(index, 1));
+  }
+
+  onClickedColumnSettings(column: Column) {
+    this.logger.info('onClickedColumnSettings: ' + column.name);
+    this.showColumnSettings[column.index] = true;
+  }
+
+  onClickedOutside(column: Column) {
+    this.closeDropdownSettings(column);
+  }
+
+  onClickedProcessFeature(column: Column) {
+    this.logger.info('onClickedProcessFeature: ' + column.name);
+    this.closeDropdownSettings(column);
+  }
+
+  onClickAddColumn(column: Column, offset: number) {
+    this.logger.info('onClickAddColumn ' + column.name + ' ,offset ' + offset);
+    this.closeDropdownSettings(column);
+
+    this.showNewColumnSettings = true;
+    this.newColumnIndex = column.index + offset;
+  }
+
+  private closeDropdownSettings(column: Column) {
+    this.showColumnSettings[column.index] = false;
   }
 }

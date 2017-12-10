@@ -1,4 +1,6 @@
 {
+  "YES": "Yes",
+  "NO": "No",
   "NAVBAR": {
     "DATA": "Data Exploration",
     "WORKFLOWS": "Workflows"
@@ -20,7 +22,8 @@
     "HISTOGRAM": "Histogram",
     "CHART_SETTINGS": "Chart settings:",
     "CHART_TYPE": "Chart type:",
-    "WARN_TOO_MANY_LABELS": "Chart was not updated since there are more than {{max_labels}} labels on this feature."
+    "WARN_TOO_MANY_LABELS": "Chart was not updated since there are more than {{max_labels}} labels on this feature.",
+    "REMOVE_COLUMN_QUESTION": "Are you sure you want to delete the column \"{{column_name}}\"?"
   },
   "WORKFLOWS": {
     "PLACE_HOLDER": "To create your workflow, drag and drop datasets and modules here!",

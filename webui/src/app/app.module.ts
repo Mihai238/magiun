@@ -19,12 +19,12 @@ import {SidebarComponent} from './components/workflows/sidebar/sidebar.component
 import {ChartComponent} from './components/data/chart/chart.component';
 import {PieSettingsComponent} from './components/data/chart/pie/pie-settings.component';
 import {HistogramSettingsComponent} from './components/data/chart/histogram/histogram-settings.component';
-import { ScatterSettingsComponent } from './components/data/chart/scatter/scatter-settings.component';
-import { ColumnSelectorComponent } from './components/data/chart/shared/column-selector/column-selector.component';
+import {ScatterSettingsComponent} from './components/data/chart/scatter/scatter-settings.component';
+import {ColumnSelectorComponent} from './components/data/chart/shared/column-selector/column-selector.component';
 import {DragDropDirectiveModule} from 'angular4-drag-drop';
 import {LinearRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/linear-regression-block.component';
+// noinspection TsLint
 import {PoissonRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/poisson-regression-block.component';
-
 
 @NgModule({
   declarations: [

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {DataService} from '../../services/data.service';
 import {DataRow} from '../../model/data-row';
-import {ColumnType, DataSet} from '../../model/data-set';
+import {Column, ColumnType, DataSet} from '../../model/data-set';
 import {environment} from '../../../environments/environment';
 
 @Component({
@@ -20,6 +20,7 @@ export class DataComponent implements OnInit {
 
   selectedDataSet: DataSet;
   loadedPages = 0;
+  selectedColumn: Column;
 
   constructor(private logger: NGXLogger,
               private dataService: DataService) {
@@ -35,6 +36,9 @@ export class DataComponent implements OnInit {
     this.dataService.getDataSets()
       .subscribe(resp => {
         this.dataSets = resp;
+        if (!environment.production) {
+          this.onSelectDataSet(this.dataSets[0]);
+        }
       });
   }
 
@@ -67,6 +71,23 @@ export class DataComponent implements OnInit {
         () => {
         }
       );
+  }
 
+  onClickColumnSettings(column: Column) {
+    this.logger.info('Setting column: ' + column.name);
+  }
+
+  onSelectColumn(column: Column) {
+    this.selectedColumn = column;
+  }
+
+  onClickRemoveColumn() {
+    this.logger.info('Removing column: ' + this.selectedColumn.name);
+
+    const columns: Column[] = this.selectedDataSet.schema.columns;
+    const index = columns.indexOf(this.selectedColumn, 0);
+    columns.splice(index, 1);
+
+    this.rows.forEach(row => row.values.splice(index, 1));
   }
 }

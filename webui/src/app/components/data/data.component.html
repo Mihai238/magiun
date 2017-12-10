@@ -16,15 +16,18 @@
   <app-chart *ngIf="selectedDataSet" [dataSet]="selectedDataSet"></app-chart>
 
   <div infinite-scroll [infiniteScrollDistance]="2"
-       [infiniteScrollUpDistance]="1.5"
-       [infiniteScrollThrottle]="50"
-       (scrolled)="onScrollDown()"
+       [infiniteScrollUpDistance]="1.5" [infiniteScrollThrottle]="50" (scrolled)="onScrollDown()"
        id="data-table" *ngIf="selectedDataSet" class="panel panel-default">
     <table class="table table-striped">
       <thead>
       <tr>
         <th *ngFor="let column of selectedDataSet.schema.columns">
-          {{column.name}} ({{column.type}})
+          {{column.name}}
+          <br>
+          ({{column.type}})
+          <i class="fa fa-wrench" aria-hidden="true" (click)="onClickColumnSettings(column)"></i>
+          <i class="fa fa-times" aria-hidden="true" (click)="onSelectColumn(column)"
+             data-toggle="modal" data-target="#removeColumnModal"></i>
         </th>
       </tr>
       </thead>
@@ -39,6 +42,26 @@
       </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="removeColumnModal" tabindex="-1" role="dialog" aria-labelledby="removeColumnModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body" *ngIf="selectedColumn">
+          {{'DATA.REMOVE_COLUMN_QUESTION' | translate:{column_name: selectedColumn.name} }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            {{'NO' | translate}}
+          </button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onClickRemoveColumn()">
+            {{'YES' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

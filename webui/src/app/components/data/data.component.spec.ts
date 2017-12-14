@@ -9,7 +9,7 @@ import {logging} from '../../app.logging';
 import 'rxjs/add/observable/of';
 import {TranslateModule} from '@ngx-translate/core';
 import {Component, Input} from '@angular/core';
-import {DataSet} from '../../model/data-set';
+import {Column, DataSet} from '../../model/data-set';
 
 describe('DataComponent', () => {
   let component: DataComponent;
@@ -21,7 +21,8 @@ describe('DataComponent', () => {
       declarations: [
         DataComponent,
         ChartStubComponent,
-        NewColumnSettingsStubComponent
+        NewColumnSettingsStubComponent,
+        ProcessFeatureStubComponent
       ],
       imports: [
         InfiniteScrollModule,
@@ -82,4 +83,13 @@ class ChartStubComponent {
 class NewColumnSettingsStubComponent {
   @Input() visible: boolean;
   @Input() index: number;
+}
+
+@Component({
+  selector: 'data-process-feature',
+  template: ''
+})
+class ProcessFeatureStubComponent {
+  @Input() visible: boolean;
+  @Input() column: Column;
 }

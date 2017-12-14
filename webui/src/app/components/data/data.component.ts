@@ -4,6 +4,8 @@ import {DataService} from '../../services/data.service';
 import {DataRow} from '../../model/data-row';
 import {Column, ColumnType, DataSet} from '../../model/data-set';
 import {environment} from '../../../environments/environment';
+import {FeatureProcessResult} from './process-feature/process-feature.component';
+import {NewColumnResult} from './new-column-settings/new-column-settings.component';
 
 @Component({
   selector: 'app-data',
@@ -23,8 +25,10 @@ export class DataComponent implements OnInit {
   selectedColumn: Column;
 
   showColumnSettings: boolean[];
-  showNewColumnSettings: boolean;
+  showNewColumnSettingsComponent: boolean;
   newColumnIndex: number;
+
+  showProcessFeatureComponent: boolean;
 
   constructor(private logger: NGXLogger,
               private dataService: DataService) {
@@ -32,7 +36,8 @@ export class DataComponent implements OnInit {
 
   ngOnInit() {
     this.getDataSets();
-    this.showNewColumnSettings = false;
+    this.showNewColumnSettingsComponent = false;
+    this.showProcessFeatureComponent = false;
   }
 
   getDataSets() {
@@ -109,17 +114,28 @@ export class DataComponent implements OnInit {
   onClickedProcessFeature(column: Column) {
     this.logger.info('onClickedProcessFeature: ' + column.name);
     this.closeDropdownSettings(column);
+
+    this.selectedColumn = column;
+    this.showProcessFeatureComponent = true;
   }
 
   onClickAddColumn(column: Column, offset: number) {
     this.logger.info('onClickAddColumn ' + column.name + ' ,offset ' + offset);
     this.closeDropdownSettings(column);
 
-    this.showNewColumnSettings = true;
+    this.showNewColumnSettingsComponent = true;
     this.newColumnIndex = column.index + offset;
   }
 
   private closeDropdownSettings(column: Column) {
     this.showColumnSettings[column.index] = false;
+  }
+
+  onFeatureProcessResult(featureProcessResult: FeatureProcessResult) {
+    this.showProcessFeatureComponent = false;
+  }
+
+  onNewColumnResult(newColumnResult: NewColumnResult) {
+    this.showNewColumnSettingsComponent = false;
   }
 }

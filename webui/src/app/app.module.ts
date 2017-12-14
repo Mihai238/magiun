@@ -27,6 +27,7 @@ import {LinearRegressionBlockComponent} from './components/workflows/blocks/mach
 import {PoissonRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/poisson-regression-block.component';
 import {ClickOutsideModule} from 'ng-click-outside';
 import { NewColumnSettingsComponent } from './components/data/new-column-settings/new-column-settings.component';
+import { ProcessFeatureComponent } from './components/data/process-feature/process-feature.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { NewColumnSettingsComponent } from './components/data/new-column-setting
     ColumnSelectorComponent,
     LinearRegressionBlockComponent,
     PoissonRegressionBlockComponent,
-    NewColumnSettingsComponent
+    NewColumnSettingsComponent,
+    ProcessFeatureComponent
   ],
   imports: [
     BrowserModule,

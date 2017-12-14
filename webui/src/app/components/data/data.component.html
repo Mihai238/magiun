@@ -15,6 +15,11 @@
 
   <app-chart *ngIf="selectedDataSet" [dataSet]="selectedDataSet"></app-chart>
 
+  <data-new-column-settings [visible]="showNewColumnSettingsComponent" [index]="newColumnIndex"
+                            (resultEmitter)="onNewColumnResult($event)"></data-new-column-settings>
+  <data-process-feature [visible]="showProcessFeatureComponent" [column]="selectedColumn"
+                        (resultEmitter)="onFeatureProcessResult($event)"></data-process-feature>
+
   <div infinite-scroll [infiniteScrollDistance]="2"
        [infiniteScrollUpDistance]="1.5" [infiniteScrollThrottle]="50" (scrolled)="onScrollDown()"
        id="data-table" *ngIf="selectedDataSet" class="panel panel-default">
@@ -52,8 +57,6 @@
       </tbody>
     </table>
   </div>
-
-  <data-new-column-settings [visible]="showNewColumnSettings" [index]="newColumnIndex"></data-new-column-settings>
 
   <!-- Modal -->
   <div class="modal fade" id="removeColumnModal" tabindex="-1" role="dialog" aria-labelledby="removeColumnModalLabel"

@@ -1,4 +1,7 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges,
+  ViewChild
+} from '@angular/core';
 
 @Component({
   selector: 'data-new-column-settings',
@@ -9,6 +12,8 @@ export class NewColumnSettingsComponent implements OnInit, OnChanges {
 
   @Input() visible: boolean;
   @Input() index: number;
+
+  @Output() resultEmitter = new EventEmitter();
 
   @ViewChild('modalActivator') modalActivatorEl: ElementRef;
 
@@ -23,4 +28,16 @@ export class NewColumnSettingsComponent implements OnInit, OnChanges {
     }
   }
 
+  onClickDone(): void {
+    this.resultEmitter.emit({executted: true});
+  }
+
+  onClickCancel(): void {
+    this.resultEmitter.emit({executted: false});
+  }
+
+}
+
+export interface NewColumnResult {
+  executed: boolean
 }

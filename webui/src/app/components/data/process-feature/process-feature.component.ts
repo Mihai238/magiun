@@ -25,7 +25,6 @@ export class ProcessFeatureComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('FUUUU ngOnChanges');
     if (this.visible) {
       this.modalActivatorEl.nativeElement.click();
     }

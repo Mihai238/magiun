@@ -1,8 +1,8 @@
 package at.magiun.core
 
 import at.magiun.core.config.{H2Config, SparkConfig}
-import at.magiun.core.repository.StageRepository
-import at.magiun.core.rest.{StageController, RestApi, UserController}
+import at.magiun.core.repository.{DataSetRepository, StageRepository}
+import at.magiun.core.rest.{RestApi, StageController, UserController}
 import at.magiun.core.service.{JobService, StageService}
 import com.softwaremill.macwire._
 import com.typesafe.config.ConfigFactory
@@ -24,6 +24,7 @@ trait MainModule {
 
   // Repositories
   lazy val stageRepository = wire[StageRepository]
+  lazy val dataSetRepository = wire[DataSetRepository]
 
   // Configs
   lazy val config = ConfigFactory.load()

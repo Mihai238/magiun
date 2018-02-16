@@ -7,7 +7,7 @@ import {Column} from '../../../model/data-set';
 @Component({
   selector: 'data-process-feature',
   templateUrl: './process-feature.component.html',
-  styleUrls: ['./process-feature.component.css']
+  styleUrls: ['./process-feature.component.scss']
 })
 export class ProcessFeatureComponent implements OnInit, OnChanges {
 

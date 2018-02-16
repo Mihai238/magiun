@@ -6,7 +6,7 @@ import {DataService} from '../../../../services/data.service';
 @Component({
   selector: 'chart-histogram-settings',
   templateUrl: './histogram-settings.component.html',
-  styleUrls: ['./histogram-settings.component.css']
+  styleUrls: ['./histogram-settings.component.scss']
 })
 export class HistogramSettingsComponent implements OnInit, OnChanges {
 

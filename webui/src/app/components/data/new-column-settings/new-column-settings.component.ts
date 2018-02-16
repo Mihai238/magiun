@@ -6,7 +6,7 @@ import {
 @Component({
   selector: 'data-new-column-settings',
   templateUrl: './new-column-settings.component.html',
-  styleUrls: ['./new-column-settings.component.css']
+  styleUrls: ['./new-column-settings.component.scss']
 })
 export class NewColumnSettingsComponent implements OnInit, OnChanges {
 

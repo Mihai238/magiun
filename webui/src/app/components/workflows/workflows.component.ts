@@ -6,7 +6,7 @@ import {PoissonRegressionBlockComponent} from './blocks/machine-learning/regress
 @Component({
   selector: 'app-workflows',
   templateUrl: './workflows.component.html',
-  styleUrls: ['./workflows.component.css']
+  styleUrls: ['./workflows.component.scss']
 })
 export class WorkflowsComponent implements OnInit {
 

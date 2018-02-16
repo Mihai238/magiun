@@ -4,7 +4,7 @@ import {Column} from '../../../../../model/data-set';
 @Component({
   selector: 'chart-column-selector',
   templateUrl: './column-selector.component.html',
-  styleUrls: ['./column-selector.component.css']
+  styleUrls: ['./column-selector.component.scss']
 })
 export class ColumnSelectorComponent implements OnInit, OnChanges {
 

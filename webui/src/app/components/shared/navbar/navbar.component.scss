@@ -1,308 +1,220 @@
-.img-responsive {
-  display: inline-flex;
-  max-height: 40px;
-  height: auto;
-  width: auto;
-}
+// ---------------------------------------------------------
+// @TOC
 
-li {
-  display:inline;
-  padding: 10px 40px;
-}
+// + @Topbar
+// + @Collapsed State
 
-nav.navbar {
-  background: #2f333e;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  color: #fff;
-  position: relative;
-  border-radius: 0;
-  -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  padding-left: 0;
-  padding-right: 0;
-}
+// ---------------------------------------------------------
+// @Topbar
+// ---------------------------------------------------------
 
-nav.navbar .badge {
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-  text-align: center;
+@import "../../../../styles";
+
+.header {
+  background-color: $default-white;
+  border-bottom: 1px solid $border-color;
+  display: block;
+  height: $header-height;
+  margin-bottom: 0;
   padding: 0;
-  border-radius: 50%;
-}
-
-nav.navbar .navbar-holder {
+  position: fixed;
+  transition: all 0.2s ease;
   width: 100%;
-}
+  z-index: 800;
 
-nav.navbar .navbar-brand .brand-small {
-  display: none;
-}
-
-nav.navbar .brand-big {
-  display: block;
-}
-
-nav.navbar .brand-small {
-  display: none;
-}
-
-nav.navbar a {
-  color: inherit;
-}
-
-nav.navbar .container-fluid {
-  width: 100%;
-}
-
-nav.navbar .menu-btn {
-  margin-right: 20px;
-  font-size: 1.2em;
-  -webkit-transition: all 0.7s;
-  transition: all 0.7s;
-}
-
-nav.navbar .menu-btn span {
-  width: 20px;
-  height: 2px;
-  background: #fff;
-  display: block;
-  margin: 4px auto 0;
-  -webkit-transition: all 0.3s cubic-bezier(0.81, -0.33, 0.345, 1.375);
-  transition: all 0.3s cubic-bezier(0.81, -0.33, 0.345, 1.375);
-}
-
-nav.navbar .menu-btn span:nth-of-type(2) {
-  position: relative;
-  width: 35px;
-  -webkit-transform: rotateY(180deg);
-  transform: rotateY(180deg);
-}
-
-nav.navbar .menu-btn span:nth-of-type(2)::before, nav.navbar .menu-btn span:nth-of-type(2)::after {
-  content: '';
-  width: 6px;
-  height: 2px;
-  display: block;
-  background: #fff;
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-  position: absolute;
-  top: 2px;
-  left: 0;
-  -webkit-transition: all 0.7s;
-  transition: all 0.7s;
-}
-
-nav.navbar .menu-btn span:nth-of-type(2)::after {
-  -webkit-transform: rotate(145deg);
-  transform: rotate(145deg);
-  position: absolute;
-  top: -2px;
-  left: 0;
-}
-
-nav.navbar .menu-btn.active span:first-of-type {
-  -webkit-transform: translateY(12px);
-  transform: translateY(12px);
-}
-
-nav.navbar .menu-btn.active span:nth-of-type(2) {
-  -webkit-transform: none;
-  transform: none;
-}
-
-nav.navbar .menu-btn.active span:last-of-type {
-  -webkit-transform: translateY(-12px);
-  transform: translateY(-12px);
-}
-
-nav.navbar .nav-item > a {
-  position: relative;
-}
-
-nav.navbar .nav-item > a span {
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-weight: 400;
-  font-size: 0.7em;
-}
-
-nav.navbar .nav-item > a.logout i {
-  margin-left: 10px;
-}
-
-nav.navbar .search-box {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0;
-  background: #fff;
-  z-index: 12;
-  border-radius: 0;
-  display: none;
-}
-
-nav.navbar .search-box .dismiss {
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5em;
-  color: #999;
-}
-
-nav.navbar .search-box form {
-  height: 100%;
-}
-
-nav.navbar .search-box form input {
-  height: 100%;
-  border: none;
-  padding: 20px;
-}
-
-nav.navbar .dropdown-menu {
-  right: 0;
-  min-width: 250px;
-  left: auto;
-  margin-top: 15px;
-  padding: 15px 0;
-  max-width: 400px;
-  border-radius: 0;
-  border: none;
-  -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -2px 0 2px rgba(0, 0, 0, 0.1);
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -2px 0 2px rgba(0, 0, 0, 0.1);
-}
-
-nav.navbar .dropdown-menu a {
-  background: #fff;
-  padding: 10px 20px;
-  font-size: 0.8em;
-  color: #777;
-  width: 100%;
-}
-
-nav.navbar .dropdown-menu a:hover {
-  background: #f5f5f5;
-}
-
-nav.navbar .dropdown-menu a i {
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  background: #796AEE;
-  text-align: center;
-  color: #fff;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-nav.navbar .dropdown-menu a small {
-  margin-left: 40px;
-}
-
-nav.navbar .dropdown-menu span {
-  position: static;
-  font-size: 0.9em;
-  color: #999;
-}
-
-nav.navbar .dropdown-menu strong {
-  font-weight: 700;
-}
-
-nav.navbar .dropdown-menu .msg-profile {
-  width: 45px;
-  height: 45px;
-  margin-right: 10px;
-}
-
-nav.navbar .dropdown-menu h3 {
-  font-weight: 500;
-}
-
-/* MAIN NAVBAR MEDIAQUERIES ----------------------------------- */
-@media (max-width: 1199px) {
-  nav.navbar {
-    /*==== Toggle Sidebar Btn ====*/
+  @include to($breakpoint-md) {
+    width: 100%;
   }
-  nav.navbar .navbar-brand .brand-small {
-    display: block !important;
+
+  @include between($breakpoint-md, $breakpoint-xl) {
+    width: calc(100% - #{$collapsed-size});
   }
-  nav.navbar .brand-big {
+
+  .header-container {
+    @include clearfix;
+
+    .nav-left,
+    .nav-right {
+      list-style: none;
+      margin-bottom: 0;
+      padding-left: 0;
+      position: relative;
+
+      > li {
+        float: left;
+
+        > a {
+          color: $default-text-color;
+          display: block;
+          line-height: $header-height;
+          min-height: $header-height;
+          padding: 0 15px;
+          transition: all 0.2s ease-in-out;
+
+          i {
+            font-size: 17px;
+          }
+
+          &:hover,
+          &:focus {
+            color: $default-dark;
+            text-decoration: none;
+          }
+
+          @include to($breakpoint-md) {
+            padding: 0 15px;
+          }
+        }
+      }
+
+      .notifications {
+        position: relative;
+
+        .counter {
+          background-color: $default-danger;
+          border-radius: 50px;
+          color: $default-white;
+          font-size: 10px;
+          line-height: 1;
+          padding: 3px 5.5px;
+          position: absolute;
+          right: 6px;
+          top: 12px;
+        }
+
+        .dropdown-menu {
+          min-width: 350px;
+          padding: 0;
+
+          @include to($breakpoint-sm) {
+            max-width: 300px;
+          }
+        }
+      }
+    }
+
+    .dropdown-menu {
+      display: block;
+      margin: 0;
+      transform-origin: top right;
+      transform: scale(0, 0);
+      transition: transform 0.15s ease-out;
+
+      .divider {
+        border-bottom: 1px solid $border-color;
+        height: 1px;
+        overflow: hidden;
+      }
+
+      > li {
+        > a {
+          transition: all 0.2s ease-out;
+        }
+      }
+    }
+
+    .show {
+      .dropdown-menu {
+        transform: scale(1, 1);
+      }
+    }
+
+    .nav-left {
+      float: left;
+      margin-left: 15px;
+    }
+
+    .nav-right {
+      float: right;
+
+      .dropdown-menu {
+        left: auto;
+        right: 0;
+
+        > li {
+          width: 100%;
+
+          > a {
+            line-height: 1.5;
+            min-height: auto;
+            padding: 10px 15px;
+          }
+        }
+      }
+    }
+  }
+
+  .search-box {
+    .search-icon-close {
+      display: none;
+    }
+
+    &.active {
+      .search-icon {
+        display: none;
+      }
+
+      .search-icon-close {
+        display: inline-block;
+      }
+    }
+  }
+
+  .search-input {
     display: none;
-  }
-  nav.navbar .brand-small {
-    display: block;
-  }
-  nav.navbar .menu-btn {
-    margin-right: 20px;
-    font-size: 1.2em;
-    -webkit-transition: all 0.7s;
-    transition: all 0.7s;
-  }
-  nav.navbar .menu-btn span:first-of-type {
-    -webkit-transform: translateY(12px);
-    transform: translateY(12px);
-  }
-  nav.navbar .menu-btn span:nth-of-type(2) {
-    -webkit-transform: none;
-    transform: none;
-  }
-  nav.navbar .menu-btn span:nth-of-type(2)::before, nav.navbar .menu-btn span:nth-of-type(2)::after {
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
-  nav.navbar .menu-btn span:nth-of-type(2)::after {
-    -webkit-transform: rotate(145deg);
-    transform: rotate(145deg);
-    position: absolute;
-    top: -2px;
-    left: 0;
-  }
-  nav.navbar .menu-btn span:last-of-type {
-    -webkit-transform: translateY(-12px);
-    transform: translateY(-12px);
-  }
-  nav.navbar .menu-btn.active span:first-of-type {
-    -webkit-transform: none;
-    transform: none;
-  }
-  nav.navbar .menu-btn.active span:nth-of-type(2) {
-    -webkit-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-  }
-  nav.navbar .menu-btn.active span:last-of-type {
-    -webkit-transform: none;
-    transform: none;
+
+    &.active {
+      display: inline-block;
+    }
+
+    input {
+      background-color: transparent;
+      border: 0;
+      box-shadow: none;
+      font-size: 18px;
+      height: 40px;
+      margin-top: 12px;
+      outline: none;
+      padding: 5px;
+
+      @include to($breakpoint-sm) {
+        width: 85px;
+      }
+
+      @include placeholder {
+        color: lighten($default-text-color, 20%);
+        font-style: italic;
+      }
+    }
   }
 }
 
-@media (max-width: 575px) {
-  nav.navbar {
-    font-size: 14px;
+.navbar-logo {
+  border-bottom: 1px solid transparent;
+  padding: 0;
+
+  a {
+    .logo {
+      background-position: center center;
+      width: 50px;
+    }
   }
-  nav.navbar .badge {
-    width: 19px;
-    height: 19px;
-  }
-  nav.navbar .nav-item > a {
-    font-size: 13px;
-  }
-  nav.navbar .dropdown-menu {
-    right: auto;
-    left: -50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+}
+
+// ---------------------------------------------------------
+// @Collapsed State
+// ---------------------------------------------------------
+
+.is-collapsed {
+  .header {
+    width: calc(100% - #{$collapsed-size});
+
+    @include to($breakpoint-md) {
+      width: 100%;
+    }
+
+    @include between($breakpoint-md, $breakpoint-xl) {
+      width: calc(100% - #{$offscreen-size});
+    }
   }
 }

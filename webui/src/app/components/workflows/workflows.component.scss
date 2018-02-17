@@ -1,38 +1,98 @@
-section {
-  height: 100%;
+// ---------------------------------------------------------
+// @TOC
+// ---------------------------------------------------------
+
+// + @Page Container
+// + @Main Content
+// + @Full Container
+// + @Collapsed State
+
+// ---------------------------------------------------------
+// @Page Container
+// ---------------------------------------------------------
+
+@import "../../../styles";
+
+.page-container {
+  min-height: 100vh;
+  padding-left: $offscreen-size;
+  transition: all 0.2s ease;
+
+  @include between($breakpoint-md, $breakpoint-xl) {
+    padding-left: $collapsed-size;
+  }
+
+  @include to($breakpoint-md) {
+    padding-left: 0;
+  }
 }
 
-header {
-  width: 100%;
-  background: #ffffff !important;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
+// ---------------------------------------------------------
+// @Main Content
+// ---------------------------------------------------------
+
+.main-content {
+  padding: 85px 20px 20px;
+  min-height: calc(100vh - 61px);
+
+  @include to($breakpoint-md) {
+    padding: 85px 5px 5px;
+  }
 }
 
-.container.droppingarea {
-  height: 90%;
-  box-sizing: border-box;
-  background: #ffffff !important;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+.remain-height {
+  height: calc(100vh - 126px);
 }
 
-.page-content {
-  margin: 0 auto;
-  height: 100%;
-  width: 100%;
-  background: #EEF5F9;
+// ---------------------------------------------------------
+// @Full Container
+// ---------------------------------------------------------
+
+.full-container {
+  left: $offscreen-size;
+  min-height: calc(100vh - #{$header-height});
+  position: absolute;
+  right: 0;
+  top: $header-height;
+  transition: all 0.2s ease;
+
+  @include between($breakpoint-md, $breakpoint-xl) {
+    left: 0;
+    padding-left: $collapsed-size;
+  }
+
+  @include to($breakpoint-md) {
+    left: 0;
+  }
 }
 
-input {
-  outline: none;
-  border: none;
-  width: auto;
-  min-width: 450px;
-  max-width: 100%;
-  font-size: 19px;
-  padding-left: 10px;
-}
+// ---------------------------------------------------------
+// @Collapsed State
+// ---------------------------------------------------------
 
-.col-md-1 {
-  text-align: center;
+.is-collapsed {
+  .page-container {
+    padding-left: $collapsed-size;
+
+    @include to($breakpoint-md) {
+      padding-left: 0;
+    }
+
+    @include between($breakpoint-md, $breakpoint-xl) {
+      padding-left: $offscreen-size;
+    }
+  }
+
+  .full-container {
+    left: $collapsed-size;
+
+    @include to($breakpoint-md) {
+      left: 0;
+    }
+
+    @include between($breakpoint-md, $breakpoint-xl) {
+      left: $offscreen-size;
+      padding-left: 0;
+    }
+  }
 }

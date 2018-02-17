@@ -22,7 +22,9 @@
         "styles.scss"
       ],
       "scripts": [
-        "../node_modules/plotly.js/dist/plotly.min.js"
+        "../node_modules/plotly.js/dist/plotly.min.js",
+        "../src/assets/scripts/scrollbar/index.js",
+        "../src/assets/scripts/sidebar/index.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

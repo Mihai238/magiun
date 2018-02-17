@@ -29,3 +29,5 @@ so that the system has enough watchers to handle changes on all files
 #### Create a component via angular cli
 
     ng g component components/<component-name>
+
+#### [Template] (https://github.com/puikinsh/Adminator-admin-dashboard)

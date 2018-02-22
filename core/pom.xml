@@ -24,6 +24,7 @@
         <typesafe.version>1.2.1</typesafe.version>
         <slick.version>3.2.1</slick.version>
         <h2.version>1.4.196</h2.version>
+        <circe.version>0.8.0</circe.version>
     </properties>
 
     <dependencies>
@@ -110,10 +111,21 @@
             <artifactId>finch-circe_${compiled.with.scala.version}</artifactId>
             <version>${finch.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.circe</groupId>
+            <artifactId>circe-core_${compiled.with.scala.version}</artifactId>
+            <version>${circe.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.circe</groupId>
             <artifactId>circe-generic_${compiled.with.scala.version}</artifactId>
-            <version>0.8.0</version>
+            <version>${circe.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.circe</groupId>
+            <artifactId>circe-parser_${compiled.with.scala.version}</artifactId>
+            <version>${circe.version}</version>
         </dependency>
 
         <!-- Testing -->

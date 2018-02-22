@@ -2,15 +2,11 @@ package at.magiun.core.model
 
 
 case class MagiunDataSet(
-                     id: Long,
-                     name: String,
-                     sourceType: SourceType.Value,
-                     url: String
-                   ) {
+                        id: Long,
+                        name: String,
+                        sourceType: SourceType.Value,
+                        url: String,
+                        schema: Schema
+                        ) {
 
-}
-
-object SourceType extends Enumeration {
-  val FileCsv: SourceType.Value = Value("FileCsv")
-  val Mongo: SourceType.Value = Value("Mongo")
 }

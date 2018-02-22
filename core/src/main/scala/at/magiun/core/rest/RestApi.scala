@@ -24,8 +24,8 @@ class RestApi(userController: UserController,
 
   // Encoders
 
-  implicit val sourceTypeEncoderEncoder: Encoder[SourceType.Value] = new Encoder[SourceType.Value] {
-    override def apply(sourceType: SourceType.Value): Json = {
+  implicit val sourceTypeEncoderEncoder: Encoder[SourceType] = new Encoder[SourceType] {
+    override def apply(sourceType: SourceType): Json = {
       Json.fromString(sourceType.toString)
     }
   }

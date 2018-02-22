@@ -99,6 +99,11 @@
             <artifactId>config</artifactId>
             <version>${typesafe.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.beachape</groupId>
+            <artifactId>enumeratum_${compiled.with.scala.version}</artifactId>
+            <version>1.5.12</version>
+        </dependency>
 
         <!-- REST -->
         <dependency>

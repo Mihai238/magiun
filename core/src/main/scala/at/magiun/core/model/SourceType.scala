@@ -1,6 +1,16 @@
 package at.magiun.core.model
 
-object SourceType extends Enumeration {
-  val FileCsv: SourceType.Value = Value("FileCsv")
-  val Mongo: SourceType.Value = Value("Mongo")
+import at.magiun.core.model
+import enumeratum._
+
+import scala.collection.immutable
+
+sealed abstract class SourceType(name: String) extends EnumEntry
+
+object SourceType extends Enum[SourceType] {
+
+  case object FileCsv extends SourceType("FileCsv")
+  case object Mongo extends SourceType("Mongo")
+
+  val values: immutable.IndexedSeq[model.SourceType] = findValues
 }

@@ -1,6 +1,6 @@
 package at.magiun.core.service
 
-import at.magiun.core.model.{MagiunDataSet, Schema}
+import at.magiun.core.model.{MagiunDataSet, Schema, SourceType}
 import at.magiun.core.repository.{DataSetRepository, MagiunDataSetEntity}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -18,7 +18,7 @@ class DataSetService(dataSetRepository: DataSetRepository) {
       .map(_.map(mapToModel))
   }
 
-  def mapToModel(entity: MagiunDataSetEntity): MagiunDataSet = {
+  private def mapToModel(entity: MagiunDataSetEntity): MagiunDataSet = {
     MagiunDataSet(
       entity.id,
       entity.name,
@@ -27,5 +27,9 @@ class DataSetService(dataSetRepository: DataSetRepository) {
       Schema(List())
     )
   }
+
+//  private def getConnector(sourceType: SourceType.Value) = {
+//  TODO
+//  }
 
 }

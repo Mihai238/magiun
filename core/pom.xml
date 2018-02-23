@@ -83,6 +83,13 @@
             </exclusions>
         </dependency>
 
+        <!-- Spark Connectors -->
+        <dependency>
+            <groupId>org.mongodb.spark</groupId>
+            <artifactId>mongo-spark-connector_${compiled.with.scala.version}</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+
         <!-- Database -->
         <dependency>
             <groupId>com.typesafe.slick</groupId>

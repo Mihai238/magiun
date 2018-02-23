@@ -27,6 +27,7 @@ object ColumnType extends Enum[ColumnType] with CirceEnum[ColumnType] {
   case object Date extends ColumnType
   case object Int extends ColumnType
   case object Double extends ColumnType
+  case object Unknown extends ColumnType
 
   val values: immutable.IndexedSeq[ColumnType] = findValues
 

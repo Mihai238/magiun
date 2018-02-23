@@ -12,5 +12,6 @@ object TestData {
 
   val testDs1 = MagiunDataSet(1, "gigi", DataSetSource(SourceType.Mongo, "url") , Schema(List.empty))
   val csvDataSetSource = DataSetSource(SourceType.FileCsv, sampleCsvUrl)
+  val mongoDataSource = DataSetSource(SourceType.Mongo, "mongodb://127.0.0.1/testDb/testCollection")
 
 }

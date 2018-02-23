@@ -11,12 +11,12 @@ class CsvConnector(spark: SparkSession) extends Connector {
       "header" -> "true"
     )
 
-    val frame = spark.read
+    val dataFrame = spark.read
       .options(options)
       .option("inferSchema", "true")
       .csv(source.url)
 
-    val cols = frame.schema.zipWithIndex.map { case (col, index) =>
+    val cols = dataFrame.schema.zipWithIndex.map { case (col, index) =>
         Column(index, col.name, mapToColumnType(col.dataType))
     }
 

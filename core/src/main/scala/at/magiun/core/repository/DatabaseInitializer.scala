@@ -7,9 +7,15 @@ import scala.concurrent.duration._
 
 class DatabaseInitializer(dataSetRepository: DataSetRepository) {
 
+  private val sampleCsvUrl = "file://" + getClass.getClassLoader.getResource("insurance_sample.csv").getFile
+
   def init(): Unit = {
-    Await.result(dataSetRepository.upsert(MagiunDataSetEntity(1, "people", SourceType.FileCsv, "/home/mihai/f.txt")), 5.seconds)
-    Await.result(dataSetRepository.upsert(MagiunDataSetEntity(2, "drinks", SourceType.Mongo, "mongodb://db1.example.net:27017")), 5.seconds)
+    insertDataSet(MagiunDataSetEntity(1, "people", SourceType.withName("FileCsv"), sampleCsvUrl))
+    insertDataSet(MagiunDataSetEntity(2, "drinks", SourceType.Mongo, "mongodb://db1.example.net:27017"))
+  }
+
+  private def insertDataSet(magiunDataSetEntity: MagiunDataSetEntity): Unit = {
+    Await.result(dataSetRepository.upsert(magiunDataSetEntity), 5.seconds)
   }
 
 

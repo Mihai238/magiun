@@ -7,7 +7,7 @@ import scala.collection.immutable
 
 sealed abstract class SourceType(name: String) extends EnumEntry
 
-object SourceType extends Enum[SourceType] {
+object SourceType extends Enum[SourceType] with CirceEnum[SourceType] {
 
   case object FileCsv extends SourceType("FileCsv")
   case object Mongo extends SourceType("Mongo")

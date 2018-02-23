@@ -1,10 +1,8 @@
 package at.magiun.core.rest
 
-import at.magiun.core.model.{MagiunDataSet, Schema, SourceType}
+import at.magiun.core.model.MagiunDataSet
 import at.magiun.core.service.DataSetService
 import com.twitter.util.{Return, Throw, Future => TFuture, Promise => TPromise}
-
-import scala.concurrent.{ExecutionContext, Future => SFuture, Promise => SPromise}
 import io.finch._
 
 import scala.concurrent.ExecutionContext.Implicits.global

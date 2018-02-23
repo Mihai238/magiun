@@ -31,15 +31,18 @@
 // ---------------------------------------------------------
 // @Main Content
 // ---------------------------------------------------------
-
 .main-content {
   padding: 85px 20px 20px;
   min-height: calc(100vh - 61px);
-  height: 80%;
 
   @include to($breakpoint-md) {
     padding: 85px 5px 5px;
   }
+}
+
+#mainContent {
+  height: 90vh;
+  overflow: scroll;
 }
 
 .remain-height {
@@ -96,5 +99,69 @@
       left: $offscreen-size;
       padding-left: 0;
     }
+  }
+}
+
+// ---------------------------------------------------------
+// Workflow Navbar
+// ---------------------------------------------------------
+.workflow-nav {
+  border-bottom: 1px solid $border-color;
+  display: block;
+  height: 71px;
+
+  @include clearfix;
+
+  .left,
+  .right {
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+    position: relative;
+
+    > li {
+      float: left;
+      margin: 3px;
+
+      > a {
+        color: $default-text-color;
+        display: block;
+        line-height: $header-height;
+        min-height: $header-height;
+        padding: 0 15px;
+        transition: all 0.2s ease-in-out;
+
+        i {
+          font-size: 19px;
+        }
+
+        &:hover,
+        &:focus {
+          color: $default-dark;
+          text-decoration: none;
+        }
+
+        @include to($breakpoint-md) {
+          padding: 0 15px;
+        }
+      }
+    }
+  }
+
+  .left {
+    float: left;
+    margin: auto 0;
+  }
+
+  .right {
+    float: right;
+  }
+
+  input {
+    width: 55vh;
+    outline: none;
+    border: none;
+    font-size: 19px;
+    min-height: $header-height;
   }
 }

@@ -3,6 +3,8 @@ import {ChartData} from '../../../model/chart-data';
 import {DataSet} from '../../../model/data-set';
 import {NGXLogger} from 'ngx-logger';
 
+declare var Plotly: any;
+
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',

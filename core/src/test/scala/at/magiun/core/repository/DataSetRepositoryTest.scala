@@ -2,11 +2,14 @@ package at.magiun.core.repository
 
 import at.magiun.core.MainModule
 import at.magiun.core.model.SourceType
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
+@RunWith(classOf[JUnitRunner])
 class DataSetRepositoryTest extends FlatSpec with Matchers {
 
   private val TIMEOUT = 1.second

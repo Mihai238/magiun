@@ -1,6 +1,6 @@
 package at.magiun.core.rest
 
-import at.magiun.core.model.{MagiunDataSet, Schema, SourceType}
+import at.magiun.core.TestUtils._
 import at.magiun.core.service.DataSetService
 import io.finch.Input
 import org.junit.runner.RunWith
@@ -13,13 +13,11 @@ import scala.concurrent.Future
 @RunWith(classOf[JUnitRunner])
 class DataSetControllerTest extends FlatSpec with Matchers with MockFactory {
 
-  val ds1 = MagiunDataSet(1, "gigi", SourceType.Mongo, "url", Schema(List.empty))
-
   it should "return a dataset" in {
     val input = Input.get("/datasets/1")
 
     val mockedService = stub[DataSetService]
-    mockedService.find _ when 1 returns Future.successful(Option(ds1))
+    mockedService.find _ when 1 returns Future.successful(Option(testDs1))
 
     val result = new DataSetController(mockedService).getDataSet(input)
 

@@ -1,12 +1,18 @@
 package at.magiun.core.service
 
+import at.magiun.core.connector.{CsvConnector, MongoDbConnector}
+import at.magiun.core.model.SourceType.{FileCsv, Mongo}
 import at.magiun.core.model.{MagiunDataSet, Schema, SourceType}
 import at.magiun.core.repository.{DataSetRepository, MagiunDataSetEntity}
+import org.apache.spark.sql.SparkSession
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class DataSetService(dataSetRepository: DataSetRepository) {
+class DataSetService(
+                      dataSetRepository: DataSetRepository,
+                      sparkSession: SparkSession
+                    ) {
 
   def find(id: Long): Future[Option[MagiunDataSet]] = {
     dataSetRepository.find(id)
@@ -28,8 +34,9 @@ class DataSetService(dataSetRepository: DataSetRepository) {
     )
   }
 
-//  private def getConnector(sourceType: SourceType.Value) = {
-//  TODO
-//  }
+  private def getConnector(sourceType: SourceType) = sourceType match {
+    case FileCsv => new CsvConnector(sparkSession)
+    case Mongo => new MongoDbConnector
+  }
 
 }

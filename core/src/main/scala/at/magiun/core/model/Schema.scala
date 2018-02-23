@@ -1,5 +1,9 @@
 package at.magiun.core.model
 
+import enumeratum._
+
+import scala.collection.immutable
+
 case class Schema(
                    columns: List[Column]
                  ) {
@@ -9,7 +13,21 @@ case class Schema(
 case class Column(
                    index: Int,
                    name: String,
-                   `type`: String
+                   `type`: ColumnType
                  ) {
+
+}
+
+sealed abstract class ColumnType extends EnumEntry
+
+object ColumnType extends Enum[ColumnType] {
+
+  case object String extends ColumnType
+  case object Boolean extends ColumnType
+  case object Date extends ColumnType
+  case object Int extends ColumnType
+  case object Double extends ColumnType
+
+  val values: immutable.IndexedSeq[ColumnType] = findValues
 
 }

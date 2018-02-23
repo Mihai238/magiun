@@ -1,14 +1,10 @@
 package at.magiun.core.connector
 
-import at.magiun.core.MainModule
 import at.magiun.core.TestUtils._
 import at.magiun.core.model.ColumnType
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.{FlatSpec, Matchers}
+import at.magiun.core.{MainModule, UnitTest}
 
-@RunWith(classOf[JUnitRunner])
-class CsvConnectorTest extends FlatSpec with Matchers {
+class CsvConnectorTest extends UnitTest {
 
   private val mainModule = new MainModule {}
   private val connector = new CsvConnector(mainModule.spark)

@@ -1,14 +1,9 @@
 package at.magiun.core.rest
 
-import at.magiun.core.MainModule
+import at.magiun.core.{MainModule, UnitTest}
 import io.finch.Input
-import org.junit.runner.RunWith
-import org.scalamock.scalatest.MockFactory
-import org.scalatest._
-import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
-class UserControllerTest extends FlatSpec with Matchers with MockFactory {
+class UserControllerTest extends UnitTest {
 
   private val mainModule = new MainModule {}
 

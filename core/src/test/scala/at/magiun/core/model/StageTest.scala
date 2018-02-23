@@ -1,12 +1,8 @@
 package at.magiun.core.model
 
-import at.magiun.core.MainModule
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.{FlatSpec, Matchers}
+import at.magiun.core.{MainModule, UnitTest}
 
-@RunWith(classOf[JUnitRunner])
-class StageTest extends FlatSpec with Matchers {
+class StageTest extends UnitTest {
 
   private val mainModule = new MainModule {}
   private val sampleCsvPath = getClass.getClassLoader.getResource("insurance_sample.csv").getFile

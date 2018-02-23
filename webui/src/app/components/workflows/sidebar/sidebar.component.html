@@ -1,36 +1,3 @@
-<!--
-<nav class="sidebar">
-  <span class="heading"><i class="fa fa-table" aria-hidden="true"></i> Data</span>
-  <ul class="list-unstyled">
-    <li><a href="#import-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-upload" aria-hidden="true"></i>Import Data<i class="icon-interface-windows"></i></a>
-      <ul id="import-variants" class="collapse list-unstyled">
-        <li [dragDirective]='"database"' [dragHightlight]="'highlight'"><a><i class="fa fa-database" aria-hidden="true"></i>Database</a></li>
-        <li [dragDirective]='"file"' [dragHightlight]="'highlight'"><a><i class="fa fa-file-excel-o" aria-hidden="true"></i>File</a></li>
-      </ul>
-    </li>
-    <li><a href="#transformation-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-ambulance" aria-hidden="true"></i>Data Transformation<i class="icon-interface-windows"></i></a>
-      <ul id="transformation-variants" class="collapse list-unstyled">
-      </ul>
-    </li>
-    <li><a href="#features-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-search" aria-hidden="true"></i>Feature Selection<i class="icon-interface-windows"></i></a>
-      <ul id="features-variants" class="collapse list-unstyled">
-      </ul>
-    </li>
-  </ul>
-  <span class="heading"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Machine Learning</span>
-  <ul class="list-unstyled">
-    <li><a href="#mi-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-codepen" aria-hidden="true"></i>Model Initialization<i class="icon-interface-windows"></i></a>
-      <ul id="mi-variants" class="collapse list-unstyled">
-        <li><a href="#regression-variants" aria-expanded="false" data-toggle="collapse"><i class="fa fa-line-chart" aria-hidden="true"></i>Regression<i class="icon-interface-windows"></i></a></li>
-        <ul id="regression-variants" class="collapse list-unstyled">
-          <li [dragDirective]='"linearRegression"' [dragHightlight]="'highlight'"><a>Linear Regression</a></li>
-          <li [dragDirective]='"poissonRegression"' [dragHightlight]="'highlight'"><a>Poisson Regression</a></li>
-        </ul>
-      </ul>
-    </li>
-  </ul>
-</nav> -->
-
 <div class="sidebar">
   <div class="sidebar-inner">
     <!-- ### $Sidebar Header ### -->
@@ -63,43 +30,58 @@
     <!-- ### $Sidebar Menu ### -->
     <ul class="sidebar-menu scrollable pos-r">
       <li class="nav-item dropdown">
-        <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                  <i class="c-orange-500 ti-layout-list-thumb"></i>
-                </span>
-          <span class="title">Data</span>
-          <span class="arrow">
-                  <i class="ti-angle-right"></i>
-                </span>
+        <a class="dropdown-toggle">
+          <span class="icon-holder"><i class="c-orange-500 ti-import"></i></span>
+          <span class="title">Import Data</span>
+          <span class="arrow"><i class="ti-angle-right"></i></span>
         </a>
         <ul class="dropdown-menu">
           <li>
-            <a class='sidebar-link' href="basic-table.html">Database</a>
+            <a>Database</a>
           </li>
           <li>
-            <a class='sidebar-link' href="datatable.html">File</a>
+            <a>File</a>
           </li>
         </ul>
       </li>
-    </ul>
 
-    <ul class="sidebar-menu scrollable pos-r">
       <li class="nav-item dropdown">
-        <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                  <i class="c-orange-500 ti-layout-list-thumb"></i>
-                </span>
+        <a class="dropdown-toggle">
+          <span class="icon-holder"><i class="c-teal-500 ti-ruler-alt-2"></i></span>
+          <span class="title">Data Transformation</span>
+          <span class="arrow"><i class="ti-angle-right"></i></span>
+        </a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="dropdown-toggle">
+          <span class="icon-holder"><i class="c-teal-500 ti-target"></i></span>
+          <span class="title">Feature Selection</span>
+          <span class="arrow"><i class="ti-angle-right"></i></span>
+        </a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="dropdown-toggle">
+          <span class="icon-holder"><i class="c-teal-500 ti-stats-up"></i></span>
           <span class="title">Machine Learning</span>
-          <span class="arrow">
-                  <i class="ti-angle-right"></i>
-                </span>
+          <span class="arrow"><i class="ti-angle-right"></i></span>
         </a>
         <ul class="dropdown-menu">
-          <li>
-            <a class='sidebar-link' href="basic-table.html">Model Initialization</a>
+          <li class="nav-item dropdown">
+            <a>
+              <span>Model Initialization</span>
+            </a>
           </li>
-          <li>
-            <a class='sidebar-link' href="Regression">File</a>
+          <li class="nav-item dropdown">
+            <a>
+              <span>Regression</span>
+              <span class="arrow"><i class="ti-angle-right"></i></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li [dragDirective]='"linearRegression"' [dragHightlight]="'highlight'"><a>Linear Regression</a></li>
+              <li [dragDirective]='"poissonRegression"' [dragHightlight]="'highlight'"><a>Poisson Regression</a></li>
+            </ul>
           </li>
         </ul>
       </li>

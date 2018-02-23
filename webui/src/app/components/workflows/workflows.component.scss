@@ -27,6 +27,7 @@
   }
 }
 
+
 // ---------------------------------------------------------
 // @Main Content
 // ---------------------------------------------------------
@@ -34,6 +35,7 @@
 .main-content {
   padding: 85px 20px 20px;
   min-height: calc(100vh - 61px);
+  height: 80%;
 
   @include to($breakpoint-md) {
     padding: 85px 5px 5px;

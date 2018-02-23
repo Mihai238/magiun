@@ -34,9 +34,15 @@
 <div class="page-container">
   <main class='main-content bgc-grey-100'>
     <div id='mainContent'>
-      <div class="row gap-20 masonry pos-r">
-        <div class="masonry-sizer col-md-6"></div>
-        <div class="masonry-item  w-100">
+      <div class="masonry-item col-12 droppingarea">
+        <div class="bd bgc-white" dropDirective (dropEvent)="addDropItem($event)">
+          <div id="placeHolderTextDiv" *ngIf="showPlaceholder">
+            {{ 'WORKFLOWS.PLACE_HOLDER' | translate }}
+          </div>
+          <div *ngFor="let block of blocksDropped">
+            <app-linear-regression-block *ngIf="block.code === 'linearRegression'"></app-linear-regression-block>
+            <app-poisson-regression-block *ngIf="block.code === 'poissonRegression'"></app-poisson-regression-block>
+          </div>
         </div>
       </div>
     </div>

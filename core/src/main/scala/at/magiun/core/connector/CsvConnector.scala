@@ -1,11 +1,11 @@
 package at.magiun.core.connector
 
-import at.magiun.core.model.{Column, MagiunDataSet, Schema}
+import at.magiun.core.model.{Column, DataSetSource, MagiunDataSet, Schema}
 import org.apache.spark.sql.SparkSession
 
 class CsvConnector(spark: SparkSession) extends Connector {
 
-  override def getSchema(magiunDataSet: MagiunDataSet): Schema = {
+  override def getSchema(source: DataSetSource): Schema = {
     val options = Map(
       "sep" -> ",",
       "header" -> "true"
@@ -14,7 +14,7 @@ class CsvConnector(spark: SparkSession) extends Connector {
     val frame = spark.read
       .options(options)
       .option("inferSchema", "true")
-      .csv(magiunDataSet.url)
+      .csv(source.url)
 
     val cols = frame.schema.zipWithIndex.map { case (col, index) =>
         Column(index, col.name, mapToColumnType(col.dataType))

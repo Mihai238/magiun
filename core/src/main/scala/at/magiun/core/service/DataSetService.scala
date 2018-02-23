@@ -1,8 +1,8 @@
 package at.magiun.core.service
 
-import at.magiun.core.connector.{CsvConnector, MongoDbConnector}
+import at.magiun.core.connector.{Connector, CsvConnector, MongoDbConnector}
 import at.magiun.core.model.SourceType.{FileCsv, Mongo}
-import at.magiun.core.model.{MagiunDataSet, Schema, SourceType}
+import at.magiun.core.model.{DataSetSource, MagiunDataSet, SourceType}
 import at.magiun.core.repository.{DataSetRepository, MagiunDataSetEntity}
 import org.apache.spark.sql.SparkSession
 
@@ -25,16 +25,18 @@ class DataSetService(
   }
 
   private def mapToModel(entity: MagiunDataSetEntity): MagiunDataSet = {
+    val source = DataSetSource(entity.sourceType, entity.url)
+    val schema = getConnector(entity.sourceType).getSchema(source)
+
     MagiunDataSet(
       entity.id,
       entity.name,
-      entity.sourceType,
-      entity.url,
-      Schema(List())
+      source,
+      schema
     )
   }
 
-  private def getConnector(sourceType: SourceType) = sourceType match {
+  private def getConnector(sourceType: SourceType): Connector = sourceType match {
     case FileCsv => new CsvConnector(sparkSession)
     case Mongo => new MongoDbConnector
   }

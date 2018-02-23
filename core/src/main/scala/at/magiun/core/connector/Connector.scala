@@ -1,13 +1,13 @@
 package at.magiun.core.connector
 
-import at.magiun.core.model.{ColumnType, MagiunDataSet, Schema}
+import at.magiun.core.model.{ColumnType, MagiunDataSet, Schema, DataSetSource}
 import org.apache.spark.sql.types.DataType
 
 trait Connector {
 
-  def getSchema(magiunDataSet: MagiunDataSet): Schema
+  def getSchema(source: DataSetSource): Schema
 
-  def mapToColumnType(dataType: DataType): ColumnType = {
+  protected def mapToColumnType(dataType: DataType): ColumnType = {
     dataType.typeName match {
       case "integer" => ColumnType.Int
       case "string" => ColumnType.String

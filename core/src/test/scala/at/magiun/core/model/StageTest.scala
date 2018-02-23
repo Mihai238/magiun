@@ -1,11 +1,11 @@
 package at.magiun.core.model
 
+import at.magiun.core.TestUtils.sampleCsvPath
 import at.magiun.core.{MainModule, UnitTest}
 
 class StageTest extends UnitTest {
 
   private val mainModule = new MainModule {}
-  private val sampleCsvPath = getClass.getClassLoader.getResource("insurance_sample.csv").getFile
 
   it should "remove the column called 'statecode'" in {
     val task = new DropColumnStage(

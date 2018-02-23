@@ -9,10 +9,8 @@ class CsvConnectorTest extends UnitTest {
   private val mainModule = new MainModule {}
   private val connector = new CsvConnector(mainModule.spark)
 
-  private val sampleCsvPath = getClass.getClassLoader.getResource("insurance_sample.csv").getFile
-
   it should "get schema given an url" in {
-    val schema = connector.getSchema(testDs1.copy(url = s"file://$sampleCsvPath"))
+    val schema = connector.getSchema(csvDataSetSource)
 
     schema.columns should have size 18
     val column1 = schema.columns.head

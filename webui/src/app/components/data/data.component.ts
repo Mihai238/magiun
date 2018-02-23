@@ -10,7 +10,7 @@ import {NewColumnResult} from './new-column-settings/new-column-settings.compone
 @Component({
   selector: 'app-data',
   templateUrl: './data.component.html',
-  styleUrls: ['./data.component.css'],
+  styleUrls: ['./data.component.scss'],
   providers: [NGXLogger]
 })
 export class DataComponent implements OnInit {

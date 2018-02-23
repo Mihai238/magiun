@@ -4,7 +4,7 @@ import {BlockComponent} from '../../block.component';
 @Component({
   selector: 'app-linear-regression-block',
   templateUrl: './regression-block.component.html',
-  styleUrls: ['./regression-block.component.css']
+  styleUrls: ['./regression-block.component.scss']
 })
 export class LinearRegressionBlockComponent extends BlockComponent {
   name: string;

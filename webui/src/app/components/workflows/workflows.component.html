@@ -1,31 +1,32 @@
-<div class="page-content d-flex align-items-stretch">
-  <app-workflow-sidebar></app-workflow-sidebar>
-  <div class="page-content">
-    <header class="page-header">
-      <div class="row">
-        <div class="col-md-10">
+<app-workflow-sidebar></app-workflow-sidebar>
+<div class="page-container">
+  <main class="main-content bgc-grey-100">
+    <div class='col-12 bd bgc-white workflow-nav'>
+      <ul class="left">
+        <li>
           <label>
-            <input #title placeholder="{{defaultWorkflowTitle}}" (keyup)="updateTitle($event)">
+           <input #title placeholder="{{defaultWorkflowTitle}}" (keyup)="updateTitle($event)">
           </label>
-        </div>
-        <div class="col-sm-1 col-md-offset-*">
-          <i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i>
-        </div>
-        <div class="col-sm-1 col-md-offset-*">
-          <i class="fa fa-upload fa-lg" aria-hidden="true"></i>
-        </div>
+        </li>
+      </ul>
+      <ul class="right">
+        <li>
+            <a><i class="c-blue-500 ti-save"></i></a>
+        </li>
+        <li>
+            <a><i class="c-blue-500 ti-import"></i></a>
+        </li>
+      </ul>
+    </div>
+
+    <div id="mainContent" class = "col-12 bd bgc-white" dropDirective (dropEvent)="addDropItem($event)">
+      <div id="placeHolderTextDiv" *ngIf="showPlaceholder">
+        {{ 'WORKFLOWS.PLACE_HOLDER' | translate }}
       </div>
-    </header>
-    <section class="no-padding-bottom">
-      <div dropDirective class="container droppingarea" (dropEvent)="addDropItem($event)">
-        <div id="placeHolderTextDiv" *ngIf="showPlaceholder">
-          {{ 'WORKFLOWS.PLACE_HOLDER' | translate }}
-        </div>
-        <div *ngFor="let block of blocksDropped">
-          <app-linear-regression-block *ngIf="block.code === 'linearRegression'"></app-linear-regression-block>
-          <app-poisson-regression-block *ngIf="block.code === 'poissonRegression'"></app-poisson-regression-block>
-        </div>
+      <div *ngFor="let block of blocksDropped">
+        <app-linear-regression-block *ngIf="block.code === 'linearRegression'"></app-linear-regression-block>
+        <app-poisson-regression-block *ngIf="block.code === 'poissonRegression'"></app-poisson-regression-block>
       </div>
-    </section>
-  </div>
+    </div>
+  </main>
 </div>

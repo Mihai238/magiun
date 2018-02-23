@@ -1,0 +1,167 @@
+// ---------------------------------------------------------
+// @TOC
+// ---------------------------------------------------------
+
+// + @Page Container
+// + @Main Content
+// + @Full Container
+// + @Collapsed State
+
+// ---------------------------------------------------------
+// @Page Container
+// ---------------------------------------------------------
+
+@import "../../../styles";
+
+.page-container {
+  min-height: 100vh;
+  padding-left: $offscreen-size;
+  transition: all 0.2s ease;
+
+  @include between($breakpoint-md, $breakpoint-xl) {
+    padding-left: $collapsed-size;
+  }
+
+  @include to($breakpoint-md) {
+    padding-left: 0;
+  }
+}
+
+
+// ---------------------------------------------------------
+// @Main Content
+// ---------------------------------------------------------
+.main-content {
+  padding: 85px 20px 20px;
+  min-height: calc(100vh - 61px);
+
+  @include to($breakpoint-md) {
+    padding: 85px 5px 5px;
+  }
+}
+
+#mainContent {
+  height: 80vh;
+  overflow: scroll;
+}
+
+.remain-height {
+  height: calc(100vh - 126px);
+}
+
+// ---------------------------------------------------------
+// @Full Container
+// ---------------------------------------------------------
+
+.full-container {
+  left: $offscreen-size;
+  min-height: calc(100vh - #{$header-height});
+  position: absolute;
+  right: 0;
+  top: $header-height;
+  transition: all 0.2s ease;
+
+  @include between($breakpoint-md, $breakpoint-xl) {
+    left: 0;
+    padding-left: $collapsed-size;
+  }
+
+  @include to($breakpoint-md) {
+    left: 0;
+  }
+}
+
+// ---------------------------------------------------------
+// @Collapsed State
+// ---------------------------------------------------------
+
+.is-collapsed {
+  .page-container {
+    padding-left: $collapsed-size;
+
+    @include to($breakpoint-md) {
+      padding-left: 0;
+    }
+
+    @include between($breakpoint-md, $breakpoint-xl) {
+      padding-left: $offscreen-size;
+    }
+  }
+
+  .full-container {
+    left: $collapsed-size;
+
+    @include to($breakpoint-md) {
+      left: 0;
+    }
+
+    @include between($breakpoint-md, $breakpoint-xl) {
+      left: $offscreen-size;
+      padding-left: 0;
+    }
+  }
+}
+
+// ---------------------------------------------------------
+// Workflow Navbar
+// ---------------------------------------------------------
+.workflow-nav {
+  border-bottom: 1px solid $border-color;
+  display: block;
+  height: 71px;
+
+  @include clearfix;
+
+  .left,
+  .right {
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+    position: relative;
+
+    > li {
+      float: left;
+      margin: 3px;
+
+      > a {
+        color: $default-text-color;
+        display: block;
+        line-height: $header-height;
+        min-height: $header-height;
+        padding: 0 15px;
+        transition: all 0.2s ease-in-out;
+
+        i {
+          font-size: 19px;
+        }
+
+        &:hover,
+        &:focus {
+          color: $default-dark;
+          text-decoration: none;
+        }
+
+        @include to($breakpoint-md) {
+          padding: 0 15px;
+        }
+      }
+    }
+  }
+
+  .left {
+    float: left;
+    margin: auto 0;
+  }
+
+  .right {
+    float: right;
+  }
+
+  input {
+    width: 55vh;
+    outline: none;
+    border: none;
+    font-size: 19px;
+    min-height: $header-height;
+  }
+}

@@ -1,0 +1,132 @@
+// ---------------------------------------------------------
+// @TOC
+
+// + @Topbar
+// + @Collapsed State
+
+// ---------------------------------------------------------
+// @Topbar
+// ---------------------------------------------------------
+
+@import "../../../../styles";
+
+.header {
+  background-color: $default-white;
+  border-bottom: 1px solid $border-color;
+  display: block;
+  height: $header-height;
+  margin-bottom: 0;
+  padding: 0;
+  position: fixed;
+  transition: all 0.2s ease;
+  width: 100%;
+  z-index: 800;
+
+  @include to($breakpoint-md) {
+    width: 100%;
+  }
+
+  @include between($breakpoint-md, $breakpoint-xl) {
+    width: calc(100% - #{$collapsed-size});
+  }
+
+  .header-container {
+    @include clearfix;
+
+    .nav-left,
+    .nav-right {
+      list-style: none;
+      margin-bottom: 0;
+      padding-left: 0;
+      position: relative;
+
+      > li {
+        float: left;
+
+        > a {
+          color: $default-text-color;
+          display: block;
+          line-height: $header-height;
+          min-height: $header-height;
+          padding: 0 15px;
+          transition: all 0.2s ease-in-out;
+
+          i {
+            font-size: 17px;
+          }
+
+          &:hover,
+          &:focus {
+            color: $default-dark;
+            text-decoration: none;
+          }
+
+          @include to($breakpoint-md) {
+            padding: 0 15px;
+          }
+        }
+      }
+
+    }
+
+    .show {
+      .dropdown-menu {
+        transform: scale(1, 1);
+      }
+    }
+
+    .nav-left {
+      float: left;
+      margin-left: 15px;
+    }
+
+    .nav-right {
+      float: right;
+
+      .dropdown-menu {
+        left: auto;
+        right: 0;
+
+        > li {
+          width: 100%;
+
+          > a {
+            line-height: 1.5;
+            min-height: auto;
+            padding: 10px 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.navbar-logo {
+  border-bottom: 1px solid transparent;
+  padding: 0;
+
+  a {
+    .logo {
+      background-position: center center;
+      width: 50px;
+    }
+  }
+}
+
+// ---------------------------------------------------------
+// @Collapsed State
+// ---------------------------------------------------------
+
+.is-collapsed {
+  .header {
+    width: calc(100% - #{$collapsed-size});
+
+    @include to($breakpoint-md) {
+      width: 100%;
+    }
+
+    @include between($breakpoint-md, $breakpoint-xl) {
+      width: calc(100% - #{$offscreen-size});
+    }
+  }
+}

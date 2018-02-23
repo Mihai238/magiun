@@ -6,7 +6,7 @@ import {PoissonRegressionBlockComponent} from './blocks/machine-learning/regress
 @Component({
   selector: 'app-workflows',
   templateUrl: './workflows.component.html',
-  styleUrls: ['./workflows.component.css']
+  styleUrls: ['./workflows.component.scss']
 })
 export class WorkflowsComponent implements OnInit {
 
@@ -14,9 +14,6 @@ export class WorkflowsComponent implements OnInit {
   private title = this.defaultWorkflowTitle;
   private showPlaceholder = true;
   private blocksDropped: Array<BlockComponent> = [];
-
-  constructor() {
-  }
 
   ngOnInit() {
   }

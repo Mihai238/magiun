@@ -4,7 +4,7 @@ import {BlockComponent} from '../../block.component';
 @Component({
   selector: 'app-poisson-regression-block',
   templateUrl: './regression-block.component.html',
-  styleUrls: ['./regression-block.component.css']
+  styleUrls: ['./regression-block.component.scss']
 })
 export class PoissonRegressionBlockComponent extends BlockComponent {
   name: string;

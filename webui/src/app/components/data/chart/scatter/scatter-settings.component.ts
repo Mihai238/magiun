@@ -6,7 +6,7 @@ import {ChartData} from '../../../../model/chart-data';
 @Component({
   selector: 'chart-scatter-settings',
   templateUrl: './scatter-settings.component.html',
-  styleUrls: ['./scatter-settings.component.css']
+  styleUrls: ['./scatter-settings.component.scss']
 })
 export class ScatterSettingsComponent implements OnInit {
 

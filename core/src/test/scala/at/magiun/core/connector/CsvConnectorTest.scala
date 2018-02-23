@@ -1,6 +1,6 @@
 package at.magiun.core.connector
 
-import at.magiun.core.TestUtils._
+import at.magiun.core.TestData._
 import at.magiun.core.model.ColumnType
 import at.magiun.core.{MainModule, UnitTest}
 

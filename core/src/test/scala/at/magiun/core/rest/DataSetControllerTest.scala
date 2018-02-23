@@ -1,6 +1,6 @@
 package at.magiun.core.rest
 
-import at.magiun.core.TestUtils._
+import at.magiun.core.TestData._
 import at.magiun.core.service.DataSetService
 import at.magiun.core.{MainModule, UnitTest}
 import io.finch.Input

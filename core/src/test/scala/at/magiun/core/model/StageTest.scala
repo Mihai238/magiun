@@ -1,6 +1,6 @@
 package at.magiun.core.model
 
-import at.magiun.core.TestUtils.sampleCsvPath
+import at.magiun.core.TestData.sampleCsvPath
 import at.magiun.core.{MainModule, UnitTest}
 
 class StageTest extends UnitTest {

@@ -8,8 +8,6 @@ import scala.concurrent.duration._
 
 class DataSetRepositoryTest extends UnitTest {
 
-  private val TIMEOUT = 1.second
-
   private val mainModule = new MainModule {}
   private val repo = mainModule.dataSetRepository
 

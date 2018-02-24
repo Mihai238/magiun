@@ -19,7 +19,7 @@
       </ul>
     </div>
 
-    <div id="mainContent" class = "col-12 bd bgc-white" dropDirective (dropEvent)="addDropItem($event)">
+    <div id="mainContent" class = "col-12 bd bgc-white" dropDirective (dropEventMouse)="handleDropEventMouse($event)">
       <div id="placeHolderTextDiv" *ngIf="showPlaceholder">
         {{ 'WORKFLOWS.PLACE_HOLDER' | translate }}
       </div>

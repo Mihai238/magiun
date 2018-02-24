@@ -18,11 +18,20 @@ export class WorkflowsComponent implements OnInit {
   ngOnInit() {
   }
 
-  private addDropItem(event) {
+  private handleDropEventMouse(event) {
     if (this.showPlaceholder) {
       this.showPlaceholder = false;
     }
-    this.blocksDropped.push(this.getBlockComponentFromEvent(event));
+
+    const object = JSON.parse(event.dataTransfer.getData('text')).object;
+    if (typeof object === 'string') {
+      this.blocksDropped.push(this.getBlockComponentFromEvent(object));
+      // this.blocksDropped[this.blocksDropped.length - 1].setCoordinates(event.x, event.y);
+    } else if (typeof object === 'object') {
+      const d = document.getElementById(object.id);
+      d.style.left = event.layerX + 'px';
+      d.style.top =  event.layerY + 'px';
+    }
   }
 
   private getBlockComponentFromEvent(event): BlockComponent {
@@ -32,7 +41,6 @@ export class WorkflowsComponent implements OnInit {
       default: return null;
     }
   }
-
   private updateTitle(event: any) {
     this.title = event.target.value;
 

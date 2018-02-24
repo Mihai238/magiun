@@ -15,5 +15,6 @@ export class LinearRegressionBlockComponent extends BlockComponent {
     super();
     this.name = 'Linear Regression';
     this.code = 'linearRegression';
+    this.id = 'linearRegression-' + new Date().getMilliseconds();
   }
 }

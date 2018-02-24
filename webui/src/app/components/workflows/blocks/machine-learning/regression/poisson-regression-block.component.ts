@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 import {BlockComponent} from '../../block.component';
 
 @Component({
@@ -15,5 +15,6 @@ export class PoissonRegressionBlockComponent extends BlockComponent {
     super();
     this.name = 'Poisson Regression';
     this.code = 'poissonRegression';
+    this.id = 'poissonRegression-' + new Date().getMilliseconds();
   }
 }

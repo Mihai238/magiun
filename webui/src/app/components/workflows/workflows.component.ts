@@ -25,8 +25,7 @@ export class WorkflowsComponent implements OnInit {
 
     const object = JSON.parse(event.dataTransfer.getData('text')).object;
     if (typeof object === 'string') {
-      this.blocksDropped.push(this.getBlockComponentFromEvent(object));
-      // this.blocksDropped[this.blocksDropped.length - 1].setCoordinates(event.x, event.y);
+      this.blocksDropped.push(this.getBlockComponentFromEvent(object, event.layerX, event.layerY));
     } else if (typeof object === 'object') {
       const d = document.getElementById(object.id);
       d.style.left = event.layerX + 'px';
@@ -34,10 +33,10 @@ export class WorkflowsComponent implements OnInit {
     }
   }
 
-  private getBlockComponentFromEvent(event): BlockComponent {
+  private getBlockComponentFromEvent(event, x, y): BlockComponent {
     switch (event.toString()) {
-      case 'linearRegression': return new LinearRegressionBlockComponent();
-      case 'poissonRegression': return new PoissonRegressionBlockComponent();
+      case 'linearRegression': return new LinearRegressionBlockComponent().setCoordinates(x, y);
+      case 'poissonRegression': return new PoissonRegressionBlockComponent().setCoordinates(x, y);
       default: return null;
     }
   }

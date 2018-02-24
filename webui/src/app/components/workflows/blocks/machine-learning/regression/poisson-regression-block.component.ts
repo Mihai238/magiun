@@ -1,4 +1,4 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {BlockComponent} from '../../block.component';
 
 @Component({

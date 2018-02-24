@@ -15,9 +15,10 @@ export interface Column {
 }
 
 export enum ColumnType {
-  string = 'string',
-  boolean = 'boolean',
-  date = 'date',
-  int = 'int',
-  double = 'double'
+  String = 'String',
+  Boolean = 'Boolean',
+  Date = 'Date',
+  Int = 'Int',
+  Double = 'Double',
+  Unknown = 'Unknown'
 }

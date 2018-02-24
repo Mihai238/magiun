@@ -1,7 +1,6 @@
-import {AfterViewChecked, OnInit} from '@angular/core';
-declare var $: any;
+import {OnInit} from '@angular/core';
 
-export class BlockComponent implements OnInit, AfterViewChecked {
+export class BlockComponent implements OnInit {
   name: string;
   id: string;
   code: string;
@@ -9,10 +8,6 @@ export class BlockComponent implements OnInit, AfterViewChecked {
   popUp = false;
 
   ngOnInit(): void {
-  }
-
-  ngAfterViewChecked(): void {
-    $('[data-toggle="tooltip"]').tooltip();
   }
 
   protected hidePopUp() {

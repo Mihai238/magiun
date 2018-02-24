@@ -23,10 +23,7 @@
       <div id="placeHolderTextDiv" *ngIf="showPlaceholder">
         {{ 'WORKFLOWS.PLACE_HOLDER' | translate }}
       </div>
-      <div *ngFor="let block of blocksDropped">
-        <app-linear-regression-block *ngIf="block.code === 'linearRegression'"></app-linear-regression-block>
-        <app-poisson-regression-block *ngIf="block.code === 'poissonRegression'"></app-poisson-regression-block>
-      </div>
+      <ng-template appWorkflowDirective></ng-template>
     </div>
   </main>
 </div>

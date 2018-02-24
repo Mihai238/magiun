@@ -1,6 +1,6 @@
-import {AfterViewChecked, OnInit} from '@angular/core';
+import {AfterViewInit, OnInit} from '@angular/core';
 
-export class BlockComponent implements OnInit, AfterViewChecked {
+export class BlockComponent implements AfterViewInit {
   name: string;
   id: string;
   code: string;
@@ -8,9 +8,6 @@ export class BlockComponent implements OnInit, AfterViewChecked {
   popUp = false;
   x: number;
   y: number;
-
-  ngOnInit(): void {
-  }
 
   protected hidePopUp() {
     this.popUp = false;
@@ -20,13 +17,7 @@ export class BlockComponent implements OnInit, AfterViewChecked {
     console.log('settings')
   }
 
-  setCoordinates(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-    return this;
-  }
-
-  ngAfterViewChecked() {
+  ngAfterViewInit() {
     const d = document.getElementById(this.id);
     d.style.left = this.x + 'px';
     d.style.top =  this.y + 'px';

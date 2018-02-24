@@ -1,12 +1,11 @@
 package at.magiun.core.repository
 
-import at.magiun.core.model.SourceType
 import slick.jdbc.H2Profile.api._
 import slick.jdbc.meta.MTable
 
-import scala.concurrent.{Await, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
 
 class DataSetRepository(db: Database) {
 
@@ -22,10 +21,16 @@ class DataSetRepository(db: Database) {
     }
   }
 
-  def upsert(dataSet: MagiunDataSetEntity): Future[Int] = {
-    val f = dataSets.insertOrUpdate(dataSet.id, dataSet.name, dataSet.sourceType.toString, dataSet.url)
+  def upsert(dataSetEntity: MagiunDataSetEntity): Future[MagiunDataSetEntity] = {
+    val action = (dataSets returning dataSets.map(_.id)).insertOrUpdate(dataSetEntity)
 
-    db.run(f)
+//    val f = dataSets.insertOrUpdate(dataSetEntity)
+
+    db.run(action)
+      .map {
+        case Some(id) => dataSetEntity.copy(id = id)
+        case None => dataSetEntity
+      }
   }
 
   def find(id: Long): Future[Option[MagiunDataSetEntity]] = {
@@ -34,18 +39,12 @@ class DataSetRepository(db: Database) {
       .headOption
 
     db.run(action)
-      .map(_.map(e =>
-        MagiunDataSetEntity(e._1, e._2, SourceType.withName(e._3), e._4)
-      ))
   }
 
   def findAll(): Future[Seq[MagiunDataSetEntity]] = {
     val all = dataSets.result
 
     db.run(all)
-      .map(_.map(e =>
-        MagiunDataSetEntity(e._1, e._2, SourceType.withName(e._3), e._4)
-      ))
   }
 
   def delete(id: Long): Future[Int] = {
@@ -55,9 +54,13 @@ class DataSetRepository(db: Database) {
     db.run(action)
   }
 
-  class DataSets(tag: Tag) extends Table[(Long, String, String, String)](tag, TABLE_NAME) {
+  def deleteAll(): Future[Int] = {
+    db.run(dataSets.delete)
+  }
 
-    def id = column[Long]("ID", O.PrimaryKey)
+  class DataSets(tag: Tag) extends Table[MagiunDataSetEntity](tag, TABLE_NAME) {
+
+    def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
 
     def name = column[String]("NAME")
 
@@ -65,7 +68,7 @@ class DataSetRepository(db: Database) {
 
     def url = column[String]("URL")
 
-    override def * = (id, name, sourceType, url)
+    override def * = (id, name, sourceType, url) <> (MagiunDataSetEntity.tupled, MagiunDataSetEntity.unapply)
 
   }
 

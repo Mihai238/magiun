@@ -2,10 +2,10 @@ package at.magiun.core.repository
 
 import at.magiun.core.model.SourceType
 
-case class MagiunDataSetEntity(
-                     id: Long,
+final case class MagiunDataSetEntity(
+                     id: Long = 0L,
                      name: String,
-                     sourceType: SourceType,
+                     sourceType: String,
                      url: String
                    ) {
 

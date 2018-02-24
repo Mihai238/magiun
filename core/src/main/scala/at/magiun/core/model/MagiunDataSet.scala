@@ -5,7 +5,7 @@ case class MagiunDataSet(
                         id: Long,
                         name: String,
                         dataSetSource: DataSetSource,
-                        schema: Schema
+                        schema: Option[Schema]
                         ) {
 
 }

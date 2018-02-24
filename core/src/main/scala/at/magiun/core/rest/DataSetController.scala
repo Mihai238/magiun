@@ -1,24 +1,32 @@
 package at.magiun.core.rest
 
+import java.util.UUID
+
 import at.magiun.core.model.MagiunDataSet
+import at.magiun.core.rest.FutureConverter._
 import at.magiun.core.service.DataSetService
-import com.twitter.util.{Return, Throw, Future => TFuture, Promise => TPromise}
+import com.twitter.util.{Future => TFuture, Promise => TPromise}
+import com.typesafe.scalalogging.LazyLogging
 import io.finch._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ExecutionContext, Future => SFuture, Promise => SPromise}
-import scala.util.{Failure, Success}
+import scala.concurrent.{Future => SFuture, Promise => SPromise}
+import io.circe.generic.auto._
+import io.finch.circe._
 
-class DataSetController(dataSetService: DataSetService) {
+class DataSetController(dataSetService: DataSetService) extends LazyLogging {
 
   private val PATH = "datasets"
 
   //noinspection TypeAnnotation
-  lazy val api = getDataSet :+: getDataSets
+  lazy val api = getDataSet :+: getDataSets :+: createDataSet
 
   val getDataSet: Endpoint[MagiunDataSet] = get(PATH :: path[Int]) { id: Int =>
 
-    dataSetService.find(id).asTwitter.map(e => e.get).map(Ok)
+    dataSetService.find(id)
+      .asTwitter
+      .map(e => e.get)
+      .map(Ok)
   }
 
   val getDataSets: Endpoint[Seq[MagiunDataSet]] = get(PATH) {
@@ -27,31 +35,13 @@ class DataSetController(dataSetService: DataSetService) {
       .map(Ok)
   }
 
+  val createDataSet: Endpoint[MagiunDataSet] = post(PATH :: jsonBody[MagiunDataSet]) { dataSet: MagiunDataSet =>
+    logger.info("Creating new dataset")
 
-  // Future conversions
-
-  implicit class RichTFuture[A](f: TFuture[A]) {
-    def asScala(implicit e: ExecutionContext): SFuture[A] = {
-      val p: SPromise[A] = SPromise()
-      f.respond {
-        case Return(value) => p.success(value)
-        case Throw(exception) => p.failure(exception)
-      }
-
-      p.future
-    }
+    dataSetService.create(dataSet)
+      .asTwitter
+      .map(Ok)
   }
 
-  implicit class RichSFuture[A](f: SFuture[A]) {
-    def asTwitter(implicit e: ExecutionContext): TFuture[A] = {
-      val p: TPromise[A] = new TPromise[A]
-      f.onComplete {
-        case Success(value) => p.setValue(value)
-        case Failure(exception) => p.setException(exception)
-      }
-
-      p
-    }
-  }
 
 }

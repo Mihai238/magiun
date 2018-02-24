@@ -21,7 +21,7 @@ class DataSetServiceTest extends UnitTest {
     val ds = Await.result(service.find(1), TIMEOUT).get
     ds.name should be ("gigi")
     ds.dataSetSource.url should be (testDsEntity1.url)
-    ds.schema.columns should have size 18
+    ds.schema.get.columns should have size 18
   }
 
 }

@@ -1,5 +1,4 @@
 import {AfterViewChecked, OnInit} from '@angular/core';
-declare var $: any;
 
 export class BlockComponent implements OnInit, AfterViewChecked {
   name: string;
@@ -7,12 +6,10 @@ export class BlockComponent implements OnInit, AfterViewChecked {
   code: string;
   valid = false;
   popUp = false;
+  x: number;
+  y: number;
 
   ngOnInit(): void {
-  }
-
-  ngAfterViewChecked(): void {
-    $('[data-toggle="tooltip"]').tooltip();
   }
 
   protected hidePopUp() {
@@ -21,6 +18,18 @@ export class BlockComponent implements OnInit, AfterViewChecked {
 
   protected showSettingsPopUp() {
     console.log('settings')
+  }
+
+  setCoordinates(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+    return this;
+  }
+
+  ngAfterViewChecked() {
+    const d = document.getElementById(this.id);
+    d.style.left = this.x + 'px';
+    d.style.top =  this.y + 'px';
   }
 }
 

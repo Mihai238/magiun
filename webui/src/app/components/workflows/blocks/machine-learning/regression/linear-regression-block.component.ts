@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {BlockComponent} from '../../block.component';
 
 @Component({
@@ -15,5 +15,6 @@ export class LinearRegressionBlockComponent extends BlockComponent {
     super();
     this.name = 'Linear Regression';
     this.code = 'linearRegression';
+    this.id = 'linearRegression-' + new Date().getMilliseconds();
   }
 }

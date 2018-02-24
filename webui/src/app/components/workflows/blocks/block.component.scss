@@ -6,8 +6,9 @@
   box-sizing: border-box;
   text-align: center;
   margin: 10px;
-  position: relative;
   border-radius: 25px;
+  background: transparent;
+  position: absolute;
 }
 
 i.fa {
@@ -16,5 +17,9 @@ i.fa {
 
 i.fa.fa-exclamation-circle {
   color: red;
+}
+
+.row {
+  background: transparent;
 }
 

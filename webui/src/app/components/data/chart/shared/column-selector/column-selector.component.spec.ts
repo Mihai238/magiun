@@ -16,12 +16,12 @@ describe('ColumnSelectorComponent', () => {
     {
       index: 1,
       name: 'col1',
-      type: ColumnType.double
+      type: ColumnType.Double
     },
     {
       index: 2,
       name: 'col2',
-      type: ColumnType.int
+      type: ColumnType.Int
     }
   ];
 

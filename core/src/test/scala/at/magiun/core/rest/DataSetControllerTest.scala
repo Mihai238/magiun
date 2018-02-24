@@ -6,7 +6,6 @@ import at.magiun.core.service.DataSetService
 import at.magiun.core.{MainModule, UnitTest}
 import com.twitter.io.Buf
 import io.finch.{Application, Input}
-import org.scalamock.function.FunctionAdapter1
 
 import scala.concurrent.Future
 

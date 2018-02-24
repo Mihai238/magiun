@@ -9,7 +9,7 @@ object App {
     val mainModule = new MainModule{}
     mainModule.databaseInitializer.init()
 
-    Await.ready(Http.server.serve(":8080", mainModule.restApi.service))
+    Await.ready(Http.server.serve(":8080", mainModule.restApi.corsService))
   }
 
 }

@@ -11,7 +11,7 @@ class DatabaseInitializer(dataSetRepository: DataSetRepository) {
 
   def init(): Unit = {
     insertDataSet(MagiunDataSetEntity(1, "people", SourceType.withName("FileCsv"), sampleCsvUrl))
-    insertDataSet(MagiunDataSetEntity(2, "drinks", SourceType.Mongo, "mongodb://db1.example.net:27017"))
+    insertDataSet(MagiunDataSetEntity(2, "drinks", SourceType.Mongo, "mongodb://127.0.0.1/testDb/testCollection"))
   }
 
   private def insertDataSet(magiunDataSetEntity: MagiunDataSetEntity): Unit = {

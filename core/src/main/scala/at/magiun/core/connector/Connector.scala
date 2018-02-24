@@ -1,9 +1,10 @@
 package at.magiun.core.connector
 
-import at.magiun.core.model.{ColumnType, MagiunDataSet, Schema, DataSetSource}
+import at.magiun.core.model.{ColumnType, DataSetSource, MagiunDataSet, Schema}
+import com.typesafe.scalalogging.LazyLogging
 import org.apache.spark.sql.types.DataType
 
-trait Connector {
+trait Connector extends LazyLogging {
 
   def getSchema(source: DataSetSource): Schema
 
@@ -14,7 +15,9 @@ trait Connector {
       case "double" => ColumnType.Double
       case "boolean" => ColumnType.Boolean
       case "date" => ColumnType.Date
-      case _ => throw new RuntimeException(s"Unknown column type $dataType")
+      case _ =>
+        logger.warn(s"Unknown column type $dataType")
+        ColumnType.Unknown
     }
   }
 

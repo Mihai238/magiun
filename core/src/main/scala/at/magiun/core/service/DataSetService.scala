@@ -38,7 +38,7 @@ class DataSetService(
 
   private def getConnector(sourceType: SourceType): Connector = sourceType match {
     case FileCsv => new CsvConnector(sparkSession)
-    case Mongo => new MongoDbConnector
+    case Mongo => new MongoDbConnector(sparkSession)
   }
 
 }

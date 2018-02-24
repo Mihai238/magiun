@@ -1,12 +1,12 @@
-///<reference path="../model/data-set.ts"/>
+///<reference path="../model/data-set.model.ts"/>
 import {Injectable} from '@angular/core';
-import {DataRow} from '../model/data-row';
+import {DataRow} from '../model/data-row.model';
 import {environment} from '../../environments/environment';
 import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/observable/throw';
-import {ColumnType, DataSet, Schema} from '../model/data-set';
+import {ColumnType, DataSet, Schema} from '../model/data-set.model';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable()

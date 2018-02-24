@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {ChartData} from '../../../../model/chart-data';
-import {Column, DataSet} from '../../../../model/data-set';
+import {ChartData} from '../../../../model/chart-data.model';
+import {Column, DataSet} from '../../../../model/data-set.model';
 import {DataService} from '../../../../services/data.service';
 
 @Component({

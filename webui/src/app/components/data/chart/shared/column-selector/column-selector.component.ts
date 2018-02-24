@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Column} from '../../../../../model/data-set';
+import {Column} from '../../../../../model/data-set.model';
 
 @Component({
   selector: 'chart-column-selector',

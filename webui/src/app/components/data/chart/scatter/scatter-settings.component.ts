@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Column, DataSet} from '../../../../model/data-set';
+import {Column, DataSet} from '../../../../model/data-set.model';
 import {DataService} from '../../../../services/data.service';
-import {ChartData} from '../../../../model/chart-data';
+import {ChartData} from '../../../../model/chart-data.model';
 
 @Component({
   selector: 'chart-scatter-settings',

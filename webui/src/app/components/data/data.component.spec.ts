@@ -9,7 +9,7 @@ import {logging} from '../../app.logging';
 import 'rxjs/add/observable/of';
 import {TranslateModule} from '@ngx-translate/core';
 import {Component, Input} from '@angular/core';
-import {Column, DataSet} from '../../model/data-set';
+import {Column, DataSet} from '../../model/data-set.model';
 
 describe('DataComponent', () => {
   let component: DataComponent;

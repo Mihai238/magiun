@@ -1,4 +1,5 @@
-import {AfterViewInit, OnInit} from '@angular/core';
+import {AfterViewInit} from '@angular/core';
+import {BlockPosition} from './block-position';
 
 export class BlockComponent implements AfterViewInit {
   name: string;
@@ -6,8 +7,7 @@ export class BlockComponent implements AfterViewInit {
   code: string;
   valid = false;
   popUp = false;
-  x: number;
-  y: number;
+  position: BlockPosition;
 
   protected hidePopUp() {
     this.popUp = false;
@@ -19,9 +19,10 @@ export class BlockComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     const d = document.getElementById(this.id);
-    d.style.left = this.x + 'px';
-    d.style.top =  this.y + 'px';
+    d.style.left = this.position.x + 'px';
+    d.style.top = this.position.y + 'px';
   }
 }
+
 
 

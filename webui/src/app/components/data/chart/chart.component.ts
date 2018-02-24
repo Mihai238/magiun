@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {ChartData} from '../../../model/chart-data';
-import {DataSet} from '../../../model/data-set';
+import {ChartData} from '../../../model/chart-data.model';
+import {DataSet} from '../../../model/data-set.model';
 import {NGXLogger} from 'ngx-logger';
 
 declare var Plotly: any;

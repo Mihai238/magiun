@@ -2,7 +2,7 @@ import {
   Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges,
   ViewChild
 } from '@angular/core';
-import {Column} from '../../../model/data-set';
+import {Column} from '../../../model/data-set.model';
 
 @Component({
   selector: 'data-process-feature',

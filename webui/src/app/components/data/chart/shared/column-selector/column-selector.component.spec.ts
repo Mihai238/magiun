@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ColumnSelectorComponent} from './column-selector.component';
-import {Column, ColumnType} from '../../../../../model/data-set';
+import {Column, ColumnType} from '../../../../../model/data-set.model';
 import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
 import {translate} from '../../../../../app.translate';

@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ChartComponent} from './chart.component';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {DataSet} from '../../../model/data-set';
+import {DataSet} from '../../../model/data-set.model';
 import {logging} from '../../../app.logging';
 import {translate} from '../../../app.translate';
 

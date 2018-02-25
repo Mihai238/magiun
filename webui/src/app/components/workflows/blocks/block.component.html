@@ -1,10 +1,11 @@
 <div class="block container" id="{{id}}" [dragDirective]='this' [dragHightlight]="'highlight'">
   <div class="row flex-row">
     <div class="col input" *ngFor="let i of range(numberOfInputs)" id="{{id}}-input-{{i}}">
-      <a><i class="fa fa-circle unset"></i></a>
+      <a><i class="fa fa-circle unset" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ popUpInputOutPutTitle(inputs[i]) | translate }}"></i></a>
     </div>
     <div class="col">
-      <i class="fa fa-sliders float-right" aria-hidden="true" (click)="showSettingsPopUp()"></i>
+      <i class="fa fa-sliders float-right" aria-hidden="true" (click)="showSettingsPopUp()"data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.SETTINGS' | translate }}"></i>
+      <i class="fa fa-exclamation-circle float-right" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.STEP_IS_NOT_COMPLETE' | translate }}"></i>
     </div>
   </div>
   <div class="row">
@@ -14,10 +15,7 @@
   </div>
   <div class="row flex-row">
     <div class="col output" *ngFor="let i of range(numberOfOutputs)" id="{{id}}-output-{{i}}">
-      <a><i class="fa fa-circle unset"></i></a>
-    </div>
-    <div class="col" *ngIf="!valid">
-      <i class="fa fa-exclamation-circle float-right" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.STEP_IS_NOT_COMPLETE' | translate }}"></i>
+      <a><i class="fa fa-circle unset" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ popUpInputOutPutTitle(outputs[i]) | translate }}"></i></a>
     </div>
   </div>
 </div>

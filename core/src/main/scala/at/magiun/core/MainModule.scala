@@ -14,7 +14,6 @@ trait MainModule {
   lazy val magiunContext = wire[MagiunContext]
 
   // Rest
-  lazy val userController = wire[UserController]
   lazy val otherController = wire[StageController]
   lazy val dataSetController = wire[DataSetController]
   lazy val restApi = wire[RestApi]

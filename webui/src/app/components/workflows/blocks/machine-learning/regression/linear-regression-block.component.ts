@@ -1,16 +1,13 @@
 import {Component} from '@angular/core';
-import {BlockComponent} from '../../block.component';
 import {BlockType} from '../../block-type';
+import {RegressionBlockComponent} from './regression-block.component';
 
 @Component({
   selector: 'app-linear-regression-block',
   templateUrl: '../../block.component.html',
   styleUrls: ['./regression-block.component.scss']
 })
-export class LinearRegressionBlockComponent extends BlockComponent {
-  name: string;
-  id: string;
-  code: string;
+export class LinearRegressionBlockComponent extends RegressionBlockComponent {
 
   constructor() {
     super();

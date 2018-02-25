@@ -5,6 +5,7 @@ import {PoissonRegressionBlockComponent} from './blocks/machine-learning/regress
 import {WorkflowsDirective} from './workflows.directive';
 import {BlockPosition} from './blocks/block-position';
 import {DatabaseBlockComponent} from './blocks/import-data/database-block.component';
+import {FileBlockComponent} from './blocks/import-data/file-block.component';
 
 @Component({
   selector: 'app-workflows',
@@ -22,6 +23,7 @@ export class WorkflowsComponent {
   private static getBlockComponentType(event): Type<any> {
     switch (event.toString()) {
       case 'database': return DatabaseBlockComponent;
+      case 'file': return FileBlockComponent;
       case 'linearRegression': return LinearRegressionBlockComponent;
       case 'poissonRegression': return PoissonRegressionBlockComponent;
       default: return null;

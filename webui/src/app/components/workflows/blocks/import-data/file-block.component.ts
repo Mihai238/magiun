@@ -7,12 +7,12 @@ import {ImportDataComponent} from './import-data.component';
   templateUrl: '../block.component.html',
   styleUrls: ['./import-data-block.component.scss']
 })
-export class DatabaseBlockComponent extends ImportDataComponent {
+export class FileBlockComponent extends ImportDataComponent {
 
   constructor() {
     super();
-    this.name = BlockType.DATABASE.name;
-    this.code = BlockType.DATABASE.code;
-    this.id = BlockType.DATABASE.code + '-' + new Date().getMilliseconds();
+    this.name = BlockType.FILE.name;
+    this.code = BlockType.FILE.code;
+    this.id = BlockType.FILE.code + '-' + new Date().getMilliseconds();
   }
 }

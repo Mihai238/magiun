@@ -1,16 +1,13 @@
 import {Component} from '@angular/core';
-import {BlockComponent} from '../../block.component';
 import {BlockType} from '../../block-type';
+import {RegressionBlockComponent} from './regression-block.component';
 
 @Component({
   selector: 'app-poisson-regression-block',
   templateUrl: '../../block.component.html',
   styleUrls: ['./regression-block.component.scss']
 })
-export class PoissonRegressionBlockComponent extends BlockComponent {
-  name: string;
-  id: string;
-  code: string;
+export class PoissonRegressionBlockComponent extends RegressionBlockComponent {
 
   constructor() {
     super();

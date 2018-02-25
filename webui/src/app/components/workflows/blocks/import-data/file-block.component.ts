@@ -12,7 +12,7 @@ export class FileBlockComponent extends ImportDataComponent {
   constructor() {
     super();
     this.name = BlockType.FILE.name;
-    this.code = BlockType.FILE.code;
-    this.id = BlockType.FILE.code + '-' + new Date().getMilliseconds();
+    this.type = BlockType.FILE.type;
+    this.id = BlockType.FILE.type + '-' + new Date().getMilliseconds();
   }
 }

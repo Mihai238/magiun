@@ -12,7 +12,7 @@ export class LinearRegressionBlockComponent extends RegressionBlockComponent {
   constructor() {
     super();
     this.name = BlockType.LINEAR_REGRESSION.name;
-    this.code = BlockType.LINEAR_REGRESSION.code;
-    this.id = BlockType.LINEAR_REGRESSION.code + '-' + new Date().getMilliseconds();
+    this.type = BlockType.LINEAR_REGRESSION.type;
+    this.id = BlockType.LINEAR_REGRESSION.type + '-' + new Date().getMilliseconds();
   }
 }

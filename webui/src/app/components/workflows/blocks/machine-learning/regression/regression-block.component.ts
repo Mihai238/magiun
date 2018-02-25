@@ -8,5 +8,6 @@ export class RegressionBlockComponent extends BlockComponent {
     this.numberOfInputs = 1;
     this.inputs = [BlockType.DATASET];
     this.numberOfOutputs = 1;
+    this.outputs = [BlockType.REGRESSION_MODEL];
   }
 }

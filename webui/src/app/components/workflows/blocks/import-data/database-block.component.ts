@@ -12,7 +12,7 @@ export class DatabaseBlockComponent extends ImportDataComponent {
   constructor() {
     super();
     this.name = BlockType.DATABASE.name;
-    this.code = BlockType.DATABASE.code;
-    this.id = BlockType.DATABASE.code + '-' + new Date().getMilliseconds();
+    this.type = BlockType.DATABASE.type;
+    this.id = BlockType.DATABASE.type + '-' + new Date().getMilliseconds();
   }
 }

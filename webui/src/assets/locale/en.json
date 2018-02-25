@@ -28,7 +28,12 @@
   "WORKFLOWS": {
     "PLACE_HOLDER": "To create your workflow, drag and drop datasets and modules here!",
     "BLOCKS": {
-      "STEP_IS_NOT_COMPLETE": "It seems that the created step is not configured!"
+      "STEP_IS_NOT_COMPLETE": "It seems that the created step is not configured!",
+      "SETTINGS": "Settings",
+      "INPUT_OUTPUT": {
+        "DATASET": "Dataset",
+        "REGRESSION_MODEL": "Regression Model"
+      }
     }
   }
 }

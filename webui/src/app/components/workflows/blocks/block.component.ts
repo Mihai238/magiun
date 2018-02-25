@@ -3,9 +3,12 @@ import {BlockPosition} from './block-position';
 import {BlockType} from './block-type';
 
 export class BlockComponent implements AfterViewInit {
+
+  private static base_path = 'WORKFLOWS.BLOCKS.INPUT_OUTPUT.';
+
   name: string;
   id: string;
-  code: string;
+  type: string;
   valid = false;
   popUp = false;
   position: BlockPosition;
@@ -30,6 +33,14 @@ export class BlockComponent implements AfterViewInit {
 
   private range(maxValue) {
     return Array(maxValue).fill(0, maxValue - 1);
+  }
+
+  private popUpInputOutPutTitle(type: BlockType): string {
+    switch (type) {
+      case BlockType.DATASET: return BlockComponent.base_path + BlockType.DATASET.value;
+      case BlockType.REGRESSION_MODEL: return BlockComponent.base_path + BlockType.REGRESSION_MODEL.value;
+      default: return 'ERROR';
+    }
   }
 }
 

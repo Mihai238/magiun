@@ -1,5 +1,6 @@
 package at.magiun.core.rest
 
+import at.magiun.core.model.BlockType
 import at.magiun.core.service.BlockService
 import at.magiun.core.{MainModule, TestData, UnitTest}
 import io.finch.Input
@@ -23,7 +24,7 @@ class BlockControllerTest extends UnitTest {
     val block = result.awaitValueUnsafe().get
 
     block.id should be ("2")
-    block.`type` should be ("")
+    block.`type` should be (BlockType.FileReader)
   }
 
 }

@@ -1,5 +1,6 @@
 import {AfterViewInit} from '@angular/core';
 import {BlockPosition} from './block-position';
+import {BlockType} from './block-type';
 
 export class BlockComponent implements AfterViewInit {
   name: string;
@@ -8,6 +9,10 @@ export class BlockComponent implements AfterViewInit {
   valid = false;
   popUp = false;
   position: BlockPosition;
+  numberOfInputs: number;
+  inputs: Array<BlockType>;
+  numberOfOutputs: number;
+  outputs: Array<BlockType>;
 
   protected hidePopUp() {
     this.popUp = false;

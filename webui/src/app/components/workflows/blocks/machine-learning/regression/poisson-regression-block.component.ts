@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
 import {BlockComponent} from '../../block.component';
+import {BlockType} from '../../block-type';
 
 @Component({
   selector: 'app-poisson-regression-block',
-  templateUrl: './regression-block.component.html',
+  templateUrl: '../../block.component.html',
   styleUrls: ['./regression-block.component.scss']
 })
 export class PoissonRegressionBlockComponent extends BlockComponent {
@@ -13,8 +14,8 @@ export class PoissonRegressionBlockComponent extends BlockComponent {
 
   constructor() {
     super();
-    this.name = 'Poisson Regression';
-    this.code = 'poissonRegression';
-    this.id = 'poissonRegression-' + new Date().getMilliseconds();
+    this.name = BlockType.POISSON_REGRESSION.name;
+    this.code = BlockType.POISSON_REGRESSION.code;
+    this.id = BlockType.POISSON_REGRESSION.code + '-' + new Date().getMilliseconds();
   }
 }

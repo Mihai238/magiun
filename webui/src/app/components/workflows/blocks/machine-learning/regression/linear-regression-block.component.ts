@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
 import {BlockComponent} from '../../block.component';
+import {BlockType} from '../../block-type';
 
 @Component({
   selector: 'app-linear-regression-block',
-  templateUrl: './regression-block.component.html',
+  templateUrl: '../../block.component.html',
   styleUrls: ['./regression-block.component.scss']
 })
 export class LinearRegressionBlockComponent extends BlockComponent {
@@ -13,8 +14,8 @@ export class LinearRegressionBlockComponent extends BlockComponent {
 
   constructor() {
     super();
-    this.name = 'Linear Regression';
-    this.code = 'linearRegression';
-    this.id = 'linearRegression-' + new Date().getMilliseconds();
+    this.name = BlockType.LINEAR_REGRESSION.name;
+    this.code = BlockType.LINEAR_REGRESSION.code;
+    this.id = BlockType.LINEAR_REGRESSION.code + '-' + new Date().getMilliseconds();
   }
 }

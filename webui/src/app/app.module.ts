@@ -2,7 +2,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
-// noinspection TsLint
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
 import {DataService} from './services/data.service';
@@ -24,11 +23,13 @@ import {ScatterSettingsComponent} from './components/data/chart/scatter/scatter-
 import {ColumnSelectorComponent} from './components/data/chart/shared/column-selector/column-selector.component';
 import {DragDropDirectiveModule} from 'angular4-drag-drop';
 import {LinearRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/linear-regression-block.component';
+// noinspection TsLint
 import {PoissonRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/poisson-regression-block.component';
 import {ClickOutsideModule} from 'ng-click-outside';
 import { NewColumnSettingsComponent } from './components/data/new-column-settings/new-column-settings.component';
 import { ProcessFeatureComponent } from './components/data/process-feature/process-feature.component';
 import {WorkflowsDirective} from './components/workflows/workflows.directive';
+import {DatabaseBlockComponent} from './components/workflows/blocks/import-data/database-block.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {WorkflowsDirective} from './components/workflows/workflows.directive';
     WorkflowsComponent,
     SidebarComponent,
     PageNotFoundComponent,
+    DatabaseBlockComponent,
     LinearRegressionBlockComponent,
     PoissonRegressionBlockComponent,
     ChartComponent,
@@ -66,6 +68,7 @@ import {WorkflowsDirective} from './components/workflows/workflows.directive';
     DataService
   ],
   entryComponents: [
+    DatabaseBlockComponent,
     LinearRegressionBlockComponent,
     PoissonRegressionBlockComponent
   ],

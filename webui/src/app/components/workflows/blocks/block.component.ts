@@ -1,6 +1,7 @@
 import {AfterViewInit} from '@angular/core';
 import {BlockPosition} from './block-position';
 import {BlockType} from './block-type';
+import {BlockService} from '../../../services/block.service';
 
 export class BlockComponent implements AfterViewInit {
 
@@ -16,6 +17,8 @@ export class BlockComponent implements AfterViewInit {
   inputs: Array<BlockType> = [];
   numberOfOutputs = 0;
   outputs: Array<BlockType> = [];
+
+  constructor(private blockService: BlockService) {}
 
   protected hidePopUp() {
     this.popUp = false;
@@ -41,6 +44,15 @@ export class BlockComponent implements AfterViewInit {
       case BlockType.REGRESSION_MODEL: return BlockComponent.base_path + BlockType.REGRESSION_MODEL.value;
       default: return 'ERROR';
     }
+  }
+
+  private startLine(component, index) {
+    console.log(index);
+    this.blockService.startLine(component, this.id.concat('-output-').concat(index));
+  }
+
+  private endLine(component, index) {
+    this.blockService.endLine(component, this.id.concat('-input-').concat(index));
   }
 }
 

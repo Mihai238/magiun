@@ -2,23 +2,23 @@ import {Component, ComponentFactoryResolver, OnInit, Type, ViewChild} from '@ang
 import {BlockComponent} from './blocks/block.component';
 import {LinearRegressionBlockComponent} from './blocks/machine-learning/regression/linear-regression-block.component';
 import {PoissonRegressionBlockComponent} from './blocks/machine-learning/regression/poisson-regression-block.component';
-import {WorkflowsDirective} from './workflows.directive';
+import {WorkflowDirective} from './workflow.directive';
 import {BlockPosition} from './blocks/block-position';
 import {DatabaseBlockComponent} from './blocks/import-data/database-block.component';
 import {FileBlockComponent} from './blocks/import-data/file-block.component';
 
 @Component({
-  selector: 'app-workflows',
-  templateUrl: './workflows.component.html',
-  styleUrls: ['./workflows.component.scss']
+  selector: 'app-workflow',
+  templateUrl: './workflow.component.html',
+  styleUrls: ['./workflow.component.scss']
 })
-export class WorkflowsComponent {
+export class WorkflowComponent {
 
   private defaultWorkflowTitle = 'My workflow created on '.concat(new Date().toJSON().slice(0, 10).replace(/-/g, '/'));
   private title = this.defaultWorkflowTitle;
   private showPlaceholder = true;
   private blocksDropped: Array<BlockComponent> = [];
-  @ViewChild(WorkflowsDirective) private workflowsDirective: WorkflowsDirective;
+  @ViewChild(WorkflowDirective) private workflowsDirective: WorkflowDirective;
 
   private static getBlockComponentType(event): Type<any> {
     switch (event.toString()) {
@@ -46,7 +46,7 @@ export class WorkflowsComponent {
   }
 
   private createNewBlockComponent(event, object): void {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(WorkflowsComponent.getBlockComponentType(object));
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(WorkflowComponent.getBlockComponentType(object));
     const componentRef = this.workflowsDirective.viewContainerRef.createComponent(componentFactory);
 
     (<BlockComponent>componentRef.instance).position = new BlockPosition(event.layerX, event.layerY) ;

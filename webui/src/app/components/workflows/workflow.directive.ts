@@ -3,7 +3,7 @@ import { Directive, ViewContainerRef } from '@angular/core';
 @Directive({
   selector: '[appWorkflowDirective]',
 })
-export class WorkflowsDirective {
+export class WorkflowDirective {
   constructor(public viewContainerRef: ViewContainerRef) { }
 }
 

@@ -7,7 +7,7 @@ import {AppComponent} from './app.component';
 import {DataService} from './services/data.service';
 import {DataComponent} from './components/data/data.component';
 import {AboutComponent} from './components/about/about.component';
-import {WorkflowsComponent} from './components/workflows/workflows.component';
+import {WorkflowComponent} from './components/workflows/workflow.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {NavbarComponent} from './components/shared/navbar/navbar.component';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
@@ -28,9 +28,10 @@ import {PoissonRegressionBlockComponent} from './components/workflows/blocks/mac
 import {ClickOutsideModule} from 'ng-click-outside';
 import { NewColumnSettingsComponent } from './components/data/new-column-settings/new-column-settings.component';
 import { ProcessFeatureComponent } from './components/data/process-feature/process-feature.component';
-import {WorkflowsDirective} from './components/workflows/workflows.directive';
+import {WorkflowDirective} from './components/workflows/workflow.directive';
 import {DatabaseBlockComponent} from './components/workflows/blocks/import-data/database-block.component';
 import {FileBlockComponent} from './components/workflows/blocks/import-data/file-block.component';
+import {BlockService} from './services/block.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import {FileBlockComponent} from './components/workflows/blocks/import-data/file
     FooterComponent,
     DataComponent,
     AboutComponent,
-    WorkflowsComponent,
+    WorkflowComponent,
     SidebarComponent,
     PageNotFoundComponent,
     DatabaseBlockComponent,
@@ -53,7 +54,7 @@ import {FileBlockComponent} from './components/workflows/blocks/import-data/file
     ColumnSelectorComponent,
     NewColumnSettingsComponent,
     ProcessFeatureComponent,
-    WorkflowsDirective
+    WorkflowDirective
   ],
   imports: [
     BrowserModule,
@@ -67,7 +68,8 @@ import {FileBlockComponent} from './components/workflows/blocks/import-data/file
     routing
   ],
   providers: [
-    DataService
+    DataService,
+    BlockService
   ],
   entryComponents: [
     DatabaseBlockComponent,

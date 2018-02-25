@@ -1,5 +1,8 @@
 <div class="block container" id="{{id}}" [dragDirective]='this' [dragHightlight]="'highlight'">
-  <div class="row">
+  <div class="row flex-row">
+    <div class="col input" *ngFor="let i of range(numberOfInputs)" id="{{id}}-input-{{i}}">
+      <a><i class="fa fa-circle unset"></i></a>
+    </div>
     <div class="col">
       <i class="fa fa-sliders float-right" aria-hidden="true" (click)="showSettingsPopUp()"></i>
     </div>
@@ -9,9 +12,12 @@
       {{name}}
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <i *ngIf="!valid" class="fa fa-exclamation-circle float-right" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.STEP_IS_NOT_COMPLETE' | translate }}"></i>
+  <div class="row flex-row">
+    <div class="col output" *ngFor="let i of range(numberOfOutputs)" id="{{id}}-output-{{i}}">
+      <a><i class="fa fa-circle unset"></i></a>
+    </div>
+    <div class="col" *ngIf="!valid">
+      <i class="fa fa-exclamation-circle float-right" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.STEP_IS_NOT_COMPLETE' | translate }}"></i>
     </div>
   </div>
 </div>

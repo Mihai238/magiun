@@ -1,9 +1,15 @@
 export class BlockType {
 
   /**
+   * SHARED
+    */
+  static DATASET = new BlockType('Dataset', 'dataset');
+
+  /**
    * IMPORT DATA
    */
   static DATABASE = new BlockType('Database', 'database');
+  static FILE = new BlockType('File', 'file');
 
   /**
    * MACHINE LEARNING

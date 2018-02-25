@@ -9,10 +9,10 @@ export class BlockComponent implements AfterViewInit {
   valid = false;
   popUp = false;
   position: BlockPosition;
-  numberOfInputs: number;
-  inputs: Array<BlockType>;
-  numberOfOutputs: number;
-  outputs: Array<BlockType>;
+  numberOfInputs = 0;
+  inputs: Array<BlockType> = [];
+  numberOfOutputs = 0;
+  outputs: Array<BlockType> = [];
 
   protected hidePopUp() {
     this.popUp = false;
@@ -26,6 +26,10 @@ export class BlockComponent implements AfterViewInit {
     const d = document.getElementById(this.id);
     d.style.left = this.position.x + 'px';
     d.style.top = this.position.y + 'px';
+  }
+
+  private range(maxValue) {
+    return Array(maxValue).fill(0, maxValue - 1);
   }
 }
 

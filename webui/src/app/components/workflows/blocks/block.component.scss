@@ -23,3 +23,23 @@ i.fa.fa-exclamation-circle {
   background: transparent;
 }
 
+.input {
+  position: relative;
+  top: -10px;
+  margin: 0 auto;
+}
+
+.output {
+  position: relative;
+  bottom: -8px;
+  margin: 0 auto;
+}
+
+i.unset {
+  color: darkred;
+}
+
+i.set {
+  color: darkgreen;
+}
+

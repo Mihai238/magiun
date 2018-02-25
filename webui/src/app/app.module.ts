@@ -30,6 +30,7 @@ import { NewColumnSettingsComponent } from './components/data/new-column-setting
 import { ProcessFeatureComponent } from './components/data/process-feature/process-feature.component';
 import {WorkflowsDirective} from './components/workflows/workflows.directive';
 import {DatabaseBlockComponent} from './components/workflows/blocks/import-data/database-block.component';
+import {FileBlockComponent} from './components/workflows/blocks/import-data/file-block.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {DatabaseBlockComponent} from './components/workflows/blocks/import-data/
     SidebarComponent,
     PageNotFoundComponent,
     DatabaseBlockComponent,
+    FileBlockComponent,
     LinearRegressionBlockComponent,
     PoissonRegressionBlockComponent,
     ChartComponent,
@@ -69,6 +71,7 @@ import {DatabaseBlockComponent} from './components/workflows/blocks/import-data/
   ],
   entryComponents: [
     DatabaseBlockComponent,
+    FileBlockComponent,
     LinearRegressionBlockComponent,
     PoissonRegressionBlockComponent
   ],

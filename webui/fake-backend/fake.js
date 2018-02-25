@@ -5,7 +5,8 @@ const faker = require('faker');
 module.exports = () => {
   const data = {
     rows: [],
-    datasets: [dataset1, dataset2]
+    datasets: [dataset1, dataset2],
+    blocks: blocks
   };
 
   for (let i = 0; i < 1000; i++) {
@@ -110,3 +111,26 @@ const dataset2 = {
     ]
   }
 };
+
+const blocks = [
+  {
+    id: "FileReader-1",
+    type: "FileReader",
+    inputs: [
+    ],
+    params: {
+      url: "/home/..."
+    }
+  },
+  {
+    id: "LinearRegression-5",
+    type: "LinearRegression",
+    inputs: [
+      ["FileReader-1", 0]
+    ],
+    params: {
+      maxIter: 3,
+      regParam: 5
+    }
+  }
+];

@@ -51,37 +51,37 @@ const dataset1 = {
       {
         index: 0,
         name: "name",
-        type: "string"
+        type: "String"
       },
       {
         index: 1,
         name: "age",
-        type: "int"
+        type: "Int"
       },
       {
         index: 2,
         name: "dateOfBirth",
-        type: "date"
+        type: "Date"
       },
       {
         index: 3,
         name: "happy",
-        type: "boolean"
+        type: "Boolean"
       },
       {
         index: 4,
         name: "height",
-        type: "double"
+        type: "Double"
       },
       {
         index: 5,
         name: "weight",
-        type: "double"
+        type: "Double"
       },
       {
         index: 6,
         name: "sport level",
-        type: "string"
+        type: "String"
       }
     ]
   }
@@ -95,17 +95,17 @@ const dataset2 = {
       {
         index: 0,
         name: "breed",
-        type: "string"
+        type: "String"
       },
       {
         index: 1,
         name: "age",
-        type: "int",
+        type: "Int",
       },
       {
         index: 2,
         name: "color",
-        type: "string"
+        type: "String"
       }
     ]
   }

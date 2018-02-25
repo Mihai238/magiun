@@ -62,7 +62,5 @@ export class WorkflowComponent {
 
   private updateTitle(event: any): void {
     this.title = event.target.value;
-
-    console.log(this.title)
   }
 }

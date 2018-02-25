@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BlockComponent} from '../components/workflows/blocks/block.component';
+import {BlockType} from '../components/workflows/blocks/block-type';
 
 declare var LeaderLine: any;
 
@@ -8,11 +9,14 @@ export class BlockService {
 
   private startComponent: BlockComponent;
   private startId: string;
+  private outputType: BlockType;
+  private linesMap = new Map<any, Array<BlockComponent>>();
 
-  startLine(component: BlockComponent, startId: string): void {
-    if (this.startId === null || this.startId === undefined) {
+  startLine(component: BlockComponent, startId: string, outputType: BlockType): void {
+    if (this.isAStartPointAlreadySelected()) {
       this.startComponent = component;
       this.startId = startId;
+      this.outputType = outputType;
 
       const e = document.getElementById(startId);
       if (e.classList.contains('unset')) {
@@ -21,13 +25,17 @@ export class BlockService {
     }
   }
 
-  endLine(endComponent: BlockComponent, endId: string): void {
-    if (this.startId !== endId && this.startComponent !== endComponent) {
-      new LeaderLine(
+  endLine(endComponent: BlockComponent, endId: string, inputType: BlockType): void {
+    if (this.isPointAValidEndPint(endComponent, endId, inputType)) {
+      const line = new LeaderLine(
         document.getElementById(this.startId),
         document.getElementById(endId)
       );
 
+      this.linesMap.set(line, [this.startComponent, endComponent]);
+
+      this.makeComponentUndragable(this.startComponent.id);
+      this.makeComponentUndragable(endComponent.id);
       this.changeFromSelectedToSet(document.getElementById(this.startId));
       this.changeFromUnsetToSet(document.getElementById(endId));
       this.reset();
@@ -52,6 +60,21 @@ export class BlockService {
   private reset(): void {
     this.startId = null;
     this.startComponent = null;
+    this.outputType = null;
   }
 
+  private makeComponentUndragable(id: string): void {
+    document.getElementById(id).draggable = false;
+  }
+
+  private isAStartPointAlreadySelected(): boolean {
+    return this.startId === null || this.startId === undefined;
+  }
+
+  private isPointAValidEndPint(endComponent: BlockComponent, endId: string, inputType: BlockType): boolean {
+    return this.startId !== endId &&
+      this.startComponent !== endComponent &&
+      document.getElementById(endId).classList.contains('unset') &&
+      this.outputType === inputType;
+  }
 }

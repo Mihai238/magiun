@@ -1,9 +1,9 @@
 package at.magiun.core
 
 import at.magiun.core.config.{H2Config, SparkConfig}
-import at.magiun.core.repository.{DataSetRepository, DatabaseInitializer, StageRepository}
-import at.magiun.core.rest.{DataSetController, RestApi, StageController, UserController}
-import at.magiun.core.service.{DataSetService, JobService, StageService}
+import at.magiun.core.repository.{DataSetRepository, DatabaseInitializer, BlockRepository}
+import at.magiun.core.rest.{DataSetController, RestApi, BlockController}
+import at.magiun.core.service.{DataSetService, JobService, BlockService}
 import com.softwaremill.macwire._
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.sql.SparkSession
@@ -14,17 +14,17 @@ trait MainModule {
   lazy val magiunContext = wire[MagiunContext]
 
   // Rest
-  lazy val otherController = wire[StageController]
   lazy val dataSetController = wire[DataSetController]
+  lazy val blockController = wire[BlockController]
   lazy val restApi = wire[RestApi]
 
   // Services
   lazy val jobService = wire[JobService]
-  lazy val stageService = wire[StageService]
+  lazy val blockService = wire[BlockService]
   lazy val dataSetService = wire[DataSetService]
 
   // Repositories
-  lazy val stageRepository = wire[StageRepository]
+  lazy val blockRepository = wire[BlockRepository]
   lazy val dataSetRepository = wire[DataSetRepository]
   lazy val databaseInitializer = wire[DatabaseInitializer]
 

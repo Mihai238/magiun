@@ -1,6 +1,7 @@
 package at.magiun.core.model
 
 import at.magiun.core.TestData.sampleCsvPath
+import at.magiun.core.executor.{DropColumnStage, FileReaderStage}
 import at.magiun.core.{MainModule, UnitTest}
 
 class StageTest extends UnitTest {
@@ -9,7 +10,7 @@ class StageTest extends UnitTest {
 
   it should "remove the column called 'statecode'" in {
     val task = new DropColumnStage(
-      new ReaderStage(mainModule.spark, sampleCsvPath),
+      new FileReaderStage(mainModule.spark, sampleCsvPath),
       "statecode"
     )
 

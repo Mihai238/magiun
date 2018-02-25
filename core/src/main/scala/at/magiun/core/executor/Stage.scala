@@ -1,17 +1,17 @@
-package at.magiun.core.model
+package at.magiun.core.executor
 
+import at.magiun.core.model.{BlockOutput, DatasetOutput}
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 
 
 abstract class Stage {
-  def perform: StageOutput
-
-  val requiredInputStages: Int
+  def perform: BlockOutput
 }
 
-class ReaderStage(spark: SparkSession, fileName: String) extends Stage {
-  override def perform: StageOutput = {
+class FileReaderStage(spark: SparkSession, fileName: String) extends Stage {
+
+  override def perform: BlockOutput = {
     val options = Map(
       "sep" -> ",",
       "header" -> "true"
@@ -20,19 +20,18 @@ class ReaderStage(spark: SparkSession, fileName: String) extends Stage {
     DatasetOutput(frame)
   }
 
-  override val requiredInputStages = 0
 }
 
 // ***
 // Decorators
 // ***
 
-abstract class StageDecorator(stage: Stage) extends Stage {
+abstract class StageDecorator(block: Stage, outputIndex: Int = 0) extends Stage {
 }
 
-class DropColumnStage(stage: Stage, columnName: String) extends StageDecorator(stage) {
-  override def perform: StageOutput = {
-    val output = stage.perform
+class DropColumnStage(block: Stage, columnName: String) extends StageDecorator(block) {
+  override def perform: BlockOutput = {
+    val output = block.perform
 
     output match {
       case DatasetOutput(dataSet) =>
@@ -42,14 +41,13 @@ class DropColumnStage(stage: Stage, columnName: String) extends StageDecorator(s
     }
   }
 
-  override val requiredInputStages = 1
 }
 
 //"age * alta_coloana + 10"
 
-class MapStage(stage: Stage, newColName: String, func: Any => Any, colNames: Seq[String]) extends StageDecorator(stage) {
+class MapStage(block: Stage, newColName: String, func: Any => Any, colNames: Seq[String]) extends StageDecorator(block) {
   override def perform: DatasetOutput = {
-    val output = stage.perform
+    val output = block.perform
 
     output match {
       case DatasetOutput(dataSet) =>
@@ -61,5 +59,4 @@ class MapStage(stage: Stage, newColName: String, func: Any => Any, colNames: Seq
     }
   }
 
-  override val requiredInputStages = 1
 }

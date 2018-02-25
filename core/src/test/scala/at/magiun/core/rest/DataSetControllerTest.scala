@@ -23,8 +23,8 @@ class DataSetControllerTest extends UnitTest {
     stubService.find _ when 1 returns Future.successful(Option(testDs1))
 
     val result = controller.getDataSet(input)
-
     val dataSet = result.awaitValueUnsafe().get
+
     dataSet.id should be(1)
     dataSet.name should be("gigi")
   }

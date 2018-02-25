@@ -19,7 +19,6 @@ case class Column(
 }
 
 sealed abstract class ColumnType extends EnumEntry
-
 object ColumnType extends Enum[ColumnType] with CirceEnum[ColumnType] {
 
   case object String extends ColumnType

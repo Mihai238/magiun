@@ -2,7 +2,7 @@ package at.magiun.core
 
 import at.magiun.core.config.{H2Config, SparkConfig}
 import at.magiun.core.repository.{DataSetRepository, DatabaseInitializer, BlockRepository}
-import at.magiun.core.rest.{DataSetController, RestApi, BlockController, UserController}
+import at.magiun.core.rest.{DataSetController, RestApi, BlockController}
 import at.magiun.core.service.{DataSetService, JobService, BlockService}
 import com.softwaremill.macwire._
 import com.typesafe.config.ConfigFactory
@@ -14,8 +14,8 @@ trait MainModule {
   lazy val magiunContext = wire[MagiunContext]
 
   // Rest
-  lazy val otherController = wire[BlockController]
   lazy val dataSetController = wire[DataSetController]
+  lazy val blockController = wire[BlockController]
   lazy val restApi = wire[RestApi]
 
   // Services

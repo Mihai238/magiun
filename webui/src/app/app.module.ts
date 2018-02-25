@@ -22,6 +22,8 @@ import {HistogramSettingsComponent} from './components/data/chart/histogram/hist
 import {ScatterSettingsComponent} from './components/data/chart/scatter/scatter-settings.component';
 import {ColumnSelectorComponent} from './components/data/chart/shared/column-selector/column-selector.component';
 import {DragDropDirectiveModule} from 'angular4-drag-drop';
+import {ContextMenuModule} from 'angular4-contextmenu/angular2-contextmenu';
+import { ContextMenuService } from 'angular4-contextmenu/src/contextMenu.service';
 import {LinearRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/linear-regression-block.component';
 // noinspection TsLint
 import {PoissonRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/poisson-regression-block.component';
@@ -62,6 +64,7 @@ import {BlockService} from './services/block.service';
     HttpClientModule,
     InfiniteScrollModule,
     DragDropDirectiveModule,
+    ContextMenuModule,
     ClickOutsideModule,
     translate,
     logging,
@@ -69,7 +72,8 @@ import {BlockService} from './services/block.service';
   ],
   providers: [
     DataService,
-    BlockService
+    BlockService,
+    ContextMenuService
   ],
   entryComponents: [
     DatabaseBlockComponent,

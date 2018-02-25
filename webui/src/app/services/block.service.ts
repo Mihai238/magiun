@@ -10,7 +10,7 @@ export class BlockService {
   private startComponent: BlockComponent;
   private startId: string;
   private outputType: BlockType;
-  private linesMap = new Map<any, Array<BlockComponent>>();
+  private linesMap = new Map<any, Array<string>>();
 
   startLine(component: BlockComponent, startId: string, outputType: BlockType): void {
     if (this.isAStartPointAlreadySelected()) {
@@ -32,13 +32,20 @@ export class BlockService {
         document.getElementById(endId)
       );
 
-      this.linesMap.set(line, [this.startComponent, endComponent]);
+      this.linesMap.set(line, [this.startId, endId]);
 
       this.makeComponentUndragable(this.startComponent.id);
       this.makeComponentUndragable(endComponent.id);
       this.changeFromSelectedToSet(document.getElementById(this.startId));
       this.changeFromUnsetToSet(document.getElementById(endId));
       this.reset();
+    }
+  }
+
+  deselectLineStartPoint(id: string): void {
+    if (this.startId === id) {
+      this.reset();
+      this.changeFromSelectedToUnset(document.getElementById(id));
     }
   }
 
@@ -50,6 +57,11 @@ export class BlockService {
   private changeFromSelectedToSet(e) {
     e.classList.remove('selected');
     e.classList.add('set');
+  }
+
+  private changeFromSelectedToUnset(e) {
+    e.classList.remove('selected');
+    e.classList.add('unset');
   }
 
   private changeFromUnsetToSet(e) {

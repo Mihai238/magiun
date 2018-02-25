@@ -46,13 +46,17 @@ export class BlockComponent implements AfterViewInit {
     }
   }
 
-  private startLine(component: BlockComponent, index: number) {
+  private startLine(index: number) {
     console.log(index);
-    this.blockService.startLine(component, this.id + '-output-' + index, component.outputs[index]);
+    this.blockService.startLine(this, this.id + '-output-' + index, this.outputs[index]);
   }
 
-  private endLine(component: BlockComponent, index: number) {
-    this.blockService.endLine(component, this.id + '-input-' + index, component.inputs[index]);
+  private endLine(index: number) {
+    this.blockService.endLine(this, this.id + '-input-' + index, this.inputs[index]);
+  }
+
+  private deselect(index: number) {
+    this.blockService.deselectLineStartPoint(this.id + '-output-' + index);
   }
 }
 

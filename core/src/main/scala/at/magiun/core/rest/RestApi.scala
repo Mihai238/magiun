@@ -8,12 +8,10 @@ import io.circe.generic.auto._
 import io.finch.circe._
 import io.finch.{Application, Output}
 
-class RestApi(userController: UserController,
-              otherController: StageController,
+class RestApi(stageController: StageController,
               dataSetController: DataSetController) extends LazyLogging {
 
-  private val api = userController.api :+:
-    otherController.api :+:
+  private val api = stageController.api :+:
     dataSetController.api
 
   private val service: Service[Request, Response] = api.handle({

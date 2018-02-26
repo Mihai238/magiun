@@ -2,6 +2,7 @@ import {AfterViewInit} from '@angular/core';
 import {BlockPosition} from './block-position';
 import {BlockType} from './block-type';
 import {BlockService} from '../../../services/block.service';
+import {BlockParameter} from './block-parameter';
 
 export class BlockComponent implements AfterViewInit {
 
@@ -17,6 +18,7 @@ export class BlockComponent implements AfterViewInit {
   inputs: Array<BlockType> = [];
   numberOfOutputs = 0;
   outputs: Array<BlockType> = [];
+  configurationParameters: Array<BlockParameter> = [];
 
   constructor(private blockService: BlockService) {}
 

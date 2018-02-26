@@ -15,7 +15,7 @@
   </div>
   <div class="row flex-row">
     <div class="col output" *ngFor="let i of range(numberOfOutputs)">
-      <a><i class="fa fa-circle unset" id="{{id}}-output-{{i}}" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ popUpInputOutPutTitle(outputs[i]) | translate }}" (click)="startLine(i)" (dblclick)="deselect(i)"></i></a>
+      <a><i class="fa fa-circle unset" id="{{id}}-output-{{i}}" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ popUpInputOutPutTitle(outputs[i]) | translate }}" (click)="startLine(i)" (dblclick)="deselect(i)" (clickOutside)="deselect(i)"></i></a>
     </div>
   </div>
 </div>

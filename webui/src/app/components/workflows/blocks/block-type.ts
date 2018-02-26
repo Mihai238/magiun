@@ -22,6 +22,6 @@ export class BlockType {
   static LINEAR_REGRESSION = new BlockType('Linear Regression', 'linearRegression', 'LINEAR_REGRESSION');
   static POISSON_REGRESSION = new BlockType('Poisson Regression', 'poissonRegression', 'POISSON_REGRESSION');
 
-  constructor (public name: string, public type: string, public value: string) {}
+  private constructor (public name: string, public type: string, public value: string) {}
 
 }

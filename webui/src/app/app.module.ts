@@ -25,7 +25,6 @@ import {DragDropDirectiveModule} from 'angular4-drag-drop';
 import {ContextMenuModule} from 'angular4-contextmenu/angular2-contextmenu';
 import { ContextMenuService } from 'angular4-contextmenu/src/contextMenu.service';
 import {LinearRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/linear-regression-block.component';
-// noinspection TsLint
 import {PoissonRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/poisson-regression-block.component';
 import {ClickOutsideModule} from 'ng-click-outside';
 import { NewColumnSettingsComponent } from './components/data/new-column-settings/new-column-settings.component';
@@ -34,6 +33,7 @@ import {WorkflowDirective} from './components/workflows/workflow.directive';
 import {DatabaseBlockComponent} from './components/workflows/blocks/import-data/database-block.component';
 import {FileBlockComponent} from './components/workflows/blocks/import-data/file-block.component';
 import {BlockService} from './services/block.service';
+import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 
 @NgModule({
   declarations: [
@@ -66,6 +66,7 @@ import {BlockService} from './services/block.service';
     DragDropDirectiveModule,
     ContextMenuModule,
     ClickOutsideModule,
+    BootstrapModalModule,
     translate,
     logging,
     routing

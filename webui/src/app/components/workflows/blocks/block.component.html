@@ -1,11 +1,11 @@
-<div class="block container" id="{{id}}" [dragDirective]='this' [dragHightlight]="'highlight'" (contextmenu)="onContextMenu($event, item)">
+<div class="block container" id="{{id}}" [dragDirective]='{id: this.id}' [dragHightlight]="'highlight'">
   <div class="row flex-row">
     <div class="col input" *ngFor="let i of range(numberOfInputs)">
       <a><i class="fa fa-circle unset" id="{{id}}-input-{{i}}" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ popUpInputOutPutTitle(inputs[i]) | translate }}" (click)="endLine(i)"></i></a>
     </div>
     <div class="col">
       <i class="fa fa-sliders float-right" aria-hidden="true" (click)="showParametersModal()" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.SETTINGS' | translate }}"></i>
-      <i class="fa fa-exclamation-circle float-right" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.STEP_IS_NOT_COMPLETE' | translate }}"></i>
+      <i *ngIf="!valid" class="fa fa-exclamation-circle float-right" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.STEP_IS_NOT_COMPLETE' | translate }}"></i>
     </div>
   </div>
   <div class="row">

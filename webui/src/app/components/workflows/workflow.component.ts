@@ -37,11 +37,16 @@ export class WorkflowComponent {
       this.showPlaceholder = false;
     }
 
-    const object = JSON.parse(event.dataTransfer.getData('text')).object;
-    if (typeof object === 'string') {
-      this.createNewBlockComponent(event, object);
-    } else if (typeof object === 'object') {
-      this.updatePosition(event, object);
+    try {
+      const object = JSON.parse(event.dataTransfer.getData('text')).object;
+
+      if (typeof object === 'string') {
+        this.createNewBlockComponent(event, object);
+      } else if (typeof object === 'object') {
+        this.updatePosition(event, object.id);
+      }
+    } catch (e) {
+      console.log(e);
     }
   }
 
@@ -52,12 +57,12 @@ export class WorkflowComponent {
     (<BlockComponent>componentRef.instance).position = new BlockPosition(event.layerX, event.layerY) ;
   }
 
-  private updatePosition(event, object): void {
+  private updatePosition(event, id): void {
     const position = new BlockPosition(event.layerX, event.layerY);
-    const d = document.getElementById(object.id);
+    const d = document.getElementById(id);
     d.style.left = position.x + 'px';
     d.style.top =  position.y + 'px';
-    this.blocksDropped.filter(b => b.id === object.id).forEach(b => b.position = position);
+    this.blocksDropped.filter(b => b.id === id).forEach(b => b.position = position);
   }
 
   private updateTitle(event: any): void {

@@ -25,7 +25,14 @@ export class BlockComponent implements AfterViewInit {
 
   protected showParametersModal() {
     this.dialogService.addDialog(ParametersModalComponent, {parameters: this.configurationParameters})
-      .subscribe((result) => {this.configurationParameters = result;});
+      .subscribe(
+        (result) => {
+        this.configurationParameters = result;
+        const unSetParametersCount = this.configurationParameters.filter(p => p.value === null || p.value === undefined).length;
+        if (unSetParametersCount === 0) {
+          this.valid = true;
+        }
+      });
   }
 
   ngAfterViewInit() {

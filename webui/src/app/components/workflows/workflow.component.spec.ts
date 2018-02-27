@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WorkflowsComponent } from './workflows.component';
+import { WorkflowComponent } from './workflow.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {DragDropDirectiveModule} from 'angular4-drag-drop';
 import {LinearRegressionBlockComponent} from './blocks/machine-learning/regression/linear-regression-block.component';
@@ -8,14 +8,14 @@ import {PoissonRegressionBlockComponent} from './blocks/machine-learning/regress
 import {translate} from '../../app.translate';
 import {logging} from '../../app.logging';
 
-describe('WorkflowsComponent', () => {
-  let component: WorkflowsComponent;
-  let fixture: ComponentFixture<WorkflowsComponent>;
+describe('WorkflowComponent', () => {
+  let component: WorkflowComponent;
+  let fixture: ComponentFixture<WorkflowComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        WorkflowsComponent ,
+        WorkflowComponent ,
         SidebarComponent,
         LinearRegressionBlockComponent,
         PoissonRegressionBlockComponent
@@ -30,7 +30,7 @@ describe('WorkflowsComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WorkflowsComponent);
+    fixture = TestBed.createComponent(WorkflowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

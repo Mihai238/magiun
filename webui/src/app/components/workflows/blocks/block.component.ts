@@ -1,6 +1,10 @@
 import {AfterViewInit} from '@angular/core';
 import {BlockPosition} from './block-position';
 import {BlockType} from './block-type';
+import {BlockService} from '../../../services/block.service';
+import {BlockParameter} from './block-parameter';
+import {DialogService} from 'ng2-bootstrap-modal';
+import {ParametersModalComponent} from './parameters-modal/parameters-modal.component';
 
 export class BlockComponent implements AfterViewInit {
 
@@ -10,19 +14,25 @@ export class BlockComponent implements AfterViewInit {
   id: string;
   type: string;
   valid = false;
-  popUp = false;
   position: BlockPosition;
   numberOfInputs = 0;
   inputs: Array<BlockType> = [];
   numberOfOutputs = 0;
   outputs: Array<BlockType> = [];
+  configurationParameters: Array<BlockParameter> = [];
 
-  protected hidePopUp() {
-    this.popUp = false;
-  }
+  constructor(private blockService: BlockService, private dialogService: DialogService) {}
 
-  protected showSettingsPopUp() {
-    console.log('settings')
+  protected showParametersModal() {
+    this.dialogService.addDialog(ParametersModalComponent, {parameters: this.configurationParameters})
+      .subscribe(
+        (result) => {
+        this.configurationParameters = result;
+        const unSetParametersCount = this.configurationParameters.filter(p => p.value === null || p.value === undefined).length;
+        if (unSetParametersCount === 0) {
+          this.valid = true;
+        }
+      });
   }
 
   ngAfterViewInit() {
@@ -41,6 +51,19 @@ export class BlockComponent implements AfterViewInit {
       case BlockType.REGRESSION_MODEL: return BlockComponent.base_path + BlockType.REGRESSION_MODEL.value;
       default: return 'ERROR';
     }
+  }
+
+  private startLine(index: number) {
+    console.log(index);
+    this.blockService.startLine(this, this.id + '-output-' + index, this.outputs[index]);
+  }
+
+  private endLine(index: number) {
+    this.blockService.endLine(this, this.id + '-input-' + index, this.inputs[index]);
+  }
+
+  private deselect(index: number) {
+    this.blockService.deselectLineStartPoint(this.id + '-output-' + index);
   }
 }
 

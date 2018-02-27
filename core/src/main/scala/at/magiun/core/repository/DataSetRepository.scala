@@ -24,10 +24,7 @@ class DataSetRepository(db: Database) {
   def upsert(dataSetEntity: MagiunDataSetEntity): Future[MagiunDataSetEntity] = {
     val action = (dataSets returning dataSets.map(_.id)).insertOrUpdate(dataSetEntity)
 
-//    val f = dataSets.insertOrUpdate(dataSetEntity)
-
-    db.run(action)
-      .map {
+    db.run(action).map {
         case Some(id) => dataSetEntity.copy(id = id)
         case None => dataSetEntity
       }

@@ -12,8 +12,8 @@ class DataSetServiceTest extends UnitTest {
     override lazy val dataSetRepository: DataSetRepository = stub[DataSetRepository]
   }
 
-  val service: DataSetService = mainModule.dataSetService
-  val mockedRepo: DataSetRepository = mainModule.dataSetRepository
+  private val service = mainModule.dataSetService
+  private val mockedRepo = mainModule.dataSetRepository
 
   it should "return a data set model" in {
     mockedRepo.find _ when 1 returns Future.successful(Option(testDsEntity1))

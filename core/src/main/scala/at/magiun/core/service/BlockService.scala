@@ -1,21 +1,40 @@
 package at.magiun.core.service
 
 import at.magiun.core.model.{Block, BlockType}
-import at.magiun.core.repository.BlockRepository
-
-import scala.concurrent.Future
+import at.magiun.core.repository.{BlockEntity, BlockRepository}
+import io.circe.generic.auto._
+import io.circe.parser._
+import io.circe.syntax._
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class BlockService(blockRepository: BlockRepository) {
 
-  def find(id: Int): Future[Option[Block]] = {
-    // TODO
-    Future(Option(Block("2", BlockType.FileReader, Seq(("1", 0)), params = Map("x" -> "4"))))
+  case class Config(inputs: Seq[(String, Long)], params: Map[String, String])
+
+  def find(id: String): Future[Option[Block]] = {
+    blockRepository.find(id)
+      .map(_.map(mapToModel))
   }
 
-  def create(block: Block): Future[Block] = {
-    ???
+  def upsert(block: Block): Future[Block] = {
+    blockRepository.upsert(mapToEntity(block))
+      .map(mapToModel)
+  }
+
+  private def mapToModel(entity: BlockEntity): Block = {
+    val config = decode[Config](entity.config) match {
+      case Left(e) => throw new RuntimeException(e)
+      case Right(c) => c
+    }
+
+    Block(entity.id, BlockType.withName(entity.`type`), config.inputs, config.params)
+  }
+
+  private def mapToEntity(block: Block): BlockEntity = {
+    val config = Config(block.inputs, block.params).asJson.noSpaces
+    BlockEntity(block.id, block.`type`.toString, config)
   }
 
 }

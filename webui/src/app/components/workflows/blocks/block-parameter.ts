@@ -7,4 +7,8 @@ export class BlockParameter {
   public value: any;
 
   private constructor(public name: string, public required: boolean, public type: Type<any>, public defaultValue?: any) {}
+
+  getNameFromLocale() {
+    return 'WORKFLOWS.BLOCKS.PARAMETERS.' + this.name;
+  }
 }

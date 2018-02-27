@@ -4,7 +4,7 @@
       <a><i class="fa fa-circle unset" id="{{id}}-input-{{i}}" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ popUpInputOutPutTitle(inputs[i]) | translate }}" (click)="endLine(i)"></i></a>
     </div>
     <div class="col">
-      <i class="fa fa-sliders float-right" aria-hidden="true" (click)="showSettingsPopUp()"data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.SETTINGS' | translate }}"></i>
+      <i class="fa fa-sliders float-right" aria-hidden="true" (click)="showParametersModal()" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.SETTINGS' | translate }}"></i>
       <i class="fa fa-exclamation-circle float-right" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.STEP_IS_NOT_COMPLETE' | translate }}"></i>
     </div>
   </div>

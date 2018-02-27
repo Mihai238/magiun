@@ -3,6 +3,8 @@ import {BlockPosition} from './block-position';
 import {BlockType} from './block-type';
 import {BlockService} from '../../../services/block.service';
 import {BlockParameter} from './block-parameter';
+import {DialogService} from 'ng2-bootstrap-modal';
+import {ParametersModalComponent} from './parameters-modal/parameters-modal.component';
 
 export class BlockComponent implements AfterViewInit {
 
@@ -12,7 +14,6 @@ export class BlockComponent implements AfterViewInit {
   id: string;
   type: string;
   valid = false;
-  popUp = false;
   position: BlockPosition;
   numberOfInputs = 0;
   inputs: Array<BlockType> = [];
@@ -20,14 +21,11 @@ export class BlockComponent implements AfterViewInit {
   outputs: Array<BlockType> = [];
   configurationParameters: Array<BlockParameter> = [];
 
-  constructor(private blockService: BlockService) {}
+  constructor(private blockService: BlockService, private dialogService: DialogService) {}
 
-  protected hidePopUp() {
-    this.popUp = false;
-  }
-
-  protected showSettingsPopUp() {
-    console.log('settings')
+  protected showParametersModal() {
+    this.dialogService.addDialog(ParametersModalComponent, {parameters: this.configurationParameters})
+      .subscribe((result) => {this.configurationParameters = result;});
   }
 
   ngAfterViewInit() {

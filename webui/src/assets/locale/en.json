@@ -30,9 +30,14 @@
     "BLOCKS": {
       "STEP_IS_NOT_COMPLETE": "It seems that the created step is not configured!",
       "SETTINGS": "Settings",
+      "CONFIG_PARAMETERS": "Block Configuration Parameters",
       "INPUT_OUTPUT": {
         "DATASET": "Dataset",
         "REGRESSION_MODEL": "Regression Model"
+      },
+      "PARAMETERS": {
+        "FILE_URL": "File Url:",
+        "UPLOAD_FILE_TEXT": "Choose a file"
       }
     }
   }

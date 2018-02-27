@@ -1,4 +1,4 @@
-import {AfterViewInit} from '@angular/core';
+import {AfterViewInit, EventEmitter, Output} from '@angular/core';
 import {BlockPosition} from './block-position';
 import {BlockType} from './block-type';
 import {BlockService} from '../../../services/block.service';
@@ -54,7 +54,6 @@ export class BlockComponent implements AfterViewInit {
   }
 
   private startLine(index: number) {
-    console.log(index);
     this.blockService.startLine(this, this.id + '-output-' + index, this.outputs[index]);
   }
 
@@ -64,6 +63,9 @@ export class BlockComponent implements AfterViewInit {
 
   private deselect(index: number) {
     this.blockService.deselectLineStartPoint(this.id + '-output-' + index);
+  }
+
+  private delete() {
   }
 }
 

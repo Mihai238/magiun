@@ -3,9 +3,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouteReuseStrategy} from '@angular/router';
-import {ContextMenuModule} from 'angular4-contextmenu/angular2-contextmenu';
 import {DragDropDirectiveModule} from 'angular4-drag-drop';
-import { ContextMenuService } from 'angular4-contextmenu/src/contextMenu.service';
 import {ClickOutsideModule} from 'ng-click-outside';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
@@ -68,7 +66,6 @@ import {RoutingReuseStrategy} from './app.routing.reuse.strategy';
     HttpClientModule,
     InfiniteScrollModule,
     DragDropDirectiveModule,
-    ContextMenuModule,
     ClickOutsideModule,
     BootstrapModalModule,
     translate,
@@ -78,7 +75,6 @@ import {RoutingReuseStrategy} from './app.routing.reuse.strategy';
   providers: [
     DataService,
     BlockService,
-    ContextMenuService,
     {provide: RouteReuseStrategy, useClass: RoutingReuseStrategy}
   ],
   entryComponents: [

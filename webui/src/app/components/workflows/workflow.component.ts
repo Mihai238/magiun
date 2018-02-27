@@ -37,16 +37,12 @@ export class WorkflowComponent {
       this.showPlaceholder = false;
     }
 
-    try {
-      const object = JSON.parse(event.dataTransfer.getData('text')).object;
+    const object = JSON.parse(event.dataTransfer.getData('text')).object;
 
-      if (typeof object === 'string') {
-        this.createNewBlockComponent(event, object);
-      } else if (typeof object === 'object') {
-        this.updatePosition(event, object.id);
-      }
-    } catch (e) {
-      console.log(e);
+    if (typeof object === 'string') {
+      this.createNewBlockComponent(event, object);
+    } else if (typeof object === 'object') {
+      this.updatePosition(event, object.id);
     }
   }
 
@@ -55,6 +51,7 @@ export class WorkflowComponent {
     const componentRef = this.workflowsDirective.viewContainerRef.createComponent(componentFactory);
 
     (<BlockComponent>componentRef.instance).position = new BlockPosition(event.layerX, event.layerY) ;
+    this.blocksDropped.push(<BlockComponent>componentRef.instance);
   }
 
   private updatePosition(event, id): void {

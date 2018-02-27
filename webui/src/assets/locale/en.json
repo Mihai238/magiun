@@ -30,6 +30,7 @@
     "BLOCKS": {
       "STEP_IS_NOT_COMPLETE": "It seems that the created step is not configured!",
       "SETTINGS": "Settings",
+      "DELETE": "Delete Block",
       "CONFIG_PARAMETERS": "Block Configuration Parameters",
       "INPUT_OUTPUT": {
         "DATASET": "Dataset",

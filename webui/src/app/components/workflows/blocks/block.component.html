@@ -5,6 +5,7 @@
     </div>
     <div class="col">
       <i class="fa fa-sliders float-right" aria-hidden="true" (click)="showParametersModal()" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.SETTINGS' | translate }}"></i>
+      <i class="fa fa-trash float-right" aria-hidden="true" (click)="delete()"  data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.DELETE' | translate }}"></i>
       <i *ngIf="!valid" class="fa fa-exclamation-circle float-right" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'WORKFLOWS.BLOCKS.STEP_IS_NOT_COMPLETE' | translate }}"></i>
     </div>
   </div>

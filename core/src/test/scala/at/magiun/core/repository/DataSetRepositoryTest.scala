@@ -1,10 +1,8 @@
 package at.magiun.core.repository
 
-import at.magiun.core.model.SourceType
 import at.magiun.core.{MainModule, UnitTest}
 
 import scala.concurrent.Await
-import scala.concurrent.duration._
 
 class DataSetRepositoryTest extends UnitTest {
 

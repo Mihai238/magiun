@@ -2,6 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {RouteReuseStrategy} from '@angular/router';
 import {ContextMenuModule} from 'angular4-contextmenu/angular2-contextmenu';
 import {DragDropDirectiveModule} from 'angular4-drag-drop';
 import { ContextMenuService } from 'angular4-contextmenu/src/contextMenu.service';
@@ -35,6 +36,7 @@ import {DatabaseBlockComponent} from './components/workflows/blocks/import-data/
 import {FileBlockComponent} from './components/workflows/blocks/import-data/file-block.component';
 import {BlockService} from './services/block.service';
 import {ParametersModalComponent} from './components/workflows/blocks/parameters-modal/parameters-modal.component';
+import {RoutingReuseStrategy} from './app.routing.reuse.strategy';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,8 @@ import {ParametersModalComponent} from './components/workflows/blocks/parameters
   providers: [
     DataService,
     BlockService,
-    ContextMenuService
+    ContextMenuService,
+    {provide: RouteReuseStrategy, useClass: RoutingReuseStrategy}
   ],
   entryComponents: [
     DatabaseBlockComponent,

@@ -6,4 +6,20 @@ import { Component } from '@angular/core';
   templateUrl: 'navbar.component.html',
   styleUrls: ['navbar.component.scss'],
 })
-export class NavbarComponent { }
+export class NavbarComponent {
+
+  private hideLeaderLines(): void {
+    this.changeLeaderLinesVisibility('hidden');
+  }
+
+  private showLeaderLines(): void {
+    this.changeLeaderLinesVisibility('visible');
+  }
+
+  private changeLeaderLinesVisibility(visibility: string) {
+    const lines = document.getElementsByClassName('leader-line');
+    for (let i = 0; i < lines.length; i++) {
+      (<any>lines[i]).style.visibility = visibility;
+    }
+  }
+}

@@ -6,6 +6,7 @@ import {WorkflowDirective} from './workflow.directive';
 import {BlockPosition} from './blocks/block-position';
 import {DatabaseBlockComponent} from './blocks/import-data/database-block.component';
 import {FileBlockComponent} from './blocks/import-data/file-block.component';
+import {BlockService} from '../../services/block.service';
 
 @Component({
   selector: 'app-workflow',
@@ -30,7 +31,7 @@ export class WorkflowComponent {
     }
   }
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private blockService: BlockService) { }
 
   private handleDropEventMouse(event): void {
     if (this.showPlaceholder) {
@@ -60,6 +61,7 @@ export class WorkflowComponent {
     d.style.left = position.x + 'px';
     d.style.top =  position.y + 'px';
     this.blocksDropped.filter(b => b.id === id).forEach(b => b.position = position);
+    this.blockService.updatePosition(id);
   }
 
   private updateTitle(event: any): void {

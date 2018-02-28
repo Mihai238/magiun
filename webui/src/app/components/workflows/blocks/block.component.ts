@@ -54,11 +54,11 @@ export class BlockComponent implements AfterViewInit {
   }
 
   private startLine(index: number) {
-    this.blockService.startLine(this, this.id + '-output-' + index, this.outputs[index]);
+    this.blockService.startLine(this, this.id + '-output-' + index, this.outputs[index], index);
   }
 
   private endLine(index: number) {
-    this.blockService.endLine(this, this.id + '-input-' + index, this.inputs[index]);
+    this.blockService.endLine(this, this.id + '-input-' + index, this.inputs[index], index);
   }
 
   private deselect(index: number) {

@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {BlockComponent} from '../components/workflows/blocks/block.component';
 import {BlockType} from '../components/workflows/blocks/block-type';
+import {Tuple} from '../util/tuple';
+import {BlockComponentsRelation} from '../components/workflows/blocks/block-components-relation';
+import {Utils} from '../util/utils';
 
 declare var LeaderLine: any;
 
@@ -10,13 +13,15 @@ export class BlockService {
   private startComponent: BlockComponent;
   private startId: string;
   private outputType: BlockType;
-  private linesMap = new Map<any, Array<string>>();
+  private outputIndex: number;
+  private compnentsMap = new Map<Tuple<string, string>, Array<BlockComponentsRelation>>();
 
-  startLine(component: BlockComponent, startId: string, outputType: BlockType): void {
+  startLine(component: BlockComponent, startId: string, outputType: BlockType, outputIndex: number): void {
     if (this.isAStartPointAlreadySelected()) {
       this.startComponent = component;
       this.startId = startId;
       this.outputType = outputType;
+      this.outputIndex = outputIndex;
 
       const e = document.getElementById(startId);
       if (e.classList.contains('unset')) {
@@ -25,17 +30,17 @@ export class BlockService {
     }
   }
 
-  endLine(endComponent: BlockComponent, endId: string, inputType: BlockType): void {
+  endLine(endComponent: BlockComponent, endId: string, inputType: BlockType, inputIndex: number): void {
     if (this.isPointAValidEndPint(endComponent, endId, inputType)) {
       const line = new LeaderLine(
         document.getElementById(this.startId),
-        document.getElementById(endId)
+        document.getElementById(endId),
+        {
+          dropShadow: true
+        }
       );
 
-      this.linesMap.set(line, [this.startId, endId]);
-
-      this.makeComponentUndragable(this.startComponent.id);
-      this.makeComponentUndragable(endComponent.id);
+      this.addBlockRelationToMap(endComponent, inputIndex, line);
       this.changeFromSelectedToSet(document.getElementById(this.startId));
       this.changeFromUnsetToSet(document.getElementById(endId));
       this.reset();
@@ -46,6 +51,21 @@ export class BlockService {
     if (this.startId === id) {
       this.reset();
       this.changeFromSelectedToUnset(document.getElementById(id));
+    }
+  }
+
+  updatePosition(id: string): void {
+    const entries = this.compnentsMap.entries();
+    let entry = entries.next();
+    while (entry !== null && entry !== undefined && entry.value !== null && entry.value !== undefined) {
+      const entryValue = entry.value;
+      if (entryValue[0]._1 === id || entryValue[0]._2 === id) {
+        const relations: Array<BlockComponentsRelation> = entryValue[1];
+        if (relations !== undefined && relations !== null) {
+          relations.forEach(r => r.line.position());
+        }
+      }
+      entry = entries.next();
     }
   }
 
@@ -73,10 +93,7 @@ export class BlockService {
     this.startId = null;
     this.startComponent = null;
     this.outputType = null;
-  }
-
-  private makeComponentUndragable(id: string): void {
-    document.getElementById(id).draggable = false;
+    this.outputIndex = null;
   }
 
   private isAStartPointAlreadySelected(): boolean {
@@ -89,4 +106,19 @@ export class BlockService {
       document.getElementById(endId).classList.contains('unset') &&
       this.outputType === inputType;
   }
+
+  private addBlockRelationToMap(endComponent: BlockComponent, inputIndex: number, line: any): void {
+    const key = new Tuple<string, string>(this.startComponent.id, endComponent.id);
+    const value = new BlockComponentsRelation(this.startComponent, this.outputIndex, endComponent, inputIndex, line);
+
+    if (Utils.isKeyPresentInTheMap(this.compnentsMap, key)) {
+      const array = this.compnentsMap.get(key);
+      array.push(value);
+
+      this.compnentsMap.set(key, array)
+    } else {
+      this.compnentsMap.set(key, [value]);
+    }
+  }
+
 }

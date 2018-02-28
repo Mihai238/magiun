@@ -35,9 +35,7 @@ export class BlockService {
       const line = new LeaderLine(
         document.getElementById(this.startId),
         document.getElementById(endId),
-        {
-          dropShadow: true
-        }
+        {dropShadow: true}
       );
 
       this.addBlockRelationToMap(endComponent, inputIndex, line);
@@ -66,6 +64,14 @@ export class BlockService {
         }
       }
       entry = entries.next();
+    }
+  }
+
+  addDeleteEventHandlerOnSelector(): void {
+    const blocks = document.getElementsByTagName('app-block');
+
+    for (let i = 0; i < blocks.length; i++) {
+      blocks[i].addEventListener('(onDelete)', () => console.log('test'));
     }
   }
 

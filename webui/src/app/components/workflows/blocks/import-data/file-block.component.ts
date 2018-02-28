@@ -6,7 +6,7 @@ import {BlockParameter} from '../block-parameter';
 import {DialogService} from 'ng2-bootstrap-modal';
 
 @Component({
-  selector: 'app-database-block',
+  selector: 'app-block',
   templateUrl: '../block.component.html',
   styleUrls: ['./import-data-block.component.scss']
 })

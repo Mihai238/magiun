@@ -20,6 +20,7 @@ export class BlockComponent implements AfterViewInit {
   numberOfOutputs = 0;
   outputs: Array<BlockType> = [];
   configurationParameters: Array<BlockParameter> = [];
+  @Output('onDelete') onDelete = new EventEmitter<any>();
 
   constructor(private blockService: BlockService, private dialogService: DialogService) {}
 
@@ -39,6 +40,7 @@ export class BlockComponent implements AfterViewInit {
     const d = document.getElementById(this.id);
     d.style.left = this.position.x + 'px';
     d.style.top = this.position.y + 'px';
+    this.blockService.addDeleteEventHandlerOnSelector();
   }
 
   private range(maxValue) {
@@ -66,6 +68,8 @@ export class BlockComponent implements AfterViewInit {
   }
 
   private delete() {
+    this.onDelete.emit(true);
+    console.log('emitted');
   }
 }
 

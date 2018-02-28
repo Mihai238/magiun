@@ -5,7 +5,7 @@ import {BlockService} from '../../../../../services/block.service';
 import {DialogService} from 'ng2-bootstrap-modal';
 
 @Component({
-  selector: 'app-poisson-regression-block',
+  selector: 'app-block',
   templateUrl: '../../block.component.html',
   styleUrls: ['./regression-block.component.scss']
 })

@@ -21,14 +21,14 @@
     </ul>
     <ul class="nav-right">
       <li class="dropdown">
-        <a routerLink="data" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
+        <a routerLink="data" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown" (click)="hideLeaderLines()">
           <div class="peer">
             <span class="fsz-sm c-grey-900">{{ 'NAVBAR.DATA' | translate }}</span>
           </div>
         </a>
       </li>
       <li class="dropdown">
-        <a routerLink="workflow" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
+        <a routerLink="workflow" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown" (click)="showLeaderLines()">
           <div class="peer">
             <span class="fsz-sm c-grey-900">{{ 'NAVBAR.WORKFLOWS' | translate }}</span>
           </div>

@@ -7,6 +7,7 @@ import {LinearRegressionBlockComponent} from './blocks/machine-learning/regressi
 import {PoissonRegressionBlockComponent} from './blocks/machine-learning/regression/poisson-regression-block.component';
 import {translate} from '../../app.translate';
 import {logging} from '../../app.logging';
+import {BlockService} from '../../services/block.service';
 
 describe('WorkflowComponent', () => {
   let component: WorkflowComponent;
@@ -24,6 +25,9 @@ describe('WorkflowComponent', () => {
         DragDropDirectiveModule,
         logging,
         translate
+      ],
+      providers: [
+        BlockService
       ]
     })
     .compileComponents();

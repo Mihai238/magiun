@@ -67,14 +67,6 @@ export class BlockService {
     }
   }
 
-  addDeleteEventHandlerOnSelector(): void {
-    const blocks = document.getElementsByTagName('app-block');
-
-    for (let i = 0; i < blocks.length; i++) {
-      blocks[i].addEventListener('(onDelete)', () => console.log('test'));
-    }
-  }
-
   private changeFromUnsetToSelected(e) {
     e.classList.remove('unset');
     e.classList.add('selected')

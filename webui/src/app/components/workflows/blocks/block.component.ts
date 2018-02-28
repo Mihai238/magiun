@@ -1,4 +1,4 @@
-import {AfterViewInit, EventEmitter, Output} from '@angular/core';
+import {AfterViewInit, EventEmitter, OnDestroy, Output} from '@angular/core';
 import {BlockPosition} from './block-position';
 import {BlockType} from './block-type';
 import {BlockService} from '../../../services/block.service';
@@ -10,6 +10,7 @@ export class BlockComponent implements AfterViewInit {
 
   private static base_path = 'WORKFLOWS.BLOCKS.INPUT_OUTPUT.';
 
+  _ref: any;
   name: string;
   id: string;
   type: string;
@@ -40,7 +41,6 @@ export class BlockComponent implements AfterViewInit {
     const d = document.getElementById(this.id);
     d.style.left = this.position.x + 'px';
     d.style.top = this.position.y + 'px';
-    this.blockService.addDeleteEventHandlerOnSelector();
   }
 
   private range(maxValue) {
@@ -68,8 +68,7 @@ export class BlockComponent implements AfterViewInit {
   }
 
   private delete() {
-    this.onDelete.emit(true);
-    console.log('emitted');
+    this.onDelete.emit();
   }
 }
 

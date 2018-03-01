@@ -10,7 +10,6 @@ export class BlockComponent implements AfterViewInit {
 
   private static base_path = 'WORKFLOWS.BLOCKS.INPUT_OUTPUT.';
 
-  _ref: any;
   name: string;
   id: string;
   type: string;

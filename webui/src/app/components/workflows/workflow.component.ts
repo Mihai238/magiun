@@ -53,7 +53,6 @@ export class WorkflowComponent {
     const blockInstance = componentRef.instance as BlockComponent;
 
     blockInstance.position = new BlockPosition(event.layerX, event.layerY);
-    blockInstance._ref = blockInstance;
     blockInstance.onDelete.subscribe(() => {this.deleteComponent(blockInstance, componentRef)});
     this.blocksDropped.push(blockInstance);
   }
@@ -78,7 +77,6 @@ export class WorkflowComponent {
     }
 
     componentRef.destroy();
-
-    // TODO implement deletion of block-component in block.service
+    this.blockService.deleteComponent(component);
   }
 }

@@ -67,6 +67,24 @@ export class BlockService {
     }
   }
 
+  // TODO change bullet color after deleting the line
+  deleteComponent(component: BlockComponent): void {
+    const componentId = component.id;
+    const entries = this.compnentsMap.entries();
+    let entry = entries.next().value;
+    while (entry !== null && entry !== undefined) {
+      if (entry[0]._1 === componentId || entry[0]._2 === componentId) {
+        const relations: Array<BlockComponentsRelation> = entry[1];
+        if (relations !== undefined && relations !== null) {
+          relations.forEach(r => r.line.remove());
+        }
+        this.compnentsMap.delete(entry[0]);
+      }
+
+      entry = entries.next().value;
+    }
+  }
+
   private changeFromUnsetToSelected(e) {
     e.classList.remove('unset');
     e.classList.add('selected')

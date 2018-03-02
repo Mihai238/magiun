@@ -1,6 +1,7 @@
 package at.magiun.core.repository
 
 import slick.jdbc.H2Profile.api._
+import slick.jdbc.meta.MTable
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
@@ -12,7 +13,10 @@ class BlockRepository(db: Database) {
   val blocks = TableQuery[Blocks]
 
   if (db != null) {
-    Await.result(db.run(DBIO.seq(blocks.schema.create)), 5.seconds)
+    val tableExists = Await.result(db.run(MTable.getTables), 1.seconds).exists(_.name.name == TABLE_NAME)
+    if (!tableExists) {
+      Await.result(db.run(DBIO.seq(blocks.schema.create)), 5.seconds)
+    }
   }
 
   def upsert(block: BlockEntity): Future[BlockEntity] = {

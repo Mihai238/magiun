@@ -8,15 +8,14 @@ import io.circe.generic.auto._
 import io.finch.circe._
 import io.finch.{Application, Output}
 
-import io.circe.generic.auto._
-import io.finch._
-import io.finch.circe._
-
 class RestApi(blockController: BlockController,
-              dataSetController: DataSetController) extends LazyLogging {
+              dataSetController: DataSetController,
+              executionController: ExecutionController
+             ) extends LazyLogging {
 
   private val api = blockController.api :+:
-    dataSetController.api
+    dataSetController.api :+:
+    executionController.api
 
   private val service: Service[Request, Response] = api.handle({
     case e: Exception =>

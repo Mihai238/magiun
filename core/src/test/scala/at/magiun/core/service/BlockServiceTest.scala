@@ -17,9 +17,9 @@ class BlockServiceTest extends UnitTest {
   private val mockedRepo = mainModule.blockRepository
 
   it should "return a block" in {
-    mockedRepo.find _ when "id-2" returns Future.successful(Option(testBlockEntity1))
+    mockedRepo.find _ when "id-2" returns Future.successful(testBlockEntity1)
 
-    val result = Await.result(service.find("id-2"), TIMEOUT).get
+    val result = Await.result(service.find("id-2"), TIMEOUT)
 
     result.id should be("id-2")
     result.`type` should be(BlockType.FileReader)

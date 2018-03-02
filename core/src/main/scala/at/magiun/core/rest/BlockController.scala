@@ -20,10 +20,7 @@ class BlockController(blockService: BlockService) extends LazyLogging {
   val getBlock: Endpoint[Block] = get(PATH :: path[String]) { id: String =>
     blockService.find(id)
       .asTwitter
-      .map {
-        case Some(block) => Ok(block)
-        case None => NotFound(new RuntimeException("Block not found"))
-      }
+      .map(Ok)
   }
 
   val upsertBlock: Endpoint[Block] = post(PATH :: jsonBody[Block]) { block: Block =>

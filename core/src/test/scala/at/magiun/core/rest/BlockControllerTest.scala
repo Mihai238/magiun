@@ -20,7 +20,7 @@ class BlockControllerTest extends UnitTest {
 
   it should "read a block" in {
     val input = Input.get("/blocks/2")
-    stubService.find _ when "2" returns Future.successful(Option(TestData.testBlock2))
+    stubService.find _ when "2" returns Future.successful(TestData.testBlock2)
 
     val result = controller.getBlock(input)
     val block = result.awaitValueUnsafe().get

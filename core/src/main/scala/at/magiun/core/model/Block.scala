@@ -9,9 +9,12 @@ case class Block(id: String, `type`: BlockType, inputs: Seq[(String, Long)], par
 sealed abstract class BlockType extends EnumEntry
 object BlockType extends Enum[BlockType] with CirceEnum[BlockType] {
 
+  // Readers and writers
   case object FileReader extends BlockType
   case object DatabaseReader extends BlockType
+  case object FileWriter extends BlockType
 
+  // Feature processors
   case object DropColumn extends BlockType
   case object AddColumn extends BlockType
 

@@ -13,9 +13,9 @@ class BlockService(blockRepository: BlockRepository) {
 
   case class Config(inputs: Seq[(String, Long)], params: Map[String, String])
 
-  def find(id: String): Future[Option[Block]] = {
+  def find(id: String): Future[Block] = {
     blockRepository.find(id)
-      .map(_.map(mapToModel))
+      .map(mapToModel)
   }
 
   def upsert(block: Block): Future[Block] = {

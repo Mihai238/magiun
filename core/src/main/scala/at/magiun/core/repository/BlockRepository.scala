@@ -21,10 +21,10 @@ class BlockRepository(db: Database) {
     db.run(action).map(_ => block)
   }
 
-  def find(id: String): Future[Option[BlockEntity]] = {
+  def find(id: String): Future[BlockEntity] = {
     val action = blocks.filter(_.id === id)
       .result
-      .headOption
+      .head
 
     db.run(action)
   }

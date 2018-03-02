@@ -1,6 +1,6 @@
 package at.magiun.core.model
 
-import at.magiun.core.model.Stage.getDataSetInput
+import at.magiun.core.model.Stage.getOutputOfPrevStage
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.expr
 
@@ -10,7 +10,7 @@ abstract class Stage {
 }
 
 object Stage {
-  def getDataSetInput(stageInput: StageInput): DatasetOutput = {
+  def getOutputOfPrevStage(stageInput: StageInput): DatasetOutput = {
     stageInput.stage.perform match {
       case x@DatasetOutput(dataSet) => x
       case MultiOutput(outputs) =>
@@ -25,11 +25,10 @@ object Stage {
 case class StageInput(stage: Stage, index: Int = 0)
 
 // ***
-// Initiators
+// Readers and writers
 // ***
 
 class FileReaderStage(spark: SparkSession, fileName: String) extends Stage {
-
   override def perform: StageOutput = {
     val options = Map(
       "sep" -> ",",
@@ -38,7 +37,17 @@ class FileReaderStage(spark: SparkSession, fileName: String) extends Stage {
     val frame = spark.read.options(options).csv(fileName)
     DatasetOutput(frame)
   }
+}
 
+class FileWriterStage(input: StageInput, fileName: String) extends Stage {
+  override def perform: StageOutput = {
+    val ds = getOutputOfPrevStage(input).dataSet
+    ds.write
+      .option("header", "true")
+      .csv(fileName)
+
+    EmptyOutput
+  }
 }
 
 // ***
@@ -47,18 +56,15 @@ class FileReaderStage(spark: SparkSession, fileName: String) extends Stage {
 
 class DropColumnStage(input: StageInput, columnName: String) extends Stage {
   override def perform: StageOutput = {
-    val dataSet = getDataSetInput(input).dataSet
+    val dataSet = getOutputOfPrevStage(input).dataSet
     DatasetOutput(dataSet.drop(columnName))
   }
 }
 
-//"age * alta_coloana + 10"
-
 class AddColumnStage(input: StageInput, newColName: String, e: String) extends Stage {
   override def perform: DatasetOutput = {
-    val dataSet = getDataSetInput(input).dataSet
+    val dataSet = getOutputOfPrevStage(input).dataSet
     val result = dataSet.withColumn(newColName, expr(e))
     DatasetOutput(result)
   }
-
 }

@@ -12,6 +12,9 @@ object BlockType extends Enum[BlockType] with CirceEnum[BlockType] {
   case object FileReader extends BlockType
   case object DatabaseReader extends BlockType
 
+  case object DropColumn extends BlockType
+  case object AddColumn extends BlockType
+
   case object LinearRegression extends BlockType
 
   val values: immutable.IndexedSeq[BlockType] = findValues

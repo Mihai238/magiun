@@ -57,7 +57,7 @@ class DropColumnStage(input: StageInput, columnName: String) extends Stage {
 
 //"age * alta_coloana + 10"
 
-class MapStage(input: StageInput, newColName: String, e: String) extends Stage {
+class AddColumnStage(input: StageInput, newColName: String, e: String) extends Stage {
   override def perform: DatasetOutput = {
     val dataSet = getDataSetInput(input).dataSet
     val result = dataSet.withColumn(newColName, expr(e))

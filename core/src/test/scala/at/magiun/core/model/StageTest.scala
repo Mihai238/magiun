@@ -1,7 +1,7 @@
 package at.magiun.core.model
 
 import at.magiun.core.TestData.sampleCsvPath
-import at.magiun.core.executor.{DropColumnStage, FileReaderStage, MapStage, StageInput}
+import at.magiun.core.executor.{DropColumnStage, FileReaderStage, AddColumnStage, StageInput}
 import at.magiun.core.{MainModule, UnitTest}
 import org.apache.spark.sql.functions.udf
 
@@ -24,7 +24,7 @@ class StageTest extends UnitTest {
   }
 
   it should "add a new column" in {
-    val task = new MapStage(
+    val task = new AddColumnStage(
       input,
       "hihiCol",
       "eq_site_limit + tiv_2012"
@@ -38,7 +38,7 @@ class StageTest extends UnitTest {
   }
 
   it should "remove and add a column" in {
-    val task = new MapStage(
+    val task = new AddColumnStage(
       StageInput(new DropColumnStage(input, "policyID")),
       "new_col_1",
       "eq_site_limit + tiv_2012"

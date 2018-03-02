@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, OnInit, Type, ViewChild} from '@angular/core';
+import {Component, ComponentFactoryResolver, ComponentRef, OnInit, Type, ViewChild} from '@angular/core';
 import {BlockComponent} from './blocks/block.component';
 import {LinearRegressionBlockComponent} from './blocks/machine-learning/regression/linear-regression-block.component';
 import {PoissonRegressionBlockComponent} from './blocks/machine-learning/regression/poisson-regression-block.component';
@@ -50,9 +50,11 @@ export class WorkflowComponent {
   private createNewBlockComponent(event, object): void {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(WorkflowComponent.getBlockComponentType(object));
     const componentRef = this.workflowsDirective.viewContainerRef.createComponent(componentFactory);
+    const blockInstance = componentRef.instance as BlockComponent;
 
-    (<BlockComponent>componentRef.instance).position = new BlockPosition(event.layerX, event.layerY) ;
-    this.blocksDropped.push(<BlockComponent>componentRef.instance);
+    blockInstance.position = new BlockPosition(event.layerX, event.layerY);
+    blockInstance.onDelete.subscribe(() => {this.deleteComponent(blockInstance, componentRef)});
+    this.blocksDropped.push(blockInstance);
   }
 
   private updatePosition(event, id): void {
@@ -66,5 +68,15 @@ export class WorkflowComponent {
 
   private updateTitle(event: any): void {
     this.title = event.target.value;
+  }
+
+  private deleteComponent(component: BlockComponent, componentRef: ComponentRef<any>): void {
+    const index = this.blocksDropped.indexOf(component, 0);
+    if (index >= 0) {
+      this.blocksDropped.splice(index, 1);
+    }
+
+    componentRef.destroy();
+    this.blockService.deleteComponent(component);
   }
 }

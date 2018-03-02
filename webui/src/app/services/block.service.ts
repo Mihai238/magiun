@@ -35,9 +35,7 @@ export class BlockService {
       const line = new LeaderLine(
         document.getElementById(this.startId),
         document.getElementById(endId),
-        {
-          dropShadow: true
-        }
+        {dropShadow: true}
       );
 
       this.addBlockRelationToMap(endComponent, inputIndex, line);
@@ -69,6 +67,49 @@ export class BlockService {
     }
   }
 
+  deleteComponent(component: BlockComponent): void {
+    const componentId = component.id;
+    const entries = this.compnentsMap.entries();
+    let entry = entries.next().value;
+    while (entry !== null && entry !== undefined) {
+      if (entry[0]._1 === componentId) {
+        this.deleteLinesUnsetBulletsAndDeleteComponent(entry[0], entry[1], true);
+      } else if (entry[0]._2 === componentId) {
+        this.deleteLinesUnsetBulletsAndDeleteComponent(entry[0], entry[1], false);
+      }
+
+      entry = entries.next().value;
+    }
+  }
+
+  private deleteLinesUnsetBulletsAndDeleteComponent(key: Tuple<string, string>, relations: Array<BlockComponentsRelation>, start: boolean) {
+    if (relations !== undefined && relations !== null) {
+      relations.forEach(r => {
+        if (start) {
+          this.changeFromSetToUnset(document.getElementById(r.line.end.id));
+        } else {
+          const entries = this.compnentsMap.entries();
+          let entry = entries.next().value;
+          let count = 0;
+          while (entry !== null && entry !== undefined) {
+            if (entry[0] !== key) {
+              if (entry[1].filter(rl => rl.component1OutputIndex === r.component1OutputIndex).length > 0) {
+                count++;
+              }
+            }
+            entry = entries.next().value;
+          }
+          if (count === 0) {
+            this.changeFromSetToUnset(document.getElementById(r.line.start.id));
+          }
+        }
+
+        r.line.remove();
+      });
+    }
+    this.compnentsMap.delete(key);
+  }
+
   private changeFromUnsetToSelected(e) {
     e.classList.remove('unset');
     e.classList.add('selected')
@@ -87,6 +128,11 @@ export class BlockService {
   private changeFromUnsetToSet(e) {
     e.classList.remove('unset');
     e.classList.add('set');
+  }
+
+  private changeFromSetToUnset(e) {
+    e.classList.remove('set');
+    e.classList.add('unset');
   }
 
   private reset(): void {

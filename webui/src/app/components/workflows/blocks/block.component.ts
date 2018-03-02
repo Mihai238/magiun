@@ -1,4 +1,4 @@
-import {AfterViewInit, EventEmitter, Output} from '@angular/core';
+import {AfterViewInit, EventEmitter, OnDestroy, Output} from '@angular/core';
 import {BlockPosition} from './block-position';
 import {BlockType} from './block-type';
 import {BlockService} from '../../../services/block.service';
@@ -20,6 +20,7 @@ export class BlockComponent implements AfterViewInit {
   numberOfOutputs = 0;
   outputs: Array<BlockType> = [];
   configurationParameters: Array<BlockParameter> = [];
+  @Output('onDelete') onDelete = new EventEmitter<any>();
 
   constructor(private blockService: BlockService, private dialogService: DialogService) {}
 
@@ -66,6 +67,7 @@ export class BlockComponent implements AfterViewInit {
   }
 
   private delete() {
+    this.onDelete.emit();
   }
 }
 

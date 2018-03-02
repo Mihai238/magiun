@@ -1,10 +1,10 @@
-package at.magiun.core.executor
+package at.magiun.core.service
 
 import at.magiun.core.model.BlockType.{AddColumn, DatabaseReader, DropColumn, FileReader, LinearRegression}
-import at.magiun.core.model.{Block, StageOutput}
+import at.magiun.core.model._
 import org.apache.spark.sql.SparkSession
 
-class Executor(spark: SparkSession) {
+class ExecutorService(spark: SparkSession) {
 
   def execute(blocks: Map[String, Block], finalBlock: Block): StageOutput = {
     val stage = buildStage(blocks, finalBlock)

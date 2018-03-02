@@ -1,9 +1,7 @@
 package at.magiun.core.model
 
 import at.magiun.core.TestData.sampleCsvPath
-import at.magiun.core.executor.{DropColumnStage, FileReaderStage, AddColumnStage, StageInput}
 import at.magiun.core.{MainModule, UnitTest}
-import org.apache.spark.sql.functions.udf
 
 class StageTest extends UnitTest {
 

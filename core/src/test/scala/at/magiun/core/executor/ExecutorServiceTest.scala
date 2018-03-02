@@ -4,7 +4,7 @@ import at.magiun.core.TestData.sampleCsvPath
 import at.magiun.core.model.{Block, BlockType, DatasetOutput}
 import at.magiun.core.{MainModule, UnitTest}
 
-class ExecutorTest extends UnitTest {
+class ExecutorServiceTest extends UnitTest {
 
   private val mainModule = new MainModule {}
   private val executor = mainModule.executor

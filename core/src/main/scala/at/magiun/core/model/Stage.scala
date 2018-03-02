@@ -1,10 +1,7 @@
-package at.magiun.core.executor
+package at.magiun.core.model
 
-import at.magiun.core.executor.Stage.getDataSetInput
-import at.magiun.core.model.{DatasetOutput, MultiOutput, StageOutput}
+import at.magiun.core.model.Stage.getDataSetInput
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions._
-
 import org.apache.spark.sql.functions.expr
 
 

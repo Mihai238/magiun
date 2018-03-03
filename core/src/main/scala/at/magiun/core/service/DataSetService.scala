@@ -51,10 +51,13 @@ class DataSetService(
     )
   }
 
-  def findRows(dataSetId: Int): Future[Option[Seq[DataRow]]] = {
+  def findRows(dataSetId: Int, range: Option[Range] = Option.empty): Future[Option[Seq[DataRow]]] = {
     find(dataSetId)
       .map(_.map(ds => {
-        ???
+        val connector = getConnector(ds.dataSetSource.sourceType)
+
+        range.map(range => connector.getRows(ds.dataSetSource, range))
+          .getOrElse(connector.getRows(ds.dataSetSource))
       }))
   }
 

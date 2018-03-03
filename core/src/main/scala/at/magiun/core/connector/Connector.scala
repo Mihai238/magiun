@@ -42,16 +42,9 @@ trait Connector extends LazyLogging {
     dfRows
       .zipWithIndex
       .map { case (sparkRow, rowInd) =>
-        val values: Seq[Any] = schema.zipWithIndex
+        val values = schema.zipWithIndex
           .map { case (col, colInd) =>
-            mapToColumnType(col.dataType) match {
-              case ColumnType.Int => sparkRow.getAs[Int](colInd)
-              case ColumnType.String => sparkRow.getAs[String](colInd)
-              case ColumnType.Double => sparkRow.getAs[Double](colInd)
-              case ColumnType.Boolean => sparkRow.getAs[Boolean](colInd)
-              case ColumnType.Date => sparkRow.get(colInd)
-              case ColumnType.Unknown => sparkRow.getString(colInd)
-            }
+            sparkRow.get(colInd).toString
           }
 
         DataRow(rowInd, values)

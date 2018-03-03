@@ -7,6 +7,7 @@ import at.magiun.core.{MainModule, UnitTest}
 import com.twitter.io.Buf
 import io.finch.{Application, Input}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class DataSetControllerTest extends UnitTest {
@@ -36,12 +37,25 @@ class DataSetControllerTest extends UnitTest {
     val result = controller.createDataSet(input)
 
     val dataSet = result.awaitValueUnsafe().get
-    dataSet.id should be (1)
+    dataSet.id should be(1)
 
-    val matcher = where  {
+    val matcher = where {
       (ds: MagiunDataSet) => ds.id == 0 && ds.name == "foo"
     }
     stubService.create _ verify matcher
+  }
+
+  it should "return rows with range" in {
+    val input = Input.get("/datasets/1/rows", "_limit" -> "20", "_page" -> "5")
+    stubService.findRows _ when(*, *) returns Future(Option(Seq.empty))
+
+    val result = controller.getRows(input)
+    result.awaitValueUnsafe().get
+
+    val matcher = where {
+      (id:Int, range: Option[Range]) => range.get.start == 80 && range.get.last == 100
+    }
+    stubService.findRows _ verify matcher
   }
 
 }

@@ -30,7 +30,7 @@ class CsvConnectorTest extends UnitTest {
 
     rows should have size 15999
     rows.head.id should be (0)
-    rows.head.values.head should be (119736)
+    rows.head.values.head should be ("119736")
     rows(6364).values(1) should be ("FL")
   }
 
@@ -39,7 +39,7 @@ class CsvConnectorTest extends UnitTest {
 
     rows should have size 10
     rows.head.id should be (0)
-    rows.head.values.head should be (253816)
+    rows.head.values.head should be ("253816")
   }
 
 }

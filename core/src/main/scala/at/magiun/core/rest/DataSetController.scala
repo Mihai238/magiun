@@ -13,10 +13,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class DataSetController(dataSetService: DataSetService) extends LazyLogging {
 
   private val BASE_PATH = "datasets"
-  private val ROWS_PATH = "/rows"
+  private val ROWS_PATH = "rows"
 
   //noinspection TypeAnnotation
-  lazy val api = getDataSet :+: getDataSets :+: createDataSet
+  lazy val api = getDataSet :+: getDataSets :+: createDataSet :+: getRows
 
   val getDataSet: Endpoint[MagiunDataSet] = get(BASE_PATH :: path[Int]) { id: Int =>
 
@@ -40,11 +40,21 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
       .map(Ok)
   }
 
-  val getRows: Endpoint[Seq[DataRow]] = get(BASE_PATH + ROWS_PATH :: path[Int]) { dataSetId: Int =>
-    dataSetService.findRows(dataSetId)
-      .asTwitter
-      .map(_.get)
-      .map(Ok)
+  val getRows: Endpoint[Seq[DataRow]] = get(BASE_PATH :: path[Int] :: ROWS_PATH :: paramOption("_limit") :: paramOption("_page")) {
+    (dataSetId: Int, limit: Option[String], page: Option[String]) =>
+      logger.info(s"Getting rows for dataset `$dataSetId` with limit `$limit` and page `$page`")
+
+      val range = for {
+        l <- limit
+        p <- page
+        limit = Integer.parseInt(l)
+        page = Integer.parseInt(p)
+      } yield Range((page - 1) * limit, page * limit + 1)
+
+      dataSetService.findRows(dataSetId, range)
+        .asTwitter
+        .map(_.get)
+        .map(Ok)
   }
 
 

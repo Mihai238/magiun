@@ -12,7 +12,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class DataService {
 
-  sizePerPage = 100;
+  sizePerPage = 20;
 
   constructor(private http: HttpClient,
               private logger: NGXLogger) {

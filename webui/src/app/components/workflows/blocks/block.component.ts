@@ -43,7 +43,7 @@ export class BlockComponent implements AfterViewInit {
   }
 
   private range(maxValue) {
-    return Array(maxValue).fill(0, maxValue - 1);
+    return Array.from(Array(maxValue).keys());
   }
 
   private popUpInputOutPutTitle(type: BlockType): string {

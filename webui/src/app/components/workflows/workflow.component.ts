@@ -7,6 +7,7 @@ import {BlockPosition} from './blocks/block-position';
 import {DatabaseBlockComponent} from './blocks/import-data/database-block.component';
 import {FileBlockComponent} from './blocks/import-data/file-block.component';
 import {BlockService} from '../../services/block.service';
+import {SplitDataBlockComponent} from './blocks/data-transformation/split-data-block.component';
 
 @Component({
   selector: 'app-workflow',
@@ -25,6 +26,7 @@ export class WorkflowComponent {
     switch (event.toString()) {
       case 'database': return DatabaseBlockComponent;
       case 'file': return FileBlockComponent;
+      case 'splitData': return SplitDataBlockComponent;
       case 'linearRegression': return LinearRegressionBlockComponent;
       case 'poissonRegression': return PoissonRegressionBlockComponent;
       default: return null;

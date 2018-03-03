@@ -35,6 +35,8 @@ import {FileBlockComponent} from './components/workflows/blocks/import-data/file
 import {BlockService} from './services/block.service';
 import {ParametersModalComponent} from './components/workflows/blocks/parameters-modal/parameters-modal.component';
 import {RoutingReuseStrategy} from './app.routing.reuse.strategy';
+import {SplitDataBlockComponent} from './components/workflows/blocks/data-transformation/split-data-block.component';
+import {FileParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/file/file-parameter.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import {RoutingReuseStrategy} from './app.routing.reuse.strategy';
     NewColumnSettingsComponent,
     ProcessFeatureComponent,
     WorkflowDirective,
-    ParametersModalComponent
+    ParametersModalComponent,
+    SplitDataBlockComponent,
+    FileParameterComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +86,9 @@ import {RoutingReuseStrategy} from './app.routing.reuse.strategy';
     FileBlockComponent,
     LinearRegressionBlockComponent,
     PoissonRegressionBlockComponent,
-    ParametersModalComponent
+    ParametersModalComponent,
+    SplitDataBlockComponent,
+    FileParameterComponent
   ],
   bootstrap: [AppComponent]
 })

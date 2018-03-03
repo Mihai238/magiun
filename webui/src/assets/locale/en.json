@@ -38,7 +38,8 @@
       },
       "PARAMETERS": {
         "FILE_URL": "File Url:",
-        "UPLOAD_FILE_TEXT": "Choose a file"
+        "UPLOAD_FILE_TEXT": "Choose a file",
+        "SPLITTING_MODE": "Splitting Mode:"
       }
     }
   }

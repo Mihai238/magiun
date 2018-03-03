@@ -13,6 +13,11 @@ export class BlockType {
   static FILE = new BlockType('File', 'file', 'FILE');
 
   /**
+   * DATA TRANSFORMATION
+   */
+  static SPLIT_DATA = new BlockType('Split Data', 'splitData', 'SPLIT_DATA');
+
+  /**
    * MACHINE LEARNING
    */
 

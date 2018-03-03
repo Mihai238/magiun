@@ -2,7 +2,7 @@ package at.magiun.core.service
 
 import at.magiun.core.connector.{Connector, CsvConnector, MongoDbConnector}
 import at.magiun.core.model.SourceType.{FileCsv, Mongo}
-import at.magiun.core.model.{DataSetSource, MagiunDataSet, SourceType}
+import at.magiun.core.model.{DataSetSource, MagiunDataSet, DataRow, SourceType}
 import at.magiun.core.repository.{DataSetRepository, MagiunDataSetEntity}
 import org.apache.spark.sql.SparkSession
 
@@ -42,11 +42,6 @@ class DataSetService(
     )
   }
 
-  private def getConnector(sourceType: SourceType): Connector = sourceType match {
-    case FileCsv => new CsvConnector(sparkSession)
-    case Mongo => new MongoDbConnector(sparkSession)
-  }
-
   private def mapToEntity(dataSet: MagiunDataSet): MagiunDataSetEntity = {
     MagiunDataSetEntity(
       dataSet.id,
@@ -54,6 +49,18 @@ class DataSetService(
       dataSet.dataSetSource.sourceType.toString,
       dataSet.dataSetSource.url
     )
+  }
+
+  def findRows(dataSetId: Int): Future[Option[Seq[DataRow]]] = {
+    find(dataSetId)
+      .map(_.map(ds => {
+        ???
+      }))
+  }
+
+  private def getConnector(sourceType: SourceType): Connector = sourceType match {
+    case FileCsv => new CsvConnector(sparkSession)
+    case Mongo => new MongoDbConnector(sparkSession)
   }
 
 }

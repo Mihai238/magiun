@@ -25,9 +25,9 @@ class DataSetRepository(db: Database) {
     val action = (dataSets returning dataSets.map(_.id)).insertOrUpdate(dataSetEntity)
 
     db.run(action).map {
-        case Some(id) => dataSetEntity.copy(id = id)
-        case None => dataSetEntity
-      }
+      case Some(id) => dataSetEntity.copy(id = id)
+      case None => dataSetEntity
+    }
   }
 
   def find(id: Long): Future[Option[MagiunDataSetEntity]] = {

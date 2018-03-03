@@ -2,12 +2,12 @@ package at.magiun.core.connector
 
 import java.util.regex.Pattern
 
-import at.magiun.core.model.{Column, DataSetSource, Schema}
+import at.magiun.core.model.{Column, DataRow, DataSetSource, Schema}
 import com.mongodb.spark.config.ReadConfig
 import com.mongodb.spark.sql._
 import com.mongodb.{BasicDBObject, MongoClient, MongoClientOptions}
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{DataFrame, SparkSession}
 
 import scala.util.control.NonFatal
 
@@ -18,10 +18,7 @@ class MongoDbConnector(spark: SparkSession) extends Connector with LazyLogging {
 
   override def getSchema(source: DataSetSource): Schema = {
     val url = source.url
-    val lastSlashIndex = url.lastIndexOf("/")
-    val mongoUri = url.substring(0, lastSlashIndex)
-    val collectionName = url.substring(lastSlashIndex + 1)
-
+    val (mongoUri, collectionName) = getUriAndCollection(source.url)
     logger.info(s"Connecting to mongo uri '$mongoUri'; collection '$collectionName'")
 
     if (isMongoReachable(url)) {
@@ -36,6 +33,21 @@ class MongoDbConnector(spark: SparkSession) extends Connector with LazyLogging {
     } else {
       Schema(List.empty)
     }
+  }
+
+  override def getDataFrame(source: DataSetSource): DataFrame = {
+    val (mongoUri, collectionName) = getUriAndCollection(source.url)
+
+    val readConfig = ReadConfig(Map("uri" -> mongoUri, "collection" -> collectionName))
+    spark.read.mongo(readConfig)
+  }
+
+  private def getUriAndCollection(url: String): (String, String) = {
+    val lastSlashIndex = url.lastIndexOf("/")
+    val mongoUri = url.substring(0, lastSlashIndex)
+    val collectionName = url.substring(lastSlashIndex + 1)
+
+    (mongoUri, collectionName)
   }
 
   private def isMongoReachable(url: String) = {
@@ -59,5 +71,4 @@ class MongoDbConnector(spark: SparkSession) extends Connector with LazyLogging {
       case NonFatal(e) => false
     }
   }
-
 }

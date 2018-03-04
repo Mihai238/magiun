@@ -19,7 +19,7 @@ export class BlockComponent implements AfterViewInit {
   inputs: Array<BlockType> = [];
   numberOfOutputs = 0;
   outputs: Array<BlockType> = [];
-  configurationParameters: Array<BlockParameter> = [];
+  configurationParameters: Array<BlockParameter<any>> = [];
   @Output('onDelete') onDelete = new EventEmitter<any>();
 
   constructor(private blockService: BlockService, private dialogService: DialogService) {}

@@ -1,3 +1,4 @@
+import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
@@ -37,8 +38,9 @@ import {ParametersModalComponent} from './components/workflows/blocks/parameters
 import {RoutingReuseStrategy} from './app.routing.reuse.strategy';
 import {SplitDataBlockComponent} from './components/workflows/blocks/data-transformation/split-data-block.component';
 import {FileParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/file/file-parameter.component';
-import {SelectParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/optional/select-parameter.component';
+import {SelectParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/select/select-parameter.component';
 import {InputParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/input/input-parameter.component';
+import {CheckboxParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/checkbox/checkbox-parameter.component';
 
 @NgModule({
   declarations: [
@@ -66,9 +68,11 @@ import {InputParameterComponent} from './components/workflows/blocks/parameters-
     SplitDataBlockComponent,
     FileParameterComponent,
     SelectParameterComponent,
-    InputParameterComponent
+    InputParameterComponent,
+    CheckboxParameterComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
@@ -94,7 +98,8 @@ import {InputParameterComponent} from './components/workflows/blocks/parameters-
     SplitDataBlockComponent,
     FileParameterComponent,
     SelectParameterComponent,
-    InputParameterComponent
+    InputParameterComponent,
+    CheckboxParameterComponent
   ],
   bootstrap: [AppComponent]
 })

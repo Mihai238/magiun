@@ -12,4 +12,12 @@ export class InputParameterComponent extends ParameterComponent {
     this.parameter.value = event.target.value;
     this.emitEvent();
   }
+
+  private inputType() {
+    if (this.parameter.type === Number) {
+      return 'number';
+    } else {
+      return 'textarea';
+    }
+  }
 }

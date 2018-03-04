@@ -8,15 +8,18 @@
       <div class="row" *ngFor="let p of parameters">
         <div class="parameter-container">
           <ul>
-            <li><span class="parameter-name">{{ p.getNameFromLocale() | translate }}</span></li>
-            <li *ngIf="p.htmlType === 'file'">
-              <app-file-parameter [parameter]="p" (onValueChanged)="parameterValueChanged($event)"></app-file-parameter>
+            <li class="left"><span class="parameter-name">{{ p.getNameFromLocale() | translate }}</span></li>
+            <li class="right" *ngIf="p.htmlType === 'file'">
+              <app-file-parameter [parameter]="p.clone()" (onValueChanged)="parameterValueChanged($event)"></app-file-parameter>
             </li>
-            <li *ngIf="p.htmlType === 'select'">
-              <app-select-component [parameter]="p" (onValueChanged)="parameterValueChanged($event)"></app-select-component>
+            <li class="right" *ngIf="p.htmlType === 'select'">
+              <app-select-component [parameter]="p.clone()" (onValueChanged)="parameterValueChanged($event)"></app-select-component>
             </li>
-            <li *ngIf="p.htmlType === 'input'">
-              <app-input-parameter [parameter]="p" (onValueChanged)="parameterValueChanged($event)"></app-input-parameter>
+            <li class="right" *ngIf="p.htmlType === 'input'">
+              <app-input-parameter [parameter]="p.clone()" (onValueChanged)="parameterValueChanged($event)"></app-input-parameter>
+            </li>
+            <li class="right" *ngIf="p.htmlType === 'checkbox'">
+              <app-checkbox-parameter [parameter]="p.clone()" (onValueChanged)="parameterValueChanged($event)"></app-checkbox-parameter>
             </li>
           </ul>
         </div>

@@ -19,11 +19,18 @@
     display: block;
 
     li {
-      float: left;
       margin: 0 10px 0 0;
       input {
         width: 300px;
       }
+    }
+
+    li.left {
+      float: left;
+    }
+
+    li.right {
+      float: right;
     }
   }
 }

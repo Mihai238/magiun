@@ -39,11 +39,12 @@
       "PARAMETERS": {
         "FILE_URL": "File Url:",
         "UPLOAD_FILE_TEXT": "Choose a file",
-        "SPLITTING_MODE": "Splitting Mode:",
+        "SPLITTING_MODE": "Splitting Mode",
         "SPLIT_ROWS": "Split Rows",
         "REGULAR_EXPRESSION": "Regular Expression",
-        "FRACTION": "Fraction of rows in the first dataset:",
-        "REGULAR_EXPRESSION_VALUE": "Regular Expression:"
+        "FRACTION": "Fraction of rows in the first dataset",
+        "RANDOMIZED": "Randomized Split",
+        "REGULAR_EXPRESSION_VALUE": "Regular Expression"
       }
     }
   }

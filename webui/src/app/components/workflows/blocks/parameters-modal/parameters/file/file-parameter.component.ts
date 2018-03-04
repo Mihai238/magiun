@@ -9,7 +9,7 @@ import {ParameterComponent} from '../parameterComponent';
 })
 export class FileParameterComponent extends ParameterComponent {
 
-  uploadFile(event, parameter: BlockParameter) {
+  uploadFile(event, parameter: BlockParameter<String>) {
     this.parameter.value = event.target.value;
     this.emitEvent();
   }

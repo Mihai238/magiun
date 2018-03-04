@@ -19,6 +19,6 @@ export class SplitDataBlockComponent extends DataTransformationBlockComponent {
     this.id = BlockType.SPLIT_DATA.type + '-' + new Date().getMilliseconds();
     this.numberOfOutputs = 2;
     this.outputs = [BlockType.DATASET, BlockType.DATASET];
-    this.configurationParameters = [BlockParameter.SPLITTING_MODE, BlockParameter.FRACTION];
+    this.configurationParameters = [BlockParameter.SPLITTING_MODE, BlockParameter.FRACTION, BlockParameter.RANDOMIZED];
   }
 }

@@ -37,6 +37,8 @@ import {ParametersModalComponent} from './components/workflows/blocks/parameters
 import {RoutingReuseStrategy} from './app.routing.reuse.strategy';
 import {SplitDataBlockComponent} from './components/workflows/blocks/data-transformation/split-data-block.component';
 import {FileParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/file/file-parameter.component';
+import {SelectParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/optional/select-parameter.component';
+import {InputParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/input/input-parameter.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import {FileParameterComponent} from './components/workflows/blocks/parameters-m
     WorkflowDirective,
     ParametersModalComponent,
     SplitDataBlockComponent,
-    FileParameterComponent
+    FileParameterComponent,
+    SelectParameterComponent,
+    InputParameterComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +92,9 @@ import {FileParameterComponent} from './components/workflows/blocks/parameters-m
     PoissonRegressionBlockComponent,
     ParametersModalComponent,
     SplitDataBlockComponent,
-    FileParameterComponent
+    FileParameterComponent,
+    SelectParameterComponent,
+    InputParameterComponent
   ],
   bootstrap: [AppComponent]
 })

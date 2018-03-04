@@ -13,7 +13,10 @@
               <app-file-parameter [parameter]="p" (onValueChanged)="parameterValueChanged($event)"></app-file-parameter>
             </li>
             <li *ngIf="p.htmlType === 'select'">
-
+              <app-select-component [parameter]="p" (onValueChanged)="parameterValueChanged($event)"></app-select-component>
+            </li>
+            <li *ngIf="p.htmlType === 'input'">
+              <app-input-parameter [parameter]="p" (onValueChanged)="parameterValueChanged($event)"></app-input-parameter>
             </li>
           </ul>
         </div>

@@ -1,0 +1,4 @@
+<select (change)="selectionChanged($event.target.value)">
+  <option *ngFor="let d of parameter.dependencies" value="{{d.name}}">{{ d.getNameFromLocale() | translate}}</option>
+</select>
+

@@ -8,4 +8,8 @@ export class ParameterComponent {
   protected emitEvent() {
     this.onValueChanged.emit(this.parameter);
   }
+
+  getDependencies(): Array<BlockParameter> {
+      return this.parameter.value.dependencies;
+  }
 }

@@ -1,14 +1,12 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {beforeEach} from 'selenium-webdriver/testing';
 
 import {ParametersModalComponent} from './parameters-modal.component';
-import {DialogService} from 'ng2-bootstrap-modal';
+import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {translate} from '../../../../app.translate';
 import {logging} from '../../../../app.logging';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BlockParameter} from '../block-parameter';
 
-/**
 describe('ParametersModal', () => {
   let component: ParametersModalComponent;
   let fixture: ComponentFixture<ParametersModalComponent>;
@@ -23,9 +21,9 @@ describe('ParametersModal', () => {
         StubSelectParameterComponent
       ],
       imports: [
-        DialogService,
         logging,
-        translate
+        translate,
+        BootstrapModalModule
       ]
     }).compileComponents()
   }));
@@ -69,11 +67,10 @@ class StubInputParameterComponent {
 }
 
 @Component({
-  selector: 'app-select-parameter',
+  selector: 'app-select-component',
   template: '',
 })
 class StubSelectParameterComponent {
   @Input() parameter: BlockParameter<any>;
   @Output('onValueChanged') onValueChanged = new EventEmitter<any>();
 }
-*/

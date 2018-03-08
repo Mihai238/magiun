@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {ChartData} from '../../../../model/chart-data.model';
 import {Column, DataSet} from '../../../../model/data-set.model';
 import {DataService} from '../../../../services/data.service';
+import {NGXLogger} from "ngx-logger";
 
 @Component({
   selector: 'chart-histogram-settings',
@@ -19,7 +20,8 @@ export class HistogramSettingsComponent implements OnInit, OnChanges {
   selectedHistNorm: HistNorm;
   isCumulativeEnabled: boolean;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService,
+              private logger: NGXLogger) {
   }
 
   ngOnInit() {
@@ -46,7 +48,9 @@ export class HistogramSettingsComponent implements OnInit, OnChanges {
   }
 
   private getDataAndUpdate() {
-    this.dataService.getAllData(this.dataSet)
+    this.logger.info('HistogramSettingsComponent: get data and update');
+
+    this.dataService.getAllData(this.dataSet, new Set([this.selectedColumn.name]))
       .subscribe(dataRows => {
         const values = dataRows.map(row => row.values[this.selectedColumn.index]);
         this.update(values);

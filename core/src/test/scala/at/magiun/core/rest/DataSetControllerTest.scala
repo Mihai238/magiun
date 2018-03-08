@@ -46,14 +46,14 @@ class DataSetControllerTest extends UnitTest {
   }
 
   it should "return rows with range" in {
-    val input = Input.get("/datasets/1/rows", "_limit" -> "20", "_page" -> "5")
-    stubService.findRows _ when(*, *) returns Future(Option(Seq.empty))
+    val input = Input.get("/datasets/1/rows", "_limit" -> "20", "_page" -> "5", "_columns" -> "col1, col2")
+    stubService.findRows _ when(*, *, *) returns Future(Option(Seq.empty))
 
     val result = controller.getRows(input)
     result.awaitValueUnsafe().get
 
     val matcher = where {
-      (id:Int, range: Option[Range]) => range.get.start == 80 && range.get.last == 100
+      (id:Int, range: Option[Range], cols: Option[Set[String]]) => range.get.start == 80 && range.get.last == 100 && cols.get.size == 2
     }
     stubService.findRows _ verify matcher
   }

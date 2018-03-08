@@ -40,9 +40,11 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
       .map(Ok)
   }
 
-  val getRows: Endpoint[Seq[DataRow]] = get(BASE_PATH :: path[Int] :: ROWS_PATH :: paramOption("_limit") :: paramOption("_page")) {
-    (dataSetId: Int, limit: Option[String], page: Option[String]) =>
-      logger.info(s"Getting rows for dataset `$dataSetId` with limit `$limit` and page `$page`")
+  val getRows: Endpoint[Seq[DataRow]] = get(BASE_PATH :: path[Int] :: ROWS_PATH ::
+    paramOption("_limit") :: paramOption("_page") :: paramOption("_columns")) {
+
+    (dataSetId: Int, limit: Option[String], page: Option[String], stringColumns: Option[String]) =>
+      logger.info(s"Getting rows for dataset `$dataSetId` with limit `$limit` and page `$page` and cols `$stringColumns`")
 
       val range = for {
         l <- limit
@@ -51,7 +53,9 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
         page = Integer.parseInt(p)
       } yield Range((page - 1) * limit, page * limit + 1)
 
-      dataSetService.findRows(dataSetId, range)
+      val columns = stringColumns.map(_.split(",").map(_.trim).toSet)
+
+      dataSetService.findRows(dataSetId, range, columns)
         .asTwitter
         .map(_.get)
         .map(Ok)

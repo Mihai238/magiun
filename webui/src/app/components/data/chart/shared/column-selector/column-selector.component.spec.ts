@@ -42,11 +42,12 @@ describe('ColumnSelectorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ColumnSelectorComponent);
     component = fixture.componentInstance;
-    dropDownElem = fixture.debugElement.query(By.css('#column-selector-dropdown'));
 
     component.columns = columns;
-
+    component.ngOnChanges({});
     fixture.detectChanges();
+
+    dropDownElem = fixture.debugElement.query(By.css('#column-selector-dropdown'));
   });
 
   it('should create', () => {

@@ -39,7 +39,7 @@ export class ChartComponent implements OnInit, OnChanges {
   }
 
   handleSettingsUpdated(chartData: ChartData) {
-    this.logger.info('Settings updated');
+    this.logger.info('ChartComponent: settings updated');
 
     chartData.layout.height = 400;
     chartData.layout.width = 500;

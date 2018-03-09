@@ -1,7 +1,7 @@
 <div class="row chart-settings-entry">
   <span class="col">{{'DATA.FEATURE' | translate }}:</span>
   <div class="col dropdown">
-    <button id="column-selector-dropdown" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+    <button *ngIf="selectedColumn" id="column-selector-dropdown" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
       {{selectedColumn.name}}
     </button>

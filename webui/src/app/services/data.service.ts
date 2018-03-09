@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import {ColumnType, DataSet, Schema} from '../model/data-set.model';
 import {HttpClient} from '@angular/common/http';
+import {DataTableParams} from "../components/shared/table";
 
 @Injectable()
 export class DataService {
@@ -74,6 +75,31 @@ export class DataService {
     this.logger.info('DataService: load all data for ' + dataSet.id + ' and columns ' + columnsString);
     return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows' + '?_columns=' + columnsString)
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getDataForTable(dataSet: DataSet, params: DataTableParams): Promise<{ items: DataRow[]; count: number }> {
+    let queryString = this.paramsToQueryString(params);
+    this.logger.info('DataSerice: get data for table with queryString ' + queryString);
+
+    return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows?' + queryString).toPromise()
+      .then((resp: DataRow[]) => ({
+        items: resp,
+        count: 1000 // TODO
+      }));
+  }
+
+  private paramsToQueryString(params: DataTableParams) {
+    const result = [];
+
+    if (params.offset != null) {
+      const page = (params.offset / params.limit) + 1;
+      result.push(['_page', page]);
+    }
+    if (params.limit != null) {
+      result.push(['_limit', params.limit]);
+    }
+
+    return result.map(param => param.join('=')).join('&');
   }
 
 }

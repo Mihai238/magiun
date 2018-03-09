@@ -20,42 +20,26 @@
   <data-process-feature [visible]="showProcessFeatureComponent" [column]="selectedColumn"
                         (resultEmitter)="onFeatureProcessResult($event)"></data-process-feature>
 
-  <div infinite-scroll [infiniteScrollDistance]="2"
-       [infiniteScrollUpDistance]="1.5" [infiniteScrollThrottle]="50" (scrolled)="onScrollDown()"
-       id="data-table" *ngIf="selectedDataSet" class="panel panel-default">
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th *ngFor="let column of selectedDataSet.schema.columns">
-          {{column.name}}
-          <br>
-          ({{column.type}})
 
-          <div class="dropdown" (clickOutside)="onClickedOutside(column)">
-            <span (click)="onClickedColumnSettings(column)" class="columnSettingsIcon fa fa-wrench clickable"></span>
-            <div id="myDropdown" class="dropdown-content" [ngClass]="{'show': showColumnSettings[column.index]}">
-              <a class="clickable" (click)="onClickedProcessFeature(column)">Process feature</a>
-              <a class="clickable" (click)="onClickAddColumn(column, 0)">Add column the the left</a>
-              <a class="clickable" (click)="onClickAddColumn(column, 1)">Add column the the right</a>
-            </div>
-          </div>
+  <div *ngIf="rows" style="margin: auto; max-width: 1000px; margin-bottom: 50px;">
+    <data-table id="data-table"
+                headerTitle="{{selectedDataSet.name}}"
+                [pagination_limit]="true"
+                [items]="rows"
+                [itemCount]="rowsCount"
+                (reload)="reloadRows($event)"
 
-          <i class="fa fa-times clickable" aria-hidden="true" (click)="onSelectColumn(column)"
-             data-toggle="modal" data-target="#removeColumnModal"></i>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let row of rows">
-        <td *ngFor="let value of row.values; index as i">
-          <span *ngIf="selectedDataSet.schema.columns[i].type == ColumnType.double; else notDouble">
-            {{value | number : '1.2-2'}}
-          </span>
-          <ng-template #notDouble>{{value}}</ng-template>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+                (rowClick)="rowClick($event)"
+                (rowDoubleClick)="rowDoubleClick($event)"
+                [rowTooltip]="rowTooltip"
+    >
+      <data-table-column
+        *ngFor="let column of selectedDataSet.schema.columns; index as ind"
+        [property]="column.index"
+        [header]="column.name"
+        [visible]="ind < 5">
+      </data-table-column>
+    </data-table>
   </div>
 
   <!-- Modal -->

@@ -10,6 +10,7 @@ import 'rxjs/add/observable/of';
 import {TranslateModule} from '@ngx-translate/core';
 import {Component, Input} from '@angular/core';
 import {Column, DataSet} from '../../model/data-set.model';
+import {RowCallback} from "../shared/table/types/row-callback.type";
 
 describe('DataComponent', () => {
   let component: DataComponent;
@@ -22,7 +23,9 @@ describe('DataComponent', () => {
         DataComponent,
         ChartStubComponent,
         NewColumnSettingsStubComponent,
-        ProcessFeatureStubComponent
+        ProcessFeatureStubComponent,
+        DataTableStubComponent,
+        TableColumnStubComponent
       ],
       imports: [
         InfiniteScrollModule,
@@ -92,4 +95,26 @@ class NewColumnSettingsStubComponent {
 class ProcessFeatureStubComponent {
   @Input() visible: boolean;
   @Input() column: Column;
+}
+
+@Component({
+  selector: 'data-table',
+  template: ''
+})
+class DataTableStubComponent {
+  @Input() headerTitle: string;
+  @Input() pagination_limit = false;
+  @Input() items;
+  @Input() itemCount: number;
+  @Input() rowTooltip: RowCallback;
+}
+
+@Component({
+  selector: 'data-table-column',
+  template: ''
+})
+class TableColumnStubComponent {
+  @Input() property: string;
+  @Input() header: string;
+  @Input() visible = true;
 }

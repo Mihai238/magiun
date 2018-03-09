@@ -41,6 +41,7 @@ import {FileParameterComponent} from './components/workflows/blocks/parameters-m
 import {SelectParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/select/select-parameter.component';
 import {InputParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/input/input-parameter.component';
 import {CheckboxParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/checkbox/checkbox-parameter.component';
+import {DataTableModule} from "./components/shared/table";
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import {CheckboxParameterComponent} from './components/workflows/blocks/paramete
     DragDropDirectiveModule,
     ClickOutsideModule,
     BootstrapModalModule,
+    DataTableModule,
     translate,
     logging,
     routing

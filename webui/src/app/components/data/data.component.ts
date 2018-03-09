@@ -17,8 +17,9 @@ export class DataComponent implements OnInit {
 
   public ColumnType = ColumnType;
 
-  rows: DataRow[];
   dataSets: DataSet[];
+  rows: DataRow[];
+  rowsCount = 0;
 
   selectedDataSet: DataSet;
   loadedPages = 0;
@@ -65,6 +66,13 @@ export class DataComponent implements OnInit {
     this.loadedPages = 0;
     this.rows = [];
     this.loadDataSet(dataSet, ++this.loadedPages);
+  }
+
+  reloadRows(params) {
+    this.dataService.getDataForTable(this.selectedDataSet, params).then(result => {
+      this.rows = result.items;
+      this.rowsCount = result.count;
+    })
   }
 
   onScrollDown() {

@@ -42,11 +42,13 @@ export class BlockComponent implements AfterViewInit {
     d.style.top = this.position.y + 'px';
   }
 
-  static range(maxValue) {
+  // noinspection JSMethodCanBeStatic - this doesn't work if static
+  range(maxValue) {
     return Array.from(Array(maxValue).keys());
   }
 
-  static popUpInputOutPutTitle(type: BlockType): string {
+  // noinspection JSMethodCanBeStatic - this doesn't work if static
+  popUpInputOutPutTitle(type: BlockType): string {
     switch (type) {
       case BlockType.DATASET: return BlockComponent.base_path + BlockType.DATASET.value;
       case BlockType.REGRESSION_MODEL: return BlockComponent.base_path + BlockType.REGRESSION_MODEL.value;

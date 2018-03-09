@@ -32,7 +32,7 @@ export class ScatterSettingsComponent implements OnInit {
   }
 
   private getDataAndUpdate() {
-    this.dataService.getAllData(this.dataSet)
+    this.dataService.getAllData(this.dataSet, new Set([this.selectedFirstColumn.name, this.selectedSecondColumn.name]))
       .subscribe(dataRows => {
         const values1 = dataRows.map(row => row.values[this.selectedFirstColumn.index]);
         const values2 = dataRows.map(row => row.values[this.selectedSecondColumn.index]);

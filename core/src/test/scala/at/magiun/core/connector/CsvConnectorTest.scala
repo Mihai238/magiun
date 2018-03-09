@@ -35,11 +35,22 @@ class CsvConnectorTest extends UnitTest {
   }
 
   it should "get range of rows given a source" in {
-    val rows = connector.getRows(csvDataSetSource, Range(10, 20))
+    val rows = connector.getRows(csvDataSetSource, Option(Range(10, 20)))
 
     rows should have size 10
     rows.head.id should be (0)
     rows.head.values.head should be ("253816")
+  }
+
+  it should "get specific columns" in {
+    val rows = connector.getRows(csvDataSetSource, None, Option(Set("statecode", "policyID", "hu_site_limit")))
+    val firstRow = rows.head.values
+
+    rows should have size 15999
+    rows.head.id should be (0)
+
+    firstRow should have size 3
+    firstRow.head should be ("119736")
   }
 
 }

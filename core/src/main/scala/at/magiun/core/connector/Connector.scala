@@ -5,24 +5,22 @@ import com.typesafe.scalalogging.LazyLogging
 import org.apache.spark.sql.{DataFrame, Row}
 import org.apache.spark.sql.types.{DataType, StructType}
 
+import scala.Option.empty
+
 trait Connector extends LazyLogging {
 
   def getSchema(source: DataSetSource): Schema
 
   def getDataFrame(source: DataSetSource): DataFrame
 
-  final def getRows(source: DataSetSource): Seq[DataRow] = {
+  final def getRows(source: DataSetSource, range: Option[Range] = Option.empty, columns: Option[Set[String]] = empty): Seq[DataRow] = {
     val df = getDataFrame(source)
 
-    mapToRowValues(df.collect(), df.schema)
-  }
+    val dfRows = range.map(range => {
+      df.take(range.end).drop(range.start)
+    }).getOrElse(df.collect())
 
-  final def getRows(source: DataSetSource, range: Range): Seq[DataRow] = {
-    val df = getDataFrame(source)
-    val dfRows = df.take(range.end)
-      .drop(range.start)
-
-    mapToRowValues(dfRows, df.schema)
+    mapToRowValues(dfRows, df.schema, columns)
   }
 
   protected def mapToColumnType(dataType: DataType): ColumnType = {
@@ -38,14 +36,28 @@ trait Connector extends LazyLogging {
     }
   }
 
-  protected def mapToRowValues(dfRows: Array[Row], schema: StructType): Array[DataRow] = {
+  protected def mapToRowValues(dfRows: Array[Row], schema: StructType, columns: Option[Set[String]] = empty): Array[DataRow] = {
     dfRows
       .zipWithIndex
       .map { case (sparkRow, rowInd) =>
-        val values = schema.zipWithIndex
-          .map { case (col, colInd) =>
-            sparkRow.get(colInd).toString
-          }
+
+        columns.map(columns => {
+          schema.zipWithIndex
+            .map { case (col, colInd) =>
+              sparkRow.get(colInd).toString
+            }
+        })
+
+        val values = schema.zipWithIndex.flatMap {
+          case (col, colInd) =>
+            val shouldFetchColumn = columns.forall(_.contains(col.name))
+
+            if (shouldFetchColumn) {
+              Option(sparkRow.get(colInd).toString)
+            } else {
+              None
+            }
+        }
 
         DataRow(rowInd, values)
       }

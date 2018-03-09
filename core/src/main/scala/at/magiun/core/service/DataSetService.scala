@@ -2,10 +2,11 @@ package at.magiun.core.service
 
 import at.magiun.core.connector.{Connector, CsvConnector, MongoDbConnector}
 import at.magiun.core.model.SourceType.{FileCsv, Mongo}
-import at.magiun.core.model.{DataSetSource, MagiunDataSet, DataRow, SourceType}
+import at.magiun.core.model.{DataRow, DataSetSource, MagiunDataSet, SourceType}
 import at.magiun.core.repository.{DataSetRepository, MagiunDataSetEntity}
 import org.apache.spark.sql.SparkSession
 
+import scala.Option._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -13,6 +14,7 @@ class DataSetService(
                       dataSetRepository: DataSetRepository,
                       sparkSession: SparkSession
                     ) {
+
   def find(id: Long): Future[Option[MagiunDataSet]] = {
     dataSetRepository.find(id)
       .map(_.map(mapToModel))
@@ -51,13 +53,11 @@ class DataSetService(
     )
   }
 
-  def findRows(dataSetId: Int, range: Option[Range] = Option.empty): Future[Option[Seq[DataRow]]] = {
+  def findRows(dataSetId: Int, range: Option[Range] = empty, columns: Option[Set[String]] = empty): Future[Option[Seq[DataRow]]] = {
     find(dataSetId)
       .map(_.map(ds => {
         val connector = getConnector(ds.dataSetSource.sourceType)
-
-        range.map(range => connector.getRows(ds.dataSetSource, range))
-          .getOrElse(connector.getRows(ds.dataSetSource))
+        connector.getRows(ds.dataSetSource, range, columns)
       }))
   }
 

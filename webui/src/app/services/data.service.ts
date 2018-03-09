@@ -66,8 +66,13 @@ export class DataService {
 
   // not really wise to fetch all the data if we deal with GBs of data
   // should be refactored in further versions
-  getAllData(dataSet: DataSet): Observable<DataRow[]> {
-    return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows')
+  getAllData(dataSet: DataSet, columns: Set<String>): Observable<DataRow[]> {
+    let columnsString: string = "";
+    columns.forEach(col => columnsString += col + ",");
+    columnsString = columnsString.substring(0, columnsString.length - 1);
+
+    this.logger.info('DataService: load all data for ' + dataSet.id + ' and columns ' + columnsString);
+    return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows' + '?_columns=' + columnsString)
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 

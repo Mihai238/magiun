@@ -52,7 +52,7 @@ export class HistogramSettingsComponent implements OnInit, OnChanges {
 
     this.dataService.getAllData(this.dataSet, new Set([this.selectedColumn.name]))
       .subscribe(dataRows => {
-        const values = dataRows.map(row => row.values[this.selectedColumn.index]);
+        const values = dataRows.map(row => row.values[0]);
         this.update(values);
       });
   }

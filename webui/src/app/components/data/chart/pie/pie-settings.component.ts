@@ -33,7 +33,7 @@ export class PieSettingsComponent implements OnInit {
   private getDataAndUpdate() {
     this.dataService.getAllData(this.dataSet, new Set([this.selectedColumn.name]))
       .subscribe(dataRows => {
-        const keys: any[] = dataRows.map(row => row.values[this.selectedColumn.index]);
+        const keys: any[] = dataRows.map(row => row.values[0]);
 
         const keyWithOccurrences = Utils.countOccurrences(keys);
         if (this.check(keyWithOccurrences)) {

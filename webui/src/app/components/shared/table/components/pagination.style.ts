@@ -29,7 +29,6 @@ export const PAGINATION_STYLE = `
     display: inline-block;
 }
 .pagination-page {
-    width: 102px;
     display: inline-table;
 }
 .pagination-box button {
@@ -45,4 +44,8 @@ export const PAGINATION_STYLE = `
     color: gray;
     font-size: 12px;
 }
+#page-button {
+  margin: 0.1rem;
+}
 `;
+

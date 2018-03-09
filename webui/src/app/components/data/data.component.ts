@@ -65,7 +65,6 @@ export class DataComponent implements OnInit {
 
     this.loadedPages = 0;
     this.rows = [];
-    this.loadDataSet(dataSet, ++this.loadedPages);
   }
 
   reloadRows(params) {
@@ -73,27 +72,6 @@ export class DataComponent implements OnInit {
       this.rows = result.items;
       this.rowsCount = result.count;
     })
-  }
-
-  onScrollDown() {
-    this.loadDataSet(this.selectedDataSet, ++this.loadedPages);
-    this.logger.info('Loading more rows');
-  }
-
-  private loadDataSet(dataSet: DataSet, pageToLoad: number) {
-    this.logger.info('Loading data set: ' + dataSet.name);
-
-    this.dataService.getData(dataSet, pageToLoad)
-      .subscribe(
-        resp => {
-          this.rows.push(...resp);
-        },
-        err => {
-          this.logger.error(err);
-        },
-        () => {
-        }
-      );
   }
 
   onSelectColumn(column: Column) {

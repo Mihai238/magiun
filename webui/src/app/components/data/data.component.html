@@ -24,7 +24,6 @@
   <div *ngIf="rows" style="margin: auto; max-width: 1000px; margin-bottom: 50px;">
     <data-table id="data-table"
                 headerTitle="{{selectedDataSet.name}}"
-                [pagination_limit]="true"
                 [items]="rows"
                 [itemCount]="rowsCount"
                 (reload)="reloadRows($event)"

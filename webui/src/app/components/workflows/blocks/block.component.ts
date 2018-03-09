@@ -1,4 +1,4 @@
-import {AfterViewInit, EventEmitter, OnDestroy, Output} from '@angular/core';
+import {AfterViewInit, EventEmitter, Output} from '@angular/core';
 import {BlockPosition} from './block-position';
 import {BlockType} from './block-type';
 import {BlockService} from '../../../services/block.service';
@@ -42,11 +42,11 @@ export class BlockComponent implements AfterViewInit {
     d.style.top = this.position.y + 'px';
   }
 
-  private range(maxValue) {
+  static range(maxValue) {
     return Array.from(Array(maxValue).keys());
   }
 
-  private popUpInputOutPutTitle(type: BlockType): string {
+  static popUpInputOutPutTitle(type: BlockType): string {
     switch (type) {
       case BlockType.DATASET: return BlockComponent.base_path + BlockType.DATASET.value;
       case BlockType.REGRESSION_MODEL: return BlockComponent.base_path + BlockType.REGRESSION_MODEL.value;

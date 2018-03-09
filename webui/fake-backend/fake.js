@@ -19,11 +19,11 @@ module.exports = () => {
       id: i,
       values: [
         faker.name.findName(),
-        faker.random.number({min: 18, max: 99}),
+        faker.random.number({min: 18, max: 99}).toString(),
         faker.date.past(),
-        faker.random.boolean(),
-        height,
-        ((height * 100) - 100) + faker.random.number({min: -20, max: 20}),
+        faker.random.boolean().toString(),
+        height.toString(),
+        (((height * 100) - 100) + faker.random.number({min: -20, max: 20})).toString(),
         sportLevel[faker.random.number({min: 0, max: 2})]
       ]
     });
@@ -116,8 +116,7 @@ const blocks = [
   {
     id: "FileReader-1",
     type: "FileReader",
-    inputs: [
-    ],
+    inputs: [],
     params: {
       url: "/home/..."
     }

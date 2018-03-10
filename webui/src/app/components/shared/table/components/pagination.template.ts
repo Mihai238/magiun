@@ -25,7 +25,7 @@ export const PAGINATION_TEMPLATE = `
                     <input #pageInput type="number" class="form-control" min="1" step="1" max="{{maxPage}}"
                            [ngModel]="page" (blur)="page = pageInput.value"
                            (keyup.enter)="page = pageInput.value" (keyup.esc)="pageInput.value = page"/>
-                    <div class="input-group-addon">
+                    <div class="input-group-text">
                         <span>/</span>
                         <span [textContent]="dataTable.lastPage"></span>
                     </div>

@@ -30,6 +30,9 @@
                 (rowClick)="rowClick($event)"
                 (rowDoubleClick)="rowDoubleClick($event)"
                 [rowTooltip]="rowTooltip"
+                [pagination_input]="true"
+                [pagination_numbers]="false"
+
     >
       <data-table-column
         *ngFor="let column of selectedDataSet.schema.columns; index as ind"

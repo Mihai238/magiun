@@ -6,6 +6,7 @@ export interface DataSet {
 
 export interface Schema {
   columns: Column[];
+  totalCount: number;
 }
 
 export interface Column {

@@ -1,33 +1,32 @@
 <div class="container">
 
-  <div class="dropdown">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false" id="dropdownDataSetButton">
+  <app-chart id="app-chart" *ngIf="selectedDataSet" [dataSet]="selectedDataSet"></app-chart>
 
-      <span *ngIf="selectedDataSet; else noDataSetSelected">{{selectedDataSet.name}}</span>
-      <ng-template #noDataSetSelected>{{'DATA.NO_DATA_SET' | translate}}</ng-template>
-      <span class="caret"></span>
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownDataSetButton">
-      <a class="dropdown-item clickable" *ngFor="let dataSet of dataSets" (click)="onSelectDataSet(dataSet)">{{dataSet.name}}</a>
-    </div>
-  </div>
-
-  <app-chart *ngIf="selectedDataSet" [dataSet]="selectedDataSet"></app-chart>
 
   <data-new-column-settings [visible]="showNewColumnSettingsComponent" [index]="newColumnIndex"
                             (resultEmitter)="onNewColumnResult($event)"></data-new-column-settings>
   <data-process-feature [visible]="showProcessFeatureComponent" [column]="selectedColumn"
                         (resultEmitter)="onFeatureProcessResult($event)"></data-process-feature>
 
+  <div class="dropdown">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+  aria-expanded="false" id="dropdownDataSetButton">
+
+  <span *ngIf="selectedDataSet; else noDataSetSelected">{{selectedDataSet.name}}</span>
+  <ng-template #noDataSetSelected>{{'DATA.NO_DATA_SET' | translate}}</ng-template>
+  <span class="caret"></span>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownDataSetButton">
+  <a class="dropdown-item clickable" *ngFor="let dataSet of dataSets" (click)="onSelectDataSet(dataSet)">{{dataSet.name}}</a>
+  </div>
+  </div>
 
   <div *ngIf="rows" style="margin: auto; max-width: 1000px; margin-bottom: 50px;">
     <data-table id="data-table"
-                headerTitle="{{selectedDataSet.name}}"
+                headerTitle=""
                 [items]="rows"
                 [itemCount]="rowsCount"
                 (reload)="reloadRows($event)"
-
                 (rowClick)="rowClick($event)"
                 (rowDoubleClick)="rowDoubleClick($event)"
                 [rowTooltip]="rowTooltip"

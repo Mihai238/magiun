@@ -6,6 +6,7 @@ import {Column, ColumnType, DataSet} from '../../model/data-set.model';
 import {environment} from '../../../environments/environment';
 import {FeatureProcessResult} from './process-feature/process-feature.component';
 import {NewColumnResult} from './new-column-settings/new-column-settings.component';
+import {DataTableParams} from "../shared/table";
 
 @Component({
   selector: 'app-data',
@@ -15,14 +16,11 @@ import {NewColumnResult} from './new-column-settings/new-column-settings.compone
 })
 export class DataComponent implements OnInit {
 
-  public ColumnType = ColumnType;
-
   dataSets: DataSet[];
   rows: DataRow[];
   rowsCount = 0;
 
   selectedDataSet: DataSet;
-  loadedPages = 0;
   selectedColumn: Column;
 
   showColumnSettings: boolean[];
@@ -61,16 +59,16 @@ export class DataComponent implements OnInit {
       this.showColumnSettings[i] = false;
     }
 
+    this.rowsCount = dataSet.schema.totalCount || this.rowsCount;
     this.selectedDataSet = dataSet;
-
-    this.loadedPages = 0;
     this.rows = [];
+    this.reloadRows({limit: 10, offset: 0});
   }
 
-  reloadRows(params) {
+  reloadRows(params: DataTableParams) {
     this.dataService.getDataForTable(this.selectedDataSet, params).then(result => {
       this.rows = result.items;
-      this.rowsCount = result.count;
+      this.rowsCount = result.count || this.rowsCount;
     })
   }
 

@@ -7,7 +7,7 @@ import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/observable/throw';
 import {ColumnType, DataSet, Schema} from '../model/data-set.model';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {DataTableParams} from "../components/shared/table";
 
 @Injectable()
@@ -39,7 +39,7 @@ export class DataService {
       });
   }
 
-  private mapSchema(schema: any): Schema {
+  private mapSchema(schema: Schema): Schema {
     const columns = schema.columns.map(column => {
       const type = ColumnType[column.type];
       if (type === undefined) {
@@ -53,7 +53,7 @@ export class DataService {
       };
     });
 
-    return {columns: columns};
+    return {columns: columns, totalCount: schema.totalCount};
   }
 
   getData(dataSet: DataSet, page = 1): Observable<DataRow[]> {
@@ -77,15 +77,19 @@ export class DataService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getDataForTable(dataSet: DataSet, params: DataTableParams): Promise<{ items: DataRow[]; count: number }> {
+  getDataForTable(dataSet: DataSet, params: DataTableParams) {
     let queryString = this.paramsToQueryString(params);
     this.logger.info('DataSerice: get data for table with queryString ' + queryString);
 
-    return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows?' + queryString).toPromise()
-      .then((resp: DataRow[]) => ({
-        items: resp,
-        count: 1000 // TODO
-      }));
+    return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows?' + queryString, {observe: 'response'}).toPromise()
+      .then((resp: HttpResponse<DataRow[]>) => {
+        const totalCount = resp.headers.get('X-Total-Count');
+
+        return {
+          items: resp.body,
+          count: Number(totalCount)
+        };
+      });
   }
 
   private paramsToQueryString(params: DataTableParams) {

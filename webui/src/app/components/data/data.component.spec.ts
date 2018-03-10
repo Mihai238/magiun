@@ -66,6 +66,9 @@ describe('DataComponent', () => {
       }
     ]));
 
+    spyOn(dataService, 'getDataForTable')
+      .and.returnValue(Promise.resolve({}));
+
     fixture.detectChanges();
     expect(component.dataSets.length).toBe(2);
   });

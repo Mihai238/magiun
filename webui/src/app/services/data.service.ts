@@ -77,7 +77,7 @@ export class DataService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getDataForTable(dataSet: DataSet, params: DataTableParams) {
+  getDataForTable(dataSet: DataSet, params: DataTableParams): Promise<{ items: DataRow[] | null; count: number }> {
     let queryString = this.paramsToQueryString(params);
     this.logger.info('DataSerice: get data for table with queryString ' + queryString);
 

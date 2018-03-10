@@ -103,10 +103,12 @@ class ProcessFeatureStubComponent {
 })
 class DataTableStubComponent {
   @Input() headerTitle: string;
-  @Input() pagination_limit = false;
   @Input() items;
   @Input() itemCount: number;
   @Input() rowTooltip: RowCallback;
+  @Input() pagination_limit = false;
+  @Input() pagination_input = true;
+  @Input() pagination_numbers = false;
 }
 
 @Component({

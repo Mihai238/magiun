@@ -29,9 +29,9 @@ class MongoDbConnector(spark: SparkSession) extends Connector with LazyLogging {
         Column(index, col.name, mapToColumnType(col.dataType))
       }
 
-      Schema(cols.toList)
+      Schema(cols.toList, dataFrame.count())
     } else {
-      Schema(List.empty)
+      Schema(List.empty, 0)
     }
   }
 

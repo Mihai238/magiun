@@ -5,7 +5,8 @@ import enumeratum._
 import scala.collection.immutable
 
 case class Schema(
-                   columns: List[Column]
+                   columns: List[Column],
+                   totalCount: Long
                  ) {
 
 }

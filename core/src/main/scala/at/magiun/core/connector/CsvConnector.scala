@@ -20,7 +20,7 @@ class CsvConnector(spark: SparkSession) extends Connector {
       Column(index, col.name, mapToColumnType(col.dataType))
     }
 
-    Schema(cols.toList)
+    Schema(cols.toList, dataFrame.count())
   }
 
   override def getDataFrame(source: DataSetSource): DataFrame = {

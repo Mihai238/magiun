@@ -1,7 +1,7 @@
 import {EventEmitter, Input, Output} from '@angular/core';
 import {BlockParameter} from '../../block-parameter';
 
-export class ParameterComponent {
+export abstract class ParameterComponent {
   @Input() parameter: BlockParameter<any>;
   @Output('onValueChanged') onValueChanged = new EventEmitter<any>();
 

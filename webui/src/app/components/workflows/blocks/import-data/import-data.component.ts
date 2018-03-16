@@ -1,13 +1,13 @@
 import {BlockComponent} from '../block.component';
-import {BlockType} from '../block-type';
 import {BlockService} from '../../../../services/block.service';
 import {DialogService} from 'ng2-bootstrap-modal';
+import {WireType} from "../wire-type";
 
-export class ImportDataComponent extends BlockComponent {
+export abstract class ImportDataComponent extends BlockComponent {
 
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
     this.numberOfOutputs = 1;
-    this.outputs = [BlockType.DATASET];
+    this.outputs = [WireType.DATASET];
   }
 }

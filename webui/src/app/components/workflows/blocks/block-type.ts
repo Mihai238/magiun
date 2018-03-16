@@ -1,12 +1,6 @@
 export class BlockType {
 
   /**
-   * SHARED
-    */
-  static DATASET = new BlockType('Dataset', 'dataset', 'DATASET');
-  static REGRESSION_MODEL = new BlockType('Regression Model', 'regressionModel', 'REGRESSION_MODEL');
-
-  /**
    * IMPORT DATA
    */
   static DATABASE = new BlockType('Database', 'database', 'DATABASE');

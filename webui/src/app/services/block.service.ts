@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {BlockComponent} from '../components/workflows/blocks/block.component';
-import {BlockType} from '../components/workflows/blocks/block-type';
 import {Tuple} from '../util/tuple';
 import {BlockComponentsRelation} from '../components/workflows/blocks/block-components-relation';
 import {Utils} from '../util/utils';
+import {WireType} from "../components/workflows/blocks/wire-type";
 
 declare var LeaderLine: any;
 
@@ -12,11 +12,11 @@ export class BlockService {
 
   private startComponent: BlockComponent;
   private startId: string;
-  private outputType: BlockType;
+  private outputType: WireType;
   private outputIndex: number;
   private compnentsMap = new Map<Tuple<string, string>, Array<BlockComponentsRelation>>();
 
-  startLine(component: BlockComponent, startId: string, outputType: BlockType, outputIndex: number): void {
+  startLine(component: BlockComponent, startId: string, outputType: WireType, outputIndex: number): void {
     if (this.isAStartPointAlreadySelected()) {
       this.startComponent = component;
       this.startId = startId;
@@ -30,8 +30,8 @@ export class BlockService {
     }
   }
 
-  endLine(endComponent: BlockComponent, endId: string, inputType: BlockType, inputIndex: number): void {
-    if (this.isPointAValidEndPint(endComponent, endId, inputType)) {
+  endLine(endComponent: BlockComponent, endId: string, inputType: WireType, inputIndex: number): void {
+    if (this.isPointValidEndPoint(endComponent, endId, inputType)) {
       const line = new LeaderLine(
         document.getElementById(this.startId),
         document.getElementById(endId),
@@ -110,26 +110,31 @@ export class BlockService {
     this.compnentsMap.delete(key);
   }
 
+  // noinspection JSMethodCanBeStatic
   private changeFromUnsetToSelected(e) {
     e.classList.remove('unset');
     e.classList.add('selected')
   }
 
+  // noinspection JSMethodCanBeStatic
   private changeFromSelectedToSet(e) {
     e.classList.remove('selected');
     e.classList.add('set');
   }
 
+  // noinspection JSMethodCanBeStatic
   private changeFromSelectedToUnset(e) {
     e.classList.remove('selected');
     e.classList.add('unset');
   }
 
+  // noinspection JSMethodCanBeStatic
   private changeFromUnsetToSet(e) {
     e.classList.remove('unset');
     e.classList.add('set');
   }
 
+  // noinspection JSMethodCanBeStatic
   private changeFromSetToUnset(e) {
     e.classList.remove('set');
     e.classList.add('unset');
@@ -146,7 +151,7 @@ export class BlockService {
     return this.startId === null || this.startId === undefined;
   }
 
-  private isPointAValidEndPint(endComponent: BlockComponent, endId: string, inputType: BlockType): boolean {
+  private isPointValidEndPoint(endComponent: BlockComponent, endId: string, inputType: WireType): boolean {
     return this.startId !== endId &&
       this.startComponent !== endComponent &&
       document.getElementById(endId).classList.contains('unset') &&

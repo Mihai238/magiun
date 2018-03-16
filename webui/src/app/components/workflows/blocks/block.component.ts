@@ -1,12 +1,12 @@
 import {AfterViewInit, EventEmitter, Output} from '@angular/core';
 import {BlockPosition} from './block-position';
-import {BlockType} from './block-type';
 import {BlockService} from '../../../services/block.service';
 import {BlockParameter} from './block-parameter';
 import {DialogService} from 'ng2-bootstrap-modal';
 import {ParametersModalComponent} from './parameters-modal/parameters-modal.component';
+import {WireType} from "./wire-type";
 
-export class BlockComponent implements AfterViewInit {
+export abstract class BlockComponent implements AfterViewInit {
 
   private static base_path = 'WORKFLOWS.BLOCKS.INPUT_OUTPUT.';
 
@@ -16,9 +16,9 @@ export class BlockComponent implements AfterViewInit {
   valid = false;
   position: BlockPosition;
   numberOfInputs = 0;
-  inputs: Array<BlockType> = [];
+  inputs: Array<WireType> = [];
   numberOfOutputs = 0;
-  outputs: Array<BlockType> = [];
+  outputs: Array<WireType> = [];
   configurationParameters: Array<BlockParameter<any>> = [];
   @Output('onDelete') onDelete = new EventEmitter<any>();
 
@@ -48,10 +48,10 @@ export class BlockComponent implements AfterViewInit {
   }
 
   // noinspection JSMethodCanBeStatic - this doesn't work if static
-  popUpInputOutPutTitle(type: BlockType): string {
+  popUpInputOutPutTitle(type: WireType): string {
     switch (type) {
-      case BlockType.DATASET: return BlockComponent.base_path + BlockType.DATASET.value;
-      case BlockType.REGRESSION_MODEL: return BlockComponent.base_path + BlockType.REGRESSION_MODEL.value;
+      case WireType.DATASET: return BlockComponent.base_path + WireType.DATASET.i18nValue;
+      case WireType.REGRESSION_MODEL: return BlockComponent.base_path + WireType.REGRESSION_MODEL.i18nValue;
       default: return 'ERROR';
     }
   }

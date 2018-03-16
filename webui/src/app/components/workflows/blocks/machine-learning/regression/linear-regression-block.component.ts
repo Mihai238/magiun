@@ -11,10 +11,10 @@ import {DialogService} from 'ng2-bootstrap-modal';
 })
 export class LinearRegressionBlockComponent extends RegressionBlockComponent {
 
+  id: string = BlockType.LINEAR_REGRESSION.name + '-' + new Date().getMilliseconds();
+  name: string = BlockType.LINEAR_REGRESSION.name;
+
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
-    this.name = BlockType.LINEAR_REGRESSION.name;
-    this.type = BlockType.LINEAR_REGRESSION.type;
-    this.id = BlockType.LINEAR_REGRESSION.type + '-' + new Date().getMilliseconds();
   }
 }

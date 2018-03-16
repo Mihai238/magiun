@@ -11,10 +11,10 @@ import {DialogService} from 'ng2-bootstrap-modal';
 })
 export class DatabaseBlockComponent extends ImportDataComponent {
 
+  name = BlockType.DATABASE.name;
+  id = BlockType.DATABASE.name + '-' + new Date().getMilliseconds();
+
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
-    this.name = BlockType.DATABASE.name;
-    this.type = BlockType.DATABASE.type;
-    this.id = BlockType.DATABASE.type + '-' + new Date().getMilliseconds();
   }
 }

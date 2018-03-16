@@ -10,9 +10,9 @@ export abstract class BlockComponent implements AfterViewInit {
 
   private static base_path = 'WORKFLOWS.BLOCKS.INPUT_OUTPUT.';
 
-  name: string;
-  id: string;
-  type: string;
+  abstract id: string;
+  abstract name: string;
+
   valid = false;
   position: BlockPosition;
   numberOfInputs = 0;
@@ -20,6 +20,7 @@ export abstract class BlockComponent implements AfterViewInit {
   numberOfOutputs = 0;
   outputs: Array<WireType> = [];
   configurationParameters: Array<BlockParameter<any>> = [];
+
   @Output('onDelete') onDelete = new EventEmitter<any>();
 
   constructor(private blockService: BlockService, private dialogService: DialogService) {}

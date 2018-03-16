@@ -13,11 +13,11 @@ import {WireType} from "../wire-type";
 })
 export class SplitDataBlockComponent extends DataTransformationBlockComponent {
 
+  id = BlockType.SPLIT_DATA.name + '-' + new Date().getMilliseconds();
+  name = BlockType.SPLIT_DATA.name;
+
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
-    this.name = BlockType.SPLIT_DATA.name;
-    this.type = BlockType.SPLIT_DATA.type;
-    this.id = BlockType.SPLIT_DATA.type + '-' + new Date().getMilliseconds();
     this.numberOfOutputs = 2;
     this.outputs = [WireType.DATASET, WireType.DATASET];
     this.configurationParameters = [BlockParameter.SPLITTING_MODE, BlockParameter.FRACTION, BlockParameter.RANDOMIZED];

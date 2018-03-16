@@ -12,11 +12,11 @@ import {DialogService} from 'ng2-bootstrap-modal';
 })
 export class FileBlockComponent extends ImportDataComponent {
 
+  name = BlockType.FILE.name;
+  id = BlockType.FILE.name + '-' + new Date().getMilliseconds();
+
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
-    this.name = BlockType.FILE.name;
-    this.type = BlockType.FILE.type;
-    this.id = BlockType.FILE.type + '-' + new Date().getMilliseconds();
     this.configurationParameters = [BlockParameter.FILE_URL];
   }
 }

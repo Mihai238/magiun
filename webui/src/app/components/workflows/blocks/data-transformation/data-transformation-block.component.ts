@@ -3,7 +3,10 @@ import {BlockService} from '../../../../services/block.service';
 import {DialogService} from 'ng2-bootstrap-modal';
 import {WireType} from "../wire-type";
 
-export class DataTransformationBlockComponent extends BlockComponent {
+export abstract class DataTransformationBlockComponent extends BlockComponent {
+
+  abstract id: string;
+  abstract name: string;
 
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);

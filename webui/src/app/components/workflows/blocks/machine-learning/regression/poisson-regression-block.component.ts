@@ -11,10 +11,10 @@ import {DialogService} from 'ng2-bootstrap-modal';
 })
 export class PoissonRegressionBlockComponent extends RegressionBlockComponent {
 
+  name = BlockType.POISSON_REGRESSION.name;
+  id = BlockType.POISSON_REGRESSION.name + '-' + new Date().getMilliseconds();
+
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
-    this.name = BlockType.POISSON_REGRESSION.name;
-    this.type = BlockType.POISSON_REGRESSION.type;
-    this.id = BlockType.POISSON_REGRESSION.type + '-' + new Date().getMilliseconds();
   }
 }

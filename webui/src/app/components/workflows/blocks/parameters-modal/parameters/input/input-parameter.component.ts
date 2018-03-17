@@ -13,7 +13,7 @@ export class InputParameterComponent extends ParameterComponent {
     this.emitEvent();
   }
 
-  private inputType() {
+  inputType() {
     if (this.parameter.type === Number) {
       return 'number';
     } else {

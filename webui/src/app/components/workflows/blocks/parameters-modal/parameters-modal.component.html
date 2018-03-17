@@ -18,6 +18,9 @@
             <li class="right" *ngIf="p.htmlType === 'input'">
               <app-input-parameter [parameter]="p.clone()" (onValueChanged)="parameterValueChanged($event)"></app-input-parameter>
             </li>
+            <li class="right" *ngIf="p.htmlType === 'multi-input'">
+              <app-multi-input-parameter [parameter]="p.clone()" (onValueChanged)="parameterValueChanged($event)"></app-multi-input-parameter>
+            </li>
             <li class="right" *ngIf="p.htmlType === 'checkbox'">
               <app-checkbox-parameter [parameter]="p.clone()" (onValueChanged)="parameterValueChanged($event)"></app-checkbox-parameter>
             </li>

@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouteReuseStrategy} from '@angular/router';
 import {DragDropDirectiveModule} from 'angular4-drag-drop';
@@ -43,6 +43,9 @@ import {InputParameterComponent} from './components/workflows/blocks/parameters-
 import {CheckboxParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/checkbox/checkbox-parameter.component';
 import {DataTableModule} from "./components/shared/table";
 import {DropColumnsBlockComponent} from "./components/workflows/blocks/feature-selection/drop-columns-block.component";
+import {MultiInputParameterComponent} from "./components/workflows/blocks/parameters-modal/parameters/multi-input/multi-input-parameter.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {TagInputModule} from "ngx-chips";
 
 @NgModule({
   declarations: [
@@ -72,18 +75,22 @@ import {DropColumnsBlockComponent} from "./components/workflows/blocks/feature-s
     FileParameterComponent,
     SelectParameterComponent,
     InputParameterComponent,
+    MultiInputParameterComponent,
     CheckboxParameterComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     InfiniteScrollModule,
     DragDropDirectiveModule,
     ClickOutsideModule,
     BootstrapModalModule,
     DataTableModule,
+    BrowserAnimationsModule,
+    TagInputModule,
     translate,
     logging,
     routing

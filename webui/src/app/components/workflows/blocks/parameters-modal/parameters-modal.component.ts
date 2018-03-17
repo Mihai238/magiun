@@ -24,7 +24,7 @@ export class ParametersModalComponent extends DialogComponent<ParametersModal, A
     this.close();
   }
 
-  private parameterValueChanged(event) {
+  parameterValueChanged(event) {
     const p = event as BlockParameter<any>;
     this.deleteDependenciesIfNeeded(p);
     this.replaceOldParameterValue(p);

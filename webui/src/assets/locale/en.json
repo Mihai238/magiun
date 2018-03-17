@@ -38,6 +38,7 @@
       },
       "PARAMETERS": {
         "FILE_URL": "File Url:",
+        "MULTI_INPUT": "Columns:",
         "UPLOAD_FILE_TEXT": "Choose a file",
         "SPLITTING_MODE": "Splitting Mode",
         "SPLIT_ROWS": "Split Rows",

@@ -5,6 +5,8 @@ export class BlockParameter<T> {
 
   static FILE_URL = new BlockParameter<String>('FILE_URL', true, String, 'file');
 
+  static MULTI_INPUT = new BlockParameter<Array<String>>('MULTI_INPUT', true, undefined, 'multi-input');
+
   /**
    * SPLIT DATA
    */

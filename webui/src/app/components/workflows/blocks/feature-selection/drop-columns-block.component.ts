@@ -3,6 +3,7 @@ import {FeatureSelectionBlockComponent} from "./feature-selection-block.componen
 import {BlockService} from "../../../../services/block.service";
 import {DialogService} from "ng2-bootstrap-modal";
 import {BlockType} from "../block-type";
+import {BlockParameter} from "../block-parameter";
 
 @Component({
   selector: 'app-block',
@@ -16,6 +17,6 @@ export class DropColumnsBlockComponent extends FeatureSelectionBlockComponent {
 
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
-    this.configurationParameters = [];
+    this.configurationParameters = [BlockParameter.MULTI_INPUT];
   }
 }

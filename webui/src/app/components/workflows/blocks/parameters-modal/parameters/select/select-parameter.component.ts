@@ -8,7 +8,7 @@ import {ParameterComponent} from '../parameterComponent';
 })
 export class SelectParameterComponent extends ParameterComponent {
 
-  private selectionChanged(newSelection): void {
+  selectionChanged(newSelection): void {
     this.parameter.value = this.parameter.dependencies.filter(d => d.name === newSelection)[0];
     this.emitEvent();
   }

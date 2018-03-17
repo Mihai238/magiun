@@ -18,6 +18,7 @@ describe('ParametersModal', () => {
         StubCheckboxParameterComponent,
         StubFileParameterComponent,
         StubInputParameterComponent,
+        StubMultiInputParameterComponent,
         StubSelectParameterComponent
       ],
       imports: [
@@ -71,6 +72,15 @@ class StubInputParameterComponent {
   template: '',
 })
 class StubSelectParameterComponent {
+  @Input() parameter: BlockParameter<any>;
+  @Output('onValueChanged') onValueChanged = new EventEmitter<any>();
+}
+
+@Component({
+  selector: 'app-multi-input-parameter',
+  template: '',
+})
+class StubMultiInputParameterComponent {
   @Input() parameter: BlockParameter<any>;
   @Output('onValueChanged') onValueChanged = new EventEmitter<any>();
 }

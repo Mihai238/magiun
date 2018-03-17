@@ -12,6 +12,11 @@ export class BlockType {
   static SPLIT_DATA = new BlockType('Split Data', 'SPLIT_DATA');
 
   /**
+   * FEATURE SELECTION
+   */
+  static DROP_COLUMNS = new BlockType('Drop Columns', 'DROP_COLUMNS');
+
+  /**
    * MACHINE LEARNING
    */
 

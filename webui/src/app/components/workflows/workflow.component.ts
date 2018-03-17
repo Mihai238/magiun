@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, ComponentRef, OnInit, Type, ViewChild} from '@angular/core';
+import {Component, ComponentFactoryResolver, ComponentRef, Type, ViewChild} from '@angular/core';
 import {BlockComponent} from './blocks/block.component';
 import {LinearRegressionBlockComponent} from './blocks/machine-learning/regression/linear-regression-block.component';
 import {PoissonRegressionBlockComponent} from './blocks/machine-learning/regression/poisson-regression-block.component';
@@ -8,6 +8,7 @@ import {DatabaseBlockComponent} from './blocks/import-data/database-block.compon
 import {FileBlockComponent} from './blocks/import-data/file-block.component';
 import {BlockService} from '../../services/block.service';
 import {SplitDataBlockComponent} from './blocks/data-transformation/split-data-block.component';
+import {DropColumnsBlockComponent} from "./blocks/feature-selection/drop-columns-block.component";
 
 @Component({
   selector: 'app-workflow',
@@ -27,6 +28,7 @@ export class WorkflowComponent {
       case 'database': return DatabaseBlockComponent;
       case 'file': return FileBlockComponent;
       case 'splitData': return SplitDataBlockComponent;
+      case 'dropColumns': return DropColumnsBlockComponent;
       case 'linearRegression': return LinearRegressionBlockComponent;
       case 'poissonRegression': return PoissonRegressionBlockComponent;
       default: return null;
@@ -35,7 +37,7 @@ export class WorkflowComponent {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private blockService: BlockService) { }
 
-  private handleDropEventMouse(event): void {
+  handleDropEventMouse(event): void {
     if (this.showPlaceholder) {
       this.showPlaceholder = false;
     }
@@ -68,7 +70,7 @@ export class WorkflowComponent {
     this.blockService.updatePosition(id);
   }
 
-  private updateTitle(event: any): void {
+  updateTitle(event: any): void {
     this.title = event.target.value;
   }
 

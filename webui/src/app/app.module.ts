@@ -42,6 +42,7 @@ import {SelectParameterComponent} from './components/workflows/blocks/parameters
 import {InputParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/input/input-parameter.component';
 import {CheckboxParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/checkbox/checkbox-parameter.component';
 import {DataTableModule} from "./components/shared/table";
+import {DropColumnsBlockComponent} from "./components/workflows/blocks/feature-selection/drop-columns-block.component";
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {DataTableModule} from "./components/shared/table";
     WorkflowDirective,
     ParametersModalComponent,
     SplitDataBlockComponent,
+    DropColumnsBlockComponent,
     FileParameterComponent,
     SelectParameterComponent,
     InputParameterComponent,
@@ -98,6 +100,7 @@ import {DataTableModule} from "./components/shared/table";
     PoissonRegressionBlockComponent,
     ParametersModalComponent,
     SplitDataBlockComponent,
+    DropColumnsBlockComponent,
     FileParameterComponent,
     SelectParameterComponent,
     InputParameterComponent,

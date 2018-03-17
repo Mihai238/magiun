@@ -2,8 +2,9 @@ import {EventEmitter, Input, Output} from '@angular/core';
 import {BlockParameter} from '../../block-parameter';
 
 export abstract class ParameterComponent {
+
   @Input() parameter: BlockParameter<any>;
-  @Output('onValueChanged') onValueChanged = new EventEmitter<any>();
+  @Output('onValueChanged') onValueChanged = new EventEmitter<BlockParameter<any>>();
 
   protected emitEvent() {
     this.onValueChanged.emit(this.parameter);

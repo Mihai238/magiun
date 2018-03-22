@@ -27,6 +27,9 @@
   },
   "WORKFLOWS": {
     "PLACE_HOLDER": "To create your workflow, drag and drop datasets and modules here!",
+    "RUN": "Run workflow",
+    "EXPORT": "Export workflow to file",
+    "IMPORT": "Import workflow from file",
     "BLOCKS": {
       "STEP_IS_NOT_COMPLETE": "It seems that the created step is not configured!",
       "SETTINGS": "Settings",

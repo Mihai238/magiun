@@ -83,4 +83,16 @@ export class WorkflowComponent {
     componentRef.destroy();
     this.blockService.deleteComponent(component);
   }
+
+  run() {
+    this.blockService.run();
+  }
+
+  export() {
+    // TODO: paulcurcean
+  }
+
+  import() {
+    // TODO: paulcurcean
+  }
 }

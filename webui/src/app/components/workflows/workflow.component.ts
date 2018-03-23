@@ -84,15 +84,15 @@ export class WorkflowComponent {
     this.blockService.deleteComponent(component);
   }
 
-  run() {
+  private run() {
     this.blockService.run();
   }
 
-  export() {
+  private export() {
     // TODO: paulcurcean
   }
 
-  import() {
+  private import() {
     // TODO: paulcurcean
   }
 }

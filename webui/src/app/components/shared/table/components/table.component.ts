@@ -10,43 +10,43 @@ import { DataTableTranslations } from '../types/data-table-translations.type';
 import { defaultTranslations } from '../types/default-translations.type';
 import { drag } from '../utils/drag';
 import { TABLE_TEMPLATE } from './table.template';
-import { TABLE_STYLE } from "./table.style";
+import { TABLE_STYLE } from './table.style';
 
 @Component({
-	moduleId: module.id +'',
-	selector: 'data-table',
-	template: TABLE_TEMPLATE,
-	styles: [TABLE_STYLE]
+  moduleId: module.id + '',
+  selector: 'data-table',
+  template: TABLE_TEMPLATE,
+  styles: [TABLE_STYLE]
 })
 export class DataTable implements DataTableParams, OnInit {
 
-	private _items: any[] = [];
+  private _items: any[] = [];
 
-	@Input() get items() {
-		return this._items;
-	}
+  @Input() get items() {
+    return this._items;
+  }
 
-	set items(items: any[]) {
-		this._items = items;
-		this._onReloadFinished();
-	}
+  set items(items: any[]) {
+    this._items = items;
+    this._onReloadFinished();
+  }
 
-	@Input() itemCount: number;
+  @Input() itemCount: number;
 
-	// UI components:
+  // UI components:
 
-	@ContentChildren(DataTableColumn) columns: QueryList<DataTableColumn>;
-	@ViewChildren(DataTableRow) rows: QueryList<DataTableRow>;
-	@ContentChild('dataTableExpand') expandTemplate: TemplateRef<any>;
+  @ContentChildren(DataTableColumn) columns: QueryList<DataTableColumn>;
+  @ViewChildren(DataTableRow) rows: QueryList<DataTableRow>;
+  @ContentChild('dataTableExpand') expandTemplate: TemplateRef<any>;
 
-	// One-time optional bindings with default values:
+  // One-time optional bindings with default values:
 
-	@Input() headerTitle: string;
-	@Input() header = true;
-	@Input() pagination = true;
-	@Input() pagination_range = false;
-	@Input() pagination_limit = false;
-	@Input() pagination_input = false;
+  @Input() headerTitle: string;
+  @Input() header = true;
+  @Input() pagination = true;
+  @Input() pagination_range = false;
+  @Input() pagination_limit = false;
+  @Input() pagination_input = false;
 	@Input() pagination_numbers = true;
 	@Input() indexColumn = true;
 	@Input() indexColumnHeader = '';
@@ -64,7 +64,7 @@ export class DataTable implements DataTableParams, OnInit {
 
 	// UI state without input:
 
-	indexColumnVisible: boolean;
+  indexColumnVisible: boolean;
 	selectColumnVisible: boolean;
 	expandColumnVisible: boolean;
 

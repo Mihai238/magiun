@@ -8,7 +8,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import {ColumnType, DataSet, Schema} from '../model/data-set.model';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import {DataTableParams} from "../components/shared/table";
+import {DataTableParams} from '../components/shared/table';
 
 @Injectable()
 export class DataService {

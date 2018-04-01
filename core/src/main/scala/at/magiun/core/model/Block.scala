@@ -14,6 +14,9 @@ object BlockType extends Enum[BlockType] with CirceEnum[BlockType] {
   case object DatabaseReader extends BlockType
   case object FileWriter extends BlockType
 
+  // Data Transformation
+  case object SplitData extends BlockType
+
   // Feature processors
   case object DropColumn extends BlockType
   case object AddColumn extends BlockType

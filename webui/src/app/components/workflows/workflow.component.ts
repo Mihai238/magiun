@@ -8,7 +8,7 @@ import {DatabaseBlockComponent} from './blocks/import-data/database-block.compon
 import {FileBlockComponent} from './blocks/import-data/file-block.component';
 import {BlockService} from '../../services/block.service';
 import {SplitDataBlockComponent} from './blocks/data-transformation/split-data-block.component';
-import {DropColumnsBlockComponent} from "./blocks/feature-selection/drop-columns-block.component";
+import {DropColumnsBlockComponent} from './blocks/feature-selection/drop-columns-block.component';
 
 @Component({
   selector: 'app-workflow',
@@ -59,6 +59,7 @@ export class WorkflowComponent {
     blockInstance.position = new BlockPosition(event.layerX, event.layerY);
     blockInstance.onDelete.subscribe(() => {this.deleteComponent(blockInstance, componentRef)});
     this.blocksDropped.push(blockInstance);
+    this.blockService.upsertBlock(blockInstance);
   }
 
   private updatePosition(event, id): void {

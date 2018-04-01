@@ -23,6 +23,10 @@ class BlockService(blockRepository: BlockRepository) {
       .map(mapToModel)
   }
 
+  def delete(id: String): Future[Int] = {
+    blockRepository.delete(id)
+  }
+
   private def mapToModel(entity: BlockEntity): Block = {
     val config = decode[Config](entity.config) match {
       case Left(e) => throw new RuntimeException(e)

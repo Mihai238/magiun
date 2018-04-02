@@ -1,6 +1,6 @@
 package at.magiun.core.service
 
-import at.magiun.core.model.{Block, BlockType}
+import at.magiun.core.model.{Block, BlockInput, BlockType}
 import at.magiun.core.repository.{BlockEntity, BlockRepository}
 import io.circe.generic.auto._
 import io.circe.parser._
@@ -11,7 +11,7 @@ import scala.concurrent.Future
 
 class BlockService(blockRepository: BlockRepository) {
 
-  case class Config(inputs: Seq[(String, Long)], params: Map[String, String])
+  case class Config(inputs: Seq[BlockInput], params: Map[String, String])
 
   def find(id: String): Future[Block] = {
     blockRepository.find(id)
@@ -21,6 +21,10 @@ class BlockService(blockRepository: BlockRepository) {
   def upsert(block: Block): Future[Block] = {
     blockRepository.upsert(mapToEntity(block))
       .map(mapToModel)
+  }
+
+  def delete(id: String): Future[Int] = {
+    blockRepository.delete(id)
   }
 
   private def mapToModel(entity: BlockEntity): Block = {

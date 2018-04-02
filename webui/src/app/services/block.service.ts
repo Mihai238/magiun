@@ -5,11 +5,15 @@ import {BlockComponentsRelation} from '../components/workflows/blocks/block-comp
 import {Utils} from '../util/utils';
 import {WireType} from '../components/workflows/blocks/wire-type';
 import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {HttpUtils} from '../util/http.utils';
 
 declare var LeaderLine: any;
 
 @Injectable()
 export class BlockService {
+
+  private blocksUrl = environment.baseUrl + '/blocks/';
 
   private startComponent: BlockComponent;
   private startId: string;
@@ -20,7 +24,24 @@ export class BlockService {
   constructor(private http: HttpClient) {}
 
   run() {
-   // TODO: paulcurcean implement
+    // TODO: paulcurcean implement
+  }
+
+  upsertBlock(component: BlockComponent): void {
+    console.log(HttpUtils.createBlockComponentBodyJson(component));
+
+    this.http.post(
+      this.blocksUrl,
+      HttpUtils.createBlockComponentBodyJson(component),
+      HttpUtils.optionsOnlyWithHeaders()
+    ).subscribe(() => {});
+  }
+
+  deleteBlock(componentId: string): void {
+    this.http.delete(
+      this.blocksUrl.concat(componentId),
+      HttpUtils.optionsOnlyWithHeaders()
+    ).subscribe(() => {});
   }
 
   startLine(component: BlockComponent, startId: string, outputType: WireType, outputIndex: number): void {
@@ -76,6 +97,7 @@ export class BlockService {
 
   deleteComponent(component: BlockComponent): void {
     const componentId = component.id;
+    this.deleteBlock(componentId);
     const entries = this.compnentsMap.entries();
     let entry = entries.next().value;
     while (entry !== null && entry !== undefined) {

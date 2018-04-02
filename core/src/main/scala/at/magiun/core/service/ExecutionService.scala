@@ -28,7 +28,7 @@ class ExecutionService(
     if (block.inputs.isEmpty) {
       Map(block.id -> block)
     } else {
-      val blockIds = block.inputs.map(_._1)
+      val blockIds = block.inputs.map(_.blockId)
       val blocks = blockIds.map(blockService.find).map(Await.result(_, 2.seconds))
 
       val blockMap = blocks.map(loadBlocks).foldLeft(Map[String, Block]()){(acc, m) => acc ++ m}
@@ -50,11 +50,11 @@ class ExecutionService(
         new FileReaderStage(spark, block.params("fileName"))
       case DatabaseReader => ???
       case FileWriter =>
-        val nextBlock = blocks(block.inputs.head._1)
+        val nextBlock = blocks(block.inputs.head.blockId)
         val stage = buildStage(blocks, nextBlock)
         new FileWriterStage(StageInput(stage), block.params("fileName"))
       case DropColumn =>
-        val nextBlock = blocks(block.inputs.head._1)
+        val nextBlock = blocks(block.inputs.head.blockId)
         val stage = buildStage(blocks, nextBlock)
         new DropColumnStage(StageInput(stage), block.params("columnName"))
       case AddColumn => ???

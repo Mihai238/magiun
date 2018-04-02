@@ -4,22 +4,24 @@ import {BlockService} from '../../../services/block.service';
 import {BlockParameter} from './block-parameter';
 import {DialogService} from 'ng2-bootstrap-modal';
 import {ParametersModalComponent} from './parameters-modal/parameters-modal.component';
-import {WireType} from "./wire-type";
+import {WireType} from './wire-type';
+import {Tuple} from '../../../util/tuple';
 
 export abstract class BlockComponent implements AfterViewInit {
 
-  private static base_path = 'WORKFLOWS.BLOCKS.INPUT_OUTPUT.';
+  protected static base_path = 'WORKFLOWS.BLOCKS.';
+  private static input_output_base_path = 'WORKFLOWS.BLOCKS.INPUT_OUTPUT.';
 
   abstract id: string;
   abstract name: string;
+  abstract i18nValue: string;
 
   valid = false;
   position: BlockPosition;
-  numberOfInputs = 0;
   inputs: Array<WireType> = [];
-  numberOfOutputs = 0;
   outputs: Array<WireType> = [];
   configurationParameters: Array<BlockParameter<any>> = [];
+  setInputs: Array<Tuple<string, number>> = [];
 
   @Output('onDelete') onDelete = new EventEmitter<any>();
 
@@ -33,6 +35,7 @@ export abstract class BlockComponent implements AfterViewInit {
         const unSetParametersCount = this.configurationParameters.filter(p => p.value === null || p.value === undefined).length;
         if (unSetParametersCount === 0) {
           this.valid = true;
+          this.blockService.upsertBlock(this);
         }
       });
   }
@@ -51,8 +54,8 @@ export abstract class BlockComponent implements AfterViewInit {
   // noinspection JSMethodCanBeStatic - this doesn't work if static
   popUpInputOutPutTitle(type: WireType): string {
     switch (type) {
-      case WireType.DATASET: return BlockComponent.base_path + WireType.DATASET.i18nValue;
-      case WireType.REGRESSION_MODEL: return BlockComponent.base_path + WireType.REGRESSION_MODEL.i18nValue;
+      case WireType.DATASET: return BlockComponent.input_output_base_path + WireType.DATASET.i18nValue;
+      case WireType.REGRESSION_MODEL: return BlockComponent.input_output_base_path + WireType.REGRESSION_MODEL.i18nValue;
       default: return 'ERROR';
     }
   }

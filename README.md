@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/Mihai238/magiun.svg?branch=master)](https://travis-ci.org/Mihai238/magiun)
 
-## Backend technologies:
+## Technologies:
+
+#### Backend:
 
 * spark 2
 * macwire - dependency injection
@@ -10,7 +12,7 @@
 * circe - json library
 * slick - database access
 
-## Frontend technologies:
+#### Frontend:
 
 * angular
 * adminator - html admin template

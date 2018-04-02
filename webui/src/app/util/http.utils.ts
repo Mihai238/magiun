@@ -2,7 +2,6 @@ import {HttpHeaders} from '@angular/common/http';
 import {BlockComponent} from '../components/workflows/blocks/block.component';
 import {BlockParameter} from '../components/workflows/blocks/block-parameter';
 import {WireType} from '../components/workflows/blocks/wire-type';
-import {BlockType} from '../components/workflows/blocks/block-type';
 
 export class HttpUtils {
 
@@ -28,15 +27,13 @@ export class HttpUtils {
   private static createInputsBodyJson(inputs: WireType[]): string {
     let json = '';
 
-    /** TODO
     inputs.forEach(input => {
-      json = json + '{\"_1\":\"' + input.i18nValue + '\", \"_2\":' + 0 + '}';
+      json = json + '[\"' + input.i18nValue + '\", ' + 0 + ']';
 
       if (inputs.indexOf(input) !== (inputs.length - 1)) {
        json += ',';
       }
     });
-  */
     return json;
   }
 

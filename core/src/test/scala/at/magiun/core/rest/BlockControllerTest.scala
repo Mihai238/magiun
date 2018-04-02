@@ -30,7 +30,7 @@ class BlockControllerTest extends UnitTest {
   }
 
   it should "create a block" in {
-    val input = Input.post("/blocks/upsert").withBody[Application.Json](Buf.Utf8("""{"id":"id-2","type":"FileReader","inputs":[["1",0]],"params":{"x":"4"}}"""))
+    val input = Input.post("/blocks/").withBody[Application.Json](Buf.Utf8("""{"id":"id-2","type":"FileReader","inputs":[["1",0]],"params":{"x":"4"}}"""))
     val result = controller.upsertBlock(input)
     stubService.upsert _ when * returns Future.successful(TestData.testBlock2)
 

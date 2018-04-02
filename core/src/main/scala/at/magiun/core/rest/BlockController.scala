@@ -13,8 +13,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class BlockController(blockService: BlockService) extends LazyLogging {
 
   private val PATH = "blocks"
-  private val UPSERT = "upsert"
-  private val DELETE = "delete"
 
   //noinspection TypeAnnotation
   lazy val api = getBlock :+: upsertBlock
@@ -25,7 +23,7 @@ class BlockController(blockService: BlockService) extends LazyLogging {
       .map(Ok)
   }
 
-  val upsertBlock: Endpoint[Block] = post(PATH :: UPSERT :: jsonBody[Block]) { block: Block =>
+  val upsertBlock: Endpoint[Block] = post(PATH :: jsonBody[Block]) { block: Block =>
     logger.info("Upserting a block")
 
     blockService.upsert(block)
@@ -33,7 +31,7 @@ class BlockController(blockService: BlockService) extends LazyLogging {
       .map(Ok)
   }
 
-  val deleteBlock: Endpoint[Int] = delete(PATH :: DELETE :: path[String]) { id: String =>
+  val deleteBlock: Endpoint[Int] = delete(PATH :: path[String]) { id: String =>
     logger.info(s"Deleting block $id")
     blockService.delete(id)
       .asTwitter

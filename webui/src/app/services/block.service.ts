@@ -13,8 +13,7 @@ declare var LeaderLine: any;
 @Injectable()
 export class BlockService {
 
-  private upsertBlockUrl = environment.baseUrl + '/blocks/upsert';
-  private deleteBlockUrl = environment.baseUrl + '/blocks/delete/';
+  private blocksUrl = environment.baseUrl + '/blocks/';
 
   private startComponent: BlockComponent;
   private startId: string;
@@ -32,7 +31,7 @@ export class BlockService {
     console.log(HttpUtils.createBlockComponentBodyJson(component));
 
     this.http.post(
-      this.upsertBlockUrl,
+      this.blocksUrl,
       HttpUtils.createBlockComponentBodyJson(component),
       HttpUtils.optionsOnlyWithHeaders()
     ).subscribe(() => {});
@@ -40,7 +39,7 @@ export class BlockService {
 
   deleteBlock(componentId: string): void {
     this.http.delete(
-      this.deleteBlockUrl.concat(componentId),
+      this.blocksUrl.concat(componentId),
       HttpUtils.optionsOnlyWithHeaders()
     ).subscribe(() => {});
   }

@@ -4,7 +4,7 @@ import enumeratum._
 
 import scala.collection.immutable
 
-case class Block(id: String, `type`: BlockType, inputs: Seq[(String, Long)], params: Map[String, String])
+case class Block(id: String, `type`: BlockType, inputs: Seq[BlockInput], params: Map[String, String])
 
 sealed abstract class BlockType extends EnumEntry
 object BlockType extends Enum[BlockType] with CirceEnum[BlockType] {
@@ -25,3 +25,9 @@ object BlockType extends Enum[BlockType] with CirceEnum[BlockType] {
 
   val values: immutable.IndexedSeq[BlockType] = findValues
 }
+
+/**
+  * @param blockId of the block which provides the input
+  * @param index of the output of the block
+  */
+case class BlockInput(blockId: String, index: Long)

@@ -6,9 +6,7 @@ import {WireType} from '../wire-type';
 export abstract class FeatureSelectionBlockComponent extends BlockComponent {
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
-    this.numberOfInputs = 1;
     this.inputs = [WireType.DATASET];
-    this.numberOfOutputs = 1;
     this.outputs = [WireType.DATASET];
   }
 }

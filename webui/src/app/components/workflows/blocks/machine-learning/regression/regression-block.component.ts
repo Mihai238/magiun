@@ -10,9 +10,7 @@ export abstract class RegressionBlockComponent extends BlockComponent {
 
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
-    this.numberOfInputs = 1;
     this.inputs = [WireType.DATASET];
-    this.numberOfOutputs = 1;
     this.outputs = [WireType.REGRESSION_MODEL];
   }
 }

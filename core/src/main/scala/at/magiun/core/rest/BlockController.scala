@@ -15,7 +15,7 @@ class BlockController(blockService: BlockService) extends LazyLogging {
   private val PATH = "blocks"
 
   //noinspection TypeAnnotation
-  lazy val api = getBlock :+: upsertBlock
+  lazy val api = getBlock :+: upsertBlock :+: deleteBlock
 
   val getBlock: Endpoint[Block] = get(PATH :: path[String]) { id: String =>
     blockService.find(id)

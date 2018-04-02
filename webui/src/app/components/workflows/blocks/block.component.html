@@ -1,6 +1,6 @@
 <div class="block container" id="{{id}}" [dragDirective]='{id: this.id}' [dragHightlight]="'highlight'">
   <div class="row flex-row">
-    <div class="col input" *ngFor="let i of range(numberOfInputs)">
+    <div class="col input" *ngFor="let i of range(inputs.length)">
       <a><i class="fa fa-circle unset" id="{{id}}-input-{{i}}" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ popUpInputOutPutTitle(inputs[i]) | translate }}" (click)="endLine(i)"></i></a>
     </div>
     <div class="col">
@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="row flex-row">
-    <div class="col output" *ngFor="let i of range(numberOfOutputs)">
+    <div class="col output" *ngFor="let i of range(outputs.length)">
       <a><i class="fa fa-circle unset" id="{{id}}-output-{{i}}" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ popUpInputOutPutTitle(outputs[i]) | translate }}" (click)="startLine(i)" (dblclick)="deselect(i)" (clickOutside)="deselect(i)"></i></a>
     </div>
   </div>

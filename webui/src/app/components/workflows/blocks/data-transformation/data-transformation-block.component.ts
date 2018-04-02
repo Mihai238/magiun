@@ -10,7 +10,6 @@ export abstract class DataTransformationBlockComponent extends BlockComponent {
 
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
-    this.numberOfInputs = 1;
     this.inputs = [WireType.DATASET];
   }
 }

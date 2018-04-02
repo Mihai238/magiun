@@ -7,7 +7,6 @@ export abstract class ImportDataComponent extends BlockComponent {
 
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
-    this.numberOfOutputs = 1;
     this.outputs = [WireType.DATASET];
   }
 }

@@ -20,7 +20,6 @@ export class SplitDataBlockComponent extends DataTransformationBlockComponent {
 
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);
-    this.numberOfOutputs = 2;
     this.outputs = [WireType.DATASET, WireType.DATASET];
     this.configurationParameters = [BlockParameter.SPLITTING_MODE, BlockParameter.FRACTION, BlockParameter.RANDOMIZED];
   }

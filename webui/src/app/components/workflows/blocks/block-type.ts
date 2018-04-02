@@ -14,7 +14,7 @@ export class BlockType {
   /**
    * FEATURE SELECTION
    */
-  static DROP_COLUMNS = new BlockType('Drop Columns', 'DROP_COLUMNS');
+  static DROP_COLUMNS = new BlockType('DropColumn', 'DROP_COLUMNS');
 
   /**
    * MACHINE LEARNING
@@ -23,8 +23,8 @@ export class BlockType {
   /**
    * REGRESSION
    */
-  static LINEAR_REGRESSION = new BlockType('Linear Regression', 'LINEAR_REGRESSION');
-  static POISSON_REGRESSION = new BlockType('Poisson Regression', 'POISSON_REGRESSION');
+  static LINEAR_REGRESSION = new BlockType('LinearRegression', 'LINEAR_REGRESSION');
+  static POISSON_REGRESSION = new BlockType('PoissonRegression', 'POISSON_REGRESSION');
 
   private constructor (public name: string, public i18nValue: string) {}
 

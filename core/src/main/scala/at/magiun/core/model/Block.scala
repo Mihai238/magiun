@@ -22,6 +22,7 @@ object BlockType extends Enum[BlockType] with CirceEnum[BlockType] {
   case object AddColumn extends BlockType
 
   case object LinearRegression extends BlockType
+  case object PoissonRegression extends BlockType
 
   val values: immutable.IndexedSeq[BlockType] = findValues
 }

@@ -1,7 +1,7 @@
 package at.magiun.core.service
 
 import at.magiun.core.TestData._
-import at.magiun.core.model.{Block, BlockInput, BlockType}
+import at.magiun.core.model.{BlockInput, BlockType}
 import at.magiun.core.repository.{BlockEntity, BlockRepository}
 import at.magiun.core.{MainModule, UnitTest}
 

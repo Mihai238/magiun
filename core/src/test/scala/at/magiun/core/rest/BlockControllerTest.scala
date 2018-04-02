@@ -1,10 +1,9 @@
 package at.magiun.core.rest
 
 import at.magiun.core.model.BlockType.FileReader
-import at.magiun.core.model.{Block, BlockInput, BlockType}
+import at.magiun.core.model.{Block, BlockType}
 import at.magiun.core.service.BlockService
 import at.magiun.core.{MainModule, TestData, UnitTest}
-import com.google.gson.Gson
 import com.twitter.io.Buf
 import io.finch.{Application, Input}
 

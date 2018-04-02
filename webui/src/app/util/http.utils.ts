@@ -2,6 +2,7 @@ import {HttpHeaders} from '@angular/common/http';
 import {BlockComponent} from '../components/workflows/blocks/block.component';
 import {BlockParameter} from '../components/workflows/blocks/block-parameter';
 import {WireType} from '../components/workflows/blocks/wire-type';
+import {Tuple} from './tuple';
 
 export class HttpUtils {
 
@@ -20,15 +21,15 @@ export class HttpUtils {
     return '{\n' +
       '\"id\":\"' + component.id + '\",\n' +
       '\"type\":\"' + component.name + '\",\n' +
-      '\"inputs\":[' + this.createInputsBodyJson(component.inputs) + '],\n' +
+      '\"inputs\":[' + this.createInputsBodyJson(component.setInputs) + '],\n' +
       '\"params\":{\n' + this.createParametersBodyJson(component.configurationParameters) + '}\n}'
   }
 
-  private static createInputsBodyJson(inputs: WireType[]): string {
+  private static createInputsBodyJson(inputs: Array<Tuple<string, number>>): string {
     let json = '';
 
     inputs.forEach(input => {
-      json = json + '[\"' + input.i18nValue + '\", ' + 0 + ']';
+      json = json + '{\"blockId\":\"' + input._1 + '\", \"index\":' + input._2 + '}';
 
       if (inputs.indexOf(input) !== (inputs.length - 1)) {
        json += ',';

@@ -69,6 +69,8 @@ export class BlockService {
       this.addBlockRelationToMap(endComponent, inputIndex, line);
       this.changeFromSelectedToSet(document.getElementById(this.startId));
       this.changeFromUnsetToSet(document.getElementById(endId));
+      endComponent.setInputs.push(new Tuple<string, number>(this.startId, this.outputIndex));
+      this.upsertBlock(endComponent);
       this.reset();
     }
   }

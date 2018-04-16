@@ -20,7 +20,6 @@ export class WorkflowComponent {
   private defaultWorkflowTitle = 'My workflow created on '.concat(new Date().toJSON().slice(0, 10).replace(/-/g, '/'));
   private title = this.defaultWorkflowTitle;
   private showPlaceholder = true;
-  private blocksDropped: Array<BlockComponent> = [];
   @ViewChild(WorkflowDirective) private workflowsDirective: WorkflowDirective;
 
   private static getBlockComponentType(event): Type<any> {
@@ -58,17 +57,11 @@ export class WorkflowComponent {
 
     blockInstance.position = new BlockPosition(event.layerX, event.layerY);
     blockInstance.onDelete.subscribe(() => {this.deleteComponent(blockInstance, componentRef)});
-    this.blocksDropped.push(blockInstance);
-    this.blockService.upsertBlock(blockInstance);
+    this.blockService.addBlock(blockInstance);
   }
 
   private updatePosition(event, id): void {
-    const position = new BlockPosition(event.layerX, event.layerY);
-    const d = document.getElementById(id);
-    d.style.left = position.x + 'px';
-    d.style.top =  position.y + 'px';
-    this.blocksDropped.filter(b => b.id === id).forEach(b => b.position = position);
-    this.blockService.updatePosition(id);
+    this.blockService.updatePosition(id, new BlockPosition(event.layerX, event.layerY));
   }
 
   updateTitle(event: any): void {
@@ -76,13 +69,8 @@ export class WorkflowComponent {
   }
 
   private deleteComponent(component: BlockComponent, componentRef: ComponentRef<any>): void {
-    const index = this.blocksDropped.indexOf(component, 0);
-    if (index >= 0) {
-      this.blocksDropped.splice(index, 1);
-    }
-
     componentRef.destroy();
-    this.blockService.deleteComponent(component);
+    this.blockService.deleteBlock(component);
   }
 
   private run() {

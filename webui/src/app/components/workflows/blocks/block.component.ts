@@ -25,7 +25,7 @@ export abstract class BlockComponent implements AfterViewInit {
 
   @Output('onDelete') onDelete = new EventEmitter<any>();
 
-  constructor(private blockService: BlockService, private dialogService: DialogService) {}
+  protected constructor(private blockService: BlockService, private dialogService: DialogService) {}
 
   protected showParametersModal() {
     this.dialogService.addDialog(ParametersModalComponent, {parameters: this.configurationParameters})
@@ -35,7 +35,7 @@ export abstract class BlockComponent implements AfterViewInit {
         const unSetParametersCount = this.configurationParameters.filter(p => p.value === null || p.value === undefined).length;
         if (unSetParametersCount === 0) {
           this.valid = true;
-          this.blockService.upsertBlock(this);
+          this.blockService.updateBlock(this);
         }
       });
   }
@@ -60,19 +60,19 @@ export abstract class BlockComponent implements AfterViewInit {
     }
   }
 
-  private startLine(index: number) {
+  private startLine(index: number): void {
     this.blockService.startLine(this, this.id + '-output-' + index, this.outputs[index], index);
   }
 
-  private endLine(index: number) {
+  private endLine(index: number): void {
     this.blockService.endLine(this, this.id + '-input-' + index, this.inputs[index], index);
   }
 
-  private deselect(index: number) {
+  private deselect(index: number): void {
     this.blockService.deselectLineStartPoint(this.id + '-output-' + index);
   }
 
-  private delete() {
+  private delete(): void {
     this.onDelete.emit();
   }
 }

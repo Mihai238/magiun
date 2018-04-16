@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ChartData} from '../../../../model/chart-data.model';
 import {DataService} from '../../../../services/data.service';
 import {Column, DataSet} from '../../../../model/data-set.model';
-import {Utils} from '../../../../util/utils';
+import {CollectionsUtils} from '../../../../util/collections.utils';
 
 @Component({
   selector: 'chart-pie-settings',
@@ -35,7 +35,7 @@ export class PieSettingsComponent implements OnInit {
       .subscribe(dataRows => {
         const keys: any[] = dataRows.map(row => row.values[0]);
 
-        const keyWithOccurrences = Utils.countOccurrences(keys);
+        const keyWithOccurrences = CollectionsUtils.countOccurrences(keys);
         if (this.check(keyWithOccurrences)) {
           this.update(keyWithOccurrences);
           this.tooManyLabels = false;

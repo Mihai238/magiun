@@ -8,6 +8,9 @@ import {PoissonRegressionBlockComponent} from './blocks/machine-learning/regress
 import {translate} from '../../app.translate';
 import {logging} from '../../app.logging';
 import {BlockService} from '../../services/block.service';
+import {BlockController} from '../../controllers/block.controller';
+import {LineService} from '../../services/line.service';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('WorkflowComponent', () => {
   let component: WorkflowComponent;
@@ -23,10 +26,13 @@ describe('WorkflowComponent', () => {
       ],
       imports: [
         DragDropDirectiveModule,
+        HttpClientModule,
         logging,
         translate
       ],
       providers: [
+        BlockController,
+        LineService,
         BlockService
       ]
     })

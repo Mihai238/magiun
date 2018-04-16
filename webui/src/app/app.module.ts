@@ -8,6 +8,8 @@ import {DragDropDirectiveModule} from 'angular4-drag-drop';
 import {ClickOutsideModule} from 'ng-click-outside';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TagInputModule} from 'ngx-chips';
 
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
@@ -41,11 +43,11 @@ import {FileParameterComponent} from './components/workflows/blocks/parameters-m
 import {SelectParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/select/select-parameter.component';
 import {InputParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/input/input-parameter.component';
 import {CheckboxParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/checkbox/checkbox-parameter.component';
-import {DataTableModule} from "./components/shared/table";
-import {DropColumnsBlockComponent} from "./components/workflows/blocks/feature-selection/drop-columns-block.component";
-import {MultiInputParameterComponent} from "./components/workflows/blocks/parameters-modal/parameters/multi-input/multi-input-parameter.component";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {TagInputModule} from "ngx-chips";
+import {DataTableModule} from './components/shared/table';
+import {DropColumnsBlockComponent} from './components/workflows/blocks/feature-selection/drop-columns-block.component';
+import {MultiInputParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/multi-input/multi-input-parameter.component';
+import {LineService} from './services/line.service';
+import {BlockController} from './controllers/block.controller';
 
 @NgModule({
   declarations: [
@@ -98,6 +100,8 @@ import {TagInputModule} from "ngx-chips";
   providers: [
     DataService,
     BlockService,
+    LineService,
+    BlockController,
     {provide: RouteReuseStrategy, useClass: RoutingReuseStrategy}
   ],
   entryComponents: [

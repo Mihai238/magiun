@@ -1,5 +1,5 @@
 import {BlockService} from './block.service';
-import {async, TestBed} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {HttpClientModule} from '@angular/common/http';
 import {BlockController} from '../controllers/block.controller';
 import {LineService} from './line.service';
@@ -11,17 +11,19 @@ import {CollectionsUtils} from '../util/collections.utils';
 import {LinearRegressionBlockComponent} from '../components/workflows/blocks/machine-learning/regression/linear-regression-block.component';
 import {WireType} from '../components/workflows/blocks/wire-type';
 import {Tuple} from '../util/tuple';
+import {BlockComponent} from "../components/workflows/blocks/block.component";
 
-fdescribe('Service: BlockService', () => {
+describe('Service: BlockService', () => {
   let blockService: BlockService;
   let lineServie: LineService;
-  let blockController: BlockController;
   let dialogService: DialogService;
 
-  beforeEach(async(() => {
+  let lockControllerSpy: jasmine.SpyObj<BlockController>;
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        FileBlockComponent
+        // FileBlockComponent
       ],
       imports: [
         HttpClientModule,
@@ -29,18 +31,17 @@ fdescribe('Service: BlockService', () => {
         translate
       ],
       providers: [
-        BlockController,
+        {provide: BlockController, useValue: new BlockControllerStub()},
         LineService,
         BlockService,
         DialogService
       ]
     });
-  }));
+  });
 
   beforeEach(() => {
     blockService = TestBed.get(BlockService);
     lineServie = TestBed.get(LineService);
-    blockController = TestBed.get(BlockController);
     dialogService = TestBed.get(DialogService);
     blockService.blocks.clear();
   });
@@ -53,7 +54,6 @@ fdescribe('Service: BlockService', () => {
 
   it('should add a block', () => {
     // given
-    spyOn(blockController, 'upsertBlock').and.callFake(() => {});
 
     // when
     const fileBlockComponent = new FileBlockComponent(blockService, dialogService);
@@ -66,9 +66,7 @@ fdescribe('Service: BlockService', () => {
 
   it('should remove block', () => {
     // given
-    spyOn(blockController, 'upsertBlock').and.callFake(() => {});
     spyOn(lineServie, 'deleteComponent').and.callFake(() => {});
-    spyOn(blockController, 'deleteBlock').and.callFake(() => {});
 
     const fileBlockComponent = new FileBlockComponent(blockService, dialogService);
 
@@ -90,7 +88,6 @@ fdescribe('Service: BlockService', () => {
     blockService.addBlock(fileBlockComponent);
     blockService.addBlock(regressionBlock);
 
-    spyOn(blockController, 'upsertBlock').and.callFake(() => {});
     spyOn(lineServie, 'endLine').and.returnValue(new Tuple<string, number>(fileBlockComponent.id, 0));
 
     // when
@@ -106,9 +103,7 @@ fdescribe('Service: BlockService', () => {
   // TODO: fixme
   it('should delete block also from the inputs of another block', () => {
     // given
-    spyOn(blockController, 'upsertBlock').and.callFake(() => {});
     spyOn(lineServie, 'deleteComponent').and.callFake(() => {});
-    spyOn(blockController, 'deleteBlock').and.callFake(() => {});
 
     const fileBlockComponent = new FileBlockComponent(blockService, dialogService);
     let regressionBlock = new LinearRegressionBlockComponent(blockService, dialogService);
@@ -127,3 +122,8 @@ fdescribe('Service: BlockService', () => {
   });
 
 });
+
+class BlockControllerStub {
+  upsertBlock(block: BlockComponent): void { }
+  deleteBlock(blockId: string): void { }
+}

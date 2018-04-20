@@ -18,8 +18,6 @@ describe('Service: BlockService', () => {
   let lineServie: LineService;
   let dialogService: DialogService;
 
-  let lockControllerSpy: jasmine.SpyObj<BlockController>;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -79,7 +77,6 @@ describe('Service: BlockService', () => {
     expect(blockService.blocks.size).toBe(0);
   });
 
-  // TODO: fixme
   it('should add block as input into the input array after line was draw', () => {
     // given
     const fileBlockComponent = new FileBlockComponent(blockService, dialogService);
@@ -100,7 +97,6 @@ describe('Service: BlockService', () => {
     expect(regressionBlock.setInputs[0]).toEqual(new Tuple<string, number>(fileBlockComponent.id, 0));
   });
 
-  // TODO: fixme
   it('should delete block also from the inputs of another block', () => {
     // given
     spyOn(lineServie, 'deleteComponent').and.callFake(() => {});

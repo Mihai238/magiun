@@ -20,9 +20,6 @@ describe('Service: BlockService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        // FileBlockComponent
-      ],
       imports: [
         HttpClientModule,
         DragDropDirectiveModule,
@@ -44,7 +41,7 @@ describe('Service: BlockService', () => {
     blockService.blocks.clear();
   });
 
-  it('service should be created!', () => {
+  it('should create service', () => {
     expect(blockService).not.toBeNull();
     expect(blockService.blocks.size).toBe(0);
   });

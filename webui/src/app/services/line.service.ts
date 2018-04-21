@@ -9,11 +9,11 @@ declare var LeaderLine: any;
 @Injectable()
 export class LineService {
 
-  private startComponent: BlockComponent;
-  private startId: string;
-  private outputType: WireType;
-  private outputIndex: number;
-  private compnentsMap = new Map<Tuple<string, string>, Array<BlockComponentsRelation>>();
+  startComponent: BlockComponent;
+  startId: string;
+  outputType: WireType;
+  outputIndex: number;
+  componentsMap = new Map<Tuple<string, string>, Array<BlockComponentsRelation>>();
 
   startLine(component: BlockComponent, startId: string, outputType: WireType, outputIndex: number): void {
     if (this.isAStartPointAlreadySelected()) {
@@ -56,7 +56,7 @@ export class LineService {
   }
 
   updatePosition(id: string): void {
-    const entries = this.compnentsMap.entries();
+    const entries = this.componentsMap.entries();
     let entry = entries.next();
     while (entry !== null && entry !== undefined && entry.value !== null && entry.value !== undefined) {
       const entryValue = entry.value;
@@ -72,7 +72,7 @@ export class LineService {
 
   deleteComponent(component: BlockComponent): void {
     const componentId = component.id;
-    const entries = this.compnentsMap.entries();
+    const entries = this.componentsMap.entries();
     let entry = entries.next().value;
     while (entry !== null && entry !== undefined) {
       if (entry[0]._1 === componentId) {
@@ -91,7 +91,7 @@ export class LineService {
         if (start) {
           this.changeFromSetToUnset(document.getElementById(r.line.end.id));
         } else {
-          const entries = this.compnentsMap.entries();
+          const entries = this.componentsMap.entries();
           let entry = entries.next().value;
           let count = 0;
           while (entry !== null && entry !== undefined) {
@@ -110,7 +110,7 @@ export class LineService {
         r.line.remove();
       });
     }
-    this.compnentsMap.delete(key);
+    this.componentsMap.delete(key);
   }
 
   // noinspection JSMethodCanBeStatic
@@ -165,13 +165,13 @@ export class LineService {
     const key = new Tuple<string, string>(this.startComponent.id, endComponent.id);
     const value = new BlockComponentsRelation(this.startComponent, this.outputIndex, endComponent, inputIndex, line);
 
-    if (this.compnentsMap.has(key)) {
-      const array = this.compnentsMap.get(key);
+    if (this.componentsMap.has(key)) {
+      const array = this.componentsMap.get(key);
       array.push(value);
 
-      this.compnentsMap.set(key, array)
+      this.componentsMap.set(key, array)
     } else {
-      this.compnentsMap.set(key, [value]);
+      this.componentsMap.set(key, [value]);
     }
   }
 

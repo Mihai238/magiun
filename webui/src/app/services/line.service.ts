@@ -40,7 +40,7 @@ export class LineService {
       this.addBlockRelationToMap(endComponent, inputIndex, line);
       this.changeFromSelectedToSet(document.getElementById(this.startId));
       this.changeFromUnsetToSet(document.getElementById(endId));
-      const input = new Tuple<string, number>(this.startId, this.outputIndex);
+      const input = new Tuple<string, number>(this.startComponent.id, this.outputIndex);
       this.reset();
       return input;
     } else {

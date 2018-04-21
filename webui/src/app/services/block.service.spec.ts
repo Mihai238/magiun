@@ -1,7 +1,7 @@
 import {BlockService} from './block.service';
 import {TestBed} from '@angular/core/testing';
 import {HttpClientModule} from '@angular/common/http';
-import {BlockController} from '../controllers/block.controller';
+import {BlockRestService} from '../rest/block.rest.service';
 import {LineService} from './line.service';
 import {DialogService} from 'ng2-bootstrap-modal';
 import {FileBlockComponent} from '../components/workflows/blocks/import-data/file-block.component';
@@ -11,7 +11,7 @@ import {CollectionsUtils} from '../util/collections.utils';
 import {LinearRegressionBlockComponent} from '../components/workflows/blocks/machine-learning/regression/linear-regression-block.component';
 import {WireType} from '../components/workflows/blocks/wire-type';
 import {Tuple} from '../util/tuple';
-import {BlockComponent} from "../components/workflows/blocks/block.component";
+import {BlockComponent} from '../components/workflows/blocks/block.component';
 
 describe('Service: BlockService', () => {
   let blockService: BlockService;
@@ -29,7 +29,7 @@ describe('Service: BlockService', () => {
         translate
       ],
       providers: [
-        {provide: BlockController, useValue: new BlockControllerStub()},
+        {provide: BlockRestService, useValue: new BlockRestServiceStub()},
         LineService,
         BlockService,
         DialogService
@@ -119,7 +119,7 @@ describe('Service: BlockService', () => {
 
 });
 
-class BlockControllerStub {
+class BlockRestServiceStub {
   upsertBlock(block: BlockComponent): void { }
   deleteBlock(blockId: string): void { }
 }

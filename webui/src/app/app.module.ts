@@ -47,7 +47,7 @@ import {DataTableModule} from './components/shared/table';
 import {DropColumnsBlockComponent} from './components/workflows/blocks/feature-selection/drop-columns-block.component';
 import {MultiInputParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/multi-input/multi-input-parameter.component';
 import {LineService} from './services/line.service';
-import {BlockController} from './controllers/block.controller';
+import {BlockRestService} from './rest/block.rest.service';
 
 @NgModule({
   declarations: [
@@ -101,7 +101,7 @@ import {BlockController} from './controllers/block.controller';
     DataService,
     BlockService,
     LineService,
-    BlockController,
+    BlockRestService,
     {provide: RouteReuseStrategy, useClass: RoutingReuseStrategy}
   ],
   entryComponents: [

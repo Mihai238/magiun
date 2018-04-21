@@ -3,9 +3,8 @@ import {BlockComponent} from '../components/workflows/blocks/block.component';
 import {CollectionsUtils} from '../util/collections.utils';
 import {WireType} from '../components/workflows/blocks/wire-type';
 import {LineService} from './line.service';
-import {BlockController} from '../controllers/block.controller';
+import {BlockRestService} from '../rest/block.rest.service';
 import {BlockPosition} from '../components/workflows/blocks/block-position';
-
 
 @Injectable()
 export class BlockService {
@@ -13,7 +12,7 @@ export class BlockService {
 
   blocks: Map<string, BlockComponent> = new Map<string, BlockComponent>();
 
-  constructor(private blockController: BlockController, private lineService: LineService) {}
+  constructor(private blockRestService: BlockRestService, private lineService: LineService) {}
 
   run(): void {
     // TODO: paulcurcean implement
@@ -21,19 +20,19 @@ export class BlockService {
 
   addBlock(block: BlockComponent): void {
     this.blocks.set(block.id, block);
-    this.blockController.upsertBlock(block);
+    this.blockRestService.upsertBlock(block);
   }
 
   updateBlock(block: BlockComponent): void {
     this.blocks.set(block.id, block);
-    this.blockController.upsertBlock(block);
+    this.blockRestService.upsertBlock(block);
   }
 
   deleteBlock(block: BlockComponent): void {
     this.blocks.delete(block.id);
     this.deleteBlockFromInputsArray(block);
     this.lineService.deleteComponent(block);
-    this.blockController.deleteBlock(block.id)
+    this.blockRestService.deleteBlock(block.id)
   }
 
   private deleteBlockFromInputsArray(block: BlockComponent) {
@@ -43,6 +42,7 @@ export class BlockService {
         inputs.forEach(input => {
           if (input._1 === block.id) {
             value.setInputs = CollectionsUtils.deleteEntryFromArray(value.setInputs, input);
+            this.blockRestService.upsertBlock(value);
           }
         })
       }
@@ -65,6 +65,7 @@ export class BlockService {
     const input = this.lineService.endLine(endComponent, endId, inputType, inputIndex);
     if (input !== null) {
       this.blocks.get(endComponent.id).setInputs.push(input);
+      this.blockRestService.upsertBlock(this.blocks.get(endComponent.id));
     }
   }
 

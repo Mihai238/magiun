@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {DataService} from '../../services/data.service';
 import {DataRow} from '../../model/data-row.model';
-import {Column, ColumnType, DataSet} from '../../model/data-set.model';
+import {Column, DataSet} from '../../model/data-set.model';
 import {environment} from '../../../environments/environment';
 import {FeatureProcessResult} from './process-feature/process-feature.component';
 import {NewColumnResult} from './new-column-settings/new-column-settings.component';
-import {DataTableParams} from "../shared/table";
+import {DataTableParams} from '../shared/table';
 
 @Component({
   selector: 'app-data',

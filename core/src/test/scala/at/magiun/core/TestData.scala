@@ -14,7 +14,7 @@ object TestData {
   val testDs1 = MagiunDataSet(1, "gigi", DataSetSource(SourceType.Mongo, "url") , Option.empty)
   val testDsEntity1 = MagiunDataSetEntity(1, "gigi", "FileCsv", sampleCsvUrl)
 
-  val testBlock2 = Block("id-2", BlockType.FileReader, Seq(("1", 0)), params = Map("x" -> "4"))
-  val testBlockEntity1 = BlockEntity("id-2", "FileReader", """{"inputs":[["1",0]],"params":{"x":"4"}}""")
+  val testBlock2 = Block("id-2", BlockType.FileReader, Seq(BlockInput("1", 0)), params = Map("x" -> "4"))
+  val testBlockEntity1 = BlockEntity("id-2", "FileReader", """{"inputs":[{"blockId":"1","index":0}],"params":{"x":"4"}}""")
 
 }

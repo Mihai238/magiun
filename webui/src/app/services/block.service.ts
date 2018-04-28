@@ -1,182 +1,75 @@
 import {Injectable} from '@angular/core';
 import {BlockComponent} from '../components/workflows/blocks/block.component';
-import {Tuple} from '../util/tuple';
-import {BlockComponentsRelation} from '../components/workflows/blocks/block-components-relation';
-import {Utils} from '../util/utils';
+import {CollectionsUtils} from '../util/collections.utils';
 import {WireType} from '../components/workflows/blocks/wire-type';
-import {HttpClient} from '@angular/common/http';
-
-declare var LeaderLine: any;
+import {LineService} from './line.service';
+import {BlockRestService} from '../rest/block.rest.service';
+import {BlockPosition} from '../components/workflows/blocks/block-position';
 
 @Injectable()
 export class BlockService {
 
-  private startComponent: BlockComponent;
-  private startId: string;
-  private outputType: WireType;
-  private outputIndex: number;
-  private compnentsMap = new Map<Tuple<string, string>, Array<BlockComponentsRelation>>();
 
-  constructor(private http: HttpClient) {}
+  blocks: Map<string, BlockComponent> = new Map<string, BlockComponent>();
 
-  run() {
-   // TODO: paulcurcean implement
+  constructor(private blockRestService: BlockRestService, private lineService: LineService) {}
+
+  run(): void {
+    // TODO: paulcurcean implement
+  }
+
+  addBlock(block: BlockComponent): void {
+    this.blocks.set(block.id, block);
+    this.blockRestService.upsertBlock(block);
+  }
+
+  updateBlock(block: BlockComponent): void {
+    this.blocks.set(block.id, block);
+    this.blockRestService.upsertBlock(block);
+  }
+
+  deleteBlock(block: BlockComponent): void {
+    this.blocks.delete(block.id);
+    this.deleteBlockFromInputsArray(block);
+    this.lineService.deleteComponent(block);
+    this.blockRestService.deleteBlock(block.id)
+  }
+
+  private deleteBlockFromInputsArray(block: BlockComponent) {
+    this.blocks.forEach((value: BlockComponent, key: string) => {
+      if (value.setInputs.length > 0) {
+        const inputs = value.setInputs;
+        inputs.forEach(input => {
+          if (input._1 === block.id) {
+            value.setInputs = CollectionsUtils.deleteEntryFromArray(value.setInputs, input);
+            this.blockRestService.upsertBlock(value);
+          }
+        })
+      }
+    })
+  }
+
+  updatePosition(id: string, position: BlockPosition): void {
+    const d = document.getElementById(id);
+    d.style.left = position.x + 'px';
+    d.style.top =  position.y + 'px';
+    this.blocks.get(id).position = position;
+    this.lineService.updatePosition(id);
   }
 
   startLine(component: BlockComponent, startId: string, outputType: WireType, outputIndex: number): void {
-    if (this.isAStartPointAlreadySelected()) {
-      this.startComponent = component;
-      this.startId = startId;
-      this.outputType = outputType;
-      this.outputIndex = outputIndex;
-
-      const e = document.getElementById(startId);
-      if (e.classList.contains('unset')) {
-        this.changeFromUnsetToSelected(e);
-      }
-    }
+    this.lineService.startLine(component, startId, outputType, outputIndex);
   }
 
   endLine(endComponent: BlockComponent, endId: string, inputType: WireType, inputIndex: number): void {
-    if (this.isPointValidEndPoint(endComponent, endId, inputType)) {
-      const line = new LeaderLine(
-        document.getElementById(this.startId),
-        document.getElementById(endId),
-        {dropShadow: true}
-      );
-
-      this.addBlockRelationToMap(endComponent, inputIndex, line);
-      this.changeFromSelectedToSet(document.getElementById(this.startId));
-      this.changeFromUnsetToSet(document.getElementById(endId));
-      this.reset();
+    const input = this.lineService.endLine(endComponent, endId, inputType, inputIndex);
+    if (input !== null) {
+      this.blocks.get(endComponent.id).setInputs.push(input);
+      this.blockRestService.upsertBlock(this.blocks.get(endComponent.id));
     }
   }
 
-  deselectLineStartPoint(id: string): void {
-    if (this.startId === id) {
-      this.reset();
-      this.changeFromSelectedToUnset(document.getElementById(id));
-    }
+  deselectLineStartPoint(id: string) {
+    this.lineService.deselectLineStartPoint(id);
   }
-
-  updatePosition(id: string): void {
-    const entries = this.compnentsMap.entries();
-    let entry = entries.next();
-    while (entry !== null && entry !== undefined && entry.value !== null && entry.value !== undefined) {
-      const entryValue = entry.value;
-      if (entryValue[0]._1 === id || entryValue[0]._2 === id) {
-        const relations: Array<BlockComponentsRelation> = entryValue[1];
-        if (relations !== undefined && relations !== null) {
-          relations.forEach(r => r.line.position());
-        }
-      }
-      entry = entries.next();
-    }
-  }
-
-  deleteComponent(component: BlockComponent): void {
-    const componentId = component.id;
-    const entries = this.compnentsMap.entries();
-    let entry = entries.next().value;
-    while (entry !== null && entry !== undefined) {
-      if (entry[0]._1 === componentId) {
-        this.deleteLinesUnsetBulletsAndDeleteComponent(entry[0], entry[1], true);
-      } else if (entry[0]._2 === componentId) {
-        this.deleteLinesUnsetBulletsAndDeleteComponent(entry[0], entry[1], false);
-      }
-
-      entry = entries.next().value;
-    }
-  }
-
-  private deleteLinesUnsetBulletsAndDeleteComponent(key: Tuple<string, string>, relations: Array<BlockComponentsRelation>, start: boolean) {
-    if (relations !== undefined && relations !== null) {
-      relations.forEach(r => {
-        if (start) {
-          this.changeFromSetToUnset(document.getElementById(r.line.end.id));
-        } else {
-          const entries = this.compnentsMap.entries();
-          let entry = entries.next().value;
-          let count = 0;
-          while (entry !== null && entry !== undefined) {
-            if (entry[0] !== key) {
-              if (entry[1].filter(rl => rl.component1OutputIndex === r.component1OutputIndex).length > 0) {
-                count++;
-              }
-            }
-            entry = entries.next().value;
-          }
-          if (count === 0) {
-            this.changeFromSetToUnset(document.getElementById(r.line.start.id));
-          }
-        }
-
-        r.line.remove();
-      });
-    }
-    this.compnentsMap.delete(key);
-  }
-
-  // noinspection JSMethodCanBeStatic
-  private changeFromUnsetToSelected(e) {
-    e.classList.remove('unset');
-    e.classList.add('selected')
-  }
-
-  // noinspection JSMethodCanBeStatic
-  private changeFromSelectedToSet(e) {
-    e.classList.remove('selected');
-    e.classList.add('set');
-  }
-
-  // noinspection JSMethodCanBeStatic
-  private changeFromSelectedToUnset(e) {
-    e.classList.remove('selected');
-    e.classList.add('unset');
-  }
-
-  // noinspection JSMethodCanBeStatic
-  private changeFromUnsetToSet(e) {
-    e.classList.remove('unset');
-    e.classList.add('set');
-  }
-
-  // noinspection JSMethodCanBeStatic
-  private changeFromSetToUnset(e) {
-    e.classList.remove('set');
-    e.classList.add('unset');
-  }
-
-  private reset(): void {
-    this.startId = null;
-    this.startComponent = null;
-    this.outputType = null;
-    this.outputIndex = null;
-  }
-
-  private isAStartPointAlreadySelected(): boolean {
-    return this.startId === null || this.startId === undefined;
-  }
-
-  private isPointValidEndPoint(endComponent: BlockComponent, endId: string, inputType: WireType): boolean {
-    return this.startId !== endId &&
-      this.startComponent !== endComponent &&
-      document.getElementById(endId).classList.contains('unset') &&
-      this.outputType === inputType;
-  }
-
-  private addBlockRelationToMap(endComponent: BlockComponent, inputIndex: number, line: any): void {
-    const key = new Tuple<string, string>(this.startComponent.id, endComponent.id);
-    const value = new BlockComponentsRelation(this.startComponent, this.outputIndex, endComponent, inputIndex, line);
-
-    if (Utils.isKeyPresentInTheMap(this.compnentsMap, key)) {
-      const array = this.compnentsMap.get(key);
-      array.push(value);
-
-      this.compnentsMap.set(key, array)
-    } else {
-      this.compnentsMap.set(key, [value]);
-    }
-  }
-
 }

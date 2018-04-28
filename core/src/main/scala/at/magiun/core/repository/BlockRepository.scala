@@ -25,6 +25,12 @@ class BlockRepository(db: Database) {
     db.run(action).map(_ => block)
   }
 
+  def delete(id: String): Future[Int] = {
+    val action = blocks.filter(_.id === id).delete
+
+    db.run(action)
+  }
+
   def find(id: String): Future[BlockEntity] = {
     val action = blocks.filter(_.id === id)
       .result

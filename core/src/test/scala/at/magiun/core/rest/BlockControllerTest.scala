@@ -30,7 +30,7 @@ class BlockControllerTest extends UnitTest {
   }
 
   it should "create a block" in {
-    val input = Input.post("/blocks/").withBody[Application.Json](Buf.Utf8("""{"id":"id-2","type":"FileReader","inputs":[["1",0]],"params":{"x":"4"}}"""))
+    val input = Input.post("/blocks/").withBody[Application.Json](Buf.Utf8("""{"id":"id-2","type":"FileReader","inputs":[{"blockId":"1","index":0}],"params":{"x":"4"}}"""))
     val result = controller.upsertBlock(input)
     stubService.upsert _ when * returns Future.successful(TestData.testBlock2)
 
@@ -38,7 +38,7 @@ class BlockControllerTest extends UnitTest {
     block.id should be ("id-2")
 
     val matcher = where {
-      (b: Block) => b.id == "id-2" && b.`type` == FileReader && b.inputs.head._1 == "1"
+      (b: Block) => b.id == "id-2" && b.`type` == FileReader && b.inputs.head.blockId == "1"
     }
 
     stubService.upsert _ verify matcher

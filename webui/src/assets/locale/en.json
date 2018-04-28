@@ -31,6 +31,12 @@
     "EXPORT": "Export workflow to file",
     "IMPORT": "Import workflow from file",
     "BLOCKS": {
+      "DATABASE": "Database",
+      "FILE": "File",
+      "SPLIT_DATA": "Split Data",
+      "DROP_COLUMNS": "Drop Columns",
+      "LINEAR_REGRESSION": "Linear Regression",
+      "POISSON_REGRESSION": "Poisson Regression",
       "STEP_IS_NOT_COMPLETE": "It seems that the created step is not configured!",
       "SETTINGS": "Settings",
       "DELETE": "Delete Block",

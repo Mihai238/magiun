@@ -4,6 +4,7 @@ import {ImportDataComponent} from './import-data.component';
 import {BlockService} from '../../../../services/block.service';
 import {BlockParameter} from '../block-parameter';
 import {DialogService} from 'ng2-bootstrap-modal';
+import {BlockComponent} from '../block.component';
 
 @Component({
   selector: 'app-block',
@@ -14,6 +15,7 @@ export class FileBlockComponent extends ImportDataComponent {
 
   name = BlockType.FILE.name;
   id = BlockType.FILE.name + '-' + new Date().getMilliseconds();
+  i18nValue = BlockComponent.base_path + BlockType.FILE.i18nValue;
 
   constructor(blockService: BlockService, dialogService: DialogService) {
     super(blockService, dialogService);

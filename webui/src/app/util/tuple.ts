@@ -1,4 +1,4 @@
-export class Tuple <K, V> {
+export class Tuple <L, R> {
 
-  constructor(public readonly _1: K, public readonly _2: V) {}
+  constructor(public readonly _1: L, public readonly _2: R) {}
 }

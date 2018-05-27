@@ -26,6 +26,8 @@ so that the system has enough watchers to handle changes on all files
 * `cd fake-backend`
 * `json-server fake.js`
 
+Note: do not expect all features to work with the fake backend
+
 #### Create a component via angular cli
 
     ng g component components/<component-name>

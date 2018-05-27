@@ -31,7 +31,7 @@ class DataSetControllerTest extends UnitTest {
   }
 
   it should "return created dataset" in {
-    val input = Input.post("/datasets/").withBody[Application.Json](Buf.Utf8("""{"id": "0", "name":"foo", "dataSetSource":{"sourceType":"FileCsv","url":"file:///home/mihai/Development/thesis/magiun/core/target/classes/insurance_sample.csv"}}"""))
+    val input = Input.post("/datasets/").withBody[Application.Json](Buf.Utf8("""{"id": "0", "name":"foo", "dataSetSource":{"sourceType":"FileCsv","url":"file:///home/mihai/Development/thesis/magiun/core/target/classes/titanic.csv"}}"""))
     stubService.create _ when * returns Future.successful(testDs1)
 
     val result = controller.createDataSet(input)
@@ -40,7 +40,7 @@ class DataSetControllerTest extends UnitTest {
     dataSet.id should be(1)
 
     val matcher = where {
-      (ds: MagiunDataSet) => ds.id == 0 && ds.name == "foo"
+      ds: MagiunDataSet => ds.id == 0 && ds.name == "foo"
     }
     stubService.create _ verify matcher
   }

@@ -18,9 +18,9 @@ import { TABLE_STYLE } from './table.style';
   moduleId: module.id + '',
   selector: 'data-table',
   templateUrl: './table.component.html',
-  styles: [TABLE_STYLE]
+  styleUrls: ['./table.component.css']
 })
-export class DataTable implements DataTableParams, OnInit {
+export class DataTableComponent implements DataTableParams, OnInit {
 
   private _items: any[] = [];
 

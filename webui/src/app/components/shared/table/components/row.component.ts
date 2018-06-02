@@ -1,7 +1,7 @@
 import {
     Component, Input, Inject, forwardRef, Output, EventEmitter, OnDestroy
 } from '@angular/core';
-import { DataTable } from './table.component';
+import { DataTableComponent } from './table.component';
 import { ROW_TEMPLATE } from './row.template';
 import { ROW_STYLE } from './row.style';
 
@@ -51,7 +51,7 @@ export class DataTableRow implements OnDestroy {
         return '';
     }
 
-    constructor(@Inject(forwardRef(() => DataTable)) public dataTable: DataTable) {}
+    constructor(@Inject(forwardRef(() => DataTableComponent)) public dataTable: DataTableComponent) {}
 
     ngOnDestroy() {
         this.selected = false;

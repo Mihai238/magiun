@@ -9,13 +9,15 @@ import { RowCallback } from '../types/row-callback.type';
 import { DataTableTranslations } from '../types/data-table-translations.type';
 import { defaultTranslations } from '../types/default-translations.type';
 import { drag } from '../utils/drag';
-import { TABLE_TEMPLATE } from './table.template';
 import { TABLE_STYLE } from './table.style';
 
+/**
+ * https://github.com/ggmod/angular-5-data-table
+ */
 @Component({
   moduleId: module.id + '',
   selector: 'data-table',
-  template: TABLE_TEMPLATE,
+  templateUrl: './table.component.html',
   styles: [TABLE_STYLE]
 })
 export class DataTable implements DataTableParams, OnInit {

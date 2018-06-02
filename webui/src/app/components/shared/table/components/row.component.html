@@ -1,4 +1,3 @@
-export const ROW_TEMPLATE = `
 <tr	class="data-table-row"
     [title]="getTooltip()"
     [style.background-color]="dataTable.getRowColor(item, index, _this)"
@@ -30,4 +29,3 @@ export const ROW_TEMPLATE = `
         <div [ngTemplateOutlet]="dataTable.expandTemplate" [ngOutletContext]="{row: _this, item: item}"></div>
     </td>
 </tr>
-`;

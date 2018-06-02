@@ -3,13 +3,12 @@ import {
 	TemplateRef, ContentChild, ViewChildren, OnInit
 } from '@angular/core';
 import { DataTableColumn } from './column.component';
-import { DataTableRow } from './row.component';
+import { DataTableRowComponent } from './row.component';
 import { DataTableParams } from '../types/data-table-params.type';
 import { RowCallback } from '../types/row-callback.type';
 import { DataTableTranslations } from '../types/data-table-translations.type';
 import { defaultTranslations } from '../types/default-translations.type';
 import { drag } from '../utils/drag';
-import { TABLE_STYLE } from './table.style';
 
 /**
  * https://github.com/ggmod/angular-5-data-table
@@ -38,7 +37,7 @@ export class DataTableComponent implements DataTableParams, OnInit {
   // UI components:
 
   @ContentChildren(DataTableColumn) columns: QueryList<DataTableColumn>;
-  @ViewChildren(DataTableRow) rows: QueryList<DataTableRow>;
+  @ViewChildren(DataTableRowComponent) rows: QueryList<DataTableRowComponent>;
   @ContentChild('dataTableExpand') expandTemplate: TemplateRef<any>;
 
   // One-time optional bindings with default values:
@@ -221,11 +220,11 @@ export class DataTableComponent implements DataTableParams, OnInit {
 	@Output() headerClick = new EventEmitter();
 	@Output() cellClick = new EventEmitter();
 
-	public rowClicked(row: DataTableRow, event) {
+	public rowClicked(row: DataTableRowComponent, event) {
 		this.rowClick.emit({ row, event });
 	}
 
-	public rowDoubleClicked(row: DataTableRow, event) {
+	public rowDoubleClicked(row: DataTableRowComponent, event) {
 		this.rowDoubleClick.emit({ row, event });
 	}
 
@@ -239,7 +238,7 @@ export class DataTableComponent implements DataTableParams, OnInit {
 		}
 	}
 
-	private cellClicked(column: DataTableColumn, row: DataTableRow, event: MouseEvent) {
+	private cellClicked(column: DataTableColumn, row: DataTableRowComponent, event: MouseEvent) {
 		this.cellClick.emit({ row, column, event });
 	}
 
@@ -277,7 +276,7 @@ export class DataTableComponent implements DataTableParams, OnInit {
 		return count;
 	}
 
-	public getRowColor(item: any, index: number, row: DataTableRow) {
+	public getRowColor(item: any, index: number, row: DataTableRowComponent) {
 		if (this.rowColors !== undefined) {
 			return (<RowCallback>this.rowColors)(item, row, index);
 		}
@@ -285,8 +284,8 @@ export class DataTableComponent implements DataTableParams, OnInit {
 
 	// selection:
 
-	selectedRow: DataTableRow;
-	selectedRows: DataTableRow[] = [];
+	selectedRow: DataTableRowComponent;
+	selectedRows: DataTableRowComponent[] = [];
 
 	private _selectAllCheckbox = false;
 
@@ -303,7 +302,7 @@ export class DataTableComponent implements DataTableParams, OnInit {
 		this.rows.toArray().forEach(row => row.selected = value);
 	}
 
-	onRowSelectChanged(row: DataTableRow) {
+	onRowSelectChanged(row: DataTableRowComponent) {
 
 		// maintain the selectedRow(s) view
 		if (this.multiSelect) {

@@ -1,5 +1,5 @@
 import { Directive, Input, ContentChild, OnInit } from '@angular/core';
-import { DataTableRow } from './row.component';
+import { DataTableRowComponent } from './row.component';
 import { CellCallback } from '../types/cell-callback.type';
 
 
@@ -23,7 +23,7 @@ export class DataTableColumn implements OnInit {
     @ContentChild('dataTableCell') cellTemplate;
     @ContentChild('dataTableHeader') headerTemplate;
 
-    getCellColor(row: DataTableRow, index: number) {
+    getCellColor(row: DataTableRowComponent, index: number) {
         if (this.cellColors !== undefined) {
             return (<CellCallback>this.cellColors)(row.item, row, this, index);
         }

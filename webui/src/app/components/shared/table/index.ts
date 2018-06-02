@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { DataTableComponent} from './components/table.component';
 import { DataTableColumn } from './components/column.component';
-import { DataTableRow } from './components/row.component';
+import { DataTableRowComponent } from './components/row.component';
 import { DataTablePagination } from './components/pagination.component';
 import { DataTableHeader } from './components/header.component';
 
@@ -17,7 +17,7 @@ import { RowCallback } from './types/row-callback.type';
 import { DataTableParams } from './types/data-table-params.type';
 import { defaultTranslations } from './types/default-translations.type';
 export * from './tools/data-table-resource';
-export { DataTableComponent, DataTableColumn, DataTableRow, DataTablePagination,
+export { DataTableComponent, DataTableColumn, DataTableRowComponent, DataTablePagination,
           DataTableHeader, DataTableTranslations, CellCallback, RowCallback, DataTableParams, defaultTranslations};
 
 
@@ -25,7 +25,7 @@ export { DataTableComponent, DataTableColumn, DataTableRow, DataTablePagination,
     imports: [ CommonModule, FormsModule ],
     declarations: [
         DataTableComponent, DataTableColumn,
-        DataTableRow, DataTablePagination, DataTableHeader,
+        DataTableRowComponent, DataTablePagination, DataTableHeader,
         PixelConverter, Hide, MinPipe
     ],
     exports: [ DataTableComponent, DataTableColumn ]

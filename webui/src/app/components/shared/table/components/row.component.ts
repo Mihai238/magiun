@@ -1,7 +1,5 @@
-import {
-  Component, Input, Inject, forwardRef, Output, EventEmitter, OnDestroy
-} from '@angular/core';
-import {DataTableComponent} from './table.component';
+import {Component, EventEmitter, Input, OnDestroy, Output, QueryList} from '@angular/core';
+import {DataTableColumn} from "./column.component";
 
 
 @Component({
@@ -14,16 +12,14 @@ export class DataTableRowComponent implements OnDestroy {
 
   @Input() item: any;
   @Input() index: number;
-
-  expanded: boolean;
-
-  // row selection:
+  @Input() selectColumnVisible: boolean;
+  @Input() columns: QueryList<DataTableColumn>;
 
   private _selected: boolean;
 
   @Output() selectedChange = new EventEmitter();
 
-  constructor(@Inject(forwardRef(() => DataTableComponent)) public dataTable: DataTableComponent) {
+  constructor() {
   }
 
   get selected() {
@@ -33,23 +29,6 @@ export class DataTableRowComponent implements OnDestroy {
   set selected(selected) {
     this._selected = selected;
     this.selectedChange.emit(selected);
-  }
-
-  // other:
-
-  get displayIndex() {
-    if (this.dataTable.pagination) {
-      return this.dataTable.displayParams.offset + this.index + 1;
-    } else {
-      return this.index + 1;
-    }
-  }
-
-  getTooltip() {
-    if (this.dataTable.rowTooltip) {
-      return this.dataTable.rowTooltip(this.item, this, this.index);
-    }
-    return '';
   }
 
   ngOnDestroy() {

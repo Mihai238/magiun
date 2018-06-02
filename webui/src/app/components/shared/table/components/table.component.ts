@@ -49,14 +49,12 @@ export class DataTableComponent implements DataTableParams, OnInit {
   @Input() pagination_limit = false;
   @Input() pagination_input = false;
 	@Input() pagination_numbers = true;
-	@Input() indexColumn = true;
 	@Input() indexColumnHeader = '';
 	@Input() rowColors: RowCallback;
 	@Input() rowTooltip: RowCallback;
 	@Input() selectColumn = false;
 	@Input() multiSelect = true;
 	@Input() substituteRows = true;
-	@Input() expandableRows = false;
 	@Input() translations: DataTableTranslations = defaultTranslations;
 	@Input() selectOnRowClick = false;
 	@Input() autoReload = true;
@@ -65,9 +63,7 @@ export class DataTableComponent implements DataTableParams, OnInit {
 
 	// UI state without input:
 
-  indexColumnVisible: boolean;
 	selectColumnVisible: boolean;
-	expandColumnVisible: boolean;
 
 	// UI state: visible ge/set for the outside with @Input for one-time initial values
 
@@ -152,9 +148,7 @@ export class DataTableComponent implements DataTableParams, OnInit {
 	}
 
 	private _initDefaultValues() {
-		this.indexColumnVisible = this.indexColumn;
 		this.selectColumnVisible = this.selectColumn;
-		this.expandColumnVisible = this.expandableRows;
 	}
 
 	private _initDefaultClickEvents() {
@@ -267,19 +261,11 @@ export class DataTableComponent implements DataTableParams, OnInit {
 
 	get columnCount() {
 		let count = 0;
-		count += this.indexColumnVisible ? 1 : 0;
 		count += this.selectColumnVisible ? 1 : 0;
-		count += this.expandColumnVisible ? 1 : 0;
 		this.columns.toArray().forEach(column => {
 			count += column.visible ? 1 : 0;
 		});
 		return count;
-	}
-
-	public getRowColor(item: any, index: number, row: DataTableRowComponent) {
-		if (this.rowColors !== undefined) {
-			return (<RowCallback>this.rowColors)(item, row, index);
-		}
 	}
 
 	// selection:
@@ -328,12 +314,6 @@ export class DataTableComponent implements DataTableParams, OnInit {
 				}
 			});
 		}
-	}
-
-	// other:
-
-	get substituteItems() {
-		return Array.from({ length: this.displayParams.limit - this.items.length });
 	}
 
 	// column resizing:

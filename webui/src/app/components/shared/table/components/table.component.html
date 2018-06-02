@@ -5,13 +5,9 @@
     <table class="table table-condensed table-bordered data-table">
       <thead>
       <tr>
-        <th scope="col" [hide]="!expandColumnVisible" class="expand-column-header">
-        <th scope="col" [hide]="!indexColumnVisible" class="index-column-header">
-          <span [textContent]="indexColumnHeader"></span>
-        </th>
         <th scope="col" [hide]="!selectColumnVisible" class="select-column-header">
           <input [hide]="!multiSelect" type="checkbox" [(ngModel)]="selectAllCheckbox"
-                 [attr.aria-label]="translations.selectAllRows"/>
+                 [attr.aria-label]="translations.selectAllRows" title="checkbox select all"/>
         </th>
         <th scope="col" *ngFor="let column of columns" #th [hide]="!column.visible"
             (click)="headerClicked(column, $event)"
@@ -31,22 +27,12 @@
       </tr>
       </thead>
       <tbody *ngFor="let item of items; let index=index" class="data-table-row-wrapper"
-             dataTableRow #row [item]="item" [index]="index" (selectedChange)="onRowSelectChanged(row)">
+             dataTableRow #row [item]="item" [index]="index" [selectColumnVisible]="selectColumnVisible"
+             (selectedChange)="onRowSelectChanged(row)" [columns]="columns">
       </tbody>
       <tbody *ngIf="itemCount === 0 && noDataMessage">
       <tr>
         <td [attr.colspan]="columnCount">{{ noDataMessage }}</td>
-      </tr>
-      </tbody>
-      <tbody class="substitute-rows" *ngIf="pagination && substituteRows">
-      <tr *ngFor="let item of substituteItems, let index = index"
-          [class.row-odd]="(index + items.length) % 2 === 0"
-          [class.row-even]="(index + items.length) % 2 === 1"
-      >
-        <td [hide]="!expandColumnVisible"></td>
-        <td [hide]="!indexColumnVisible">&nbsp;</td>
-        <td [hide]="!selectColumnVisible"></td>
-        <td *ngFor="let column of columns" [hide]="!column.visible">
       </tr>
       </tbody>
     </table>

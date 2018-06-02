@@ -12,26 +12,26 @@ class CsvConnectorTest extends UnitTest {
   it should "get schema given a source" in {
     val schema = connector.getSchema(csvDataSetSource)
 
-    schema.columns should have size 18
+    schema.columns should have size 12
     val column1 = schema.columns.head
-    val column2 = schema.columns(1)
+    val column2 = schema.columns(3)
 
     column1.index should be (0)
-    column1.name should be ("policyID")
+    column1.name should be ("PassengerId")
     column1.`type` should be (ColumnType.Int)
 
-    column2.index should be (1)
-    column2.name should be ("statecode")
+    column2.index should be (3)
+    column2.name should be ("Name")
     column2.`type` should be (ColumnType.String)
   }
 
   it should "get rows given a source" in {
     val rows = connector.getRows(csvDataSetSource)
 
-    rows should have size 15999
+    rows should have size 891
     rows.head.id should be (0)
-    rows.head.values.head should be ("119736")
-    rows(6364).values(1) should be ("FL")
+    rows.head.values(4) should be ("male")
+    rows(30).values(1) should be ("0")
   }
 
   it should "get range of rows given a source" in {
@@ -39,18 +39,18 @@ class CsvConnectorTest extends UnitTest {
 
     rows should have size 10
     rows.head.id should be (0)
-    rows.head.values.head should be ("253816")
+    rows.head.values.head should be ("11")
   }
 
   it should "get specific columns" in {
-    val rows = connector.getRows(csvDataSetSource, None, Option(Set("statecode", "policyID", "hu_site_limit")))
+    val rows = connector.getRows(csvDataSetSource, None, Option(Set("PassengerId", "Survived", "Sex")))
     val firstRow = rows.head.values
 
-    rows should have size 15999
+    rows should have size 891
     rows.head.id should be (0)
 
     firstRow should have size 3
-    firstRow.head should be ("119736")
+    firstRow(2) should be ("male")
   }
 
 }

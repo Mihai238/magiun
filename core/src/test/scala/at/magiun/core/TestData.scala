@@ -5,7 +5,7 @@ import at.magiun.core.repository.{BlockEntity, MagiunDataSetEntity}
 
 object TestData {
 
-  val sampleCsvPath: String = getClass.getClassLoader.getResource("insurance_sample.csv").getFile
+  val sampleCsvPath: String = getClass.getClassLoader.getResource("titanic.csv").getFile
   val sampleCsvUrl = s"file://$sampleCsvPath"
 
   val csvDataSetSource = DataSetSource(SourceType.FileCsv, sampleCsvUrl)

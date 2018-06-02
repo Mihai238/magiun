@@ -72,7 +72,7 @@ export class DataService {
     columns.forEach(col => columnsString += col + ",");
     columnsString = columnsString.substring(0, columnsString.length - 1);
 
-    this.logger.info('DataService: load all data for ' + dataSet.id + ' and columns ' + columnsString);
+    this.logger.info('DataService: load all data for dataset with id "' + dataSet.id + '" and column(s) "' + columnsString + '"');
     return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows' + '?_columns=' + columnsString)
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

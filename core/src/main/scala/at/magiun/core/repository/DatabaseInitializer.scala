@@ -6,10 +6,10 @@ import scala.concurrent.duration._
 class DatabaseInitializer(dataSetRepository: DataSetRepository,
                          blockRepository: BlockRepository) {
 
-  private val sampleCsvUrl = "file://" + getClass.getClassLoader.getResource("insurance_sample.csv").getFile
+  private val sampleCsvUrl = "file://" + getClass.getClassLoader.getResource("titanic.csv").getFile
 
   def init(): Unit = {
-    insertDataSet(MagiunDataSetEntity(1, "insurance", "FileCsv", sampleCsvUrl))
+    insertDataSet(MagiunDataSetEntity(1, "titanic", "FileCsv", sampleCsvUrl))
     insertDataSet(MagiunDataSetEntity(2, "drinks", "Mongo", "mongodb://127.0.0.1/testDb/testCollection"))
 
     insertBlock(BlockEntity("id-2", "FileReader", s"""{"inputs":[],"params":{"fileName":"$sampleCsvUrl"}}"""))

@@ -11,14 +11,14 @@ class ExecutionServiceTest extends UnitTest {
 
   it should "execute a sequence of stages" in {
     val fileReaderBlock = Block("id-3", BlockType.FileReader, Seq.empty, Map("fileName" -> sampleCsvPath))
-    val dropColBlock = Block("id-2", BlockType.DropColumn, Seq(BlockInput("id-3", 0)), Map("columnName" -> "statecode"))
+    val dropColBlock = Block("id-2", BlockType.DropColumn, Seq(BlockInput("id-3", 0)), Map("columnName" -> "Parch"))
     val blocks = Map("id-3" ->  fileReaderBlock, "id-2" -> dropColBlock)
 
     val output = executor.execute(blocks, dropColBlock)
 
     output match {
       case DatasetOutput(ds) =>
-        ds.columns.length should be (17)
+        ds.columns.length should be (11)
     }
   }
 

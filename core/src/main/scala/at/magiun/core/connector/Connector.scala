@@ -41,19 +41,12 @@ trait Connector extends LazyLogging {
       .zipWithIndex
       .map { case (sparkRow, rowInd) =>
 
-        columns.map(columns => {
-          schema.zipWithIndex
-            .map { case (col, colInd) =>
-              sparkRow.get(colInd).toString
-            }
-        })
-
         val values = schema.zipWithIndex.flatMap {
           case (col, colInd) =>
             val shouldFetchColumn = columns.forall(_.contains(col.name))
 
             if (shouldFetchColumn) {
-              Option(sparkRow.get(colInd).toString)
+              Option(sparkRow.get(colInd)).map(_.toString)
             } else {
               None
             }

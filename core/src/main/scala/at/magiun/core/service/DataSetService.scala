@@ -1,7 +1,7 @@
 package at.magiun.core.service
 
-import at.magiun.core.connector.{Connector, CsvConnector, MongoDbConnector}
-import at.magiun.core.model.SourceType.{FileCsv, Mongo}
+import at.magiun.core.connector.{Connector, CsvConnector, MemoryConnector, MongoDbConnector}
+import at.magiun.core.model.SourceType.{FileCsv, Memory, Mongo}
 import at.magiun.core.model.{DataRow, DataSetSource, MagiunDataSet, SourceType}
 import at.magiun.core.repository.{DataSetRepository, MagiunDataSetEntity}
 import org.apache.spark.sql.SparkSession
@@ -12,6 +12,7 @@ import scala.concurrent.Future
 
 class DataSetService(
                       dataSetRepository: DataSetRepository,
+                      executionService: ExecutionService,
                       sparkSession: SparkSession
                     ) {
 
@@ -53,17 +54,28 @@ class DataSetService(
     )
   }
 
-  def findRows(dataSetId: Int, range: Option[Range] = empty, columns: Option[Set[String]] = empty): Future[Option[Seq[DataRow]]] = {
-    find(dataSetId)
-      .map(_.map(ds => {
-        val connector = getConnector(ds.dataSetSource.sourceType)
-        connector.getRows(ds.dataSetSource, range, columns)
-      }))
+  def findRows(dataSetId: String, range: Option[Range] = empty, columns: Option[Set[String]] = empty): Future[Option[Seq[DataRow]]] = {
+    if (dataSetId.contains("-")) {
+      val source = DataSetSource(SourceType.Memory, dataSetId)
+      val connector = getConnector(SourceType.Memory)
+      Future {
+        Option {
+          connector.getRows(source, range, columns)
+        }
+      }
+    } else {
+      find(dataSetId.toLong)
+        .map(_.map(ds => {
+          val connector = getConnector(ds.dataSetSource.sourceType)
+          connector.getRows(ds.dataSetSource, range, columns)
+        }))
+    }
   }
 
   private def getConnector(sourceType: SourceType): Connector = sourceType match {
     case FileCsv => new CsvConnector(sparkSession)
     case Mongo => new MongoDbConnector(sparkSession)
+    case Memory => new MemoryConnector(executionService.getExecutionsOutput)
   }
 
 }

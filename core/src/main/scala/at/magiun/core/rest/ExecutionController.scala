@@ -1,6 +1,6 @@
 package at.magiun.core.rest
 
-import at.magiun.core.model.Execution
+import at.magiun.core.model.{Execution, ExecutionResult}
 import at.magiun.core.rest.FutureConverter._
 import at.magiun.core.service.ExecutionService
 import io.circe.generic.auto._
@@ -14,9 +14,9 @@ class ExecutionController(executionService: ExecutionService) {
   private val PATH = "executions"
 
   //noinspection TypeAnnotation
-  lazy val api = persistExecution
+  lazy val api = upsertExecution
 
-  val persistExecution: Endpoint[Execution] = post(PATH :: jsonBody[Execution]) { execution: Execution =>
+  val upsertExecution: Endpoint[ExecutionResult] = post(PATH :: jsonBody[Execution]) { execution: Execution =>
     executionService.execute(execution)
       .asTwitter
       .map(Ok)

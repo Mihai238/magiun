@@ -23,7 +23,7 @@ trait MainModule {
   lazy val jobService = wire[JobService]
   lazy val blockService = wire[BlockService]
   lazy val dataSetService = wire[DataSetService]
-  lazy val executor = wire[ExecutionService]
+  lazy val executionService = wire[ExecutionService]
 
   // Repositories
   lazy val blockRepository = wire[BlockRepository]

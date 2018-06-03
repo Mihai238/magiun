@@ -2,8 +2,8 @@ package at.magiun.core.connector
 
 import at.magiun.core.model._
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.spark.sql.{DataFrame, Row}
 import org.apache.spark.sql.types.{DataType, StructType}
+import org.apache.spark.sql.{Dataset, Row}
 
 import scala.Option.empty
 
@@ -11,10 +11,10 @@ trait Connector extends LazyLogging {
 
   def getSchema(source: DataSetSource): Schema
 
-  def getDataFrame(source: DataSetSource): DataFrame
+  def getDataset(source: DataSetSource): Dataset[Row]
 
   final def getRows(source: DataSetSource, range: Option[Range] = Option.empty, columns: Option[Set[String]] = empty): Seq[DataRow] = {
-    val df = getDataFrame(source)
+    val df = getDataset(source)
 
     val dfRows = range.map(range => {
       df.take(range.end).drop(range.start)

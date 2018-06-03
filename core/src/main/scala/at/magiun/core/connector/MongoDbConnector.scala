@@ -2,12 +2,12 @@ package at.magiun.core.connector
 
 import java.util.regex.Pattern
 
-import at.magiun.core.model.{Column, DataRow, DataSetSource, Schema}
+import at.magiun.core.model.{Column, DataSetSource, Schema}
 import com.mongodb.spark.config.ReadConfig
 import com.mongodb.spark.sql._
 import com.mongodb.{BasicDBObject, MongoClient, MongoClientOptions}
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.util.control.NonFatal
 
@@ -23,19 +23,19 @@ class MongoDbConnector(spark: SparkSession) extends Connector with LazyLogging {
 
     if (isMongoReachable(url)) {
       val readConfig = ReadConfig(Map("uri" -> mongoUri, "collection" -> collectionName))
-      val dataFrame = spark.read.mongo(readConfig)
+      val ds = spark.read.mongo(readConfig)
 
-      val cols = dataFrame.schema.zipWithIndex.map { case (col, index) =>
+      val cols = ds.schema.zipWithIndex.map { case (col, index) =>
         Column(index, col.name, mapToColumnType(col.dataType))
       }
 
-      Schema(cols.toList, dataFrame.count())
+      Schema(cols.toList, ds.count())
     } else {
       Schema(List.empty, 0)
     }
   }
 
-  override def getDataFrame(source: DataSetSource): DataFrame = {
+  override def getDataset(source: DataSetSource): Dataset[Row] = {
     val (mongoUri, collectionName) = getUriAndCollection(source.url)
 
     val readConfig = ReadConfig(Map("uri" -> mongoUri, "collection" -> collectionName))

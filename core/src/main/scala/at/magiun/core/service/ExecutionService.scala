@@ -1,9 +1,12 @@
 package at.magiun.core.service
 
+import java.util.concurrent.atomic.AtomicInteger
+
 import at.magiun.core.model.BlockType.{AddColumn, DatabaseReader, DropColumn, FileReader, FileWriter, LinearRegression}
 import at.magiun.core.model._
 import org.apache.spark.sql.SparkSession
 
+import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
@@ -13,18 +16,31 @@ class ExecutionService(
                         blockService: BlockService
                       ) {
 
-  def execute(execution: Execution): Future[Execution] = {
+  private val executionsMap: mutable.Map[String, StageOutput] = new mutable.HashMap[String, StageOutput]
+  private val idGenerator = new AtomicInteger(1)
+
+  def getExecutionOutput(executionId: String): StageOutput = {
+    executionsMap(executionId)
+  }
+
+  def getExecutionsOutput: Map[String, StageOutput] = {
+    executionsMap.toMap
+  }
+
+  def execute(execution: Execution): Future[ExecutionResult] = {
     blockService.find(execution.blockId)
       .map(finalBlock => {
         val blocks = loadBlocks(finalBlock)
-        execute(blocks, finalBlock)
+        val output: StageOutput = execute(blocks, finalBlock)
+        val execId = getNextId
+        executionsMap.put(execId, output)
 
-        execution
+        ExecutionResult(execId)
       })
   }
 
   // HACK: this should be done asynchronously but it turns out is not that easy
-  def loadBlocks(block: Block): Map[String, Block] = {
+  private def loadBlocks(block: Block): Map[String, Block] = {
     if (block.inputs.isEmpty) {
       Map(block.id -> block)
     } else {
@@ -39,26 +55,30 @@ class ExecutionService(
 
 
   def execute(blocks: Map[String, Block], finalBlock: Block): StageOutput = {
-    val stage = buildStage(blocks, finalBlock)
+    val stage = buildStages(blocks, finalBlock)
 
     stage.perform
   }
 
-  private def buildStage(blocks: Map[String, Block], block: Block): Stage = {
+  private def buildStages(blocks: Map[String, Block], block: Block): Stage = {
     block.`type` match {
       case FileReader =>
         new FileReaderStage(spark, block.params("fileName"))
       case DatabaseReader => ???
       case FileWriter =>
         val nextBlock = blocks(block.inputs.head.blockId)
-        val stage = buildStage(blocks, nextBlock)
+        val stage = buildStages(blocks, nextBlock)
         new FileWriterStage(StageInput(stage), block.params("fileName"))
       case DropColumn =>
         val nextBlock = blocks(block.inputs.head.blockId)
-        val stage = buildStage(blocks, nextBlock)
+        val stage = buildStages(blocks, nextBlock)
         new DropColumnStage(StageInput(stage), block.params("columnName"))
       case AddColumn => ???
       case LinearRegression => ???
     }
+  }
+
+  private def getNextId: String = {
+     "mem-" + idGenerator.getAndIncrement()
   }
 }

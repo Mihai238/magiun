@@ -40,10 +40,10 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
       .map(Ok)
   }
 
-  val getRows: Endpoint[Seq[DataRow]] = get(BASE_PATH :: path[Int] :: ROWS_PATH ::
+  val getRows: Endpoint[Seq[DataRow]] = get(BASE_PATH :: path[String] :: ROWS_PATH ::
     paramOption("_limit") :: paramOption("_page") :: paramOption("_columns")) {
 
-    (dataSetId: Int, limit: Option[String], page: Option[String], stringColumns: Option[String]) =>
+    (dataSetId: String, limit: Option[String], page: Option[String], stringColumns: Option[String]) =>
       logger.info(s"Getting rows for dataset `$dataSetId` with limit `$limit` and page `$page` and cols `$stringColumns`")
 
       val range = for {

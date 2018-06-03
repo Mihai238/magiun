@@ -17,4 +17,7 @@ object TestData {
   val testBlock2 = Block("id-2", BlockType.FileReader, Seq(BlockInput("1", 0)), params = Map("x" -> "4"))
   val testBlockEntity1 = BlockEntity("id-2", "FileReader", """{"inputs":[{"blockId":"1","index":0}],"params":{"x":"4"}}""")
 
+  val fileReaderBlock = Block("id-3", BlockType.FileReader, Seq.empty, Map("fileName" -> sampleCsvPath))
+  val dropColBlock = Block("id-2", BlockType.DropColumn, Seq(BlockInput("id-3", 0)), Map("columnName" -> "Parch"))
+
 }

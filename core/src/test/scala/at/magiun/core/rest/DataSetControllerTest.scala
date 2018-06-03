@@ -53,7 +53,7 @@ class DataSetControllerTest extends UnitTest {
     result.awaitValueUnsafe().get
 
     val matcher = where {
-      (id:Int, range: Option[Range], cols: Option[Set[String]]) => range.get.start == 80 && range.get.last == 100 && cols.get.size == 2
+      (id:String, range: Option[Range], cols: Option[Set[String]]) => range.get.start == 80 && range.get.last == 100 && cols.get.size == 2
     }
     stubService.findRows _ verify matcher
   }

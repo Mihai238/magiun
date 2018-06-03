@@ -5,8 +5,8 @@
 
   <data-new-column-settings [visible]="showNewColumnSettingsComponent" [index]="newColumnIndex"
                             (resultEmitter)="onNewColumnResult($event)"></data-new-column-settings>
-  <data-process-feature [visible]="showProcessFeatureComponent" [column]="selectedColumn"
-                        (resultEmitter)="onFeatureProcessResult($event)"></data-process-feature>
+  <data-edit-column *ngIf="selectedColumn" [visible]="showEditColumnComponent" [column]="selectedColumn"
+                        (resultEmitter)="onEditColumnResult($event)"></data-edit-column>
 
   <div class="dropdown">
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -24,9 +24,10 @@
   <div *ngIf="rows" style="margin: auto; max-width: 1000px; margin-bottom: 50px;">
     <data-table id="data-table"
                 headerTitle=""
+                (reload)="reloadRows($event)"
+                (columnEditClick)="onColumnEditClicked($event)"
                 [items]="rows"
                 [itemCount]="rowsCount"
-                (reload)="reloadRows($event)"
                 [rowTooltip]="rowTooltip"
                 [pagination_input]="true"
                 [pagination_numbers]="false"

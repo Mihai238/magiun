@@ -92,7 +92,7 @@ class NewColumnSettingsStubComponent {
 }
 
 @Component({
-  selector: 'data-process-feature',
+  selector: 'data-edit-column',
   template: ''
 })
 class ProcessFeatureStubComponent {

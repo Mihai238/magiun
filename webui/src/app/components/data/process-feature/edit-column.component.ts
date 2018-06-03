@@ -5,11 +5,11 @@ import {
 import {Column} from '../../../model/data-set.model';
 
 @Component({
-  selector: 'data-process-feature',
-  templateUrl: './process-feature.component.html',
-  styleUrls: ['./process-feature.component.scss']
+  selector: 'data-edit-column',
+  templateUrl: './edit-column.component.html',
+  styleUrls: ['./edit-column.component.scss']
 })
-export class ProcessFeatureComponent implements OnInit, OnChanges {
+export class EditColumnComponent implements OnInit, OnChanges {
 
   @Input() visible: boolean;
   @Input() column: Column;

@@ -4,7 +4,7 @@ import {DataService} from '../../services/data.service';
 import {DataRow} from '../../model/data-row.model';
 import {Column, DataSet} from '../../model/data-set.model';
 import {environment} from '../../../environments/environment';
-import {FeatureProcessResult} from './process-feature/process-feature.component';
+import {FeatureProcessResult} from './process-feature/edit-column.component';
 import {NewColumnResult} from './new-column-settings/new-column-settings.component';
 import {DataTableParams} from '../shared/table';
 
@@ -23,11 +23,10 @@ export class DataComponent implements OnInit {
   selectedDataSet: DataSet;
   selectedColumn: Column;
 
-  showColumnSettings: boolean[];
   showNewColumnSettingsComponent: boolean;
   newColumnIndex: number;
 
-  showProcessFeatureComponent: boolean;
+  showEditColumnComponent: boolean;
 
   constructor(private logger: NGXLogger,
               private dataService: DataService) {
@@ -36,7 +35,7 @@ export class DataComponent implements OnInit {
   ngOnInit() {
     this.getDataSets();
     this.showNewColumnSettingsComponent = false;
-    this.showProcessFeatureComponent = false;
+    this.showEditColumnComponent = false;
   }
 
   getDataSets() {
@@ -54,11 +53,6 @@ export class DataComponent implements OnInit {
   onSelectDataSet(dataSet: DataSet) {
     this.logger.info('Data Set selected: ' + dataSet.name);
 
-    this.showColumnSettings = Array(dataSet.schema.columns.length);
-    for (let i = 0; i < this.showColumnSettings.length; i++) {
-      this.showColumnSettings[i] = false;
-    }
-
     this.rowsCount = dataSet.schema.totalCount || this.rowsCount;
     this.selectedDataSet = dataSet;
     this.rows = [];
@@ -72,8 +66,11 @@ export class DataComponent implements OnInit {
     })
   }
 
-  onSelectColumn(column: Column) {
-    this.selectedColumn = column;
+  onColumnEditClicked(columnIndex: number) {
+    this.selectedColumn = this.selectedDataSet.schema.columns[columnIndex];
+    this.logger.info('DataComponent: column selected ' + this.selectedColumn.name);
+
+    this.showEditColumnComponent = true;
   }
 
   onClickRemoveColumn() {
@@ -86,37 +83,8 @@ export class DataComponent implements OnInit {
     this.rows.forEach(row => row.values.splice(index, 1));
   }
 
-  onClickedColumnSettings(column: Column) {
-    this.logger.info('onClickedColumnSettings: ' + column.name);
-    this.showColumnSettings[column.index] = true;
-  }
-
-  onClickedOutside(column: Column) {
-    this.closeDropdownSettings(column);
-  }
-
-  onClickedProcessFeature(column: Column) {
-    this.logger.info('onClickedProcessFeature: ' + column.name);
-    this.closeDropdownSettings(column);
-
-    this.selectedColumn = column;
-    this.showProcessFeatureComponent = true;
-  }
-
-  onClickAddColumn(column: Column, offset: number) {
-    this.logger.info('onClickAddColumn ' + column.name + ' ,offset ' + offset);
-    this.closeDropdownSettings(column);
-
-    this.showNewColumnSettingsComponent = true;
-    this.newColumnIndex = column.index + offset;
-  }
-
-  private closeDropdownSettings(column: Column) {
-    this.showColumnSettings[column.index] = false;
-  }
-
-  onFeatureProcessResult(featureProcessResult: FeatureProcessResult) {
-    this.showProcessFeatureComponent = false;
+  onEditColumnResult(featureProcessResult: FeatureProcessResult) {
+    this.showEditColumnComponent = false;
   }
 
   onNewColumnResult(newColumnResult: NewColumnResult) {

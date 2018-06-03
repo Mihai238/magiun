@@ -9,6 +9,7 @@ import { RowCallback } from '../types/row-callback.type';
 import { DataTableTranslations } from '../types/data-table-translations.type';
 import { defaultTranslations } from '../types/default-translations.type';
 import { drag } from '../utils/drag';
+import {Column} from "../../../../model/data-set.model";
 
 /**
  * https://github.com/ggmod/angular-5-data-table
@@ -210,19 +211,14 @@ export class DataTableComponent implements DataTableParams, OnInit {
 	// event handlers:
 
 	@Output() rowClick = new EventEmitter();
-	@Output() rowDoubleClick = new EventEmitter();
 	@Output() headerClick = new EventEmitter();
-	@Output() cellClick = new EventEmitter();
+	@Output() columnEditClick = new EventEmitter<Number>();
 
-	public rowClicked(row: DataTableRowComponent, event) {
-		this.rowClick.emit({ row, event });
-	}
+	public columnEditClicked(column: DataTableColumn) {
+    this.columnEditClick.emit(Number(column.property));
+  }
 
-	public rowDoubleClicked(row: DataTableRowComponent, event) {
-		this.rowDoubleClick.emit({ row, event });
-	}
-
-	private headerClicked(column: DataTableColumn, event: Event) {
+	public headerClicked(column: DataTableColumn, event: Event) {
 		if (!this._resizeInProgress) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -230,10 +226,6 @@ export class DataTableComponent implements DataTableParams, OnInit {
 		} else {
 			this._resizeInProgress = false; // this is because I can't prevent click from mousup of the drag end
 		}
-	}
-
-	private cellClicked(column: DataTableColumn, row: DataTableRowComponent, event: MouseEvent) {
-		this.cellClick.emit({ row, column, event });
 	}
 
 	// functions:

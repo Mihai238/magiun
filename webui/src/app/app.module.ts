@@ -31,7 +31,7 @@ import {ColumnSelectorComponent} from './components/data/chart/shared/column-sel
 import {LinearRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/linear-regression-block.component';
 import {PoissonRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/poisson-regression-block.component';
 import { NewColumnSettingsComponent } from './components/data/new-column-settings/new-column-settings.component';
-import { ProcessFeatureComponent } from './components/data/process-feature/process-feature.component';
+import { EditColumnComponent } from './components/data/process-feature/edit-column.component';
 import {WorkflowDirective} from './components/workflows/workflow.directive';
 import {DatabaseBlockComponent} from './components/workflows/blocks/import-data/database-block.component';
 import {FileBlockComponent} from './components/workflows/blocks/import-data/file-block.component';
@@ -69,7 +69,7 @@ import {BlockRestService} from './rest/block.rest.service';
     ScatterSettingsComponent,
     ColumnSelectorComponent,
     NewColumnSettingsComponent,
-    ProcessFeatureComponent,
+    EditColumnComponent,
     WorkflowDirective,
     ParametersModalComponent,
     SplitDataBlockComponent,

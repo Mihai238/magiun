@@ -20,7 +20,7 @@
           <span *ngIf="column.headerTemplate" [ngTemplateOutlet]="column.headerTemplate"
                 [ngOutletContext]="{column: column}"></span>
 
-          <span class="ti-pencil column-icon"></span>
+          <span class="ti-pencil clickable column-icon" (click)="columnEditClicked(column)"></span>
           <span class="ti-alert column-icon"></span>
 
         </th>

@@ -1,8 +1,17 @@
 import {
-  Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import {Column} from '../../../model/data-set.model';
+import {NGXLogger} from "ngx-logger";
+import {DataService} from "../../../services/data.service";
 
 @Component({
   selector: 'data-edit-column',
@@ -14,11 +23,15 @@ export class EditColumnComponent implements OnInit, OnChanges {
   @Input() visible: boolean;
   @Input() column: Column;
 
-  @Output() resultEmitter = new EventEmitter<FeatureProcessResult>();
+  @Output() resultEmitter = new EventEmitter<EditColumnResult>();
 
   @ViewChild('modalActivator') modalActivatorEl: ElementRef;
 
-  constructor() {
+  public ActionType = ActionType;
+  currActionType: ActionType;
+
+  constructor(private logger: NGXLogger,
+              private dataService: DataService) {
   }
 
   ngOnInit() {
@@ -30,16 +43,30 @@ export class EditColumnComponent implements OnInit, OnChanges {
     }
   }
 
-  onClickDone(): void {
-    this.resultEmitter.emit({executed: true});
+  onActionTypeSelected(actionTypeString: string) {
+    this.logger.info('EditColumnComponent: action type selected ' + actionTypeString);
+    this.currActionType = ActionType[actionTypeString];
+  }
+
+  actionTypes(): Array<string> {
+    return Object.keys(this.ActionType);
   }
 
   onClickCancel(): void {
     this.resultEmitter.emit({executed: false});
   }
 
+  onClickExecute(): void {
+    this.resultEmitter.emit({executed: true});
+  }
+
 }
 
-export interface FeatureProcessResult {
+export interface EditColumnResult {
   executed: boolean;
+}
+
+export enum ActionType {
+  drop = 'Drop',
+  script = 'Script'
 }

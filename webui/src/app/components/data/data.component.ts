@@ -4,7 +4,7 @@ import {DataService} from '../../services/data.service';
 import {DataRow} from '../../model/data-row.model';
 import {Column, DataSet} from '../../model/data-set.model';
 import {environment} from '../../../environments/environment';
-import {FeatureProcessResult} from './process-feature/edit-column.component';
+import {EditColumnResult} from './process-feature/edit-column.component';
 import {NewColumnResult} from './new-column-settings/new-column-settings.component';
 import {DataTableParams} from '../shared/table';
 
@@ -83,7 +83,7 @@ export class DataComponent implements OnInit {
     this.rows.forEach(row => row.values.splice(index, 1));
   }
 
-  onEditColumnResult(featureProcessResult: FeatureProcessResult) {
+  onEditColumnResult(featureProcessResult: EditColumnResult) {
     this.showEditColumnComponent = false;
   }
 

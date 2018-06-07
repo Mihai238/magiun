@@ -2,7 +2,7 @@
   "YES": "Yes",
   "NO": "No",
   "NAVBAR": {
-    "DATA": "Data Exploration",
+    "DATA": "Feature Engineering",
     "WORKFLOWS": "Workflows"
   },
   "FOOTER": {

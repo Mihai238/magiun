@@ -4,7 +4,7 @@ import at.magiun.core.feature.FeatureRecommender._
 import org.apache.jena.ontology.OntClass
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.vocabulary.{OWL2, RDF}
-import org.apache.spark.sql.{Dataset, Row}
+import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable
@@ -17,6 +17,7 @@ object FeatureRecommender {
 
   val ColumnClass = "Column"
 
+  val TypeNumericClass = "Numeric"
   val TypeIntClass = "Int"
   val TypeStringClass = "String"
   val TypeDoubleClass = "Double"
@@ -24,13 +25,18 @@ object FeatureRecommender {
   val HasTypeProperty = "hasType"
   val ValuesProperty = "values"
 
-  val NumericTypes = Set("integer, double")
+  val typeClassToColumnType = Map(
+    TypeIntClass -> Set("integer"),
+    TypeDoubleClass -> Set("double"),
+    TypeNumericClass -> Set("integer", "double"),
+    TypeStringClass -> Set("string")
+  )
 }
 
 /**
   *
   */
-class FeatureRecommender {
+class FeatureRecommender(sparkSession: SparkSession) {
 
   def recommendFeatureOperation(ds: Dataset[Row]): Recommendation = {
     val model = ModelFactory.createOntologyModel()
@@ -38,7 +44,7 @@ class FeatureRecommender {
     model.read(is, null)
 
     val classes = model.getOntClass(NS + ColumnClass).listSubClasses().toList
-    val checker = new ColumnChecker()
+    val checker = new ColumnChecker(sparkSession)
 
     val result = mutable.Map[Int, List[String]]()
 
@@ -60,7 +66,9 @@ class FeatureRecommender {
 /**
   *
   */
-class ColumnChecker {
+class ColumnChecker(sparkSession: SparkSession) {
+
+  import sparkSession.implicits._
 
   def check(ds: Dataset[Row], colIndex: Int, ontClass: OntClass): Boolean = {
     ontClass.listSuperClasses().toList.toList
@@ -72,7 +80,7 @@ class ColumnChecker {
           if (restrictionName == HasTypeProperty) {
             if (restriction.isAllValuesFromRestriction) {
               val restrictionType = restriction.asAllValuesFromRestriction().getAllValuesFrom.getLocalName
-              if (restrictionType == TypeIntClass || restrictionType == TypeStringClass || restrictionType == TypeDoubleClass) {
+              if (Set(TypeNumericClass, TypeIntClass, TypeDoubleClass, TypeStringClass).contains(restrictionType)) {
                 checkHasTypeAllValues(ds, colIndex, restrictionType)
               } else {
                 throw new IllegalArgumentException(s"Restriction with type $restrictionType not supported")
@@ -87,8 +95,9 @@ class ColumnChecker {
                 .listProperties().toList.get(0)
 
               checkHasValuesInRange(ds, colIndex, valueRestriction.getPredicate.getLocalName, valueRestriction.getInt)
+            } else {
+              throw new IllegalArgumentException(s"Restriction of type $ValuesProperty as $restriction not supported")
             }
-            true
           } else {
             throw new IllegalArgumentException(s"Restriction property '$restrictionName' not supported")
           }
@@ -99,19 +108,15 @@ class ColumnChecker {
   }
 
   def checkHasTypeAllValues(ds: Dataset[Row], colIndex: Int, restrictionType: String): Boolean = {
-    if (restrictionType == TypeIntClass && ds.schema(colIndex).dataType.typeName == "integer") {
-      true
-    } else if (restrictionType == TypeStringClass && ds.schema(colIndex).dataType.typeName == "string") {
-      true
-    } else if (restrictionType == TypeDoubleClass && ds.schema(colIndex).dataType.typeName == "double") {
-      true
-    } else {
-      false
-    }
+    val typeName = ds.schema(colIndex).dataType.typeName
+    typeClassToColumnType.get(restrictionType)
+      .exists(_.contains(typeName))
   }
 
+  val NumericTypes = Set("integer, double")
+
   def checkHasValuesInRange(ds: Dataset[Row], colIndex: Int, rangeRestriction: String, value: Int): Boolean = {
-    if (NumericTypes.contains(ds.schema(colIndex).dataType.typeName)) {
+    if (typeClassToColumnType(TypeNumericClass).contains(ds.schema(colIndex).dataType.typeName)) {
       val rangeFunction = rangeRestriction match {
         case "minExclusive" =>
           (x: Double) => value < x
@@ -119,14 +124,16 @@ class ColumnChecker {
           (x: Double) => value > x
       }
 
-      var result = true
-      ds.foreach(row => {
-        if (!rangeFunction(row.get(colIndex).toString.toDouble)) {
-          result = false
+      val f = ds.map { row: Row =>
+        val value = row.get(colIndex)
+        if (value != null && !rangeFunction(value.toString.toDouble)) {
+          false
+        } else {
+          true
         }
-      })
+      }.collect()
 
-      result
+      !f.contains(false)
     } else {
       false
     }

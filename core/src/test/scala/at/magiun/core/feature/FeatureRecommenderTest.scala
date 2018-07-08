@@ -11,11 +11,12 @@ class FeatureRecommenderTest extends UnitTest {
   private val connector = new CsvConnector(mainModule.spark)
 
   it should "do something" in {
-    val fr = new FeatureRecommender
+    val fr = new FeatureRecommender(mainModule.spark)
     val recommendation = fr.recommendFeatureOperation(connector.getDataset(csvDataSetSource))
 
     val map = recommendation.map
     map should have size 12
+    map(1) should be(List.empty)
     map(3) should contain ("NameColumn")
     map(5) should contain ("HumanAgeColumn")
 

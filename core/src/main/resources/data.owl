@@ -91,7 +91,7 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/data-ontology#hasType"/>
-                <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/data-ontology#Double"/>
+                <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/data-ontology#Numeric"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -146,6 +146,18 @@
                 <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/data-ontology#String"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#Numeric -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/data-ontology#Numeric">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/data-ontology#Type"/>
+        <owl:disjointUnionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.magiun.io/ontologies/data-ontology#Double"/>
+            <rdf:Description rdf:about="http://www.magiun.io/ontologies/data-ontology#Int"/>
+        </owl:disjointUnionOf>
     </owl:Class>
     
 

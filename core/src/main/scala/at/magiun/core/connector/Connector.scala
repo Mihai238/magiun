@@ -14,13 +14,13 @@ trait Connector extends LazyLogging {
   def getDataset(source: DataSetSource): Dataset[Row]
 
   final def getRows(source: DataSetSource, range: Option[Range] = Option.empty, columns: Option[Set[String]] = empty): Seq[DataRow] = {
-    val df = getDataset(source)
+    val ds = getDataset(source)
 
-    val dfRows = range.map(range => {
-      df.take(range.end).drop(range.start)
-    }).getOrElse(df.collect())
+    val dsRows = range.map(range => {
+      ds.take(range.end).drop(range.start)
+    }).getOrElse(ds.collect())
 
-    mapToRowValues(dfRows, df.schema, columns)
+    mapToRowValues(dsRows, ds.schema, columns)
   }
 
   protected def mapToColumnType(dataType: DataType): ColumnType = {

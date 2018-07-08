@@ -17,7 +17,7 @@ class FeatureRecommenderTest extends UnitTest {
     val map = recommendation.map
     map should have size 12
     map(3) should contain ("NameColumn")
-//    map(5) should contain ("HumanAgeColumn")
+    map(5) should contain ("HumanAgeColumn")
 
   }
 

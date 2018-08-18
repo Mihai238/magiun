@@ -1,0 +1,128 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix data-ontology: <http://www.magiun.io/ontologies/data-ontology#> .
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@base <http://www.magiun.io/ontologies/data-ontology> .
+
+<http://www.magiun.io/ontologies/data-ontology> rdf:type owl:Ontology ;
+                                                 owl:imports <http://www.w3.org/ns/shacl#> ,
+                                                             <http://www.ontoeng.com/statistics> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.magiun.io/ontologies/data-ontology#hasType
+data-ontology:hasType rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf owl:topObjectProperty ;
+                      rdfs:domain data-ontology:Column .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.magiun.io/ontologies/data-ontology#name
+data-ontology:name rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain data-ontology:Column .
+
+
+###  http://www.magiun.io/ontologies/data-ontology#values
+data-ontology:values rdf:type owl:DatatypeProperty ;
+                     rdfs:domain data-ontology:Column .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.magiun.io/ontologies/data-ontology#Column
+data-ontology:Column rdf:type owl:Class .
+
+
+###  http://www.magiun.io/ontologies/data-ontology#Double
+data-ontology:Double rdf:type owl:Class ;
+                     rdfs:subClassOf data-ontology:Type .
+
+
+###  http://www.magiun.io/ontologies/data-ontology#HumanAgeColumn
+data-ontology:HumanAgeColumn rdf:type owl:Class ;
+                             rdfs:subClassOf data-ontology:Column ,
+                                             [ rdf:type owl:Restriction ;
+                                               owl:onProperty data-ontology:hasType ;
+                                               owl:allValuesFrom data-ontology:Numeric
+                                             ] ,
+                                             [ rdf:type owl:Restriction ;
+                                               owl:onProperty data-ontology:values ;
+                                               owl:allValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                   owl:onDatatype xsd:int ;
+                                                                   owl:withRestrictions ( [ xsd:minExclusive "0"^^xsd:int
+                                                                                          ]
+                                                                                        )
+                                                                 ]
+                                             ] ,
+                                             [ rdf:type owl:Restriction ;
+                                               owl:onProperty data-ontology:values ;
+                                               owl:allValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                   owl:onDatatype xsd:int ;
+                                                                   owl:withRestrictions ( [ xsd:maxExclusive "115"^^xsd:int
+                                                                                          ]
+                                                                                        )
+                                                                 ]
+                                             ] ,
+                                             [
+                                               a sh:NodeShape ;
+                                               sh:targetClass data-ontology:HumanAgeColumn ;
+                                               sh:property [
+                                                 sh:path data-ontology:value ;
+                                                 sh:minInclusive 0 ;
+                                                 sh:maxInclusive 150 ;
+                                               ]
+                                             ].
+
+data-ontology:HumanAgeColumnShape
+  a sh:NodeShape ;
+  sh:targetClass data-ontology:HumanAgeColumn ;
+  sh:property [
+    sh:path data-ontology:value ;
+    sh:minInclusive 0 ;
+    sh:maxInclusive 150 ;
+  ] .
+
+
+###  http://www.magiun.io/ontologies/data-ontology#Int
+data-ontology:Int rdf:type owl:Class ;
+                  rdfs:subClassOf data-ontology:Type .
+
+
+###  http://www.magiun.io/ontologies/data-ontology#NameColumn
+data-ontology:NameColumn rdf:type owl:Class ;
+                         rdfs:subClassOf data-ontology:Column ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty data-ontology:hasType ;
+                                           owl:allValuesFrom data-ontology:String
+                                         ] .
+
+
+###  http://www.magiun.io/ontologies/data-ontology#Numeric
+data-ontology:Numeric rdf:type owl:Class ;
+                      rdfs:subClassOf data-ontology:Type ;
+                      owl:disjointUnionOf ( data-ontology:Double
+                                            data-ontology:Int
+                                          ) .
+
+
+###  http://www.magiun.io/ontologies/data-ontology#String
+data-ontology:String rdf:type owl:Class ;
+                     rdfs:subClassOf data-ontology:Type .
+
+
+###  http://www.magiun.io/ontologies/data-ontology#Type
+data-ontology:Type rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

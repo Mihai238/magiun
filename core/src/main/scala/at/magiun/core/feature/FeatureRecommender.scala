@@ -3,6 +3,7 @@ package at.magiun.core.feature
 import at.magiun.core.feature.FeatureRecommender._
 import org.apache.jena.ontology.OntClass
 import org.apache.jena.rdf.model.ModelFactory
+import org.apache.jena.util.FileUtils.langTurtle
 import org.apache.jena.vocabulary.{OWL2, RDF}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
@@ -40,8 +41,8 @@ class FeatureRecommender(sparkSession: SparkSession) {
 
   def recommendFeatureOperation(ds: Dataset[Row]): Recommendation = {
     val model = ModelFactory.createOntologyModel()
-    val is = this.getClass.getClassLoader.getResourceAsStream("data.owl")
-    model.read(is, null)
+    val is = this.getClass.getClassLoader.getResourceAsStream("data.ttl")
+    model.read(is, null, langTurtle)
 
     val classes = model.getOntClass(NS + ColumnClass).listSubClasses().toList
     val checker = new ColumnChecker(sparkSession)

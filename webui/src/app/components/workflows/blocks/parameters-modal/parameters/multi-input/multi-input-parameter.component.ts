@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {ParameterComponent} from "../parameterComponent";
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/map';
+
+
 
 @Component({
   selector: 'app-multi-input-parameter',

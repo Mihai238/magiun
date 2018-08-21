@@ -4,9 +4,8 @@ import {DataComponent} from './data.component';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {DataService} from '../../services/data.service';
 import {HttpClientModule} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {logging} from '../../app.logging';
-import 'rxjs/add/observable/of';
 import {TranslateModule} from '@ngx-translate/core';
 import {Component, Input} from '@angular/core';
 import {Column, DataSet} from '../../model/data-set.model';
@@ -49,7 +48,7 @@ describe('DataComponent', () => {
 
   it('should be created', () => {
     spyOn(dataService, 'getDataSets')
-      .and.returnValue(Observable.of([
+      .and.returnValue(of([
       {
         id: '1',
         name: 'people',

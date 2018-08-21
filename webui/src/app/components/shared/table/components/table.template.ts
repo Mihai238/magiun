@@ -21,7 +21,7 @@ export const TABLE_TEMPLATE = `
                         [attr.aria-sort]="column.sortable ? (column.property === sortBy ? (sortAsc ? 'ascending' : 'descending') : 'none') : null"
                         [attr.tabindex]="column.sortable ? '0' : null">
                         <span *ngIf="!column.headerTemplate" [textContent]="column.header"></span>
-                        <span *ngIf="column.headerTemplate" [ngTemplateOutlet]="column.headerTemplate" [ngOutletContext]="{column: column}"></span>
+                        <span *ngIf="column.headerTemplate" [ngTemplateOutlet]="column.headerTemplate" [ngTemplateOutletContext]="{column: column}"></span>
                         <span class="column-sort-icon" *ngIf="column.sortable">
                             <span class="glyphicon glyphicon-sort column-sortable-icon" [hide]="column.property === sortBy"></span>
                             <span [hide]="column.property !== sortBy">

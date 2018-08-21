@@ -3,9 +3,9 @@ import {Injectable} from '@angular/core';
 import {DataRow} from '../model/data-row.model';
 import {environment} from '../../environments/environment';
 import {NGXLogger} from 'ngx-logger';
-import {Observable} from 'rxjs/Observable';
+import {Observable, throwError, pipe} from 'rxjs';
+import {map, catchError} from 'rxjs/operators';
 
-import 'rxjs/add/observable/throw';
 import {ColumnType, DataSet, Schema} from '../model/data-set.model';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {DataTableParams} from '../components/shared/table';
@@ -20,23 +20,25 @@ export class DataService {
   }
 
   getDataSets(): Observable<DataSet[]> {
-    return this.http.get(environment.baseUrl + '/datasets/')
-      .map((resp: DataSet[]) => {
-        this.logger.debug('Got all data sets' + resp);
+    return this.http
+      .get<DataSet[]>(environment.baseUrl + '/datasets/')
+      .pipe(
+        map((resp: DataSet[]) => {
+          this.logger.debug('Got all data sets' + resp);
 
-        return resp.map(e => ({
-          id: e.id,
-          name: e.name,
-          schema: this.mapSchema(e.schema)
+          return resp.map(e => ({
+            id: e.id,
+            name: e.name,
+            schema: this.mapSchema(e.schema)
+          }));
+        }),
+        catchError((error: any) => {
+          if (typeof error.json === 'function') {
+            return throwError(error.json().error || 'Server error');
+          } else {
+            return throwError(error.message || 'Server error');
+          }
         }));
-      })
-      .catch((error: any) => {
-        if (typeof error.json === 'function') {
-          return Observable.throw(error.json().error || 'Server error');
-        } else {
-          return Observable.throw(error.message || 'Server error');
-        }
-      });
   }
 
   private mapSchema(schema: Schema): Schema {
@@ -57,28 +59,31 @@ export class DataService {
   }
 
   getData(dataSet: DataSet, page = 1): Observable<DataRow[]> {
-    return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows?_limit=' + this.sizePerPage + '&_page=' + page)
-      .map(resp => {
-        this.logger.debug('Got data for data set' + resp);
-        return resp;
-      })
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    return this.http
+      .get<DataRow[]>(environment.baseUrl + '/datasets/' + dataSet.id + '/rows?_limit=' + this.sizePerPage + '&_page=' + page)
+      .pipe(map(resp => {
+          this.logger.debug('Got data for data set' + resp);
+          return resp;
+        }),
+        catchError((error: any) => throwError(error.json().error || 'Server error'))
+      );
   }
 
   // not really wise to fetch all the data if we deal with GBs of data
   // should be refactored in further versions
   getAllData(dataSet: DataSet, columns: Set<String>): Observable<DataRow[]> {
-    let columnsString: string = "";
-    columns.forEach(col => columnsString += col + ",");
+    let columnsString = '';
+    columns.forEach(col => columnsString += col + ',');
     columnsString = columnsString.substring(0, columnsString.length - 1);
 
     this.logger.info('DataService: load all data for dataset with id "' + dataSet.id + '" and column(s) "' + columnsString + '"');
-    return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows' + '?_columns=' + columnsString)
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    return this.http
+      .get<DataRow[]>(environment.baseUrl + '/datasets/' + dataSet.id + '/rows' + '?_columns=' + columnsString)
+      .pipe(catchError((error: any) => throwError(error.json().error || 'Server error')));
   }
 
   getDataForTable(dataSet: DataSet, params: DataTableParams): Promise<{ items: DataRow[] | null; count: number }> {
-    let queryString = this.paramsToQueryString(params);
+    const queryString = this.paramsToQueryString(params);
     this.logger.info('DataSerice: get data for table with queryString ' + queryString);
 
     return this.http.get(environment.baseUrl + '/datasets/' + dataSet.id + '/rows?' + queryString, {observe: 'response'}).toPromise()

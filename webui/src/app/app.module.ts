@@ -89,7 +89,7 @@ import {BlockRestService} from './rest/block.rest.service';
     InfiniteScrollModule,
     DragDropDirectiveModule,
     ClickOutsideModule,
-    BootstrapModalModule,
+    BootstrapModalModule.forRoot({ container: document.body}),
     DataTableModule,
     BrowserAnimationsModule,
     TagInputModule,

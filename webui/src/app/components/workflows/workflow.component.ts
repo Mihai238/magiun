@@ -17,9 +17,9 @@ import {DropColumnsBlockComponent} from './blocks/feature-selection/drop-columns
 })
 export class WorkflowComponent {
 
-  private defaultWorkflowTitle = 'My workflow created on '.concat(new Date().toJSON().slice(0, 10).replace(/-/g, '/'));
-  private title = this.defaultWorkflowTitle;
-  private showPlaceholder = true;
+  defaultWorkflowTitle = 'My workflow created on '.concat(new Date().toJSON().slice(0, 10).replace(/-/g, '/'));
+  title = this.defaultWorkflowTitle;
+  showPlaceholder = true;
   @ViewChild(WorkflowDirective) private workflowsDirective: WorkflowDirective;
 
   private static getBlockComponentType(event): Type<any> {
@@ -73,15 +73,15 @@ export class WorkflowComponent {
     this.blockService.deleteBlock(component);
   }
 
-  private run() {
+  run() {
     this.blockService.run();
   }
 
-  private export() {
+  export() {
     // TODO: paulcurcean
   }
 
-  private import() {
+  import() {
     // TODO: paulcurcean
   }
 }

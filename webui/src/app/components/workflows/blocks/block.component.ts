@@ -27,7 +27,7 @@ export abstract class BlockComponent implements AfterViewInit {
 
   protected constructor(private blockService: BlockService, private dialogService: DialogService) {}
 
-  protected showParametersModal() {
+  showParametersModal() {
     this.dialogService.addDialog(ParametersModalComponent, {parameters: this.configurationParameters})
       .subscribe(
         (result) => {
@@ -72,7 +72,7 @@ export abstract class BlockComponent implements AfterViewInit {
     this.blockService.deselectLineStartPoint(this.id + '-output-' + index);
   }
 
-  private delete(): void {
+  delete(): void {
     this.onDelete.emit();
   }
 }

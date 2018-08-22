@@ -11,6 +11,9 @@ import {Column} from '../../../model/data-set.model';
 })
 export class ProcessFeatureComponent implements OnInit, OnChanges {
 
+  // TODO mihai: index wasn't defined -> ng serve failed, please check
+  index: number;
+
   @Input() visible: boolean;
   @Input() column: Column;
 

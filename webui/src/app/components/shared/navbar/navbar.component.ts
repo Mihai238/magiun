@@ -8,11 +8,11 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
-  private hideLeaderLines(): void {
+  hideLeaderLines(): void {
     this.changeLeaderLinesVisibility('hidden');
   }
 
-  private showLeaderLines(): void {
+  showLeaderLines(): void {
     this.changeLeaderLinesVisibility('visible');
   }
 

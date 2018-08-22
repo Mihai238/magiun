@@ -9,12 +9,15 @@ import {ParameterComponent} from '../parameterComponent';
 })
 export class FileParameterComponent extends ParameterComponent {
 
-  uploadFile(event, parameter: BlockParameter<String>) {
+  // TODO mihai: index wasn't defined -> ng serve failed, please check
+  index: number;
+
+  uploadFile(event) {
     this.parameter.value = event.target.value;
     this.emitEvent();
   }
 
-  private getFileUploadText() {
+   getFileUploadText() {
     if (this.parameter.value === null || this.parameter.value === undefined) {
       return 'WORKFLOWS.BLOCKS.PARAMETERS.UPLOAD_FILE_TEXT';
     } else {

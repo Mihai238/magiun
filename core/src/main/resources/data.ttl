@@ -43,69 +43,30 @@ data-ontology:values rdf:type owl:DatatypeProperty ;
 ###  http://www.magiun.io/ontologies/data-ontology#Column
 data-ontology:Column rdf:type owl:Class .
 
-
-###  http://www.magiun.io/ontologies/data-ontology#Double
-data-ontology:Double rdf:type owl:Class ;
-                     rdfs:subClassOf data-ontology:Type .
-
-
 ###  http://www.magiun.io/ontologies/data-ontology#HumanAgeColumn
 data-ontology:HumanAgeColumn rdf:type owl:Class ;
                              rdfs:subClassOf data-ontology:Column ,
-                                             [ rdf:type owl:Restriction ;
-                                               owl:onProperty data-ontology:hasType ;
-                                               owl:allValuesFrom data-ontology:Numeric
-                                             ] ,
-                                             [ rdf:type owl:Restriction ;
-                                               owl:onProperty data-ontology:values ;
-                                               owl:allValuesFrom [ rdf:type rdfs:Datatype ;
-                                                                   owl:onDatatype xsd:int ;
-                                                                   owl:withRestrictions ( [ xsd:minExclusive "0"^^xsd:int
-                                                                                          ]
-                                                                                        )
-                                                                 ]
-                                             ] ,
-                                             [ rdf:type owl:Restriction ;
-                                               owl:onProperty data-ontology:values ;
-                                               owl:allValuesFrom [ rdf:type rdfs:Datatype ;
-                                                                   owl:onDatatype xsd:int ;
-                                                                   owl:withRestrictions ( [ xsd:maxExclusive "115"^^xsd:int
-                                                                                          ]
-                                                                                        )
-                                                                 ]
-                                             ] ,
                                              [
-                                               a sh:NodeShape ;
-                                               sh:targetClass data-ontology:HumanAgeColumn ;
                                                sh:property [
                                                  sh:path data-ontology:value ;
                                                  sh:minInclusive 0 ;
                                                  sh:maxInclusive 150 ;
+                                               ] ;
+                                               sh:property [
+                                               		sh:path data-ontology:value ;
+                                               		sh:dataType xsd:integer ;
                                                ]
                                              ].
-
-data-ontology:HumanAgeColumnShape
-  a sh:NodeShape ;
-  sh:targetClass data-ontology:HumanAgeColumn ;
-  sh:property [
-    sh:path data-ontology:value ;
-    sh:minInclusive 0 ;
-    sh:maxInclusive 150 ;
-  ] .
-
-
-###  http://www.magiun.io/ontologies/data-ontology#Int
-data-ontology:Int rdf:type owl:Class ;
-                  rdfs:subClassOf data-ontology:Type .
-
 
 ###  http://www.magiun.io/ontologies/data-ontology#NameColumn
 data-ontology:NameColumn rdf:type owl:Class ;
                          rdfs:subClassOf data-ontology:Column ,
-                                         [ rdf:type owl:Restriction ;
-                                           owl:onProperty data-ontology:hasType ;
-                                           owl:allValuesFrom data-ontology:String
-                                         ] .
+                                        [
+                                            sh:property [
+                                                sh:path data-ontology:value ;
+                                                sh:dataType xsd:integer ;
+                                            ]
+                                        ].
 
 
 ###  http://www.magiun.io/ontologies/data-ontology#Numeric
@@ -114,15 +75,5 @@ data-ontology:Numeric rdf:type owl:Class ;
                       owl:disjointUnionOf ( data-ontology:Double
                                             data-ontology:Int
                                           ) .
-
-
-###  http://www.magiun.io/ontologies/data-ontology#String
-data-ontology:String rdf:type owl:Class ;
-                     rdfs:subClassOf data-ontology:Type .
-
-
-###  http://www.magiun.io/ontologies/data-ontology#Type
-data-ontology:Type rdf:type owl:Class .
-
 
 ###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

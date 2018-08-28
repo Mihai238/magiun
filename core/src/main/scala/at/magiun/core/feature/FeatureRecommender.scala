@@ -71,37 +71,47 @@ class ColumnChecker(sparkSession: SparkSession) {
 
   import sparkSession.implicits._
 
+//  val x = model.getProperty("http://www.w3.org/ns/shacl#property")
+//  val y = model.getProperty("http://www.w3.org/ns/shacl#maxInclusive")
+//  model.getOntClass(NS + ColumnClass).listSubClasses().toList.get(1).listSuperClasses().toList.get(0).getPropertyValue(x)
+//    .asResource().getProperty(y).getInt
+
+//  model.getOntClass(NS + ColumnClass).listSubClasses().toList.get(1).listSuperClasses().toList.get(0)
+//    .listProperties().toList.get(1).getObject.asResource().listProperties().toList
+
   def check(ds: Dataset[Row], colIndex: Int, ontClass: OntClass): Boolean = {
     ontClass.listSuperClasses().toList.toList
-      .filter(_.isRestriction)
-      .map(_.asRestriction())
+      .filter(_.isResource)
+      .map(_.asResource())
       .foldLeft(true) { (fulfilled, restriction) =>
         if (fulfilled) {
-          val restrictionName = restriction.getOnProperty.getLocalName
-          if (restrictionName == HasTypeProperty) {
-            if (restriction.isAllValuesFromRestriction) {
-              val restrictionType = restriction.asAllValuesFromRestriction().getAllValuesFrom.getLocalName
-              if (Set(TypeNumericClass, TypeIntClass, TypeDoubleClass, TypeStringClass).contains(restrictionType)) {
-                checkHasTypeAllValues(ds, colIndex, restrictionType)
-              } else {
-                throw new IllegalArgumentException(s"Restriction with type $restrictionType not supported")
-              }
-            } else {
-              throw new IllegalArgumentException(s"Restriction $restriction not supported")
-            }
-          } else if (restrictionName == ValuesProperty) {
-            if (restriction.isAllValuesFromRestriction) {
-              val valueRestriction = restriction.asAllValuesFromRestriction().getAllValuesFrom.getPropertyResourceValue(OWL2.withRestrictions)
-                .getPropertyResourceValue(RDF.first)
-                .listProperties().toList.get(0)
+          true
 
-              checkHasValuesInRange(ds, colIndex, valueRestriction.getPredicate.getLocalName, valueRestriction.getInt)
-            } else {
-              throw new IllegalArgumentException(s"Restriction of type $ValuesProperty as $restriction not supported")
-            }
-          } else {
-            throw new IllegalArgumentException(s"Restriction property '$restrictionName' not supported")
-          }
+//          val restrictionName = restriction.getOnProperty.getLocalName
+//          if (restrictionName == HasTypeProperty) {
+//            if (restriction.isAllValuesFromRestriction) {
+//              val restrictionType = restriction.asAllValuesFromRestriction().getAllValuesFrom.getLocalName
+//              if (Set(TypeNumericClass, TypeIntClass, TypeDoubleClass, TypeStringClass).contains(restrictionType)) {
+//                checkHasTypeAllValues(ds, colIndex, restrictionType)
+//              } else {
+//                throw new IllegalArgumentException(s"Restriction with type $restrictionType not supported")
+//              }
+//            } else {
+//              throw new IllegalArgumentException(s"Restriction $restriction not supported")
+//            }
+//          } else if (restrictionName == ValuesProperty) {
+//            if (restriction.isAllValuesFromRestriction) {
+//              val valueRestriction = restriction.asAllValuesFromRestriction().getAllValuesFrom.getPropertyResourceValue(OWL2.withRestrictions)
+//                .getPropertyResourceValue(RDF.first)
+//                .listProperties().toList.get(0)
+//
+//              checkHasValuesInRange(ds, colIndex, valueRestriction.getPredicate.getLocalName, valueRestriction.getInt)
+//            } else {
+//              throw new IllegalArgumentException(s"Restriction of type $ValuesProperty as $restriction not supported")
+//            }
+//          } else {
+//            throw new IllegalArgumentException(s"Restriction property '$restrictionName' not supported")
+//          }
         } else {
           false
         }

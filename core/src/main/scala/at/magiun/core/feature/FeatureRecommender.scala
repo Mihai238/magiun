@@ -1,5 +1,7 @@
 package at.magiun.core.feature
 
+import java.io
+
 import at.magiun.core.feature.FeatureRecommender._
 import org.apache.jena.ontology.OntClass
 import org.apache.jena.rdf.model.ModelFactory
@@ -22,10 +24,12 @@ object FeatureRecommender {
 
   val shacl = "http://www.w3.org/ns/shacl#"
 
-  val checkers = Map(
+  val checkers: Map[String, Checker] = Map(
     (shacl + "dataType") -> new DataTypeChecker,
-    (shacl + "minInclusive") -> new RangeChecker,
-    (shacl + "maxInclusive") -> new RangeChecker
+    (shacl + "minInclusive") -> new RangeChecker(new DataTypeChecker),
+    (shacl + "maxInclusive") -> new RangeChecker(new DataTypeChecker),
+    (shacl + "in") -> new EnumChecker,
+    (shacl + "or") -> new OrChecker(checkers)
   )
 }
 

@@ -82,12 +82,13 @@ data-ontology:GenderColumn rdf:type owl:Class ;
                          rdfs:subClassOf data-ontology:Column ,
                                         [
                                             sh:property [
-                                                sh:path data-ontology:value ;
                                                 sh:or (
                                                     [
+                                                        sh:path data-ontology:value ;
                                                         sh:in ("m" "f");
                                                     ]
                                                     [
+                                                        sh:path data-ontology:value ;
                                                         sh:in ("male" "female");
                                                     ]
                                                 )

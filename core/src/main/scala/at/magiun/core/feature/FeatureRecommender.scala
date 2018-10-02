@@ -1,7 +1,5 @@
 package at.magiun.core.feature
 
-import java.io
-
 import at.magiun.core.feature.FeatureRecommender._
 import org.apache.jena.ontology.OntClass
 import org.apache.jena.rdf.model.ModelFactory
@@ -24,13 +22,17 @@ object FeatureRecommender {
 
   val shacl = "http://www.w3.org/ns/shacl#"
 
-  val checkers: Map[String, Checker] = Map(
-    (shacl + "dataType") -> new DataTypeChecker,
-    (shacl + "minInclusive") -> new RangeChecker(new DataTypeChecker),
-    (shacl + "maxInclusive") -> new RangeChecker(new DataTypeChecker),
-    (shacl + "in") -> new EnumChecker,
-    (shacl + "or") -> new OrChecker(checkers)
-  )
+  val checkers: Map[String, Checker] = getCheckers
+
+  private def getCheckers: Map[String, Checker] = {
+    Map(
+      (shacl + "dataType") -> new DataTypeChecker,
+      (shacl + "minInclusive") -> new RangeChecker(new DataTypeChecker),
+      (shacl + "maxInclusive") -> new RangeChecker(new DataTypeChecker),
+      (shacl + "in") -> new EnumChecker,
+      (shacl + "or") -> new OrChecker(getCheckers)
+    )
+  }
 }
 
 /**
@@ -81,7 +83,7 @@ class ColumnChecker(sparkSession: SparkSession) {
       .foldLeft(true) { (fulfilled, restriction) =>
         if (fulfilled) {
           checkers.getOrElse(restriction.getPredicate.toString, new NoopChecker)
-                      .check(sparkSession, ds, colIndex, restriction)
+            .check(sparkSession, ds, colIndex, restriction)
         } else {
           false
         }

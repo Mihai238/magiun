@@ -7,7 +7,7 @@ import org.apache.spark.sql.{Dataset, Row, SparkSession}
 class NoopChecker(predicateName: String) extends Checker with LazyLogging {
 
   override def check(sparkSession: SparkSession, ds: Dataset[Row], colIndex: Int, restriction: Statement): Boolean = {
-    if (predicateName.startsWith(FeatureRecommender.shacl)) {
+    if (predicateName.startsWith(Recommender.shacl)) {
       logger.warn("No checker for {}", predicateName)
     }
     true

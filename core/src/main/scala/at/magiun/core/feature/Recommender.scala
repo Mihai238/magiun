@@ -1,6 +1,6 @@
 package at.magiun.core.feature
 
-import at.magiun.core.feature.FeatureRecommender._
+import at.magiun.core.feature.Recommender._
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.jena.ontology.OntClass
 import org.apache.jena.rdf.model.ModelFactory
@@ -8,15 +8,16 @@ import org.apache.jena.util.FileUtils.langTurtle
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.collection.JavaConversions._
-import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   *
   */
-object FeatureRecommender {
+object Recommender {
   val NS = "http://www.magiun.io/ontologies/ml#"
 
   val ColumnClass = "Column"
+  val OperationClass = "Operation"
 
   val HasTypeProperty = "hasType"
   val ValuesProperty = "values"
@@ -41,9 +42,9 @@ object FeatureRecommender {
 /**
   *
   */
-class FeatureRecommender(sparkSession: SparkSession) {
+class Recommender(sparkSession: SparkSession) extends LazyLogging {
 
-  def recommendFeatureOperation(ds: Dataset[Row]): Recommendation = {
+  def recommendFeatureOperation(ds: Dataset[Row]): Recommendations = {
     val model = ModelFactory.createOntologyModel()
     val is = this.getClass.getClassLoader.getResourceAsStream("data.ttl")
     model.read(is, null, langTurtle)
@@ -51,20 +52,24 @@ class FeatureRecommender(sparkSession: SparkSession) {
     val classes = model.getOntClass(NS + ColumnClass).listSubClasses().toList
     val checker = new ColumnChecker(sparkSession)
 
-    val result = mutable.Map[Int, List[String]]()
-
-    for (colIndex <- ds.schema.indices) {
-      result.put(colIndex, List())
+    val colTypesMap: Map[Int, List[String]] = ds.schema.indices.map(colIndex => {
+      val colTypes = ListBuffer[String]()
       classes.foreach { cls =>
         if (checker.check(ds, colIndex, cls)) {
-          val colClasses = result(colIndex)
-          result.put(colIndex, cls.getLocalName :: colClasses)
+          colTypes.add(cls.getLocalName)
         }
       }
+      (colIndex, colTypes.toList)
+    }).toMap
+
+    val operations = model.getOntClass(NS + ColumnClass).listSubClasses().toList
+    val recsMap = colTypesMap map {
+      case (colIndex, colTypes) =>
+        (colIndex, Recommendation(colTypes, List()))
     }
 
-    println("Done")
-    Recommendation(result.toMap)
+    logger.info("Done")
+    Recommendations(recsMap)
   }
 }
 
@@ -85,14 +90,14 @@ class ColumnChecker(sparkSession: SparkSession) extends LazyLogging {
       .flatMap(_.listProperties().toList)
 
     restrictions.foldLeft(true) { (fulfilled, restriction) =>
-        if (fulfilled) {
-          val predicateName = restriction.getPredicate.toString
-          checkers.getOrElse(predicateName, new NoopChecker(predicateName))
-            .check(sparkSession, ds, colIndex, restriction)
-        } else {
-          false
-        }
+      if (fulfilled) {
+        val predicateName = restriction.getPredicate.toString
+        checkers.getOrElse(predicateName, new NoopChecker(predicateName))
+          .check(sparkSession, ds, colIndex, restriction)
+      } else {
+        false
       }
+    }
   }
 
 }
@@ -100,4 +105,6 @@ class ColumnChecker(sparkSession: SparkSession) extends LazyLogging {
 /**
   *
   */
-case class Recommendation(map: Map[Int, List[String]])
+case class Recommendations(map: Map[Int, Recommendation])
+
+case class Recommendation(colTypes: List[String], operations: List[String])

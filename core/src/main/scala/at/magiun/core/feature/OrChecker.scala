@@ -17,7 +17,8 @@ class OrChecker(checkers: => Map[String, Checker]) extends Checker {
       fulfilled = restriction.listProperties().toList.toList
         .foldLeft(true) { (fulfilled, restriction) =>
           if (fulfilled) {
-            checkers.getOrElse(restriction.getPredicate.toString, new NoopChecker)
+            val predicateName = restriction.getPredicate.toString
+            checkers.getOrElse(predicateName, new NoopChecker(predicateName))
               .check(sparkSession, ds, colIndex, restriction)
           } else {
             false

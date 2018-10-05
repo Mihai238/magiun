@@ -26,16 +26,6 @@ data-ontology:hasType rdf:type owl:ObjectProperty ;
 #    Data properties
 #################################################################
 
-###  http://www.magiun.io/ontologies/data-ontology#name
-data-ontology:name rdf:type owl:DatatypeProperty ;
-                   rdfs:subPropertyOf owl:topDataProperty ;
-                   rdfs:domain data-ontology:Column .
-
-
-###  http://www.magiun.io/ontologies/data-ontology#values
-data-ontology:values rdf:type owl:DatatypeProperty ;
-                     rdfs:domain data-ontology:Column .
-
 
 #################################################################
 #    Classes
@@ -53,7 +43,6 @@ data-ontology:HumanAgeColumn rdf:type owl:Class ;
                                                  sh:dataType xsd:double ;
                                                  sh:minInclusive 0 ;
                                                  sh:maxInclusive 150 ;
-                                                 stats:hasSampleRange 99 ;
                                                ]
                                              ].
 
@@ -67,8 +56,17 @@ data-ontology:NameColumn rdf:type owl:Class ;
                                             ]
                                         ].
 
+data-ontology:CategoricalColumn rdf:type owl:Class ;
+                        rdfs:subClassOf data-ontology:Column ,
+                                        [
+                                            sh:property [
+                                                sh:path data-ontology:value;
+                                                sh:maxCount 10;
+                                            ]
+                                        ].
+
 data-ontology:BooleanColumn rdf:type owl:Class ;
-                         rdfs:subClassOf data-ontology:Column ,
+                         rdfs:subClassOf data-ontology:CategoricalColumn ,
                                         [
                                             sh:property [
                                                 sh:path data-ontology:value ;
@@ -79,7 +77,7 @@ data-ontology:BooleanColumn rdf:type owl:Class ;
                                         ].
 
 data-ontology:GenderColumn rdf:type owl:Class ;
-                         rdfs:subClassOf data-ontology:Column ,
+                         rdfs:subClassOf data-ontology:CategoricalColumn ,
                                         [
                                             sh:property [
                                                 sh:or (
@@ -94,3 +92,5 @@ data-ontology:GenderColumn rdf:type owl:Class ;
                                                 )
                                             ]
                                         ].
+
+### TODO UniqueColumn - suggest drop

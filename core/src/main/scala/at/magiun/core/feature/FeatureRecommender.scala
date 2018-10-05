@@ -1,6 +1,7 @@
 package at.magiun.core.feature
 
 import at.magiun.core.feature.FeatureRecommender._
+import com.typesafe.scalalogging.LazyLogging
 import org.apache.jena.ontology.OntClass
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.util.FileUtils.langTurtle
@@ -30,6 +31,8 @@ object FeatureRecommender {
       (shacl + "minInclusive") -> new RangeChecker(new DataTypeChecker),
       (shacl + "maxInclusive") -> new RangeChecker(new DataTypeChecker),
       (shacl + "in") -> new EnumChecker,
+      (shacl + "minCount") -> new CardinalityChecker,
+      (shacl + "maxCount") -> new CardinalityChecker,
       (shacl + "or") -> new OrChecker(getCheckers)
     )
   }
@@ -68,10 +71,10 @@ class FeatureRecommender(sparkSession: SparkSession) {
 /**
   *
   */
-class ColumnChecker(sparkSession: SparkSession) {
+class ColumnChecker(sparkSession: SparkSession) extends LazyLogging {
 
   def check(ds: Dataset[Row], colIndex: Int, ontClass: OntClass): Boolean = {
-    ontClass.listSuperClasses().toList.toList
+    val restrictions = ontClass.listSuperClasses().toList.toList
       .filter(_.isResource)
       .map(_.asResource())
       .flatMap(restrictions => {
@@ -80,9 +83,11 @@ class ColumnChecker(sparkSession: SparkSession) {
       })
       .map(_.getResource)
       .flatMap(_.listProperties().toList)
-      .foldLeft(true) { (fulfilled, restriction) =>
+
+    restrictions.foldLeft(true) { (fulfilled, restriction) =>
         if (fulfilled) {
-          checkers.getOrElse(restriction.getPredicate.toString, new NoopChecker)
+          val predicateName = restriction.getPredicate.toString
+          checkers.getOrElse(predicateName, new NoopChecker(predicateName))
             .check(sparkSession, ds, colIndex, restriction)
         } else {
           false

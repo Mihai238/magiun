@@ -13,9 +13,9 @@ class OrChecker(checkers: => Map[String, Checker]) extends Checker {
     var fulfilled = false
 
     while (orIterator.hasNext && !fulfilled) {
-      val restriction = orIterator.next().asResource()
-      fulfilled = restriction.listProperties().toList.toList
-        .foldLeft(true) { (fulfilled, restriction) =>
+      val restrictions = orIterator.next().asResource().listProperties().toList.toList
+
+      fulfilled = restrictions.foldLeft(true) { (fulfilled, restriction) =>
           if (fulfilled) {
             val predicateName = restriction.getPredicate.toString
             checkers.getOrElse(predicateName, new NoopChecker(predicateName))

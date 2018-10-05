@@ -3,12 +3,12 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix data-ontology: <http://www.magiun.io/ontologies/data-ontology#> .
+@prefix ml: <http://www.magiun.io/ontologies/ml#> .
 @prefix sh: <http://www.w3.org/ns/shacl#>.
 @prefix stats: <http://www.ontoeng.com/statistics#>.
-@base <http://www.magiun.io/ontologies/data-ontology> .
+@base <http://www.magiun.io/ontologies/ml> .
 
-<http://www.magiun.io/ontologies/data-ontology> rdf:type owl:Ontology ;
+<http://www.magiun.io/ontologies/ml> rdf:type owl:Ontology ;
                                                  owl:imports <http://www.w3.org/ns/shacl#> ,
                                                              <http://www.ontoeng.com/statistics> .
 
@@ -16,10 +16,10 @@
 #    Object Properties
 #################################################################
 
-###  http://www.magiun.io/ontologies/data-ontology#hasType
-data-ontology:hasType rdf:type owl:ObjectProperty ;
+###  http://www.magiun.io/ontologies/ml#hasType
+ml:hasType rdf:type owl:ObjectProperty ;
                       rdfs:subPropertyOf owl:topObjectProperty ;
-                      rdfs:domain data-ontology:Column .
+                      rdfs:domain ml:Column .
 
 
 #################################################################
@@ -31,62 +31,62 @@ data-ontology:hasType rdf:type owl:ObjectProperty ;
 #    Classes
 #################################################################
 
-###  http://www.magiun.io/ontologies/data-ontology#Column
-data-ontology:Column rdf:type owl:Class .
+###  http://www.magiun.io/ontologies/ml#Column
+ml:Column rdf:type owl:Class .
 
-###  http://www.magiun.io/ontologies/data-ontology#HumanAgeColumn
-data-ontology:HumanAgeColumn rdf:type owl:Class ;
-                             rdfs:subClassOf data-ontology:Column ,
+###  http://www.magiun.io/ontologies/ml#HumanAgeColumn
+ml:HumanAgeColumn rdf:type owl:Class ;
+                             rdfs:subClassOf ml:Column ,
                                              [
                                                sh:property [
-                                                 sh:path data-ontology:value ;
+                                                 sh:path ml:value ;
                                                  sh:dataType xsd:double ;
                                                  sh:minInclusive 0 ;
                                                  sh:maxInclusive 150 ;
                                                ]
                                              ].
 
-###  http://www.magiun.io/ontologies/data-ontology#NameColumn
-data-ontology:NameColumn rdf:type owl:Class ;
-                         rdfs:subClassOf data-ontology:Column ,
+###  http://www.magiun.io/ontologies/ml#NameColumn
+ml:NameColumn rdf:type owl:Class ;
+                         rdfs:subClassOf ml:Column ,
                                         [
                                             sh:property [
-                                                sh:path data-ontology:value ;
+                                                sh:path ml:value ;
                                                 sh:dataType xsd:string ;
                                             ]
                                         ].
 
-data-ontology:CategoricalColumn rdf:type owl:Class ;
-                        rdfs:subClassOf data-ontology:Column ,
+ml:CategoricalColumn rdf:type owl:Class ;
+                        rdfs:subClassOf ml:Column ,
                                         [
                                             sh:property [
-                                                sh:path data-ontology:value;
+                                                sh:path ml:value;
                                                 sh:maxCount 10;
                                             ]
                                         ].
 
-data-ontology:BooleanColumn rdf:type owl:Class ;
-                         rdfs:subClassOf data-ontology:CategoricalColumn ,
+ml:BooleanColumn rdf:type owl:Class ;
+                         rdfs:subClassOf ml:CategoricalColumn ,
                                         [
                                             sh:property [
-                                                sh:path data-ontology:value ;
+                                                sh:path ml:value ;
                                                 sh:dataType xsd:integer ;
                                                 sh:minInclusive 0 ;
                                                 sh:maxInclusive 1 ;
                                             ]
                                         ].
 
-data-ontology:GenderColumn rdf:type owl:Class ;
-                         rdfs:subClassOf data-ontology:CategoricalColumn ,
+ml:GenderColumn rdf:type owl:Class ;
+                         rdfs:subClassOf ml:CategoricalColumn ,
                                         [
                                             sh:property [
                                                 sh:or (
                                                     [
-                                                        sh:path data-ontology:value ;
+                                                        sh:path ml:value ;
                                                         sh:in ("m" "f");
                                                     ]
                                                     [
-                                                        sh:path data-ontology:value ;
+                                                        sh:path ml:value ;
                                                         sh:in ("male" "female");
                                                     ]
                                                 )

@@ -14,7 +14,7 @@ import scala.collection.mutable
   *
   */
 object FeatureRecommender {
-  val NS = "http://www.magiun.io/ontologies/data-ontology#"
+  val NS = "http://www.magiun.io/ontologies/ml#"
 
   val ColumnClass = "Column"
 

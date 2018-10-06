@@ -10,23 +10,23 @@ import scala.collection.mutable
 class OperationRecommender(model: OntModel) {
 
   def recommend(colTypesMap: Map[Int, List[String]]): Map[Int, List[String]] = {
-    val result = mutable.Map[Int, List[String]]()
+    val result = createEmptyResult(colTypesMap)
 
     val operations = model.getOntClass(NS + OperationClass).listSubClasses().toList.toList
     operations.foreach { operation =>
-      val opCondition = operation.listSuperClasses().toList.toList
+      val ifCondition = operation.listSuperClasses().toList.toList
         .filter(_.isResource)
         .map(_.asResource())
         .head
         .getRequiredProperty(prop(mlIf))
         .getObject.asResource()
 
-      val columnCondition = opCondition.getProperty(prop(mlColumn))
+      val columnCondition = ifCondition.getProperty(prop(mlColumn))
       val requiredClass = columnCondition.getObject.asResource().getLocalName
 
-      colTypesMap.foreach{case (colIndex, colTypes) =>
+      colTypesMap.foreach { case (colIndex, colTypes) =>
         if (colTypes.contains(requiredClass)) {
-          val prevList = result.getOrElse(colIndex, List())
+          val prevList = result(colIndex)
           result.put(colIndex, operation.getLocalName :: prevList)
         }
       }
@@ -37,6 +37,14 @@ class OperationRecommender(model: OntModel) {
 
   private def prop(uri: String): Property = {
     model.getProperty(uri)
+  }
+
+  private def createEmptyResult(colTypesMap: Map[Int, List[String]]): mutable.Map[Int, List[String]] = {
+    val result = mutable.Map[Int, List[String]]()
+    for (i <- colTypesMap.keys) {
+      result.put(i, List())
+    }
+    result
   }
 
 }

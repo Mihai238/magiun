@@ -1,7 +1,6 @@
 package at.magiun.core.feature
 
 import at.magiun.core.{MainModule, UnitTest}
-import org.scalatest.FunSuite
 
 class OperationRecommenderTest extends UnitTest {
 
@@ -10,10 +9,15 @@ class OperationRecommenderTest extends UnitTest {
 
   it should "do something" in {
     val colTypes = Map[Int, List[String]](
-      0 -> List("HumanAgeColumn")
+      0 -> List("HumanAgeColumn"),
+      1 -> List("CategoricalColumn", "BooleanColumn"),
+      2 -> List("CategoricalColumn", "HumanAgeColumn")
     )
 
-    opRecommender.recommend(colTypes)
+    val operations = opRecommender.recommend(colTypes)
+    operations(0) should contain("Discretization")
+    operations(1) should be(List.empty)
+    operations(2) should contain("Discretization")
   }
 
 }

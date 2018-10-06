@@ -2,27 +2,17 @@ package at.magiun.core.feature
 
 import at.magiun.core.feature.Recommender._
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.jena.ontology.OntClass
-import org.apache.jena.rdf.model.ModelFactory
-import org.apache.jena.util.FileUtils.langTurtle
+import org.apache.jena.ontology.{OntClass, OntModel}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ListBuffer
+import at.magiun.core.config.OntologyConfig._
 
 /**
   *
   */
 object Recommender {
-  val NS = "http://www.magiun.io/ontologies/ml#"
-
-  val ColumnClass = "Column"
-  val OperationClass = "Operation"
-
-  val HasTypeProperty = "hasType"
-  val ValuesProperty = "values"
-
-  val shacl = "http://www.w3.org/ns/shacl#"
 
   val checkers: Map[String, Checker] = getCheckers
 
@@ -42,13 +32,9 @@ object Recommender {
 /**
   *
   */
-class Recommender(sparkSession: SparkSession) extends LazyLogging {
+class Recommender(sparkSession: SparkSession, model: OntModel) extends LazyLogging {
 
   def recommendFeatureOperation(ds: Dataset[Row]): Recommendations = {
-    val model = ModelFactory.createOntologyModel()
-    val is = this.getClass.getClassLoader.getResourceAsStream("data.ttl")
-    model.read(is, null, langTurtle)
-
     val classes = model.getOntClass(NS + ColumnClass).listSubClasses().toList
     val checker = new ColumnChecker(sparkSession)
 
@@ -62,7 +48,6 @@ class Recommender(sparkSession: SparkSession) extends LazyLogging {
       (colIndex, colTypes.toList)
     }).toMap
 
-    val operations = model.getOntClass(NS + ColumnClass).listSubClasses().toList
     val recsMap = colTypesMap map {
       case (colIndex, colTypes) =>
         (colIndex, Recommendation(colTypes, List()))

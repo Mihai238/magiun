@@ -9,10 +9,10 @@ class RecommenderTest extends UnitTest {
   private val mainModule = new MainModule {}
 
   private val connector = new CsvConnector(mainModule.spark)
+  private val recommender = mainModule.recommender
 
   it should "do something" in {
-    val fr = new Recommender(mainModule.spark)
-    val recommendation = fr.recommendFeatureOperation(connector.getDataset(csvDataSetSource))
+    val recommendation = recommender.recommendFeatureOperation(connector.getDataset(csvDataSetSource))
 
     val map = recommendation.map
     map should have size 12

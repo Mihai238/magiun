@@ -28,7 +28,7 @@ ml:hasType rdf:type owl:ObjectProperty ;
 
 
 #################################################################
-#    Classes
+#    Columns
 #################################################################
 
 ###  http://www.magiun.io/ontologies/ml#Column
@@ -92,5 +92,18 @@ ml:GenderColumn rdf:type owl:Class ;
                                                 )
                                             ]
                                         ].
+
+#################################################################
+#    Operations
+#################################################################
+ml:Operation rdf:type owl:Class .
+
+ml:Discretization rdf:type owl:Class ;
+                        rdfs:subClassOf ml:Operation ,
+                        [
+                            ml:if [
+                                ml:Column ml:HumanAgeColumn ;
+                            ]
+                        ].
 
 ### TODO UniqueColumn - suggest drop

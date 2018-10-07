@@ -1,6 +1,7 @@
 package at.magiun.core.rest
 
-import at.magiun.core.model.{MagiunDataSet, DataRow}
+import at.magiun.core.feature.Recommendations
+import at.magiun.core.model.{DataRow, MagiunDataSet}
 import at.magiun.core.rest.FutureConverter._
 import at.magiun.core.service.DataSetService
 import com.typesafe.scalalogging.LazyLogging
@@ -14,9 +15,10 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
 
   private val BASE_PATH = "datasets"
   private val ROWS_PATH = "rows"
+  private val RECOMMENDATIONS_PATH = "recommendations"
 
   //noinspection TypeAnnotation
-  lazy val api = getDataSet :+: getDataSets :+: createDataSet :+: getRows
+  lazy val api = getDataSet :+: getDataSets :+: createDataSet :+: getRows :+: getRecommendation
 
   val getDataSet: Endpoint[MagiunDataSet] = get(BASE_PATH :: path[Int]) { id: Int =>
 
@@ -58,6 +60,16 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
       dataSetService.findRows(dataSetId, range, columns)
         .asTwitter
         .map(_.get)
+        .map(Ok)
+  }
+
+  val getRecommendation: Endpoint[Recommendations] = get(BASE_PATH :: path[String] :: RECOMMENDATIONS_PATH) {
+    dataSetId: String =>
+      logger.info(s"Getting recommendations for dataset `$dataSetId`")
+
+      dataSetService.getRecommendations(dataSetId)
+        .asTwitter
+        .map(e => e.get)
         .map(Ok)
   }
 

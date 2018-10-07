@@ -10,6 +10,6 @@ import scala.concurrent.duration._
 @RunWith(classOf[JUnitRunner])
 abstract class UnitTest extends FlatSpec with Matchers with MockFactory {
 
-  protected val TIMEOUT: FiniteDuration = 5.seconds
+  protected val TIMEOUT: FiniteDuration = 10.seconds
 
 }

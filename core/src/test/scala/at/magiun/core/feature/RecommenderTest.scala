@@ -21,6 +21,7 @@ class RecommenderTest extends UnitTest {
     map(3).colTypes should contain("NameColumn")
     map(4).colTypes should contain("GenderColumn")
     map(5).colTypes should contain("HumanAgeColumn")
+    map(5).operations should contain("Discretization")
 
   }
 

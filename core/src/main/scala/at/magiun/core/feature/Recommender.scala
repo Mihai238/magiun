@@ -32,7 +32,9 @@ object Recommender {
 /**
   *
   */
-class Recommender(sparkSession: SparkSession, model: OntModel) extends LazyLogging {
+class Recommender(sparkSession: SparkSession,
+                  model: OntModel,
+                  operationRecommender: OperationRecommender) extends LazyLogging {
 
   def recommendFeatureOperation(ds: Dataset[Row]): Recommendations = {
     val classes = model.getOntClass(NS + ColumnClass).listSubClasses().toList
@@ -48,13 +50,13 @@ class Recommender(sparkSession: SparkSession, model: OntModel) extends LazyLoggi
       (colIndex, colTypes.toList)
     }).toMap
 
-    val recsMap = colTypesMap map {
-      case (colIndex, colTypes) =>
-        (colIndex, Recommendation(colTypes, List()))
-    }
+    val recommendations = operationRecommender.recommend(colTypesMap)
+      .map { case (colIndex, opRecommendations) =>
+        (colIndex, Recommendation(colTypesMap(colIndex), opRecommendations))
+      }
 
     logger.info("Done")
-    Recommendations(recsMap)
+    Recommendations(recommendations)
   }
 }
 

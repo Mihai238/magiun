@@ -7,7 +7,6 @@ import {RouteReuseStrategy} from '@angular/router';
 import {DragDropDirectiveModule} from 'angular4-drag-drop';
 import {ClickOutsideModule} from 'ng-click-outside';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TagInputModule} from 'ngx-chips';
 
@@ -86,7 +85,6 @@ import {BlockRestService} from './rest/block.rest.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    InfiniteScrollModule,
     DragDropDirectiveModule,
     ClickOutsideModule,
     BootstrapModalModule,

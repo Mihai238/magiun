@@ -8,16 +8,27 @@
   <data-edit-column *ngIf="selectedColumn" [visible]="showEditColumnComponent" [column]="selectedColumn"
                     (resultEmitter)="onEditColumnResult($event)"></data-edit-column>
 
-  <div class="dropdown">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false" id="dropdownDataSetButton">
+  <div class="card">
+    <div class="card-body d-flex">
+      <div class="flex-grow-1">
+        <h3>Dataset:</h3>
+        <div class="dropdown">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false" id="dropdownDataSetButton">
 
-      <span *ngIf="selectedDataSet; else noDataSetSelected">{{selectedDataSet.name}}</span>
-      <ng-template #noDataSetSelected>{{'DATA.NO_DATA_SET' | translate}}</ng-template>
-      <span class="caret"></span>
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownDataSetButton">
-      <a class="dropdown-item clickable" *ngFor="let dataSet of dataSets" (click)="onSelectDataSet(dataSet)">{{dataSet.name}}</a>
+            <span *ngIf="selectedDataSet; else noDataSetSelected">{{selectedDataSet.name}}</span>
+            <ng-template #noDataSetSelected>{{'DATA.NO_DATA_SET' | translate}}</ng-template>
+            <span class="caret"></span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownDataSetButton">
+            <a class="dropdown-item clickable" *ngFor="let dataSet of dataSets" (click)="onSelectDataSet(dataSet)">{{dataSet.name}}</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="">
+        <button type="button" class="btn btn-primary" (click)="onRecommendClicked()">Recommend</button>
+      </div>
     </div>
   </div>
 

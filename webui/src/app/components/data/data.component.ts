@@ -7,6 +7,7 @@ import {environment} from '../../../environments/environment';
 import {EditColumnResult} from './process-feature/edit-column.component';
 import {NewColumnResult} from './new-column-settings/new-column-settings.component';
 import {DataTableParams} from '../shared/table';
+import {Recommendations} from "../../model/recommendations";
 
 @Component({
   selector: 'app-data',
@@ -22,6 +23,7 @@ export class DataComponent implements OnInit {
 
   selectedDataSet: DataSet;
   selectedColumn: Column;
+  recommendations: Recommendations;
 
   showNewColumnSettingsComponent: boolean;
   newColumnIndex: number;
@@ -89,5 +91,17 @@ export class DataComponent implements OnInit {
 
   onNewColumnResult(newColumnResult: NewColumnResult) {
     this.showNewColumnSettingsComponent = false;
+  }
+
+  onRecommendClicked() {
+    const ds = this.selectedDataSet;
+    if (ds) {
+      this.dataService.getRecommendations(ds)
+        .subscribe(resp => {
+          this.logger.info("Got recommendation for dataset " + ds.id);
+          this.recommendations = resp
+        });
+    }
+
   }
 }

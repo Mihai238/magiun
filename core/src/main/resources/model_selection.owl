@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#"
+     xml:base="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasResponseVariable -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasResponseVariable"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Algorithm -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Algorithm">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasResponseVariable"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Binary"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Bernoulli_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Bernoulli_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Binary -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Binary">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Classification"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Discrete"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Binomial_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Binomial_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Categorical -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Categorical">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable_Type"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Classification -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Classification">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Algorithm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Continious -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Continious">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Numerical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Dataset -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Dataset"/>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Decision_Trees -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Decision_Trees">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Regression"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Descrete_Uniform_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Descrete_Uniform_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Discrete -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Discrete">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Numerical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Exponential_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Exponential_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Fisher-Sendecor_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Fisher-Sendecor_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Function -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Function"/>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Gamma_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Gamma_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Gradient-Boosted_Trees -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Gradient-Boosted_Trees">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Regression"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Interval -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Interval">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Ordinal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Isotonic_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Isotonic_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Regression"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Lasso -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Lasso">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Regression"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Linear_Least_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Linear_Least_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Regression"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Log-Normal_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Log-Normal_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Multiclass -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Multiclass">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Classification"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Multinomial_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Multinomial_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Negative_Binomial_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Negative_Binomial_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Non-Negative -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Non-Negative">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Continious"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Normal_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Normal_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Numerical -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Numerical">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable_Type"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Ordinal -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Ordinal">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Continious"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Poisson_Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Poisson_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Random_Forest -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Random_Forest">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Regression"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Algorithm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Response_Variable -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Response_Variable">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Dataset"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Ridge_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Ridge_Regression">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Regression"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Text -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Text">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable_Type"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable_Type -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable_Type"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+

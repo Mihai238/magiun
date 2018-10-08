@@ -21,11 +21,26 @@
     
 
 
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasDataset -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasDataset"/>
+    
+
+
     <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasDistribution -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasDistribution">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasOutlier -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasOutlier">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Dataset"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Observation"/>
     </owl:ObjectProperty>
     
 
@@ -309,6 +324,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Numerical">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable_Type"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Observation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Observation">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Dataset"/>
     </owl:Class>
     
 

@@ -28,6 +28,8 @@
                             *ngIf="selectedChartType === ChartType.pie"></chart-pie-settings>
         <chart-scatter-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)"
                                 *ngIf="selectedChartType === ChartType.scatter"></chart-scatter-settings>
+        <chart-bar-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)"
+                                *ngIf="selectedChartType === ChartType.bar"></chart-bar-settings>
 
       </div>
     </div>

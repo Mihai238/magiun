@@ -52,5 +52,6 @@ export class ChartComponent implements OnInit, OnChanges {
 enum ChartType {
   histogram = 'Histogram',
   pie = 'Pie',
-  scatter = 'Scatter'
+  scatter = 'Scatter',
+  bar = 'Bar'
 }

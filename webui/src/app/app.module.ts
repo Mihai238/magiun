@@ -47,6 +47,7 @@ import {DropColumnsBlockComponent} from './components/workflows/blocks/feature-s
 import {MultiInputParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/multi-input/multi-input-parameter.component';
 import {LineService} from './services/line.service';
 import {BlockRestService} from './rest/block.rest.service';
+import { BarSettingsComponent } from './components/data/chart/bar-settings/bar-settings.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import {BlockRestService} from './rest/block.rest.service';
     HistogramSettingsComponent,
     PieSettingsComponent,
     ScatterSettingsComponent,
+    BarSettingsComponent,
     ColumnSelectorComponent,
     NewColumnSettingsComponent,
     EditColumnComponent,

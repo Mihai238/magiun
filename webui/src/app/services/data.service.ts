@@ -112,6 +112,7 @@ export class DataService {
   getRecommendations(dataSet: DataSet): Observable<Recommendations> {
     return this.http.get(environment.baseUrl + this.dataSetsPath + dataSet.id + '/recommendations')
       .map((resp: Recommendations) => {
+        this.logger.info("Got recommendation for dataset " + dataSet.id);
         return resp;
       })
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));

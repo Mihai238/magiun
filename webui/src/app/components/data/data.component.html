@@ -8,10 +8,10 @@
   <data-edit-column *ngIf="selectedColumn" [visible]="showEditColumnComponent" [column]="selectedColumn"
                     (resultEmitter)="onEditColumnResult($event)"></data-edit-column>
 
-  <div class="card">
+  <div class="card mb-3">
     <div class="card-body d-flex">
       <div class="flex-grow-1">
-        <h3>Dataset:</h3>
+        <h3>Dataset</h3>
         <div class="dropdown">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false" id="dropdownDataSetButton">
@@ -38,6 +38,7 @@
                 (reload)="reloadRows($event)"
                 (columnEditClick)="onColumnEditClicked($event)"
                 [items]="rows"
+                [recommendations]="recommendations"
                 [itemCount]="rowsCount"
                 [rowTooltip]="rowTooltip"
                 [pagination_input]="true"
@@ -45,7 +46,7 @@
     >
       <data-table-column
         *ngFor="let column of selectedDataSet.schema.columns; index as ind"
-        [property]="column.index"
+        [index]="column.index"
         [header]="column.name"
         [visible]="ind < 5">
       </data-table-column>

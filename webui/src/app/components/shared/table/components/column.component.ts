@@ -12,7 +12,7 @@ export class DataTableColumn implements OnInit {
     @Input() header: string;
     @Input() sortable = false;
     @Input() resizable = false;
-    @Input() property: string;
+    @Input() index: string;
     @Input() styleClass: string;
     @Input() cellColors: CellCallback;
 
@@ -36,11 +36,11 @@ export class DataTableColumn implements OnInit {
     }
 
     private _initCellClass() {
-        if (!this.styleClass && this.property) {
-            if (/^[a-zA-Z0-9_]+$/.test(this.property)) {
-                this.styleClass = 'column-' + this.property;
+        if (!this.styleClass && this.index) {
+            if (/^[a-zA-Z0-9_]+$/.test(this.index)) {
+                this.styleClass = 'column-' + this.index;
             } else {
-                this.styleClass = 'column-' + this.property.replace(/[^a-zA-Z0-9_]/g, '');
+                this.styleClass = 'column-' + this.index.replace(/[^a-zA-Z0-9_]/g, '');
             }
         }
 

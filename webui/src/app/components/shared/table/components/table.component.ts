@@ -10,6 +10,7 @@ import { DataTableTranslations } from '../types/data-table-translations.type';
 import { defaultTranslations } from '../types/default-translations.type';
 import { drag } from '../utils/drag';
 import {Column} from "../../../../model/data-set.model";
+import {Recommendations} from "../../../../model/recommendations";
 
 /**
  * https://github.com/ggmod/angular-5-data-table
@@ -34,6 +35,8 @@ export class DataTableComponent implements DataTableParams, OnInit {
   }
 
   @Input() itemCount: number;
+
+  @Input() recommendations: Recommendations;
 
   // UI components:
 
@@ -215,7 +218,7 @@ export class DataTableComponent implements DataTableParams, OnInit {
 	@Output() columnEditClick = new EventEmitter<Number>();
 
 	public columnEditClicked(column: DataTableColumn) {
-    this.columnEditClick.emit(Number(column.property));
+    this.columnEditClick.emit(Number(column.index));
   }
 
 	public headerClicked(column: DataTableColumn, event: Event) {
@@ -246,8 +249,8 @@ export class DataTableComponent implements DataTableParams, OnInit {
 
 	private sortColumn(column: DataTableColumn) {
 		if (column.sortable) {
-			let ascending = this.sortBy === column.property ? !this.sortAsc : true;
-			this.sort(column.property, ascending);
+			let ascending = this.sortBy === column.index ? !this.sortAsc : true;
+			this.sort(column.index, ascending);
 		}
 	}
 

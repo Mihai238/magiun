@@ -57,6 +57,7 @@ export class DataComponent implements OnInit {
 
     this.rowsCount = dataSet.schema.totalCount || this.rowsCount;
     this.selectedDataSet = dataSet;
+    this.recommendations = null;
     this.rows = [];
     this.reloadRows({limit: 10, offset: 0});
   }
@@ -96,10 +97,12 @@ export class DataComponent implements OnInit {
   onRecommendClicked() {
     const ds = this.selectedDataSet;
     if (ds) {
+      this.logger.info("Getting recommendations for dataset " + ds.id);
       this.dataService.getRecommendations(ds)
         .subscribe(resp => {
-          this.logger.info("Got recommendation for dataset " + ds.id);
-          this.recommendations = resp
+          if (ds.id === this.selectedDataSet.id) {
+            this.recommendations = resp;
+          }
         });
     }
 

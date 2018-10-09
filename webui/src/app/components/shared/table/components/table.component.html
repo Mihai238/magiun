@@ -14,14 +14,15 @@
             (keydown.enter)="headerClicked(column, $event)" (keydown.space)="headerClicked(column, $event)"
             [class.sortable]="column.sortable" [class.resizable]="column.resizable"
             [ngClass]="column.styleClassObject" class="column-header" [style.width]="column.width | px"
-            [attr.aria-sort]="column.sortable ? (column.property === sortBy ? (sortAsc ? 'ascending' : 'descending') : 'none') : null"
+            [attr.aria-sort]="column.sortable ? (column.index === sortBy ? (sortAsc ? 'ascending' : 'descending') : 'none') : null"
             [attr.tabindex]="column.sortable ? '0' : null">
           <span *ngIf="!column.headerTemplate" [textContent]="column.header"></span>
           <span *ngIf="column.headerTemplate" [ngTemplateOutlet]="column.headerTemplate"
                 [ngOutletContext]="{column: column}"></span>
 
           <span class="ti-pencil clickable column-icon" (click)="columnEditClicked(column)"></span>
-          <span class="ti-alert column-icon"></span>
+          <span *ngIf="recommendations" class="ti-info-alt clickable column-icon" data-toggle="tooltip" data-placement="top"
+                title="{{recommendations.map[column.index].colTypes}}"></span>
 
         </th>
       </tr>

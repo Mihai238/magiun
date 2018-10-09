@@ -8,7 +8,7 @@
     </td>
     <td *ngFor="let column of columns" [hide]="!column.visible" [ngClass]="column.styleClassObject" class="data-column"
         [style.background-color]="column.getCellColor(_this, index)">
-        <div *ngIf="!column.cellTemplate" [textContent]="item['values'][column.property]"></div>
+        <div *ngIf="!column.cellTemplate" [textContent]="item['values'][column.index]"></div>
         <div *ngIf="column.cellTemplate" [ngTemplateOutlet]="column.cellTemplate" [ngOutletContext]="{column: column, row: _this, item: item}"></div>
     </td>
 </tr>

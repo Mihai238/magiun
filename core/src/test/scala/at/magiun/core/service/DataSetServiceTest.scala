@@ -25,7 +25,7 @@ class DataSetServiceTest extends UnitTest {
   it should "return a data set model" in {
     mockedRepo.find _ when 1 returns Future.successful(Option(testDsEntity1))
 
-    val ds = Await.result(service.find(1), TIMEOUT).get
+    val ds = Await.result(service.find("1"), TIMEOUT).get
     ds.name should be("gigi")
     ds.dataSetSource.url should be(testDsEntity1.url)
     ds.schema.get.columns should have size 12

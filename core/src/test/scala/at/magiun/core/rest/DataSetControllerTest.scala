@@ -21,12 +21,12 @@ class DataSetControllerTest extends UnitTest {
 
   it should "return a dataset" in {
     val input = Input.get("/datasets/1")
-    stubService.find _ when 1 returns Future.successful(Option(testDs1))
+    stubService.find _ when "1" returns Future.successful(Option(testDs1))
 
     val result = controller.getDataSet(input)
     val dataSet = result.awaitValueUnsafe().get
 
-    dataSet.id should be(1)
+    dataSet.id should be("1")
     dataSet.name should be("gigi")
   }
 
@@ -37,10 +37,10 @@ class DataSetControllerTest extends UnitTest {
     val result = controller.createDataSet(input)
 
     val dataSet = result.awaitValueUnsafe().get
-    dataSet.id should be(1)
+    dataSet.id should be("1")
 
     val matcher = where {
-      ds: MagiunDataSet => ds.id == 0 && ds.name == "foo"
+      ds: MagiunDataSet => ds.id == "0" && ds.name == "foo"
     }
     stubService.create _ verify matcher
   }

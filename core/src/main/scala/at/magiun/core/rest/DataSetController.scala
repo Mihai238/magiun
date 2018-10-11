@@ -20,7 +20,7 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
   //noinspection TypeAnnotation
   lazy val api = getDataSet :+: getDataSets :+: createDataSet :+: getRows :+: getRecommendation
 
-  val getDataSet: Endpoint[MagiunDataSet] = get(BASE_PATH :: path[Int]) { id: Int =>
+  val getDataSet: Endpoint[MagiunDataSet] = get(BASE_PATH :: path[String]) { id: String =>
 
     dataSetService.find(id)
       .asTwitter

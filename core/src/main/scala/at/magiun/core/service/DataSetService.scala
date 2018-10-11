@@ -18,9 +18,19 @@ class DataSetService(
                       recommender: Recommender
                     ) {
 
-  def find(id: Long): Future[Option[MagiunDataSet]] = {
-    dataSetRepository.find(id)
-      .map(_.map(mapToModel))
+  def find(id: String): Future[Option[MagiunDataSet]] = {
+    if (isMemoryDataSet(id)) {
+      Future {
+        Option {
+          val source = DataSetSource(SourceType.Memory, id)
+          val schema = getConnector(SourceType.Memory).getSchema(source)
+          MagiunDataSet(id, id, source, Option(schema))
+        }
+      }
+    } else {
+      dataSetRepository.find(id.toLong)
+        .map(_.map(mapToModel))
+    }
   }
 
 
@@ -40,7 +50,7 @@ class DataSetService(
     val schema = getConnector(sourceType).getSchema(source)
 
     MagiunDataSet(
-      entity.id,
+      entity.id.toString,
       entity.name,
       source,
       Option(schema)
@@ -49,7 +59,7 @@ class DataSetService(
 
   private def mapToEntity(dataSet: MagiunDataSet): MagiunDataSetEntity = {
     MagiunDataSetEntity(
-      dataSet.id,
+      dataSet.id.toLong,
       dataSet.name,
       dataSet.dataSetSource.sourceType.toString,
       dataSet.dataSetSource.url
@@ -72,7 +82,7 @@ class DataSetService(
   }
 
   private def getConnectorAndSource(dataSetId: String): Future[Option[(Connector, DataSetSource)]] = {
-    if (dataSetId.contains("-")) {
+    if (isMemoryDataSet(dataSetId)) {
       val source = DataSetSource(SourceType.Memory, dataSetId)
       val connector = getConnector(SourceType.Memory)
       Future {
@@ -81,7 +91,7 @@ class DataSetService(
         }
       }
     } else {
-      find(dataSetId.toLong)
+      find(dataSetId)
         .map(_.map(ds => {
           val connector = getConnector(ds.dataSetSource.sourceType)
           (connector, ds.dataSetSource)
@@ -93,6 +103,10 @@ class DataSetService(
     case FileCsv => new CsvConnector(sparkSession)
     case Mongo => new MongoDbConnector(sparkSession)
     case Memory => new MemoryConnector(executionService.getExecutionsOutput)
+  }
+
+  private def isMemoryDataSet(id: String) = {
+    id.contains("-")
   }
 
 }

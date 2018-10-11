@@ -14,7 +14,7 @@ class DatabaseInitializer(dataSetRepository: DataSetRepository,
 
     insertBlock(BlockEntity("id-2", "FileReader", s"""{"inputs":[],"params":{"fileName":"$sampleCsvUrl"}}"""))
     insertBlock(BlockEntity("id-3", "LinearRegression", """{"inputs":[{"blockId": "id-2", "index": 0}],"params":{"maxIter":"3"}}"""))
-    insertBlock(BlockEntity("id-4", "DropColumn", """{"inputs":[{"blockId": "id-2", "index": 0}],"params":{"columnName":"statecode"}}"""))
+    insertBlock(BlockEntity("id-4", "DropColumn", """{"inputs":[{"blockId": "id-2", "index": 0}],"params":{"columnName":"PassengerId"}}"""))
     insertBlock(BlockEntity("id-5", "FileWriter", s"""{"inputs":[{"blockId": "id-4", "index": 0}],"params":{"fileName":"$sampleCsvUrl-tmp"}}"""))
   }
 

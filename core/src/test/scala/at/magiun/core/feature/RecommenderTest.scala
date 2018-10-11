@@ -11,7 +11,7 @@ class RecommenderTest extends UnitTest {
   private val connector = new CsvConnector(mainModule.spark)
   private val recommender = mainModule.recommender
 
-  it should "do something" in {
+  it should "try to guess column types" in {
     val recommendation = recommender.recommendFeatureOperation(connector.getDataset(csvDataSetSource))
 
     val map = recommendation.map

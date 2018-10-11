@@ -9,7 +9,7 @@ class StageTest extends UnitTest {
 
   private val input = StageInput(new FileReaderStage(mainModule.spark, sampleCsvPath))
 
-  it should "remove the column called 'statecode'" in {
+  it should "remove the column by name" in {
     val task = new DropColumnStage(
       input,
       "Cabin"

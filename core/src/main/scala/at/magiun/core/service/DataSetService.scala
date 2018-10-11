@@ -106,7 +106,7 @@ class DataSetService(
   }
 
   private def isMemoryDataSet(id: String) = {
-    id.contains("-")
+    id.startsWith("mem-")
   }
 
 }

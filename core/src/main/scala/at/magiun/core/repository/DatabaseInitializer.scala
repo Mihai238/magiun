@@ -13,9 +13,9 @@ class DatabaseInitializer(dataSetRepository: DataSetRepository,
     insertDataSet(MagiunDataSetEntity(2, "drinks", "Mongo", "mongodb://127.0.0.1/testDb/testCollection"))
 
     insertBlock(BlockEntity("id-2", "FileReader", s"""{"inputs":[],"params":{"fileName":"$sampleCsvUrl"}}"""))
-    insertBlock(BlockEntity("id-3", "LinearRegression", """{"inputs":[["id-2", 0]],"params":{"maxIter":"3"}}"""))
-    insertBlock(BlockEntity("id-4", "DropColumn", """{"inputs":[["id-2", 0]],"params":{"columnName":"statecode"}}"""))
-    insertBlock(BlockEntity("id-5", "FileWriter", s"""{"inputs":[["id-4", 0]],"params":{"fileName":"$sampleCsvUrl-tmp"}}"""))
+    insertBlock(BlockEntity("id-3", "LinearRegression", """{"inputs":[{"blockId": "id-2", "index": 0}],"params":{"maxIter":"3"}}"""))
+    insertBlock(BlockEntity("id-4", "DropColumn", """{"inputs":[{"blockId": "id-2", "index": 0}],"params":{"columnName":"statecode"}}"""))
+    insertBlock(BlockEntity("id-5", "FileWriter", s"""{"inputs":[{"blockId": "id-4", "index": 0}],"params":{"fileName":"$sampleCsvUrl-tmp"}}"""))
   }
 
   private def insertDataSet(magiunDataSetEntity: MagiunDataSetEntity): Unit = {

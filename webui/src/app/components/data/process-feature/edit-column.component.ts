@@ -11,7 +11,8 @@ import {
 } from '@angular/core';
 import {Column} from '../../../model/data-set.model';
 import {NGXLogger} from "ngx-logger";
-import {DataService} from "../../../services/data.service";
+import {ExecutionService} from "../../../services/execution.service";
+import {BlockRestService} from "../../../rest/block.rest.service";
 
 @Component({
   selector: 'data-edit-column',
@@ -28,10 +29,11 @@ export class EditColumnComponent implements OnInit, OnChanges {
   @ViewChild('modalActivator') modalActivatorEl: ElementRef;
 
   public ActionType = ActionType;
-  currActionType: ActionType;
+  selectedActionType: ActionType;
 
   constructor(private logger: NGXLogger,
-              private dataService: DataService) {
+              private executionService: ExecutionService,
+              private blockRestService: BlockRestService) {
   }
 
   ngOnInit() {
@@ -45,7 +47,7 @@ export class EditColumnComponent implements OnInit, OnChanges {
 
   onActionTypeSelected(actionTypeString: string) {
     this.logger.info('EditColumnComponent: action type selected ' + actionTypeString);
-    this.currActionType = ActionType[actionTypeString];
+    this.selectedActionType = ActionType[actionTypeString];
   }
 
   actionTypes(): Array<string> {
@@ -53,17 +55,29 @@ export class EditColumnComponent implements OnInit, OnChanges {
   }
 
   onClickCancel(): void {
-    this.resultEmitter.emit({executed: false});
+    this.resultEmitter.emit({memDataSetId: null});
   }
 
   onClickExecute(): void {
-    this.resultEmitter.emit({executed: true});
+    const type = "DropColumn";
+    const block = {
+      id: "",
+      type: type,
+      inputs: [{blockId: "id-2", "index": 0}],
+      params: {columnName: this.column.name}
+    };
+
+    this.blockRestService.createBlock(block).subscribe(blockId => {
+      this.executionService.create(blockId).subscribe((memDataSetId) => {
+        this.resultEmitter.emit({memDataSetId: memDataSetId});
+      });
+    });
   }
 
 }
 
 export interface EditColumnResult {
-  executed: boolean;
+  memDataSetId: string;
 }
 
 export enum ActionType {

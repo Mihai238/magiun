@@ -16,7 +16,7 @@
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false" id="dropdownDataSetButton">
 
-            <span *ngIf="selectedDataSet; else noDataSetSelected">{{selectedDataSet.name}}</span>
+            <span *ngIf="selectedDataSet; else noDataSetSelected">{{displayNameDataSet}}</span>
             <ng-template #noDataSetSelected>{{'DATA.NO_DATA_SET' | translate}}</ng-template>
             <span class="caret"></span>
           </button>

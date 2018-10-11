@@ -14,7 +14,8 @@
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
-            Select action
+            <span *ngIf="selectedActionType">{{selectedActionType}}</span>
+            <span *ngIf="!selectedActionType">Select action</span>
           </button>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -24,11 +25,11 @@
         </div>
       </div>
 
-      <div *ngIf="currActionType == ActionType.drop">
+      <div *ngIf="selectedActionType == ActionType.drop">
         Do you really want to drop the column?
       </div>
 
-      <div *ngIf="currActionType == ActionType.script">
+      <div *ngIf="selectedActionType == ActionType.script">
         Put your script here.
       </div>
 

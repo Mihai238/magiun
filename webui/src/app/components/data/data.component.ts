@@ -21,6 +21,7 @@ export class DataComponent implements OnInit {
   rows: DataRow[];
   rowsCount = 0;
 
+  displayNameDataSet: string;
   selectedDataSet: DataSet;
   selectedColumn: Column;
   recommendations: Recommendations;
@@ -57,6 +58,7 @@ export class DataComponent implements OnInit {
 
     this.rowsCount = dataSet.schema.totalCount || this.rowsCount;
     this.selectedDataSet = dataSet;
+    this.displayNameDataSet = dataSet.name;
     this.recommendations = null;
     this.rows = [];
     this.reloadRows({limit: 10, offset: 0});
@@ -86,8 +88,10 @@ export class DataComponent implements OnInit {
     this.rows.forEach(row => row.values.splice(index, 1));
   }
 
-  onEditColumnResult(featureProcessResult: EditColumnResult) {
+  onEditColumnResult(editColumnResult: EditColumnResult) {
     this.showEditColumnComponent = false;
+    this.dataService.getDataSet(editColumnResult.memDataSetId)
+      .subscribe((ds: DataSet) => this.selectedDataSet = ds);
   }
 
   onNewColumnResult(newColumnResult: NewColumnResult) {

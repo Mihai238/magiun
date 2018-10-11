@@ -21,6 +21,26 @@ export class DataService {
               private logger: NGXLogger) {
   }
 
+  getDataSet(id: String): Observable<DataSet> {
+    return this.http.get(environment.baseUrl + this.dataSetsPath + id)
+      .map((resp: DataSet) => {
+        this.logger.info('Got data set' + resp);
+
+        return {
+          id: resp.id,
+          name: resp.name,
+          schema: this.mapSchema(resp.schema)
+        };
+      })
+      .catch((error: any) => {
+        if (typeof error.json === 'function') {
+          return Observable.throw(error.json().error || 'Server error');
+        } else {
+          return Observable.throw(error.message || 'Server error');
+        }
+      });
+  }
+
   getDataSets(): Observable<DataSet[]> {
     return this.http.get(environment.baseUrl + this.dataSetsPath)
       .map((resp: DataSet[]) => {

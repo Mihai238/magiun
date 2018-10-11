@@ -24,7 +24,7 @@ class BlockController(blockService: BlockService) extends LazyLogging {
   }
 
   val upsertBlock: Endpoint[Block] = post(PATH :: jsonBody[Block]) { block: Block =>
-    logger.info("Upserting a block")
+    logger.info(s"Upserting block $block")
 
     blockService.upsert(block)
       .asTwitter

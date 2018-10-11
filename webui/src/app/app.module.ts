@@ -48,6 +48,7 @@ import {MultiInputParameterComponent} from './components/workflows/blocks/parame
 import {LineService} from './services/line.service';
 import {BlockRestService} from './rest/block.rest.service';
 import { BarSettingsComponent } from './components/data/chart/bar-settings/bar-settings.component';
+import {ExecutionService} from "./services/execution.service";
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { BarSettingsComponent } from './components/data/chart/bar-settings/bar-s
     BlockService,
     LineService,
     BlockRestService,
+    ExecutionService,
     {provide: RouteReuseStrategy, useClass: RoutingReuseStrategy}
   ],
   entryComponents: [

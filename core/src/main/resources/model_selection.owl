@@ -34,6 +34,7 @@
     <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasDistribution -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasDistribution">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#isDistributionOf"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
     </owl:ObjectProperty>
@@ -42,7 +43,11 @@
 
     <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasObservation -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasObservation"/>
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasObservation">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Dataset"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Observation"/>
+    </owl:ObjectProperty>
     
 
 
@@ -72,7 +77,10 @@
 
     <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasResponseVariable -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasResponseVariable"/>
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasResponseVariable">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Dataset"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Response_Variable"/>
+    </owl:ObjectProperty>
     
 
 
@@ -80,6 +88,8 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasVariable">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Dataset"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable"/>
     </owl:ObjectProperty>
     
 
@@ -89,6 +99,15 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasVariableType">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable_Type"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#isDistributionOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#isDistributionOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable"/>
     </owl:ObjectProperty>
     
 
@@ -282,6 +301,56 @@
     <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Linear_Least_Regression -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Linear_Least_Regression">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasDataset"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasObservation"/>
+                                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Observation"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasResponseVariable"/>
+                                <owl:allValuesFrom>
+                                    <owl:Class>
+                                        <owl:intersectionOf rdf:parseType="Collection">
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasDistribution"/>
+                                                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Normal_Distribution"/>
+                                            </owl:Restriction>
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasVariableType"/>
+                                                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Continious"/>
+                                            </owl:Restriction>
+                                        </owl:intersectionOf>
+                                    </owl:Class>
+                                </owl:allValuesFrom>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasVariable"/>
+                                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                                <owl:onClass>
+                                    <owl:Class>
+                                        <owl:intersectionOf rdf:parseType="Collection">
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasDistribution"/>
+                                                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Normal_Distribution"/>
+                                            </owl:Restriction>
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasVariableType"/>
+                                                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Continious"/>
+                                            </owl:Restriction>
+                                        </owl:intersectionOf>
+                                    </owl:Class>
+                                </owl:onClass>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Regression"/>
     </owl:Class>
     
@@ -336,6 +405,25 @@
     <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Normal_Distribution -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Normal_Distribution">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#isDistributionOf"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasVariableType"/>
+                                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Numerical"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasObservation"/>
+                                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</owl:minCardinality>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Distribution"/>
     </owl:Class>
     

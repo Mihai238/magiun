@@ -63,12 +63,6 @@ class DataSetService(
       })
   }
 
-  private def getConnector(sourceType: SourceType): Connector = sourceType match {
-    case FileCsv => new CsvConnector(sparkSession)
-    case Mongo => new MongoDbConnector(sparkSession)
-    case Memory => new MemoryConnector(executionService.getExecutionsOutput)
-  }
-
   def getRecommendations(dataSetId: String): Future[Option[Recommendations]] = {
     getConnectorAndSource(dataSetId)
       .map(_.map { case (a, b) =>
@@ -93,6 +87,12 @@ class DataSetService(
           (connector, ds.dataSetSource)
         }))
     }
+  }
+
+  private def getConnector(sourceType: SourceType): Connector = sourceType match {
+    case FileCsv => new CsvConnector(sparkSession)
+    case Mongo => new MongoDbConnector(sparkSession)
+    case Memory => new MemoryConnector(executionService.getExecutionsOutput)
   }
 
 }

@@ -364,6 +364,42 @@
     
 
 
+    <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Logistic_Regression -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Logistic_Regression">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasDataset"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasObservation"/>
+                                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Observation"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasVariable"/>
+                                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Variable"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasResponseVariable"/>
+                                <owl:allValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#hasVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Binary"/>
+                                    </owl:Restriction>
+                                </owl:allValuesFrom>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Regression"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Model -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/paulcurcean/ontologies/2018/6/untitled-ontology-14#Model"/>

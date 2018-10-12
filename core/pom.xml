@@ -27,6 +27,7 @@
         <circe.version>0.8.0</circe.version>
         <scala-logging>3.7.2</scala-logging>
         <enumeratum.version>1.5.12</enumeratum.version>
+        <jena.version>3.7.0</jena.version>
     </properties>
 
     <dependencies>
@@ -100,6 +101,13 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
+        </dependency>
+
+        <!-- Ontologies -->
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-core</artifactId>
+            <version>${jena.version}</version>
         </dependency>
 
         <!-- Others -->

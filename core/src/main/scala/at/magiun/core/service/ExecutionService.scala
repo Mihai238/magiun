@@ -24,6 +24,9 @@ class ExecutionService(
       .map(finalBlock => {
         val blocks = loadBlocks(finalBlock)
         val output: StageOutput = execute(blocks, finalBlock)
+        output match {
+          case DatasetOutput(ds) => ds.cache()
+        }
         val execId = getNextId
         executionContext.registerExecution(execId, output)
 

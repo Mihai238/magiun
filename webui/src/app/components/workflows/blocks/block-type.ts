@@ -5,6 +5,7 @@ export class BlockType {
    */
   static DATABASE = new BlockType('DatabaseReader', 'DATABASE');
   static FILE = new BlockType('FileReader', 'FILE');
+  static DATA_SET_READER = new BlockType('DataSetReader', 'DataSetReader');
 
   /**
    * DATA TRANSFORMATION

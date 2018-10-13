@@ -34,7 +34,7 @@ class ExecutionServiceTest extends UnitTest {
     val execution = Await.result(executionService.execute(Execution(blockId = "id-2")), TIMEOUT)
     execution.id should be ("mem-1")
 
-    val output = executionService.getExecutionOutput(execution.id)
+    val output = executionService.executionContext.getExecutionOutput(execution.id)
     output match {
       case DatasetOutput(ds) =>
         ds.columns.length should be(11)

@@ -1,8 +1,11 @@
 package at.magiun.core.model
 
 import at.magiun.core.model.Stage.getOutputOfPrevStage
+import at.magiun.core.service.DataSetService
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.expr
+
+import scala.concurrent.Await
 
 
 abstract class Stage {
@@ -27,6 +30,15 @@ case class StageInput(stage: Stage, index: Int = 0)
 // ***
 // Readers and writers
 // ***
+
+class DataSetReaderStage(dataSetService: DataSetService, dataSetId: String) extends Stage {
+  import scala.concurrent.duration._
+
+  override def perform: StageOutput = {
+    val output = Await.result(dataSetService.getDataSet(dataSetId), 10.seconds).get
+    DatasetOutput(output)
+  }
+}
 
 class FileReaderStage(spark: SparkSession, fileName: String) extends Stage {
   override def perform: StageOutput = {

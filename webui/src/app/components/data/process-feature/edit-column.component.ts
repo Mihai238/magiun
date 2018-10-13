@@ -9,10 +9,11 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import {Column} from '../../../model/data-set.model';
+import {Column, DataSet} from '../../../model/data-set.model';
 import {NGXLogger} from "ngx-logger";
 import {ExecutionService} from "../../../services/execution.service";
 import {BlockRestService} from "../../../rest/block.rest.service";
+import {BlockType} from "../../workflows/blocks/block-type";
 
 @Component({
   selector: 'data-edit-column',
@@ -23,6 +24,7 @@ export class EditColumnComponent implements OnInit, OnChanges {
 
   @Input() visible: boolean;
   @Input() column: Column;
+  @Input() dataSet: DataSet;
 
   @Output() resultEmitter = new EventEmitter<EditColumnResult>();
 
@@ -59,19 +61,29 @@ export class EditColumnComponent implements OnInit, OnChanges {
   }
 
   onClickExecute(): void {
-    const type = "DropColumn";
-    const block = {
+    const memDataBlock = {
       id: "",
-      type: type,
-      inputs: [{blockId: "id-2", "index": 0}],
+      type: BlockType.DATA_SET_READER.name,
+      inputs: [],
+      params: {"dataSetId": this.dataSet.id}
+    };
+
+    const removeColumnBlock = {
+      id: "",
+      type: BlockType.DROP_COLUMNS.name,
+      inputs: [],
       params: {columnName: this.column.name}
     };
 
-    this.blockRestService.createBlock(block).subscribe(blockId => {
-      this.executionService.create(blockId).subscribe((memDataSetId) => {
-        this.resultEmitter.emit({memDataSetId: memDataSetId});
+    this.blockRestService.createBlock(memDataBlock).subscribe(memDataBlockId => {
+      removeColumnBlock.inputs.push({blockId: memDataBlockId, "index": 0});
+      this.blockRestService.createBlock(removeColumnBlock).subscribe(removeColumnBlockId => {
+        this.executionService.create(removeColumnBlockId).subscribe((memDataSetId) => {
+          this.resultEmitter.emit({memDataSetId: memDataSetId});
+        });
       });
     });
+
   }
 
 }

@@ -2,30 +2,22 @@ package at.magiun.core.service
 
 import java.util.concurrent.atomic.AtomicInteger
 
-import at.magiun.core.model.BlockType.{AddColumn, DatabaseReader, DropColumn, FileReader, FileWriter, LinearRegression}
+import at.magiun.core.model.BlockType.{AddColumn, DataSetReader, DatabaseReader, DropColumn, FileReader, FileWriter, LinearRegression}
 import at.magiun.core.model._
 import org.apache.spark.sql.SparkSession
 
-import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
 class ExecutionService(
                         spark: SparkSession,
-                        blockService: BlockService
+                        blockService: BlockService,
+                        val executionContext: ExecutionContext,
+                        dataSetService: DataSetService
                       ) {
 
-  private val executionsMap: mutable.Map[String, StageOutput] = new mutable.HashMap[String, StageOutput]
   private val idGenerator = new AtomicInteger(1)
-
-  def getExecutionOutput(executionId: String): StageOutput = {
-    executionsMap(executionId)
-  }
-
-  def getExecutionsOutput: Map[String, StageOutput] = {
-    executionsMap.toMap
-  }
 
   def execute(execution: Execution): Future[ExecutionResult] = {
     blockService.find(execution.blockId)
@@ -33,7 +25,7 @@ class ExecutionService(
         val blocks = loadBlocks(finalBlock)
         val output: StageOutput = execute(blocks, finalBlock)
         val execId = getNextId
-        executionsMap.put(execId, output)
+        executionContext.registerExecution(execId, output)
 
         ExecutionResult(execId)
       })
@@ -47,7 +39,7 @@ class ExecutionService(
       val blockIds = block.inputs.map(_.blockId)
       val blocks = blockIds.map(blockService.find).map(Await.result(_, 2.seconds))
 
-      val blockMap = blocks.map(loadBlocks).foldLeft(Map[String, Block]()){(acc, m) => acc ++ m}
+      val blockMap = blocks.map(loadBlocks).foldLeft(Map[String, Block]()) { (acc, m) => acc ++ m }
 
       blockMap + ((block.id, block))
     }
@@ -64,6 +56,8 @@ class ExecutionService(
     block.`type` match {
       case FileReader =>
         new FileReaderStage(spark, block.params("fileName"))
+      case DataSetReader =>
+        new DataSetReaderStage(dataSetService, block.params("dataSetId"))
       case DatabaseReader => ???
       case FileWriter =>
         val nextBlock = blocks(block.inputs.head.blockId)
@@ -79,6 +73,6 @@ class ExecutionService(
   }
 
   private def getNextId: String = {
-     "mem-" + idGenerator.getAndIncrement()
+    "mem-" + idGenerator.getAndIncrement()
   }
 }

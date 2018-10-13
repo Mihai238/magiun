@@ -7,7 +7,7 @@ class OperationRecommenderTest extends UnitTest {
   private val mainModule = new MainModule {}
   private val opRecommender = mainModule.operationRecommender
 
-  it should "do something" in {
+  it should "recommend operations" in {
     val colTypes = Map[Int, List[String]](
       0 -> List("HumanAgeColumn"),
       1 -> List("CategoricalColumn", "BooleanColumn"),

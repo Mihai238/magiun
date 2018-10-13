@@ -4,7 +4,7 @@ import at.magiun.core.config.{H2Config, OntologyConfig, SparkConfig}
 import at.magiun.core.feature.{OperationRecommender, Recommender}
 import at.magiun.core.repository.{BlockRepository, DataSetRepository, DatabaseInitializer}
 import at.magiun.core.rest.{BlockController, DataSetController, ExecutionController, RestApi}
-import at.magiun.core.service.{BlockService, DataSetService, ExecutionService, JobService}
+import at.magiun.core.service.{ExecutionContext, _}
 import com.softwaremill.macwire._
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.sql.SparkSession
@@ -25,6 +25,7 @@ trait MainModule {
   lazy val blockService = wire[BlockService]
   lazy val dataSetService = wire[DataSetService]
   lazy val executionService = wire[ExecutionService]
+  lazy val executionContext = wire[ExecutionContext]
 
   // Recommenders
   lazy val recommender = wire[Recommender]

@@ -1,11 +1,10 @@
 package at.magiun.core.service
 
-import at.magiun.core.connector.{Connector, CsvConnector, MemoryConnector, MongoDbConnector}
+import at.magiun.core.connector.Connector
 import at.magiun.core.feature.{Recommendations, Recommender}
-import at.magiun.core.model.SourceType.{FileCsv, Memory, Mongo}
 import at.magiun.core.model.{DataRow, DataSetSource, MagiunDataSet, SourceType}
 import at.magiun.core.repository.{DataSetRepository, MagiunDataSetEntity}
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.Option._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -13,8 +12,8 @@ import scala.concurrent.Future
 
 class DataSetService(
                       dataSetRepository: DataSetRepository,
-                      executionService: ExecutionService,
-                      sparkSession: SparkSession,
+                      executionContext: ExecutionContext,
+                      spark: SparkSession,
                       recommender: Recommender
                     ) {
 
@@ -74,10 +73,14 @@ class DataSetService(
   }
 
   def getRecommendations(dataSetId: String): Future[Option[Recommendations]] = {
+    getDataSet(dataSetId)
+      .map(_.map(ds => recommender.recommendFeatureOperation(ds)))
+  }
+
+  def getDataSet(dataSetId: String): Future[Option[Dataset[Row]]] = {
     getConnectorAndSource(dataSetId)
-      .map(_.map { case (a, b) =>
-        val dataset = a.getDataset(b)
-        recommender.recommendFeatureOperation(dataset)
+      .map(_.map { case (connector, source) =>
+        connector.getDataset(source)
       })
   }
 
@@ -99,10 +102,8 @@ class DataSetService(
     }
   }
 
-  private def getConnector(sourceType: SourceType): Connector = sourceType match {
-    case FileCsv => new CsvConnector(sparkSession)
-    case Mongo => new MongoDbConnector(sparkSession)
-    case Memory => new MemoryConnector(executionService.getExecutionsOutput)
+  private def getConnector(sourceType: SourceType): Connector = {
+    new ConnectorFactory(spark, executionContext).getConnector(sourceType)
   }
 
   private def isMemoryDataSet(id: String) = {

@@ -57,10 +57,12 @@ export class DataComponent implements OnInit {
     this.logger.info('Data Set selected: ' + dataSet.name);
 
     this.rowsCount = dataSet.schema.totalCount || this.rowsCount;
+    if (!dataSet.name.startsWith("mem-")) {
+      this.displayNameDataSet = dataSet.name;
+    }
+
     this.selectedDataSet = dataSet;
-    this.displayNameDataSet = dataSet.name;
     this.recommendations = null;
-    this.rows = [];
     this.reloadRows({limit: 10, offset: 0});
   }
 
@@ -91,7 +93,7 @@ export class DataComponent implements OnInit {
   onEditColumnResult(editColumnResult: EditColumnResult) {
     this.showEditColumnComponent = false;
     this.dataService.getDataSet(editColumnResult.memDataSetId)
-      .subscribe((ds: DataSet) => this.selectedDataSet = ds);
+      .subscribe((ds: DataSet) => this.onSelectDataSet(ds));
   }
 
   onNewColumnResult(newColumnResult: NewColumnResult) {

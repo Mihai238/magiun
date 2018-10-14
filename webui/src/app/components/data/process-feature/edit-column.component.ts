@@ -14,6 +14,7 @@ import {NGXLogger} from "ngx-logger";
 import {ExecutionService} from "../../../services/execution.service";
 import {BlockRestService} from "../../../rest/block.rest.service";
 import {BlockType} from "../../workflows/blocks/block-type";
+import {Block} from "../../../model/block.model";
 
 @Component({
   selector: 'data-edit-column',
@@ -68,22 +69,31 @@ export class EditColumnComponent implements OnInit, OnChanges {
       params: {"dataSetId": this.dataSet.id}
     };
 
-    const removeColumnBlock = {
-      id: "",
-      type: BlockType.DROP_COLUMNS.name,
-      inputs: [],
-      params: {columnName: this.column.name}
-    };
-
-    this.blockRestService.createBlock(memDataBlock).subscribe(memDataBlockId => {
-      removeColumnBlock.inputs.push({blockId: memDataBlockId, "index": 0});
-      this.blockRestService.createBlock(removeColumnBlock).subscribe(removeColumnBlockId => {
-        this.executionService.create(removeColumnBlockId).subscribe((memDataSetId) => {
-          this.resultEmitter.emit({memDataSetId: memDataSetId});
+    const processingBlock = this.getProcessingBlock();
+    if (processingBlock) {
+      this.blockRestService.createBlock(memDataBlock).subscribe(memDataBlockId => {
+        processingBlock.inputs.push({blockId: memDataBlockId, "index": 0});
+        this.blockRestService.createBlock(processingBlock).subscribe(removeColumnBlockId => {
+          this.executionService.create(removeColumnBlockId).subscribe((memDataSetId) => {
+            this.resultEmitter.emit({memDataSetId: memDataSetId});
+          });
         });
       });
-    });
+    }
+  }
 
+  private getProcessingBlock(): Block {
+    if (this.selectedActionType == ActionType.drop) {
+      return {
+        id: "",
+        type: BlockType.DROP_COLUMNS.name,
+        inputs: [],
+        params: {columnName: this.column.name}
+      };
+    } else {
+      this.logger.error('Action type "' + this.selectedActionType + '" not supported');
+      return null;
+    }
   }
 
 }

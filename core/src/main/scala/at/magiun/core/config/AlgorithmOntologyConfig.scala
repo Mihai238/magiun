@@ -7,6 +7,7 @@ import org.apache.jena.util.FileUtils
 object AlgorithmOntologyConfig {
 
   private val fileName = "model_selection.owl"
+  val NS = "http://www.magiun.io/ontologies/model-selection#"
 
   def create(): OntModel = {
     val model = ModelFactory.createOntologyModel()

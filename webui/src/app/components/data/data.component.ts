@@ -92,8 +92,10 @@ export class DataComponent implements OnInit {
 
   onEditColumnResult(editColumnResult: EditColumnResult) {
     this.showEditColumnComponent = false;
-    this.dataService.getDataSet(editColumnResult.memDataSetId)
-      .subscribe((ds: DataSet) => this.onSelectDataSet(ds));
+    if (editColumnResult.memDataSetId) {
+      this.dataService.getDataSet(editColumnResult.memDataSetId)
+        .subscribe((ds: DataSet) => this.onSelectDataSet(ds));
+    }
   }
 
   onNewColumnResult(newColumnResult: NewColumnResult) {

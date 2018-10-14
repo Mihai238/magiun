@@ -1,8 +1,15 @@
 package at.magiun.core.model.data
 
+import enumeratum._
 
-sealed abstract class Distribution(val name: String, val mean: Double, val variance: Double)
+import scala.collection.immutable
 
-case object Normal extends Distribution("Normal", 0, 1)
+sealed abstract class Distribution(val mean: Double, val variance: Double) extends EnumEntry
 
+object Distribution extends Enum[Distribution] with CirceEnum[Distribution] {
+
+  case object Normal extends Distribution(0, 1)
+
+  val values: immutable.IndexedSeq[Distribution] = findValues
+}
 

@@ -4,7 +4,7 @@ import enumeratum._
 
 import scala.collection.immutable
 
-sealed abstract class VariableType(name: String) extends EnumEntry
+sealed abstract class VariableType(val name: String) extends EnumEntry
 
 object VariableType extends Enum[VariableType] with CirceEnum[VariableType] {
 

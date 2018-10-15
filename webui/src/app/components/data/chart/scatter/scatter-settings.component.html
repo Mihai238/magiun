@@ -1,6 +1,10 @@
 <div>
-  <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateFirstColumn($event)">
-  </chart-column-selector>
-  <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateSecondColumn($event)">
-  </chart-column-selector>
+  <div class="row chart-settings-entry">
+    <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateFirstColumn($event)">
+    </chart-column-selector>
+  </div>
+  <div class="row chart-settings-entry">
+    <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateSecondColumn($event)">
+    </chart-column-selector>
+  </div>
 </div>

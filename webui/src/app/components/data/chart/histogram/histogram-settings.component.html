@@ -1,7 +1,9 @@
 <div>
 
-  <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateColumn($event)">
-  </chart-column-selector>
+  <div class="row chart-settings-entry">
+    <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateColumn($event)">
+    </chart-column-selector>
+  </div>
 
   <div class="row chart-settings-entry">
     <span class="col">{{'DATA.NORMALIZATION' | translate}}:</span>
@@ -19,7 +21,17 @@
 
   <div class="row chart-settings-entry">
     <span class="col">{{'DATA.CUMULATIVE' | translate}}:</span>
-    <input class="col" type="checkbox" value="" [(ngModel)]="isCumulativeEnabled" (click)="onChangeCumulative()">
+    <input class="col" type="checkbox" value="" [(ngModel)]="isCumulativeEnabled" (click)="getDataAndUpdate()">
+  </div>
+
+  <div class="row chart-settings-entry">
+    <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateGroupByColumn($event)">
+    </chart-column-selector>
+  </div>
+
+  <div class="row chart-settings-entry">
+    <span class="col">Overlaid: </span>
+    <input class="col" type="checkbox" value="" [checked]="isOverlaidEnabled" (click)="onChangeOverlaid()">
   </div>
 
 </div>

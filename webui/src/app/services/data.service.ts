@@ -89,7 +89,7 @@ export class DataService {
 
   // not really wise to fetch all the data if we deal with GBs of data
   // should be refactored in further versions
-  getAllData(dataSet: DataSet, columns: Set<String>): Observable<DataRow[]> {
+  getAllData(dataSet: DataSet, columns: string[]): Observable<DataRow[]> {
     let columnsString: string = "";
     columns.forEach(col => columnsString += col + ",");
     columnsString = columnsString.substring(0, columnsString.length - 1);

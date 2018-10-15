@@ -60,7 +60,6 @@ export class HistogramSettingsComponent implements OnInit, OnChanges {
 
   getDataAndUpdate() {
     this.logger.info('HistogramSettingsComponent: get data and update');
-    console.log(this.isOverlaidEnabled);
 
     if (this.isOverlaidEnabled) {
       this.dataService.getAllData(this.dataSet, [this.selectedColumn.name, this.selectedGroupByColumn.name]).subscribe(rows => {
@@ -80,15 +79,14 @@ export class HistogramSettingsComponent implements OnInit, OnChanges {
 
     const colors = ["blue", "red", "green"];
 
-    console.log('groupByValues ' + groupByValues);
 
     if (groupByValues) {
       const groupedBy = this.groupBy(values, groupByValues);
       let i = 0;
       groupedBy.forEach((value: any[], key: any) => {
-        console.log('foreach ' + value);
         data.push({
           x: value,
+          name: this.selectedGroupByColumn.name + ": " + key,
           type: 'histogram',
           opacity: 0.5,
           marker: {

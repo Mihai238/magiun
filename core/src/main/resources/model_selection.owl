@@ -26,6 +26,7 @@
     <!-- http://www.magiun.io/ontologies/model-selection#hasDataset -->
 
     <owl:ObjectProperty rdf:about="http://www.magiun.io/ontologies/model-selection#hasDataset">
+        <owl:inverseOf rdf:resource="http://www.magiun.io/ontologies/model-selection#isDatasetOf"/>
         <rdfs:domain rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
         <rdfs:domain rdf:resource="http://www.magiun.io/ontologies/model-selection#Variable"/>
         <rdfs:range rdf:resource="http://www.magiun.io/ontologies/model-selection#Observation"/>
@@ -105,6 +106,15 @@
     
 
 
+    <!-- http://www.magiun.io/ontologies/model-selection#isDatasetOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.magiun.io/ontologies/model-selection#isDatasetOf">
+        <rdfs:domain rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
+        <rdfs:range rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.magiun.io/ontologies/model-selection#isDistributionOf -->
 
     <owl:ObjectProperty rdf:about="http://www.magiun.io/ontologies/model-selection#isDistributionOf">
@@ -179,9 +189,9 @@
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Continious -->
+    <!-- http://www.magiun.io/ontologies/model-selection#Continuous -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Continious">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Continuous">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Numerical"/>
     </owl:Class>
     
@@ -196,6 +206,10 @@
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariable"/>
                         <owl:someValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Variable"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#isDatasetOf"/>
+                        <owl:someValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
                     </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariable"/>
@@ -324,7 +338,7 @@
                                             </owl:Restriction>
                                             <owl:Restriction>
                                                 <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariableType"/>
-                                                <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Continious"/>
+                                                <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
                                             </owl:Restriction>
                                         </owl:intersectionOf>
                                     </owl:Class>
@@ -342,7 +356,7 @@
                                             </owl:Restriction>
                                             <owl:Restriction>
                                                 <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariableType"/>
-                                                <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Continious"/>
+                                                <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
                                             </owl:Restriction>
                                         </owl:intersectionOf>
                                     </owl:Class>
@@ -435,7 +449,7 @@
     <!-- http://www.magiun.io/ontologies/model-selection#Non-Negative -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Non-Negative">
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Continious"/>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
     </owl:Class>
     
 
@@ -484,7 +498,7 @@
     <!-- http://www.magiun.io/ontologies/model-selection#Ordinal -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Ordinal">
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Continious"/>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
     </owl:Class>
     
 

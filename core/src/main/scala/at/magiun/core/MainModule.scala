@@ -1,6 +1,7 @@
 package at.magiun.core
 
 import at.magiun.core.config.{AlgorithmOntologyConfig, H2Config, SparkConfig}
+import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
 import at.magiun.core.repository.{BlockRepository, DataSetRepository, DatabaseInitializer}
 import at.magiun.core.rest.{BlockController, DataSetController, ExecutionController, RestApi}
 import at.magiun.core.service.{BlockService, DataSetService, ExecutionService, JobService}
@@ -40,4 +41,5 @@ trait MainModule {
   lazy val h2 = wireWith(H2Config.create _)
   lazy val algorithmOntology = AlgorithmOntologyConfig.create()
 
+  algorithmRecommender.recommend(spark, algorithmOntology, DatasetMetadata(Seq(VariableType.Continuous), Seq(Distribution.Normal), 0))
 }

@@ -13,4 +13,5 @@ object OntologyObjectProperty extends Enumeration {
   val hasResponseVariable: OntologyObjectProperty.Value = Value(AlgorithmOntologyConfig.NS + "hasResponseVariable")
   val hasVariableType: OntologyObjectProperty.Value = Value(AlgorithmOntologyConfig.NS + "hasVariableType")
   val isDistributionOf: OntologyObjectProperty.Value = Value(AlgorithmOntologyConfig.NS + "isDistributionOf")
+  val isDatasetOf: OntologyObjectProperty.Value = Value(AlgorithmOntologyConfig.NS + "isDatasetOf")
 }

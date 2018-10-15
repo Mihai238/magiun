@@ -16,4 +16,23 @@ object OntologyClass extends Enumeration {
   val BinomialDistribution: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Binomial_Distribution")
   val NormalDistribution: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Normal_Distribution")
 
+  /** Algorithm */
+  val Algorithm: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Algorithm")
+
+  /** Algorithm - Classification */
+  val Classification: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Classification")
+  val Binary: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Binary")
+  val Multiclass: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Multiclass")
+
+  /** Algorithm - Regression */
+  val Regression: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Regression")
+  val LinearRegression: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "LinearRegression")
+
+  /** Variable Type */
+  val VariableType: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Variable_Type")
+  val Categorical: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Categorical")
+  val Numerical: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Numerical")
+  val Continuous: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Continuous")
+
+
 }

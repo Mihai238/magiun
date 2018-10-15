@@ -43,7 +43,7 @@ class CsvConnectorTest extends UnitTest {
   }
 
   it should "get specific columns" in {
-    val rows = connector.getRows(csvDataSetSource, None, Option(Set("PassengerId", "Survived", "Sex")))
+    val rows = connector.getRows(csvDataSetSource, None, Option(Seq("PassengerId", "Survived", "Sex")))
     val firstRow = rows.head.values
 
     rows should have size 891

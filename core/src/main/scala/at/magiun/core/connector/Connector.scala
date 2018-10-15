@@ -13,7 +13,7 @@ trait Connector extends LazyLogging {
 
   def getDataset(source: DataSetSource): Dataset[Row]
 
-  final def getRows(source: DataSetSource, range: Option[Range] = Option.empty, columns: Option[Set[String]] = empty): Seq[DataRow] = {
+  final def getRows(source: DataSetSource, range: Option[Range] = Option.empty, columns: Option[Seq[String]] = empty): Seq[DataRow] = {
     val ds = getDataset(source)
 
     val dsRows = range.map(range => {
@@ -36,20 +36,22 @@ trait Connector extends LazyLogging {
     }
   }
 
-  protected def mapToRowValues(dfRows: Array[Row], schema: StructType, columns: Option[Set[String]] = empty): Array[DataRow] = {
+  protected def mapToRowValues(dfRows: Array[Row], schema: StructType, columns: Option[Seq[String]] = empty): Array[DataRow] = {
     dfRows
       .zipWithIndex
       .map { case (sparkRow, rowInd) =>
 
-        val values = schema.zipWithIndex.flatMap {
-          case (col, colInd) =>
-            val shouldFetchColumn = columns.forall(_.contains(col.name))
-
-            if (shouldFetchColumn) {
+        val values = if (columns.isDefined) {
+          columns.map(_.flatMap {
+            col =>
+              val colIndex = schema.zipWithIndex.find(e => e._1.name == col).get._2
+              Option(sparkRow.get(colIndex)).map(_.toString)
+          }).get
+        } else {
+          schema.zipWithIndex.flatMap {
+            case (col, colInd) =>
               Option(sparkRow.get(colInd)).map(_.toString)
-            } else {
-              None
-            }
+          }
         }
 
         DataRow(rowInd, values)

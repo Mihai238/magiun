@@ -65,7 +65,7 @@ class DataSetService(
     )
   }
 
-  def findRows(dataSetId: String, range: Option[Range] = empty, columns: Option[Set[String]] = empty): Future[Option[Seq[DataRow]]] = {
+  def findRows(dataSetId: String, range: Option[Range] = empty, columns: Option[Seq[String]] = empty): Future[Option[Seq[DataRow]]] = {
     getConnectorAndSource(dataSetId)
       .map(_.map { case (connector, source) =>
         connector.getRows(source, range, columns)

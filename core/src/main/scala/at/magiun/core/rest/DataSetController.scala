@@ -55,7 +55,7 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
         page = Integer.parseInt(p)
       } yield Range((page - 1) * limit, page * limit + 1)
 
-      val columns = stringColumns.map(_.split(",").map(_.trim).toSet)
+      val columns = stringColumns.map(_.split(",").map(_.trim).toSeq)
 
       dataSetService.findRows(dataSetId, range, columns)
         .asTwitter

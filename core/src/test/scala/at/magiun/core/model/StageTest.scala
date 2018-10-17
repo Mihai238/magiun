@@ -1,13 +1,13 @@
 package at.magiun.core.model
 
-import at.magiun.core.TestData.sampleCsvPath
+import at.magiun.core.TestData.titanicCsvPath
 import at.magiun.core.{MainModule, UnitTest}
 
 class StageTest extends UnitTest {
 
   private val mainModule = new MainModule {}
 
-  private val input = StageInput(new FileReaderStage(mainModule.spark, sampleCsvPath))
+  private val input = StageInput(new FileReaderStage(mainModule.spark, titanicCsvPath))
 
   it should "remove the column by name" in {
     val task = new DropColumnStage(

@@ -1,6 +1,6 @@
 package at.magiun.core.feature
 
-import at.magiun.core.TestData.csvDataSetSource
+import at.magiun.core.TestData._
 import at.magiun.core.connector.CsvConnector
 import at.magiun.core.{MainModule, UnitTest}
 
@@ -12,7 +12,7 @@ class RecommenderTest extends UnitTest {
   private val recommender = mainModule.recommender
 
   it should "try to guess column types" in {
-    val recommendation = recommender.recommendFeatureOperation(connector.getDataset(csvDataSetSource))
+    val recommendation = recommender.recommendFeatureOperation(connector.getDataset(titanicDataSetSource))
 
     val map = recommendation.map
     map should have size 12

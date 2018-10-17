@@ -7,10 +7,12 @@ class DatabaseInitializer(dataSetRepository: DataSetRepository,
                          blockRepository: BlockRepository) {
 
   private val sampleCsvUrl = "file://" + getClass.getClassLoader.getResource("titanic.csv").getFile
+  private val adultCsvUrl = "file://" + getClass.getClassLoader.getResource("adult.csv").getFile
 
   def init(): Unit = {
     insertDataSet(MagiunDataSetEntity(1, "titanic", "FileCsv", sampleCsvUrl))
-    insertDataSet(MagiunDataSetEntity(2, "drinks", "Mongo", "mongodb://127.0.0.1/testDb/testCollection"))
+//    insertDataSet(MagiunDataSetEntity(2, "drinks", "Mongo", "mongodb://127.0.0.1/testDb/testCollection"))
+    insertDataSet(MagiunDataSetEntity(3, "adult", "FileCsv", adultCsvUrl))
 
     insertBlock(BlockEntity("id-2", "FileReader", s"""{"inputs":[],"params":{"fileName":"$sampleCsvUrl"}}"""))
     insertBlock(BlockEntity("id-3", "LinearRegression", """{"inputs":[{"blockId": "id-2", "index": 0}],"params":{"maxIter":"3"}}"""))

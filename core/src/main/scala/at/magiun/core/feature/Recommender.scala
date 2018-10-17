@@ -66,6 +66,8 @@ class Recommender(sparkSession: SparkSession,
 class ColumnChecker(sparkSession: SparkSession) extends LazyLogging {
 
   def check(ds: Dataset[Row], colIndex: Int, ontClass: OntClass): Boolean = {
+    logger.info(s"Checking column with index '$colIndex' for class ${ontClass.getLocalName}")
+
     val restrictions = ontClass.listSuperClasses().toList.toList
       .filter(_.isResource)
       .map(_.asResource())

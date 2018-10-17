@@ -10,7 +10,7 @@ class CsvConnectorTest extends UnitTest {
   private val connector = new CsvConnector(mainModule.spark)
 
   it should "get schema given a source" in {
-    val schema = connector.getSchema(csvDataSetSource)
+    val schema = connector.getSchema(titanicDataSetSource)
 
     schema.columns should have size 12
     val column1 = schema.columns.head
@@ -26,7 +26,7 @@ class CsvConnectorTest extends UnitTest {
   }
 
   it should "get rows given a source" in {
-    val rows = connector.getRows(csvDataSetSource)
+    val rows = connector.getRows(titanicDataSetSource)
 
     rows should have size 891
     rows.head.id should be (0)
@@ -35,7 +35,7 @@ class CsvConnectorTest extends UnitTest {
   }
 
   it should "get range of rows given a source" in {
-    val rows = connector.getRows(csvDataSetSource, Option(Range(10, 20)))
+    val rows = connector.getRows(titanicDataSetSource, Option(Range(10, 20)))
 
     rows should have size 10
     rows.head.id should be (0)
@@ -43,7 +43,7 @@ class CsvConnectorTest extends UnitTest {
   }
 
   it should "get specific columns" in {
-    val rows = connector.getRows(csvDataSetSource, None, Option(Seq("PassengerId", "Survived", "Sex")))
+    val rows = connector.getRows(titanicDataSetSource, None, Option(Seq("PassengerId", "Survived", "Sex")))
     val firstRow = rows.head.values
 
     rows should have size 891

@@ -13,7 +13,7 @@ class DataSetRepository(db: Database) {
   val dataSets = TableQuery[DataSets]
 
   if (db != null) {
-    val tableExists = Await.result(db.run(MTable.getTables), 1.seconds).exists(_.name.name == TABLE_NAME)
+    val tableExists = Await.result(db.run(MTable.getTables), 2.seconds).exists(_.name.name == TABLE_NAME)
     if (!tableExists) {
       Await.result(db.run(DBIO.seq(
         dataSets.schema.create

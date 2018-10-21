@@ -1,13 +1,14 @@
 <div>
 
-  <div class="row chart-settings-entry">
+  <div class="d-flex chart-settings-entry">
+    <span class="flex-grow-1">{{'DATA.FEATURE' | translate }}:</span>
     <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateColumn($event)">
     </chart-column-selector>
   </div>
 
-  <div class="row chart-settings-entry">
-    <span class="col">{{'DATA.NORMALIZATION' | translate}}:</span>
-    <div class="col dropdown">
+  <div class="d-flex chart-settings-entry">
+    <span class="flex-grow-1">{{'DATA.NORMALIZATION' | translate}}:</span>
+    <div class="dropdown">
       <button class="btn dropdown-toggle" type="button" id="dropdownHistNormButton" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
         {{selectedHistNorm}}
@@ -19,19 +20,16 @@
     </div>
   </div>
 
-  <div class="row chart-settings-entry">
-    <span class="col">{{'DATA.CUMULATIVE' | translate}}:</span>
-    <input class="col" type="checkbox" value="" [(ngModel)]="isCumulativeEnabled" (click)="getDataAndUpdate()">
+  <div class="d-flex chart-settings-entry">
+    <span class="flex-grow-1">{{'DATA.CUMULATIVE' | translate}}:</span>
+    <input type="checkbox" value="" [(ngModel)]="isCumulativeEnabled" (click)="getDataAndUpdate()">
   </div>
 
-  <div class="row chart-settings-entry">
+  <div class="d-flex chart-settings-entry">
+    <span class="flex-grow-1">{{'DATA.FEATURE' | translate }}:</span>
     <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateGroupByColumn($event)">
     </chart-column-selector>
-  </div>
-
-  <div class="row chart-settings-entry">
-    <span class="col">Overlaid: </span>
-    <input class="col" type="checkbox" value="" [checked]="isOverlaidEnabled" (click)="onChangeOverlaid()">
+    <input type="checkbox" value="" [checked]="isOverlaidEnabled" (click)="onChangeOverlaid()">
   </div>
 
 </div>

@@ -1,14 +1,11 @@
-<div>
-  <span class="col">{{'DATA.FEATURE' | translate }}:</span>
-  <div class="col dropdown">
-    <button *ngIf="selectedColumn" id="column-selector-dropdown" class="btn dropdown-toggle" type="button"
-            data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-      {{selectedColumn.name}}
-    </button>
-    <div class="dropdown-menu" aria-labelledby="column-selector-dropdown">
-      <a *ngFor="let column of columns" (click)="onSelectColumn(column)"
-         class="dropdown-item clickable">{{column.name}}</a>
-    </div>
+<div class="dropdown">
+  <button *ngIf="selectedColumn" id="column-selector-dropdown" class="btn dropdown-toggle" type="button"
+          data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+    {{selectedColumn.name}}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="column-selector-dropdown">
+    <a *ngFor="let column of columns" (click)="onSelectColumn(column)"
+       class="dropdown-item clickable">{{column.name}}</a>
   </div>
 </div>

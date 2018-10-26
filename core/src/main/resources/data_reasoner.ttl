@@ -1,0 +1,137 @@
+@prefix : <http://www.semanticweb.org/mihai/ontologies/2018/9/ml#> .
+@prefix ml: <http://www.semanticweb.org/mihai/ontologies/2018/9/ml#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.magiun.io/ontologies/ml> .
+
+<http://www.magiun.io/ontologies/ml> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#hasColumns
+ml:hasColumns rdf:type owl:ObjectProperty ;
+              rdfs:domain ml:dataset ;
+              rdfs:range ml:Column .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#hasValue
+ml:hasValue rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdf:type owl:FunctionalProperty ;
+            rdfs:domain ml:Column ;
+            rdfs:range ml:Value .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#Column
+ml:Column rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#FemaleValue
+ml:FemaleValue rdf:type owl:Class ;
+               rdfs:subClassOf ml:Value .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#GayValue
+ml:GayValue rdf:type owl:Class ;
+            rdfs:subClassOf ml:Value .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#GenderColumn
+ml:GenderColumn rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( ml:Column
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty ml:hasValue ;
+                                                             owl:allValuesFrom [ rdf:type owl:Class ;
+                                                                                 owl:unionOf ( ml:FemaleValue
+                                                                                               ml:MaleValue
+                                                                                             )
+                                                                               ]
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:subClassOf ml:Column .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#HumanAgeColumn
+ml:HumanAgeColumn rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( ml:Column
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty ml:hasValue ;
+                                                               owl:allValuesFrom ml:IntValue
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
+                  rdfs:subClassOf ml:Column .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#IntValue
+ml:IntValue rdf:type owl:Class ;
+            rdfs:subClassOf ml:Value .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#MaleValue
+ml:MaleValue rdf:type owl:Class ;
+             rdfs:subClassOf ml:Value .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#SomeOtherColumn
+ml:SomeOtherColumn rdf:type owl:Class ;
+                   owl:equivalentClass [ owl:intersectionOf ( ml:Column
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty ml:hasValue ;
+                                                                owl:allValuesFrom [ rdf:type owl:Class ;
+                                                                                    owl:unionOf ( ml:FemaleValue
+                                                                                                  ml:GayValue
+                                                                                                )
+                                                                                  ]
+                                                              ]
+                                                            ) ;
+                                         rdf:type owl:Class
+                                       ] ;
+                   rdfs:subClassOf ml:Column .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#Value
+ml:Value rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#dataset
+ml:dataset rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#femaleValue
+ml:femaleValue rdf:type owl:NamedIndividual ,
+                        ml:FemaleValue .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#gayValue
+ml:gayValue rdf:type owl:NamedIndividual ,
+                     ml:GayValue .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#gcol
+ml:gcol rdf:type owl:NamedIndividual ;
+        ml:hasValue ml:gayValue .
+
+
+###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#maleValue
+ml:maleValue rdf:type owl:NamedIndividual ,
+                      ml:MaleValue .
+
+
+###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

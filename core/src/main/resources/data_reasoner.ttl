@@ -1,5 +1,6 @@
-@prefix : <http://www.semanticweb.org/mihai/ontologies/2018/9/ml#> .
-@prefix ml: <http://www.semanticweb.org/mihai/ontologies/2018/9/ml#> .
+@prefix : <http://www.magiun.io/ontologies/ml#> .
+@prefix ml: <http://www.magiun.io/ontologies/ml#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -10,16 +11,40 @@
 <http://www.magiun.io/ontologies/ml> rdf:type owl:Ontology .
 
 #################################################################
+#    Annotation properties
+#################################################################
+
+###  http://www.w3.org/ns/shacl#equals
+sh:equals rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#path
+sh:path rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#pattern
+sh:pattern rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#property
+sh:property rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#targetClass
+sh:targetClass rdf:type owl:AnnotationProperty .
+
+
+#################################################################
 #    Object Properties
 #################################################################
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#hasColumns
+###  http://www.magiun.io/ontologies/ml#hasColumns
 ml:hasColumns rdf:type owl:ObjectProperty ;
               rdfs:domain ml:dataset ;
               rdfs:range ml:Column .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#hasValue
+###  http://www.magiun.io/ontologies/ml#hasValue
 ml:hasValue rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf owl:topObjectProperty ;
             rdf:type owl:FunctionalProperty ;
@@ -31,22 +56,23 @@ ml:hasValue rdf:type owl:ObjectProperty ;
 #    Data properties
 #################################################################
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#differentValueTypesCount
+###  http://www.magiun.io/ontologies/ml#differentValueTypesCount
 ml:differentValueTypesCount rdf:type owl:DatatypeProperty ;
                             rdfs:domain ml:Column ;
                             rdfs:range xsd:integer .
+
+
+###  http://www.magiun.io/ontologies/ml#value
+ml:value rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain ml:Value .
 
 
 #################################################################
 #    Classes
 #################################################################
 
-###  http://www.magiun.io/ontologies/ml#NameColumn
-:NameColumn rdf:type owl:Class ;
-            rdfs:subClassOf ml:Column .
-
-
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#BooleanColumn
+###  http://www.magiun.io/ontologies/ml#BooleanColumn
 ml:BooleanColumn rdf:type owl:Class ;
                  owl:equivalentClass [ owl:intersectionOf ( ml:CategoricalColumn
                                                             [ rdf:type owl:Restriction ;
@@ -63,7 +89,7 @@ ml:BooleanColumn rdf:type owl:Class ;
                  rdfs:subClassOf ml:CategoricalColumn .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#CategoricalColumn
+###  http://www.magiun.io/ontologies/ml#CategoricalColumn
 ml:CategoricalColumn rdf:type owl:Class ;
                      owl:equivalentClass [ owl:intersectionOf ( ml:Column
                                                                 [ rdf:type owl:Restriction ;
@@ -83,21 +109,21 @@ ml:CategoricalColumn rdf:type owl:Class ;
                      rdfs:subClassOf ml:Column .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#Column
+###  http://www.magiun.io/ontologies/ml#Column
 ml:Column rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#FalseValue
+###  http://www.magiun.io/ontologies/ml#FalseValue
 ml:FalseValue rdf:type owl:Class ;
               rdfs:subClassOf ml:Value .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#FemaleValue
+###  http://www.magiun.io/ontologies/ml#FemaleValue
 ml:FemaleValue rdf:type owl:Class ;
                rdfs:subClassOf ml:Value .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#GenderColumn
+###  http://www.magiun.io/ontologies/ml#GenderColumn
 ml:GenderColumn rdf:type owl:Class ;
                 owl:equivalentClass [ owl:intersectionOf ( ml:CategoricalColumn
                                                            [ rdf:type owl:Restriction ;
@@ -114,7 +140,7 @@ ml:GenderColumn rdf:type owl:Class ;
                 rdfs:subClassOf ml:CategoricalColumn .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#HumanAgeColumn
+###  http://www.magiun.io/ontologies/ml#HumanAgeColumn
 ml:HumanAgeColumn rdf:type owl:Class ;
                   owl:equivalentClass [ owl:intersectionOf ( ml:Column
                                                              [ rdf:type owl:Restriction ;
@@ -127,62 +153,82 @@ ml:HumanAgeColumn rdf:type owl:Class ;
                   rdfs:subClassOf ml:Column .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#IntValue
+###  http://www.magiun.io/ontologies/ml#IntValue
 ml:IntValue rdf:type owl:Class ;
             rdfs:subClassOf ml:Value .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#MaleValue
+###  http://www.magiun.io/ontologies/ml#MaleValue
 ml:MaleValue rdf:type owl:Class ;
              rdfs:subClassOf ml:Value .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#TrueValue
+###  http://www.magiun.io/ontologies/ml#NameColumn
+ml:NameColumn rdf:type owl:Class ;
+              rdfs:subClassOf ml:Column .
+
+
+###  http://www.magiun.io/ontologies/ml#TrueValue
 ml:TrueValue rdf:type owl:Class ;
              rdfs:subClassOf ml:Value .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#Value
+###  http://www.magiun.io/ontologies/ml#Value
 ml:Value rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#dataset
+###  http://www.magiun.io/ontologies/ml#dataset
 ml:dataset rdf:type owl:Class .
+
+
+###  http://www.w3.org/ns/shacl#NodeShape
+sh:NodeShape rdf:type owl:Class .
 
 
 #################################################################
 #    Individuals
 #################################################################
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#booleanColumn
+###  http://www.magiun.io/ontologies/ml#FemaleValueShape
+ml:FemaleValueShape rdf:type owl:NamedIndividual ,
+                             sh:NodeShape ;
+                    sh:property [ sh:path ml:value ;
+                                  sh:pattern "f"
+                                ] ;
+                    sh:targetClass ml:FemaleValue .
+
+
+###  http://www.magiun.io/ontologies/ml#booleanColumn
 ml:booleanColumn rdf:type owl:NamedIndividual ;
                  ml:hasValue ml:trueValue ;
                  ml:differentValueTypesCount 2 .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#falseValue
+###  http://www.magiun.io/ontologies/ml#falseValue
 ml:falseValue rdf:type owl:NamedIndividual ,
                        ml:FalseValue .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#femaleValue
+###  http://www.magiun.io/ontologies/ml#femaleValue
 ml:femaleValue rdf:type owl:NamedIndividual ,
-                        ml:FemaleValue .
+                        ml:FemaleValue ;
+               ml:value "f" .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#genderColumn
+###  http://www.magiun.io/ontologies/ml#genderColumn
 ml:genderColumn rdf:type owl:NamedIndividual ;
                 ml:hasValue ml:femaleValue ,
                             ml:maleValue ;
                 ml:differentValueTypesCount 2 .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#maleValue
+###  http://www.magiun.io/ontologies/ml#maleValue
 ml:maleValue rdf:type owl:NamedIndividual ,
-                      ml:MaleValue .
+                      ml:MaleValue ;
+             ml:value "m" .
 
 
-###  http://www.semanticweb.org/mihai/ontologies/2018/9/ml#trueValue
+###  http://www.magiun.io/ontologies/ml#trueValue
 ml:trueValue rdf:type owl:NamedIndividual ,
                       ml:TrueValue .
 

@@ -40,7 +40,7 @@ object ReasonerRecommender {
     model.listIndividuals().toList.toList
       .foreach(indv => println(indv.getLocalName + " --- " + indv.getOntClass.getLocalName))
 
-    val gcolIndv = model.listIndividuals().toList.toList.find(_.getLocalName == "gcol").get
+    val gcolIndv = model.listIndividuals().toList.toList.find(_.getLocalName == "genderColumn").get
 
 //    val reasoner = ReasonerRegistry.getOWLReasoner
 //    println()

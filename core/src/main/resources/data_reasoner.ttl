@@ -47,7 +47,6 @@ ml:hasColumns rdf:type owl:ObjectProperty ;
 ###  http://www.magiun.io/ontologies/ml#hasValue
 ml:hasValue rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf owl:topObjectProperty ;
-            rdf:type owl:FunctionalProperty ;
             rdfs:domain ml:Column ;
             rdfs:range ml:Value .
 
@@ -77,11 +76,11 @@ ml:BooleanColumn rdf:type owl:Class ;
                  owl:equivalentClass [ owl:intersectionOf ( ml:CategoricalColumn
                                                             [ rdf:type owl:Restriction ;
                                                               owl:onProperty ml:hasValue ;
-                                                              owl:allValuesFrom [ rdf:type owl:Class ;
-                                                                                  owl:unionOf ( ml:FalseValue
-                                                                                                ml:TrueValue
-                                                                                              )
-                                                                                ]
+                                                              owl:someValuesFrom ml:FalseValue
+                                                            ]
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty ml:hasValue ;
+                                                              owl:someValuesFrom ml:TrueValue
                                                             ]
                                                           ) ;
                                        rdf:type owl:Class
@@ -91,21 +90,7 @@ ml:BooleanColumn rdf:type owl:Class ;
 
 ###  http://www.magiun.io/ontologies/ml#CategoricalColumn
 ml:CategoricalColumn rdf:type owl:Class ;
-                     owl:equivalentClass [ owl:intersectionOf ( ml:Column
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty ml:differentValueTypesCount ;
-                                                                  owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                                                                                       owl:onDatatype xsd:integer ;
-                                                                                       owl:withRestrictions ( [ xsd:minInclusive 1
-                                                                                                              ]
-                                                                                                              [ xsd:maxInclusive 10
-                                                                                                              ]
-                                                                                                            )
-                                                                                     ]
-                                                                ]
-                                                              ) ;
-                                           rdf:type owl:Class
-                                         ] ;
+                     owl:equivalentClass ml:Column ;
                      rdfs:subClassOf ml:Column .
 
 
@@ -115,24 +100,31 @@ ml:Column rdf:type owl:Class .
 
 ###  http://www.magiun.io/ontologies/ml#FalseValue
 ml:FalseValue rdf:type owl:Class ;
-              rdfs:subClassOf ml:Value .
+              rdfs:subClassOf ml:Value ;
+              sh:property [ sh:pattern "0"
+                          ] .
 
 
 ###  http://www.magiun.io/ontologies/ml#FemaleValue
 ml:FemaleValue rdf:type owl:Class ;
-               rdfs:subClassOf ml:Value .
+               rdfs:subClassOf ml:Value ;
+               sh:property [ sh:pattern "female"
+                           ] .
 
 
 ###  http://www.magiun.io/ontologies/ml#GenderColumn
 ml:GenderColumn rdf:type owl:Class ;
                 owl:equivalentClass [ owl:intersectionOf ( ml:CategoricalColumn
-                                                           [ rdf:type owl:Restriction ;
-                                                             owl:onProperty ml:hasValue ;
-                                                             owl:allValuesFrom [ rdf:type owl:Class ;
-                                                                                 owl:unionOf ( ml:FemaleValue
-                                                                                               ml:MaleValue
-                                                                                             )
-                                                                               ]
+                                                           [ rdf:type owl:Class ;
+                                                             owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                             owl:onProperty ml:hasValue ;
+                                                                             owl:someValuesFrom ml:FemaleValue
+                                                                           ]
+                                                                           [ rdf:type owl:Restriction ;
+                                                                             owl:onProperty ml:hasValue ;
+                                                                             owl:someValuesFrom ml:MaleValue
+                                                                           ]
+                                                                         )
                                                            ]
                                                          ) ;
                                       rdf:type owl:Class
@@ -145,7 +137,7 @@ ml:HumanAgeColumn rdf:type owl:Class ;
                   owl:equivalentClass [ owl:intersectionOf ( ml:Column
                                                              [ rdf:type owl:Restriction ;
                                                                owl:onProperty ml:hasValue ;
-                                                               owl:allValuesFrom ml:IntValue
+                                                               owl:someValuesFrom ml:IntValue
                                                              ]
                                                            ) ;
                                         rdf:type owl:Class
@@ -160,17 +152,21 @@ ml:IntValue rdf:type owl:Class ;
 
 ###  http://www.magiun.io/ontologies/ml#MaleValue
 ml:MaleValue rdf:type owl:Class ;
-             rdfs:subClassOf ml:Value .
+             rdfs:subClassOf ml:Value ;
+             sh:property [ sh:pattern "male"
+                         ] .
 
 
-###  http://www.magiun.io/ontologies/ml#NameColumn
-ml:NameColumn rdf:type owl:Class ;
-              rdfs:subClassOf ml:Column .
+###  http://www.magiun.io/ontologies/ml#StringValue
+ml:StringValue rdf:type owl:Class ;
+               rdfs:subClassOf ml:Value .
 
 
 ###  http://www.magiun.io/ontologies/ml#TrueValue
 ml:TrueValue rdf:type owl:Class ;
-             rdfs:subClassOf ml:Value .
+             rdfs:subClassOf ml:Value ;
+             sh:property [ sh:pattern "1"
+                         ] .
 
 
 ###  http://www.magiun.io/ontologies/ml#Value
@@ -189,19 +185,18 @@ sh:NodeShape rdf:type owl:Class .
 #    Individuals
 #################################################################
 
-###  http://www.magiun.io/ontologies/ml#FemaleValueShape
-ml:FemaleValueShape rdf:type owl:NamedIndividual ,
-                             sh:NodeShape ;
-                    sh:property [ sh:path ml:value ;
-                                  sh:pattern "f"
-                                ] ;
-                    sh:targetClass ml:FemaleValue .
-
-
 ###  http://www.magiun.io/ontologies/ml#booleanColumn
 ml:booleanColumn rdf:type owl:NamedIndividual ;
-                 ml:hasValue ml:trueValue ;
+                 ml:hasValue ml:falseValue ,
+                             ml:trueValue ;
                  ml:differentValueTypesCount 2 .
+
+
+###  http://www.magiun.io/ontologies/ml#categoricalColumn
+ml:categoricalColumn rdf:type owl:NamedIndividual ;
+                     ml:hasValue ml:femaleValue ,
+                                 ml:trueValue ;
+                     ml:differentValueTypesCount 2 .
 
 
 ###  http://www.magiun.io/ontologies/ml#falseValue
@@ -211,21 +206,25 @@ ml:falseValue rdf:type owl:NamedIndividual ,
 
 ###  http://www.magiun.io/ontologies/ml#femaleValue
 ml:femaleValue rdf:type owl:NamedIndividual ,
-                        ml:FemaleValue ;
-               ml:value "f" .
+                        ml:FemaleValue .
+
+
+###  http://www.magiun.io/ontologies/ml#femaleValue2
+ml:femaleValue2 rdf:type owl:NamedIndividual ,
+                         ml:FemaleValue .
 
 
 ###  http://www.magiun.io/ontologies/ml#genderColumn
 ml:genderColumn rdf:type owl:NamedIndividual ;
                 ml:hasValue ml:femaleValue ,
+                            ml:femaleValue2 ,
                             ml:maleValue ;
                 ml:differentValueTypesCount 2 .
 
 
 ###  http://www.magiun.io/ontologies/ml#maleValue
 ml:maleValue rdf:type owl:NamedIndividual ,
-                      ml:MaleValue ;
-             ml:value "m" .
+                      ml:MaleValue .
 
 
 ###  http://www.magiun.io/ontologies/ml#trueValue

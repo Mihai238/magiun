@@ -1,11 +1,14 @@
 package at.magiun.core.config
 
 import com.typesafe.config.Config
+import com.typesafe.scalalogging.LazyLogging
 import org.apache.spark.sql.SparkSession
 
-object SparkConfig {
+object SparkConfig extends LazyLogging {
 
   def create(config: Config): SparkSession = {
+    logger.info("Initialising Spark")
+
     val spark = SparkSession
       .builder()
       .appName(config.getString("spark.app_name"))

@@ -14,12 +14,17 @@ class Recommender(sparkSession: SparkSession,
                   columnTypeRecommender: ColumnTypeRecommender,
                   operationRecommender: OperationRecommender) extends LazyLogging {
 
+  private val restrictions: Map[String, Restriction] = restrictionBuilder.build(model)
+
   def recommendFeatureOperation(ds: Dataset[Row]): Recommendations = {
-    val restrictions = restrictionBuilder.build(model)
+    logger.info("Computing columns metadata.")
     val columnsMetaData = columnMetaDataComputer.compute(ds, restrictions)
+    logger.info("Predicting columns type.")
     val columnTypes = columnTypeRecommender.recommend(columnsMetaData)
 
     val recs = columnTypes.map(colType => (colType._1, Recommendation(colType._2, List())))
+
+    logger.info("Recommender done.")
     Recommendations(recs)
   }
 }

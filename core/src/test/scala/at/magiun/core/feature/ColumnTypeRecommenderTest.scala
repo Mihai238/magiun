@@ -13,8 +13,9 @@ class ColumnTypeRecommenderTest extends UnitTest {
   private val columnMetaDataComputer = mainModule.columnMetaDataComputer
   private val columnTypeRecommender = mainModule.columnTypeRecommender
 
-  it should "" in {
-    val restrictions = restrictionBuilder.build(mainModule.model)
+  private val restrictions = restrictionBuilder.build(mainModule.model)
+
+  it should "predict for titanic dataset" in {
     val columnsMetaData = columnMetaDataComputer.compute(connector.getDataset(titanicDataSetSource), restrictions)
     val columnTypes = columnTypeRecommender.recommend(columnsMetaData)
     columnTypes(0) should contain only "Column"
@@ -22,6 +23,13 @@ class ColumnTypeRecommenderTest extends UnitTest {
 //    columnTypes(3) should contain("NameColumn")
     columnTypes(4) should contain only ("GenderColumn", "CategoricalColumn", "Column")
     columnTypes(5) should contain only ("HumanAgeColumn", "Column")
+  }
+
+  it should "predict for adult dataset" in {
+    val columnsMetaData = columnMetaDataComputer.compute(connector.getDataset(adultDataSetSource), restrictions)
+    val columnTypes = columnTypeRecommender.recommend(columnsMetaData)
+
+    columnTypes(0) should contain only ("HumanAgeColumn", "Column")
   }
 
 }

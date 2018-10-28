@@ -89,6 +89,14 @@ ml:value rdf:type owl:DatatypeProperty ;
 
 ###  http://www.magiun.io/ontologies/ml#BooleanColumn
 ml:BooleanColumn rdf:type owl:Class ;
+                 owl:equivalentClass [ owl:intersectionOf ( ml:CategoricalColumn
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty ml:hasValue ;
+                                                              owl:someValuesFrom ml:BooleanValue
+                                                            ]
+                                                          ) ;
+                                       rdf:type owl:Class
+                                     ] ;
                  rdfs:subClassOf ml:CategoricalColumn .
 
 
@@ -98,6 +106,17 @@ ml:BooleanValue rdf:type owl:Class ;
                 sh:property [ sh:or (
                     [sh:pattern "0"]
                     [sh:pattern "1"]
+                )
+                ] .
+
+###  http://www.magiun.io/ontologies/ml#GenderValue
+ml:GenderValue rdf:type owl:Class ;
+                rdfs:subClassOf ml:Value ;
+                sh:property [ sh:or (
+                    [sh:pattern "m"]
+                    [sh:pattern "f"]
+                    [sh:pattern "male"]
+                    [sh:pattern "female"]
                 )
                 ] .
 
@@ -159,6 +178,15 @@ ml:HumanAgeColumn rdf:type owl:Class ;
                                                              [ rdf:type owl:Restriction ;
                                                                owl:onProperty ml:hasValue ;
                                                                owl:someValuesFrom ml:HumanAgeValue
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty ml:cardinality ;
+                                                               owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                    owl:onDatatype xsd:integer ;
+                                                                                    owl:withRestrictions ( [ xsd:minInclusive 5
+                                                                                                           ]
+                                                                                                         )
+                                                                                  ]
                                                              ]
                                                            ) ;
                                         rdf:type owl:Class
@@ -247,13 +275,25 @@ ml:maleValue rdf:type owl:NamedIndividual ,
                       ml:MaleValue .
 
 
-[ sh:pattern "1"
+[ sh:pattern "0"
 ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "1"
+ ] .
 
 [ sh:pattern "0"
  ] .
 
 [ sh:pattern "0"
+ ] .
+
+[ sh:pattern "1"
  ] .
 
 [ sh:pattern "1"

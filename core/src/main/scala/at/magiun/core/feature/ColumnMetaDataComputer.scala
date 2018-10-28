@@ -37,13 +37,13 @@ class ColumnMetaDataComputer(
     (0 until row.size).map { colIndex => {
       val value = row.get(colIndex)
 
-      if (value == null) {
+      if (isMissingValue(value)) {
         ColumnMetaData(Set(), Set())
 
       } else {
         val valueTypes = restrictions.map { case (valueType, restr) =>
           logger.debug(s"Checking type $valueType for value $value")
-          if (value != null && restr.check(value)) {
+          if (restr.check(value)) {
             valueType
           } else {
             null
@@ -53,6 +53,16 @@ class ColumnMetaDataComputer(
         ColumnMetaData(Set(value.toString), valueTypes.toSet)
       }
     }
+    }
+  }
+
+  def isMissingValue(value: Any): Boolean = {
+    value match {
+      case null => true
+      case v: String => v == ""
+      case v: Int => v == 0
+      case v: Double => v == 0
+      case _ => false
     }
   }
 

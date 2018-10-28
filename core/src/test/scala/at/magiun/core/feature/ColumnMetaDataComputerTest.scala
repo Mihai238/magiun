@@ -15,9 +15,13 @@ class ColumnMetaDataComputerTest extends UnitTest {
   it should "try to guess column types" in {
     val restrictions = restrictionBuilder.build(mainModule.model)
     val columnsMeta = columnMetaDataComputer.compute(connector.getDataset(titanicDataSetSource), restrictions)
-    columnsMeta(1).valueTypes should contain only ("StringValue","BooleanValue","IntValue")
-    columnsMeta(1).uniqueValues.size should be (2)
-    columnsMeta(5).valueTypes should contain only ("StringValue", "IntValue", "HumanAgeValue")
+
+    columnsMeta(1).valueTypes should contain only("StringValue", "BooleanValue", "IntValue", "HumanAgeValue")
+    columnsMeta(1).uniqueValues.size should be(1)
+
+    columnsMeta(4).valueTypes should contain only("StringValue", "GenderValue", "IntValue")
+
+    columnsMeta(5).valueTypes should contain only("StringValue", "IntValue", "HumanAgeValue")
   }
 
 }

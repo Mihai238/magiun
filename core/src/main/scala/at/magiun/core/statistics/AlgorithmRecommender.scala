@@ -1,58 +1,43 @@
 package at.magiun.core.statistics
 
-import java.util
-
+import at.magiun.core.config.AlgorithmOntologyConfig
 import at.magiun.core.model.data.{DatasetMetadata, Distribution}
-import at.magiun.core.model.ontology.{OntologyClass, OntologyObjectProperty}
-import org.apache.jena.ontology.{Individual, OntModel}
-import org.apache.jena.rdf.model.{ModelFactory, Property, Selector, SimpleSelector}
+import at.magiun.core.model.ontology.{OntologyClass, OntologyProperty}
+import org.apache.jena.ontology.{DatatypeProperty, Individual, ObjectProperty, OntModel}
 import org.apache.spark.sql.SparkSession
+
+import scala.collection.JavaConversions._
 
 class AlgorithmRecommender {
 
-  def recommend(spark: SparkSession, ontology: OntModel, datasetMetadata: DatasetMetadata): Unit = {
+  def recommend(spark: SparkSession, ontology: OntModel, datasetMetadata: DatasetMetadata): Set[OntologyClass.Value] = {
     val dataset: Individual = createIndividualForOntClass(ontology, OntologyClass.Dataset.toString)
-    val responseVariable: Individual = createIndividualForOntClass(ontology, OntologyClass.ResponseVariable.toString)
-    val regression: Individual = createIndividualForOntClass(ontology, OntologyClass.Regression.toString)
+    val algorithm: Individual = createIndividualForOntClass(ontology, OntologyClass.Algorithm.toString)
     val responseVariableDistribution: Individual = createDistributionIndividual(ontology, datasetMetadata.variableDistributions(datasetMetadata.responseVariableIndex))
     val responseVariableType: Individual = createIndividualForOntClass(ontology, OntologyClass.Continuous.toString)
 
-    val hasDistribution: Property = getObjectProperty(ontology, OntologyObjectProperty.hasDistribution)
-    val hasVariableType: Property = getObjectProperty(ontology, OntologyObjectProperty.hasVariableType)
-    val hasResponseVariable: Property = getObjectProperty(ontology, OntologyObjectProperty.hasResponseVariable)
-    val hasDataset: Property = getObjectProperty(ontology, OntologyObjectProperty.hasDataset)
+    val hasDataset: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasDataset)
+    val hasVariables: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasVariables)
+    val hasObservations: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasObservations)
+    val hasResponseVariableDistribution: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasResponseVariableDistribution)
+    val hasResponseVariableType: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasResponseVariableType)
 
-    responseVariable.addProperty(hasDistribution, responseVariableDistribution)
-    responseVariable.addProperty(hasVariableType, responseVariableType)
-    dataset.addProperty(hasResponseVariable, responseVariable)
-    regression.addProperty(hasDataset, dataset)
+    algorithm.addProperty(hasDataset, dataset)
+    dataset.addLiteral(hasVariables, datasetMetadata.variablesCount - 1)
+    dataset.addLiteral(hasObservations, datasetMetadata.observationsCount)
+    dataset.addProperty(hasResponseVariableDistribution, responseVariableDistribution)
+    dataset.addProperty(hasResponseVariableType, responseVariableType)
 
-    println()
-    println("following individuals were created:")
-    val individuals: util.Iterator[Individual] = ontology.listIndividuals().toList.iterator()
-    while ( {
-      individuals.hasNext
-    }) println(individuals.next.getOntClass.getLocalName)
+    val rdfTypes = asScalaSet(algorithm.listRDFTypes(false).toSet)
+      .filter(p => p.getNameSpace.equals(AlgorithmOntologyConfig.NS))
 
-    val reasoner = ontology.getReasoner
-    val infModel = ModelFactory.createInfModel(reasoner, ontology.getBaseModel)
-    val graph = infModel.getGraph
-    val deduction = infModel.getDeductionsModel
+    val ontClasses = rdfTypes.map(a => OntologyClass.withName(a.getURI)).toSet
 
-
-    println()
-    val i = regression.listRDFTypes(true)
-    while ( {
-      i.hasNext
-    }) println(regression.getId.getLabelString + " is asserted in class " + i.next)
-
-    println()
-    if (ontology.validate().isValid) {
-      println("model is valid!")
+    for (i <- ontology.listIndividuals()) {
+      ontology.removeAll(i.asResource(), null, null)
     }
 
-    println()
-    println("stop")
+    ontClasses
   }
 
   private def createDistributionIndividual(ontology: OntModel, distribution: Distribution): Individual = {
@@ -66,7 +51,11 @@ class AlgorithmRecommender {
     ontology.createIndividual(ontology.getOntClass(ontClass))
   }
 
-  private def getObjectProperty(ontology: OntModel, property: OntologyObjectProperty.Value): Property = {
-    ontology.getProperty(property.toString)
+  private def getObjectProperty(ontology: OntModel, property: OntologyProperty.Value): ObjectProperty = {
+    ontology.getObjectProperty(property.toString)
+  }
+
+  private def getDataProperty(ontology: OntModel, property: OntologyProperty.Value): DatatypeProperty = {
+    ontology.getDatatypeProperty(property.toString)
   }
 }

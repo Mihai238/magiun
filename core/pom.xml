@@ -27,7 +27,8 @@
         <circe.version>0.8.0</circe.version>
         <scala-logging>3.7.2</scala-logging>
         <enumeratum.version>1.5.12</enumeratum.version>
-        <jena.version>3.7.0</jena.version>
+        <jena.version>3.9.0</jena.version>
+        <openllet.version>2.6.4</openllet.version>
     </properties>
 
     <dependencies>
@@ -109,6 +110,11 @@
             <artifactId>jena-core</artifactId>
             <version>${jena.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.galigator.openllet</groupId>
+            <artifactId>openllet-jena</artifactId>
+            <version>${openllet.version}</version>
+        </dependency>
 
         <!-- Others -->
         <dependency>
@@ -123,7 +129,7 @@
         </dependency>
         <dependency>
             <groupId>com.beachape</groupId>
-            <artifactId>enumeratum-circe_2.11</artifactId>
+            <artifactId>enumeratum-circe_${compiled.with.scala.version}</artifactId>
             <version>${enumeratum.version}</version>
         </dependency>
 

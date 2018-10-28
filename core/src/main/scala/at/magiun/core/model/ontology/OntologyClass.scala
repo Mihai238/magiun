@@ -6,9 +6,6 @@ object OntologyClass extends Enumeration {
 
   /** Dataset stuff */
   val Dataset: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Dataset")
-  val Variable: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Variable")
-  val ResponseVariable: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Response_Variable")
-  val Observation: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Observation")
 
   /** Distribution */
   val Distribution: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Distribution")
@@ -26,7 +23,7 @@ object OntologyClass extends Enumeration {
 
   /** Algorithm - Regression */
   val Regression: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Regression")
-  val LinearRegression: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "LinearRegression")
+  val LinearLeastRegression: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Linear_Least_Regression")
 
   /** Variable Type */
   val VariableType: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Variable_Type")

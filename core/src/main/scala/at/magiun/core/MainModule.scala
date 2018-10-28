@@ -1,7 +1,7 @@
 package at.magiun.core
 
 import at.magiun.core.config.{H2Config, OntologyConfig, SparkConfig}
-import at.magiun.core.feature.{ValueTypeComputer, _}
+import at.magiun.core.feature.{ColumnMetaDataComputer, _}
 import at.magiun.core.repository.{BlockRepository, DataSetRepository, DatabaseInitializer}
 import at.magiun.core.rest.{BlockController, DataSetController, ExecutionController, RestApi}
 import at.magiun.core.service.{ExecutionContext, _}
@@ -30,7 +30,7 @@ trait MainModule {
   // Recommenders
   lazy val recommender = wire[Recommender]
   lazy val operationRecommender = wire[OperationRecommender]
-  lazy val valueTypeComputer = wire[ValueTypeComputer]
+  lazy val columnMetaDataComputer = wire[ColumnMetaDataComputer]
   lazy val columnTypeRecommender = wire[ColumnTypeRecommender]
   lazy val restrictionBuilder = wire[RestrictionBuilder]
 

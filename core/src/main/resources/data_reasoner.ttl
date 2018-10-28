@@ -55,10 +55,10 @@ ml:hasValue rdf:type owl:ObjectProperty ;
 #    Data properties
 #################################################################
 
-###  http://www.magiun.io/ontologies/ml#differentValueTypesCount
-ml:differentValueTypesCount rdf:type owl:DatatypeProperty ;
-                            rdfs:domain ml:Column ;
-                            rdfs:range xsd:integer .
+###  http://www.magiun.io/ontologies/ml#cardinality
+ml:cardinality rdf:type owl:DatatypeProperty ;
+               rdfs:domain ml:Column ;
+               rdfs:range xsd:integer .
 
 
 ###  http://www.magiun.io/ontologies/ml#value
@@ -90,7 +90,21 @@ ml:BooleanColumn rdf:type owl:Class ;
 
 ###  http://www.magiun.io/ontologies/ml#CategoricalColumn
 ml:CategoricalColumn rdf:type owl:Class ;
-                     owl:equivalentClass ml:Column ;
+                     owl:equivalentClass [ owl:intersectionOf ( ml:Column
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty ml:cardinality ;
+                                                                  owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                       owl:onDatatype xsd:integer ;
+                                                                                       owl:withRestrictions ( [ xsd:minInclusive 0
+                                                                                                              ]
+                                                                                                              [ xsd:maxInclusive 10
+                                                                                                              ]
+                                                                                                            )
+                                                                                     ]
+                                                                ]
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ] ;
                      rdfs:subClassOf ml:Column .
 
 
@@ -189,14 +203,14 @@ sh:NodeShape rdf:type owl:Class .
 ml:booleanColumn rdf:type owl:NamedIndividual ;
                  ml:hasValue ml:falseValue ,
                              ml:trueValue ;
-                 ml:differentValueTypesCount 2 .
+                 ml:cardinality 2 .
 
 
 ###  http://www.magiun.io/ontologies/ml#categoricalColumn
 ml:categoricalColumn rdf:type owl:NamedIndividual ;
                      ml:hasValue ml:femaleValue ,
                                  ml:trueValue ;
-                     ml:differentValueTypesCount 2 .
+                     ml:cardinality 2 .
 
 
 ###  http://www.magiun.io/ontologies/ml#falseValue
@@ -219,7 +233,7 @@ ml:genderColumn rdf:type owl:NamedIndividual ;
                 ml:hasValue ml:femaleValue ,
                             ml:femaleValue2 ,
                             ml:maleValue ;
-                ml:differentValueTypesCount 2 .
+                ml:cardinality 2 .
 
 
 ###  http://www.magiun.io/ontologies/ml#maleValue

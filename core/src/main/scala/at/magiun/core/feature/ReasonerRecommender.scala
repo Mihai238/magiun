@@ -45,7 +45,7 @@ object ReasonerRecommender {
     val maleIndv = model.createIndividual(model.getOntClass(NS + "MaleValue"))
     gcolIndv.addProperty(model.getProperty(NS + "hasValue"), femaleIndv)
     gcolIndv.addProperty(model.getProperty(NS + "hasValue"), maleIndv)
-    gcolIndv.addProperty(model.getProperty(NS + "differentValueTypesCount"), model.createTypedLiteral(2.asInstanceOf[Integer]))
+    gcolIndv.addProperty(model.getProperty(NS + "cardinality"), model.createTypedLiteral(2.asInstanceOf[Integer]))
 
     println()
     if (model.validate().isValid) {

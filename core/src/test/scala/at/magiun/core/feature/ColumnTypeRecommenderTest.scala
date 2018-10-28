@@ -1,6 +1,6 @@
 package at.magiun.core.feature
 
-import at.magiun.core.TestData.titanicDataSetSource
+import at.magiun.core.TestData._
 import at.magiun.core.connector.CsvConnector
 import at.magiun.core.{MainModule, UnitTest}
 
@@ -10,13 +10,13 @@ class ColumnTypeRecommenderTest extends UnitTest {
 
   private val connector = new CsvConnector(mainModule.spark)
   private val restrictionBuilder = mainModule.restrictionBuilder
-  private val valueTypeComputer = mainModule.valueTypeComputer
+  private val columnMetaDataComputer = mainModule.columnMetaDataComputer
   private val columnTypeRecommender = mainModule.columnTypeRecommender
 
   it should "" in {
     val restrictions = restrictionBuilder.build(mainModule.model)
-    val valueTypes = valueTypeComputer.process(connector.getDataset(titanicDataSetSource), restrictions)
-    val columnTypes = columnTypeRecommender.f(valueTypes)
+    val columnsMetaData = columnMetaDataComputer.compute(connector.getDataset(titanicDataSetSource), restrictions)
+    val columnTypes = columnTypeRecommender.recommend(columnsMetaData)
 //    columnTypes(0) should be(List.empty)
     columnTypes(1) should contain("BooleanColumn")
 //    columnTypes(3) should contain("NameColumn")

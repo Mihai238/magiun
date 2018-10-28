@@ -4,18 +4,20 @@ import at.magiun.core.config.OntologyConfig.NS
 import org.apache.jena.ontology.OntModel
 
 import scala.collection.JavaConversions._
-import scala.collection.Set
 
 class ColumnTypeRecommender(model: OntModel) {
 
-  def f(valueTypes: Seq[Set[String]]): Map[Int, List[String]] = {
+  def recommend(columnsMetadata: Seq[ColumnMetaData]): Map[Int, List[String]] = {
     // TODO copy model
     // https://stackoverflow.com/questions/22713884/how-to-clone-or-copy-a-jena-ontology-model-ontmodel-to-apply-temporary-changes
 
-    valueTypes.zipWithIndex.map { case (col, colIndex) =>
-      val hasValueProperty = model.getProperty(NS + "hasValue")
-      val valueTypes = col.asInstanceOf[Set[String]]
+    val cardinalityProperty = model.getProperty(NS + "cardinality")
+    val hasValueProperty = model.getProperty(NS + "hasValue")
+
+    columnsMetadata.zipWithIndex.map { case (colMeta, colIndex) =>
+      val valueTypes = colMeta.valueTypes
       val indv = model.createIndividual(NS + "col", model.getOntClass(NS + "Column"))
+      indv.addProperty(cardinalityProperty, model.createTypedLiteral(colMeta.uniqueValues.size.asInstanceOf[Integer]))
       valueTypes.foreach(valueType => {
         val anonInd = model.createIndividual(model.getOntClass(NS + valueType))
         indv.addProperty(hasValueProperty, anonInd)

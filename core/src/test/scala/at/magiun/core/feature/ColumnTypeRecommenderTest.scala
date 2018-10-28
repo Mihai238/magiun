@@ -18,10 +18,10 @@ class ColumnTypeRecommenderTest extends UnitTest {
     val columnsMetaData = columnMetaDataComputer.compute(connector.getDataset(titanicDataSetSource), restrictions)
     val columnTypes = columnTypeRecommender.recommend(columnsMetaData)
 //    columnTypes(0) should be(List.empty)
-    columnTypes(1) should contain("BooleanColumn")
+    columnTypes(1) should contain only ("BooleanColumn", "CategoricalColumn", "Column")
 //    columnTypes(3) should contain("NameColumn")
-    columnTypes(4) should contain("GenderColumn")
-    columnTypes(5) should contain("HumanAgeColumn")
+    columnTypes(4) should contain only ("GenderColumn", "Categorical", "Column")
+    columnTypes(5) should contain ("HumanAgeColumn")
   }
 
 }

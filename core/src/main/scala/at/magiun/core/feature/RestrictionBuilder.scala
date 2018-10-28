@@ -4,8 +4,11 @@ import org.apache.jena.ontology.OntModel
 
 import scala.collection.JavaConversions._
 import at.magiun.core.config.OntologyConfig._
-import org.apache.jena.rdf.model.Resource
+import org.apache.jena.rdf.model.{RDFList, Resource}
 
+/**
+  * Assigns for each value type (IntValue, HumanAgeValue etc.) a restriction
+  */
 class RestrictionBuilder {
 
   def build(model: OntModel): Map[String, Restriction] = {
@@ -14,11 +17,11 @@ class RestrictionBuilder {
     model.getOntClass(NS + ValueClass).listSubClasses().toList.toList
       .filter(_.getNameSpace == NS)
       .map(valueClass => {
-      Option(valueClass.getProperty(shaclProperty))
-        .map(_.getResource)
-        .map(shaclProp => (valueClass.getLocalName, buildRestriction(shaclProp)))
-        .getOrElse((valueClass.getLocalName, new NoOpRestriction()))
-    }).toMap
+        Option(valueClass.getProperty(shaclProperty))
+          .map(_.getResource)
+          .map(shaclProp => (valueClass.getLocalName, buildRestriction(shaclProp)))
+          .getOrElse((valueClass.getLocalName, new NoOpRestriction()))
+      }).toMap
   }
 
   private def buildRestriction(shaclProperties: Resource): Restriction = {
@@ -26,6 +29,16 @@ class RestrictionBuilder {
       .map(stmt =>
         stmt.getPredicate.getLocalName match {
           case "pattern" => new PatternRestriction(stmt.getLiteral.getString)
+          case "minInclusive" => new MinInclusiveRestriction(stmt.getLiteral.getInt)
+          case "maxInclusive" => new MaxInclusiveRestriction(stmt.getLiteral.getInt)
+          case "or" =>
+            val it = stmt.getObject.asResource().as(classOf[RDFList]).iterator()
+            val rs = for {
+              orEntry <- it
+              restriction = buildRestriction(orEntry.asResource())
+            } yield restriction
+
+            new OrRestriction(rs.toList)
           case _ => new NoOpRestriction()
         }
       )

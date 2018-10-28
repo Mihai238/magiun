@@ -3,9 +3,12 @@ package at.magiun.core.feature
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
+/**
+  * Computes value types and other metadata for each column of the data set
+  */
 class ColumnMetaDataComputer(
-                         sparkSession: SparkSession
-                       ) extends LazyLogging with Serializable {
+                              sparkSession: SparkSession
+                            ) extends LazyLogging with Serializable {
 
   def compute(ds: Dataset[Row], restrictions: Map[String, Restriction]): Seq[ColumnMetaData] = {
     val colCount = ds.schema.indices.size
@@ -14,17 +17,19 @@ class ColumnMetaDataComputer(
       if (!row1.get(0).isInstanceOf[ColumnMetaData] && !row2.get(0).isInstanceOf[ColumnMetaData]) {
         val left = computeValueTypeForRow(row1, restrictions)
         val right = computeValueTypeForRow(row2, restrictions)
-        val result = (left zip right).map { case (l, r) => l.combine(r) }
-        Row.fromSeq(result)
+        Row.fromSeq(combine(left, right))
       } else if (row1.get(0).isInstanceOf[ColumnMetaData] && !row2.get(0).isInstanceOf[ColumnMetaData]) {
         val left = row1.toSeq.asInstanceOf[Seq[ColumnMetaData]]
         val right = computeValueTypeForRow(row2, restrictions)
-        val result = (left zip right).map { case (l, r) => l.combine(r) }
-        Row.fromSeq(result)
+        Row.fromSeq(combine(left, right))
       } else {
         throw new IllegalStateException
       }
     }).toSeq.map(_.asInstanceOf[ColumnMetaData])
+  }
+
+  def combine(left: Seq[ColumnMetaData], right: Seq[ColumnMetaData]): Seq[ColumnMetaData] = {
+    (left zip right).map { case (l, r) => l.combine(r) }
   }
 
 
@@ -47,7 +52,8 @@ class ColumnMetaDataComputer(
 
         ColumnMetaData(Set(value.toString), valueTypes.toSet)
       }
-    }}
+    }
+    }
   }
 
 }

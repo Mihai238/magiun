@@ -16,10 +16,17 @@ class RestrictionBuilderTest extends UnitTest {
     restrictions("MaleValue").check("ff") should be (false)
     restrictions("FemaleValue").check("female") should be (true)
     restrictions("FemaleValue").check("m") should be (false)
-    restrictions("FalseValue").check("0") should be (true)
-//    restrictions("TrueValue").check("true") should be (true)
-    restrictions("TrueValue").check("1") should be (true)
-    restrictions("FalseValue").check("0") should be (true)
+
+    restrictions("HumanAgeValue").check(1) should be (true)
+    restrictions("HumanAgeValue").check(88) should be (true)
+    restrictions("HumanAgeValue").check("88") should be (true)
+    restrictions("HumanAgeValue").check("88.2") should be (true)
+    restrictions("HumanAgeValue").check(-5) should be (false)
+
+    restrictions("BooleanValue").check(0) should be (true)
+    restrictions("BooleanValue").check(1) should be (true)
+    restrictions("BooleanValue").check("ffx") should be (false)
+    restrictions("BooleanValue").check(42) should be (false)
   }
 
 }

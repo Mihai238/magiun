@@ -20,6 +20,7 @@ class AlgorithmRecommender {
     val hasDataset: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasDataset)
     val hasNormalDistributionPercentage: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasNormalDistributionPercentage)
     val hasObservations: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasObservations)
+    val hasObservationVariableRatio: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasObservationVariableRatio)
     val hasResponseVariableDistribution: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasResponseVariableDistribution)
     val hasResponseVariableType: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasResponseVariableType)
     val hasVariables: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasVariables)
@@ -31,6 +32,7 @@ class AlgorithmRecommender {
     dataset.addProperty(hasResponseVariableType, responseVariableType)
     dataset.addLiteral(hasNormalDistributionPercentage, getNormalDistributionPercentage(metadata))
     dataset.addLiteral(hasContinuousVariableTypePercentage, getContinuousVariableTypePercentage(metadata))
+    dataset.addLiteral(hasObservationVariableRatio, getObservationVariableRatio(metadata))
 
     val rdfTypes = asScalaSet(algorithm.listRDFTypes(false).toSet)
       .filter(p => p.getNameSpace.equals(AlgorithmOntologyConfig.NS))
@@ -77,5 +79,11 @@ class AlgorithmRecommender {
       .map(_._1)
 
     1.0 * variableTypes.count(_.equals(VariableType.Continuous))/variableTypes.size
+  }
+
+  private def getObservationVariableRatio(metadata: DatasetMetadata): java.lang.Double = {
+    val explanatoryVarCount = metadata.variablesCount - metadata.variablesToIgnoreIndex.size - 1
+
+    1.0 * metadata.observationsCount/explanatoryVarCount
   }
 }

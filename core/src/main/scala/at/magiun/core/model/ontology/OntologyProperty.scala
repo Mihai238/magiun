@@ -15,4 +15,5 @@ object OntologyProperty extends Enumeration {
   val hasVariables: OntologyProperty.Value = Value(AlgorithmOntologyConfig.NS + "hasVariables")
   val hasNormalDistributionPercentage: OntologyProperty.Value = Value(AlgorithmOntologyConfig.NS + "hasNormalDistributionPercentage")
   val hasContinuousVariableTypePercentage: OntologyProperty.Value = Value(AlgorithmOntologyConfig.NS + "hasContinuousVariableTypePercentage")
+  val hasObservationVariableRatio: OntologyProperty.Value = Value(AlgorithmOntologyConfig.NS + "hasObservationVariableRatio")
 }

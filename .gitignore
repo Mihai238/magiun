@@ -4,3 +4,5 @@
 .idea/
 *.iml
 target/
+core/src/main/resources/model_selection_backup.owl
+core/src/main/resources/catalog-v001.xml

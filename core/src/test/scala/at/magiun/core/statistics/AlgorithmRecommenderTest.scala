@@ -11,7 +11,7 @@ class AlgorithmRecommenderTest extends UnitTest {
   private val spark = mainModule.spark
   private val ontology = mainModule.algorithmOntology
 
-  it should s"recommend the ${OntologyClass.LinearLeastRegression.toString}" in {
+  it should s"recommend the ${OntologyClass.LinearLeastRegression.toString} for dataset metadata of a small dataset" in {
     val datasetMetadata = DatasetMetadata(
       Seq.fill(2)(VariableType.Continuous),
       Seq.fill(2)(Distribution.Normal),

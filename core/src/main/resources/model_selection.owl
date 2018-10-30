@@ -76,6 +76,18 @@
     
 
 
+    <!-- http://www.magiun.io/ontologies/model-selection#hasContinuousVariableTypePercentage -->
+
+    <owl:DatatypeProperty rdf:about="http://www.magiun.io/ontologies/model-selection#hasContinuousVariableTypePercentage">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <rdfs:comment>This property represents the percentage of variables of the type continuous in the dataset (respone variable is not included).
+It takes values between [0,1]</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.magiun.io/ontologies/model-selection#hasNormalDistributionPercentage -->
 
     <owl:DatatypeProperty rdf:about="http://www.magiun.io/ontologies/model-selection#hasNormalDistributionPercentage">
@@ -262,6 +274,22 @@ It takes values between [0,1]</rdfs:comment>
                                         <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
                                     </owl:Restriction>
                                     <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasContinuousVariableTypePercentage"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.8</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                    <rdf:Description>
+                                                        <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</xsd:maxInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasNormalDistributionPercentage"/>
                                         <owl:allValuesFrom>
                                             <rdfs:Datatype>
@@ -415,6 +443,12 @@ It takes values between [0,1]</rdfs:comment>
 
     <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset">
         <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasContinuousVariableTypePercentage"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
         <rdf:type>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasNormalDistributionPercentage"/>

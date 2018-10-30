@@ -1,7 +1,7 @@
 package at.magiun.core.statistics
 
 import at.magiun.core.config.AlgorithmOntologyConfig
-import at.magiun.core.model.data.{DatasetMetadata, Distribution}
+import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
 import at.magiun.core.model.ontology.{OntologyClass, OntologyProperty}
 import org.apache.jena.ontology.{DatatypeProperty, Individual, ObjectProperty, OntModel}
 import org.apache.spark.sql.SparkSession
@@ -16,6 +16,7 @@ class AlgorithmRecommender {
     val responseVariableDistribution: Individual = createDistributionIndividual(ontology, metadata.variableDistributions(metadata.responseVariableIndex))
     val responseVariableType: Individual = createIndividualForOntClass(ontology, OntologyClass.Continuous.toString)
 
+    val hasContinuousVariableTypePercentage: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasContinuousVariableTypePercentage)
     val hasDataset: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasDataset)
     val hasNormalDistributionPercentage: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasNormalDistributionPercentage)
     val hasObservations: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasObservations)
@@ -29,6 +30,7 @@ class AlgorithmRecommender {
     dataset.addProperty(hasResponseVariableDistribution, responseVariableDistribution)
     dataset.addProperty(hasResponseVariableType, responseVariableType)
     dataset.addLiteral(hasNormalDistributionPercentage, getNormalDistributionPercentage(metadata))
+    dataset.addLiteral(hasContinuousVariableTypePercentage, getContinuousVariableTypePercentage(metadata))
 
     val rdfTypes = asScalaSet(algorithm.listRDFTypes(false).toSet)
       .filter(p => p.getNameSpace.equals(AlgorithmOntologyConfig.NS))
@@ -67,5 +69,13 @@ class AlgorithmRecommender {
       .map(_._1)
 
     1.0 * distributions.count(_.equals(Distribution.Normal))/distributions.size
+  }
+
+  private def getContinuousVariableTypePercentage(metadata: DatasetMetadata): java.lang.Double = {
+    val variableTypes = metadata.variableTypes.zipWithIndex
+      .filter(d => d._2 != metadata.responseVariableIndex && !metadata.variablesToIgnoreIndex.contains(d._2))
+      .map(_._1)
+
+    1.0 * variableTypes.count(_.equals(VariableType.Continuous))/variableTypes.size
   }
 }

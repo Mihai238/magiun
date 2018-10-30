@@ -10,23 +10,25 @@ import scala.collection.JavaConversions._
 
 class AlgorithmRecommender {
 
-  def recommend(spark: SparkSession, ontology: OntModel, datasetMetadata: DatasetMetadata): Set[OntologyClass.Value] = {
+  def recommend(spark: SparkSession, ontology: OntModel, metadata: DatasetMetadata): Set[OntologyClass.Value] = {
     val dataset: Individual = createIndividualForOntClass(ontology, OntologyClass.Dataset.toString)
     val algorithm: Individual = createIndividualForOntClass(ontology, OntologyClass.Algorithm.toString)
-    val responseVariableDistribution: Individual = createDistributionIndividual(ontology, datasetMetadata.variableDistributions(datasetMetadata.responseVariableIndex))
+    val responseVariableDistribution: Individual = createDistributionIndividual(ontology, metadata.variableDistributions(metadata.responseVariableIndex))
     val responseVariableType: Individual = createIndividualForOntClass(ontology, OntologyClass.Continuous.toString)
 
     val hasDataset: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasDataset)
-    val hasVariables: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasVariables)
+    val hasNormalDistributionPercentage: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasNormalDistributionPercentage)
     val hasObservations: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasObservations)
     val hasResponseVariableDistribution: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasResponseVariableDistribution)
     val hasResponseVariableType: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasResponseVariableType)
+    val hasVariables: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasVariables)
 
     algorithm.addProperty(hasDataset, dataset)
-    dataset.addLiteral(hasVariables, datasetMetadata.variablesCount - 1)
-    dataset.addLiteral(hasObservations, datasetMetadata.observationsCount)
+    dataset.addLiteral(hasVariables, metadata.variablesCount - 1)
+    dataset.addLiteral(hasObservations, metadata.observationsCount)
     dataset.addProperty(hasResponseVariableDistribution, responseVariableDistribution)
     dataset.addProperty(hasResponseVariableType, responseVariableType)
+    dataset.addLiteral(hasNormalDistributionPercentage, getNormalDistributionPercentage(metadata))
 
     val rdfTypes = asScalaSet(algorithm.listRDFTypes(false).toSet)
       .filter(p => p.getNameSpace.equals(AlgorithmOntologyConfig.NS))
@@ -57,5 +59,13 @@ class AlgorithmRecommender {
 
   private def getDataProperty(ontology: OntModel, property: OntologyProperty.Value): DatatypeProperty = {
     ontology.getDatatypeProperty(property.toString)
+  }
+
+  private def getNormalDistributionPercentage(metadata: DatasetMetadata): java.lang.Double = {
+    val distributions = metadata.variableDistributions.zipWithIndex
+      .filter(d => d._2 != metadata.responseVariableIndex && !metadata.variablesToIgnoreIndex.contains(d._2))
+      .map(_._1)
+
+    1.0 * distributions.count(_.equals(Distribution.Normal))/distributions.size
   }
 }

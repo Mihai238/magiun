@@ -8,11 +8,11 @@ object TestData {
   val titanicCsvPath: String = getClass.getClassLoader.getResource("titanic.csv").getFile
   val titanicCsvUrl = s"file://$titanicCsvPath"
 
-  val adultCsvPath: String = getClass.getClassLoader.getResource("adult.csv").getFile
-  val adultCsvUrl = s"file://$adultCsvPath"
+  val incomeCsvPath: String = getClass.getClassLoader.getResource("income.csv").getFile
+  val incomeCsvUrl = s"file://$incomeCsvPath"
 
   val titanicDataSetSource = DataSetSource(SourceType.FileCsv, titanicCsvUrl)
-  val adultDataSetSource = DataSetSource(SourceType.FileCsv, adultCsvUrl)
+  val incomeDataSetSource = DataSetSource(SourceType.FileCsv, incomeCsvUrl)
   val mongoDataSource = DataSetSource(SourceType.Mongo, "mongodb://127.0.0.1/testDb/testCollection")
 
   val testDs1 = MagiunDataSet("1", "gigi", DataSetSource(SourceType.Mongo, "url") , Option.empty)

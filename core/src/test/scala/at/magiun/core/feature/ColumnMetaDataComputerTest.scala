@@ -25,8 +25,8 @@ class ColumnMetaDataComputerTest extends UnitTest {
     columnsMeta(5).valueTypes should contain only("StringValue", "IntValue", "HumanAgeValue")
   }
 
-  it should "try to guess column types for adult dataset" in {
-    val columnsMeta = columnMetaDataComputer.compute(connector.getDataset(adultDataSetSource), restrictions)
+  it should "try to guess column types for income dataset" in {
+    val columnsMeta = columnMetaDataComputer.compute(connector.getDataset(incomeDataSetSource), restrictions)
 
     columnsMeta(5).valueTypes should contain only("StringValue", "IntValue", "MaritalStatusValue")
   }

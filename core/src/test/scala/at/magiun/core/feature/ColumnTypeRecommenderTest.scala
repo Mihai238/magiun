@@ -25,8 +25,8 @@ class ColumnTypeRecommenderTest extends UnitTest {
     columnTypes(5) should contain only ("HumanAgeColumn", "Column")
   }
 
-  it should "predict for adult dataset" in {
-    val columnsMetaData = columnMetaDataComputer.compute(connector.getDataset(adultDataSetSource), restrictions)
+  it should "predict for income dataset" in {
+    val columnsMetaData = columnMetaDataComputer.compute(connector.getDataset(incomeDataSetSource), restrictions)
     val columnTypes = columnTypeRecommender.recommend(columnsMetaData)
 
     columnTypes(0) should contain only ("HumanAgeColumn", "Column")

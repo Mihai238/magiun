@@ -30,6 +30,7 @@ class ColumnTypeRecommenderTest extends UnitTest {
     val columnTypes = columnTypeRecommender.recommend(columnsMetaData)
 
     columnTypes(0) should contain only ("HumanAgeColumn", "Column")
+    columnTypes(5) should contain only ("MaritalStatusColumn", "CategoricalColumn", "Column")
   }
 
 }

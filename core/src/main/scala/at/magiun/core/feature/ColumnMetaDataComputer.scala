@@ -50,6 +50,10 @@ class ColumnMetaDataComputer(
           }
         }.filter(_ != null)
 
+//        if (colIndex == 5 && !valueTypes.toSet.contains("MaritalStatusValue")) {
+//          logger.error(s"$value is wrong")
+//        }
+
         ColumnMetaData(Set(value.toString), valueTypes.toSet)
       }
     }

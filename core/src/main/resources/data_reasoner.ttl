@@ -89,7 +89,7 @@ ml:value rdf:type owl:DatatypeProperty ;
 
 ###  http://www.magiun.io/ontologies/ml#BooleanColumn
 ml:BooleanColumn rdf:type owl:Class ;
-                 owl:equivalentClass [ owl:intersectionOf ( ml:CategoricalColumn
+                 owl:equivalentClass [ owl:intersectionOf ( ml:QualitativeColumn
                                                             [ rdf:type owl:Restriction ;
                                                               owl:onProperty ml:hasValue ;
                                                               owl:someValuesFrom ml:BooleanValue
@@ -97,7 +97,7 @@ ml:BooleanColumn rdf:type owl:Class ;
                                                           ) ;
                                        rdf:type owl:Class
                                      ] ;
-                 rdfs:subClassOf ml:CategoricalColumn .
+                 rdfs:subClassOf ml:QualitativeColumn .
 
 
 ###  http://www.magiun.io/ontologies/ml#BooleanValue
@@ -108,27 +108,6 @@ ml:BooleanValue rdf:type owl:Class ;
                     [sh:pattern "1"]
                 )
                 ] .
-
-
-###  http://www.magiun.io/ontologies/ml#CategoricalColumn
-ml:CategoricalColumn rdf:type owl:Class ;
-                     owl:equivalentClass ml:DiscretizationSuitable ,
-                                         [ owl:intersectionOf ( ml:Column
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty ml:cardinality ;
-                                                                  owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                                                                                       owl:onDatatype xsd:integer ;
-                                                                                       owl:withRestrictions ( [ xsd:minInclusive 0
-                                                                                                              ]
-                                                                                                              [ xsd:maxInclusive 10
-                                                                                                              ]
-                                                                                                            )
-                                                                                     ]
-                                                                ]
-                                                              ) ;
-                                           rdf:type owl:Class
-                                         ] ;
-                     rdfs:subClassOf ml:Column .
 
 
 ###  http://www.magiun.io/ontologies/ml#Column
@@ -142,7 +121,7 @@ ml:DiscretizationSuitable rdf:type owl:Class ;
 
 ###  http://www.magiun.io/ontologies/ml#GenderColumn
 ml:GenderColumn rdf:type owl:Class ;
-                owl:equivalentClass [ owl:intersectionOf ( ml:Column
+                owl:equivalentClass [ owl:intersectionOf ( ml:QualitativeColumn
                                                            [ rdf:type owl:Restriction ;
                                                              owl:onProperty ml:hasValue ;
                                                              owl:someValuesFrom ml:GenderValue
@@ -150,7 +129,7 @@ ml:GenderColumn rdf:type owl:Class ;
                                                          ) ;
                                       rdf:type owl:Class
                                     ] ;
-                rdfs:subClassOf ml:CategoricalColumn .
+                rdfs:subClassOf ml:QualitativeColumn .
 
 
 ###  http://www.magiun.io/ontologies/ml#GenderValue
@@ -167,24 +146,15 @@ ml:GenderValue rdf:type owl:Class ;
 
 ###  http://www.magiun.io/ontologies/ml#HumanAgeColumn
 ml:HumanAgeColumn rdf:type owl:Class ;
-                  owl:equivalentClass [ owl:intersectionOf ( ml:Column
+                  owl:equivalentClass [ owl:intersectionOf ( ml:QuantitativeColumn
                                                              [ rdf:type owl:Restriction ;
                                                                owl:onProperty ml:hasValue ;
                                                                owl:someValuesFrom ml:HumanAgeValue
                                                              ]
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty ml:cardinality ;
-                                                               owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                                                                                    owl:onDatatype xsd:integer ;
-                                                                                    owl:withRestrictions ( [ xsd:minInclusive 5
-                                                                                                           ]
-                                                                                                         )
-                                                                                  ]
-                                                             ]
                                                            ) ;
                                         rdf:type owl:Class
                                       ] ;
-                  rdfs:subClassOf ml:Column .
+                  rdfs:subClassOf ml:QuantitativeColumn .
 
 
 ###  http://www.magiun.io/ontologies/ml#HumanAgeValue
@@ -202,7 +172,7 @@ ml:IntValue rdf:type owl:Class ;
 
 ###  http://www.magiun.io/ontologies/ml#MaritalStatusColumn
 ml:MaritalStatusColumn rdf:type owl:Class ;
-                       owl:equivalentClass [ owl:intersectionOf ( ml:CategoricalColumn
+                       owl:equivalentClass [ owl:intersectionOf ( ml:QualitativeColumn
                                                                   [ rdf:type owl:Restriction ;
                                                                     owl:onProperty ml:hasValue ;
                                                                     owl:someValuesFrom ml:MaritalStatusValue
@@ -210,7 +180,7 @@ ml:MaritalStatusColumn rdf:type owl:Class ;
                                                                 ) ;
                                              rdf:type owl:Class
                                            ] ;
-                       rdfs:subClassOf ml:CategoricalColumn .
+                       rdfs:subClassOf ml:QualitativeColumn .
 
 
 ###  http://www.magiun.io/ontologies/ml#MaritalStatusValue
@@ -228,6 +198,48 @@ ml:MaritalStatusValue rdf:type owl:Class ;
 ###  http://www.magiun.io/ontologies/ml#OperationSuitable
 ml:OperationSuitable rdf:type owl:Class ;
                      rdfs:subClassOf ml:Column .
+
+
+###  http://www.magiun.io/ontologies/ml#QualitativeColumn
+ml:QualitativeColumn rdf:type owl:Class ;
+                     owl:equivalentClass [ owl:intersectionOf ( ml:Column
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty ml:cardinality ;
+                                                                  owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                       owl:onDatatype xsd:integer ;
+                                                                                       owl:withRestrictions ( [ xsd:minInclusive 0
+                                                                                                              ]
+                                                                                                              [ xsd:maxInclusive 10
+                                                                                                              ]
+                                                                                                            )
+                                                                                     ]
+                                                                ]
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ] ;
+                     rdfs:subClassOf ml:Column .
+
+
+###  http://www.magiun.io/ontologies/ml#QuantitativeColumn
+ml:QuantitativeColumn rdf:type owl:Class ;
+                      owl:equivalentClass [ owl:intersectionOf ( ml:Column
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty ml:hasValue ;
+                                                                   owl:someValuesFrom ml:IntValue
+                                                                 ]
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty ml:cardinality ;
+                                                                   owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                        owl:onDatatype xsd:integer ;
+                                                                                        owl:withRestrictions ( [ xsd:minExclusive 10
+                                                                                                               ]
+                                                                                                             )
+                                                                                      ]
+                                                                 ]
+                                                               ) ;
+                                            rdf:type owl:Class
+                                          ] ;
+                      rdfs:subClassOf ml:Column .
 
 
 ###  http://www.magiun.io/ontologies/ml#StringValue
@@ -252,12 +264,6 @@ ml:booleanColumn rdf:type owl:NamedIndividual ;
                  ml:cardinality 2 .
 
 
-###  http://www.magiun.io/ontologies/ml#categoricalColumn
-ml:categoricalColumn rdf:type owl:NamedIndividual ;
-                     ml:hasValue ml:femaleValue ;
-                     ml:cardinality 2 .
-
-
 ###  http://www.magiun.io/ontologies/ml#femaleValue
 ml:femaleValue rdf:type owl:NamedIndividual .
 
@@ -276,7 +282,9 @@ ml:genderColumn rdf:type owl:NamedIndividual ;
 
 ###  http://www.magiun.io/ontologies/ml#humanAgeColumn
 ml:humanAgeColumn rdf:type owl:NamedIndividual ;
-                  ml:hasValue ml:humanAgeValue .
+                  ml:hasValue ml:humanAgeValue ,
+                              ml:intValue ;
+                  ml:cardinality 20 .
 
 
 ###  http://www.magiun.io/ontologies/ml#humanAgeValue
@@ -284,14 +292,70 @@ ml:humanAgeValue rdf:type owl:NamedIndividual ,
                           ml:HumanAgeValue .
 
 
+###  http://www.magiun.io/ontologies/ml#intValue
+ml:intValue rdf:type owl:NamedIndividual ,
+                     ml:IntValue .
+
+
 ###  http://www.magiun.io/ontologies/ml#maleValue
 ml:maleValue rdf:type owl:NamedIndividual .
 
 
-[ sh:pattern "0"
+###  http://www.magiun.io/ontologies/ml#qualitativeColumn
+ml:qualitativeColumn rdf:type owl:NamedIndividual ;
+                     ml:hasValue ml:femaleValue ;
+                     ml:cardinality 2 .
+
+
+[ sh:pattern "1"
 ] .
 
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "f"
+ ] .
+
+[ sh:pattern "female"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "female"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
 [ sh:pattern "0"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "1"
  ] .
 
 [ sh:pattern "[Ff]emale"
@@ -300,28 +364,115 @@ ml:maleValue rdf:type owl:NamedIndividual .
 [ sh:pattern "0"
  ] .
 
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
 [ sh:pattern "Separated"
  ] .
 
-[ sh:pattern "f"
- ] .
-
-[ sh:pattern "m"
- ] .
-
-[ sh:pattern "Divorced"
- ] .
-
-[ sh:pattern "female"
+[ sh:pattern "1"
  ] .
 
 [ sh:pattern "0"
  ] .
 
-[ sh:pattern "1"
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "male"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "f"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "female"
  ] .
 
 [ sh:pattern "1"
+ ] .
+
+[ sh:pattern "m"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "male"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "Separated"
  ] .
 
 [ sh:pattern ".*[Mm]arried.*"
@@ -330,25 +481,25 @@ ml:maleValue rdf:type owl:NamedIndividual .
 [ sh:pattern "m"
  ] .
 
-[ sh:pattern "1"
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "Separated"
  ] .
 
 [ sh:pattern "0"
  ] .
 
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
 [ sh:pattern "1"
- ] .
-
-[ sh:pattern "[Ff]"
- ] .
-
-[ sh:pattern "Widowed"
- ] .
-
-[ sh:pattern "[Mm]"
- ] .
-
-[ sh:pattern "male"
  ] .
 
 [ sh:pattern "[Mm]ale"
@@ -360,28 +511,16 @@ ml:maleValue rdf:type owl:NamedIndividual .
 [ sh:pattern "1"
  ] .
 
-[ sh:pattern "1"
+[ sh:pattern ".*[Mm]arried.*"
  ] .
 
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern "female"
- ] .
-
-[ sh:pattern "female"
+[ sh:pattern "Separated"
  ] .
 
 [ sh:pattern "male"
  ] .
 
-[ sh:pattern "1"
- ] .
-
-[ sh:pattern "male"
- ] .
-
-[ sh:pattern "f"
+[ sh:pattern "Widowed"
  ] .
 
 ###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

@@ -14,24 +14,42 @@ class ColumnMetaDataComputer(
     val colCount = ds.schema.indices.size
 
     ds.reduce((row1, row2) => {
-      if (!row1.get(0).isInstanceOf[ColumnMetaData] && !row2.get(0).isInstanceOf[ColumnMetaData]) {
-        val left = computeValueTypeForRow(row1, restrictions)
-        val right = computeValueTypeForRow(row2, restrictions)
-        Row.fromSeq(combine(left, right))
-      } else if (row1.get(0).isInstanceOf[ColumnMetaData] && !row2.get(0).isInstanceOf[ColumnMetaData]) {
-        val left = row1.toSeq.asInstanceOf[Seq[ColumnMetaData]]
-        val right = computeValueTypeForRow(row2, restrictions)
-        Row.fromSeq(combine(left, right))
-      } else {
-        throw new IllegalStateException
-      }
+      val (left, right) =
+        if (!isColMeta(row1) && !isColMeta(row2)) {
+          (
+            computeValueTypeForRow(row1, restrictions),
+            computeValueTypeForRow(row2, restrictions)
+          )
+        } else if (isColMeta(row1) && !isColMeta(row2)) {
+          (
+            row1.toSeq.asInstanceOf[Seq[ColumnMetaData]],
+            computeValueTypeForRow(row2, restrictions)
+          )
+        } else if (!isColMeta(row1) && isColMeta(row2)) {
+          (
+            computeValueTypeForRow(row2, restrictions),
+            row2.toSeq.asInstanceOf[Seq[ColumnMetaData]]
+          )
+        } else if (isColMeta(row1) && isColMeta(row2)) {
+          (
+            row1.toSeq.asInstanceOf[Seq[ColumnMetaData]],
+            row2.toSeq.asInstanceOf[Seq[ColumnMetaData]]
+          )
+        } else {
+          throw new IllegalStateException
+        }
+
+      Row.fromSeq(combine(left, right))
     }).toSeq.map(_.asInstanceOf[ColumnMetaData])
   }
 
-  def combine(left: Seq[ColumnMetaData], right: Seq[ColumnMetaData]): Seq[ColumnMetaData] = {
+  private def combine(left: Seq[ColumnMetaData], right: Seq[ColumnMetaData]): Seq[ColumnMetaData] = {
     (left zip right).map { case (l, r) => l.combine(r) }
   }
 
+  private def isColMeta(row: Row): Boolean = {
+    row.get(0).isInstanceOf[ColumnMetaData]
+  }
 
   def computeValueTypeForRow(row: Row, restrictions: Map[String, Restriction]): Seq[ColumnMetaData] = {
     (0 until row.size).map { colIndex => {
@@ -50,9 +68,9 @@ class ColumnMetaDataComputer(
           }
         }.filter(_ != null)
 
-//        if (colIndex == 5 && !valueTypes.toSet.contains("MaritalStatusValue")) {
-//          logger.error(s"$value is wrong")
-//        }
+        //        if (colIndex == 5 && !valueTypes.toSet.contains("MaritalStatusValue")) {
+        //          logger.error(s"$value is wrong")
+        //        }
 
         ColumnMetaData(Set(value.toString), valueTypes.toSet)
       }

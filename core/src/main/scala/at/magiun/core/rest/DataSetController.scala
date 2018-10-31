@@ -29,6 +29,8 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
   }
 
   val getDataSets: Endpoint[Seq[MagiunDataSet]] = get(BASE_PATH) {
+    logger.info("Getting all datasets")
+
     dataSetService.findAll()
       .asTwitter
       .map(Ok)

@@ -74,7 +74,7 @@ class DataSetService(
 
   def getRecommendations(dataSetId: String): Future[Option[Recommendations]] = {
     getDataSet(dataSetId)
-      .map(_.map(ds => recommender.recommendFeatureOperation(ds)))
+      .map(_.map(ds => recommender.recommend(ds)))
   }
 
   def getDataSet(dataSetId: String): Future[Option[Dataset[Row]]] = {

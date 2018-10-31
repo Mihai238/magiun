@@ -11,18 +11,23 @@ class RecommenderTest extends UnitTest {
   private val connector = new CsvConnector(mainModule.spark)
   private val recommender = mainModule.recommender
 
-  it should "try to guess column types" in {
-    val recommendation = recommender.recommendFeatureOperation(connector.getDataset(titanicDataSetSource))
+  it should "predict for titanic dataset" in {
+    val recommendation = recommender.recommend(connector.getDataset(titanicDataSetSource)).map
 
-    val map = recommendation.map
-    map should have size 12
-    map(0).colTypes should be(List.empty)
-    map(1).colTypes should contain("BooleanColumn")
-    map(3).colTypes should contain("NameColumn")
-    map(4).colTypes should contain("GenderColumn")
-    map(5).colTypes should contain("HumanAgeColumn")
-    map(5).operations should contain("Discretization")
+    recommendation should have size 12
+    recommendation(0).colTypes should be(List.empty)
+    recommendation(1).colTypes should contain only("BooleanColumn", "CategoricalColumn")
+//    recommendation(3).colTypes should contain only("NameColumn")
+    recommendation(4).colTypes should contain only("GenderColumn", "CategoricalColumn")
+    recommendation(5).colTypes should contain only "HumanAgeColumn"
+//    recommendation(5).operations should contain only("DiscretizationSuitable")
+  }
 
+  it should "predict for income dataset" in {
+    val recommendation = recommender.recommend(connector.getDataset(incomeDataSetSource)).map
+
+    recommendation(0).colTypes should contain only "HumanAgeColumn"
+    recommendation(5).colTypes should contain only ("MaritalStatusColumn", "CategoricalColumn")
   }
 
 }

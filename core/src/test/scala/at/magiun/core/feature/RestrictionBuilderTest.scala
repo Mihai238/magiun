@@ -12,6 +12,7 @@ class RestrictionBuilderTest extends UnitTest {
   it should "build shacl restricitons" in {
     val restrictions = restrictionBuilder.build(model)
 
+    restrictions("GenderValue").check("Male") should be (true)
     restrictions("GenderValue").check("male") should be (true)
     restrictions("GenderValue").check("ff") should be (false)
     restrictions("GenderValue").check("female") should be (true)

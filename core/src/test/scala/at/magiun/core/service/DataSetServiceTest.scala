@@ -43,7 +43,7 @@ class DataSetServiceTest extends UnitTest {
 
   it should "return recommendations" in {
     mockedRepo.find _ when 1 returns Future.successful(Option(testDsEntity1))
-    mockedRecommender.recommendFeatureOperation _ when * returns Recommendations(Map(0 -> Recommendation(List(), List("opRec"))))
+    mockedRecommender.recommend _ when * returns Recommendations(Map(0 -> Recommendation(List(), List("opRec"))))
 
     val recommendations = Await.result(service.getRecommendations("1"), TIMEOUT).get
     recommendations.map(0).colTypes should be(List.empty)

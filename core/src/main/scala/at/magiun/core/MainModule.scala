@@ -29,9 +29,7 @@ trait MainModule {
 
   // Recommenders
   lazy val recommender = wire[Recommender]
-  lazy val operationRecommender = wire[OperationRecommender]
   lazy val columnMetaDataComputer = wire[ColumnMetaDataComputer]
-  lazy val columnTypeRecommender = wire[ColumnTypeRecommender]
   lazy val restrictionBuilder = wire[RestrictionBuilder]
 
   // Repositories

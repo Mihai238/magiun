@@ -56,7 +56,7 @@ class ColumnMetaDataComputer(
       val value = row.get(colIndex)
 
       if (isMissingValue(value)) {
-        ColumnMetaData(Set(), Set())
+        ColumnMetaData(Set(), Set(), 1)
 
       } else {
         val valueTypes = restrictions.map { case (valueType, restr) =>
@@ -68,11 +68,11 @@ class ColumnMetaDataComputer(
           }
         }.filter(_ != null)
 
-        //        if (colIndex == 5 && !valueTypes.toSet.contains("MaritalStatusValue")) {
-        //          logger.error(s"$value is wrong")
-        //        }
+//        if (colIndex == 5 && !valueTypes.toSet.contains("HumanAgeValue")) {
+//          logger.error(s"$value is wrong")
+//        }
 
-        ColumnMetaData(Set(value.toString), valueTypes.toSet)
+        ColumnMetaData(Set(value.toString), valueTypes.toSet, 0)
       }
     }
     }
@@ -81,9 +81,7 @@ class ColumnMetaDataComputer(
   def isMissingValue(value: Any): Boolean = {
     value match {
       case null => true
-      case v: String => v == ""
-      case v: Int => v == 0
-      case v: Double => v == 0
+      case v: String => v == "" || v.equalsIgnoreCase("NA")
       case _ => false
     }
   }

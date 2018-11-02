@@ -4,7 +4,7 @@ package at.magiun.core.feature
   * @param uniqueValues no more than 100 unique values
   * @param valueTypes type of values e.g. StringValue, BooleanValue, GenderValue
   */
-case class ColumnMetaData(uniqueValues: Set[String], valueTypes: Set[String]) {
+case class ColumnMetaData(uniqueValues: Set[String], valueTypes: Set[String], missingValues: Int) {
 
   private val maxUniqueValues = 100
 
@@ -26,6 +26,6 @@ case class ColumnMetaData(uniqueValues: Set[String], valueTypes: Set[String]) {
         other.uniqueValues
       }
 
-    ColumnMetaData(combinedUniqueValues, combinedValueTypes)
+    ColumnMetaData(combinedUniqueValues, combinedValueTypes, missingValues + other.missingValues)
   }
 }

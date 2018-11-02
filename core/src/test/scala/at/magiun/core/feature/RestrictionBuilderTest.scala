@@ -28,6 +28,14 @@ class RestrictionBuilderTest extends UnitTest {
     restrictions("BooleanValue").check(1) should be (true)
     restrictions("BooleanValue").check("ffx") should be (false)
     restrictions("BooleanValue").check(42) should be (false)
+
+    restrictions("IntValue").check(42) should be (true)
+    restrictions("IntValue").check("1") should be (true)
+    restrictions("IntValue").check("hello") should be (false)
+
+    restrictions("NumericValue").check(42) should be (true)
+    restrictions("NumericValue").check("1.8") should be (true)
+    restrictions("NumericValue").check("hello") should be (false)
   }
 
 }

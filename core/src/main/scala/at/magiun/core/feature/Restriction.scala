@@ -47,6 +47,37 @@ class MaxInclusiveRestriction(max: Double) extends Restriction {
   }
 }
 
+class DataTypeRestriction(requiredType: String) extends Restriction {
+  override def check(value: Any): Boolean = {
+    requiredType match {
+      case "integer" =>
+        value match {
+          case v: Int => true
+          case v: String => try {
+            v.toInt
+            true
+          } catch {
+            case _: Throwable => false
+          }
+          case _ => false
+        }
+      case "decimal" =>
+        value match {
+          case v: Int => true
+          case v: Double => true
+          case v: String => try {
+            v.toDouble
+            true
+          } catch {
+            case _: Throwable => false
+          }
+          case _ => false
+        }
+      case _ => false
+    }
+  }
+}
+
 //
 // Composite restrictions
 //

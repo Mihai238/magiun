@@ -16,19 +16,25 @@ class RecommenderTest extends UnitTest {
 
     recommendation should have size 12
     recommendation(0).colTypes should contain only "QuantitativeColumn"
+
     recommendation(1).colTypes should contain only("BooleanColumn", "QualitativeColumn")
-//    recommendation(3).colTypes should contain only("NameColumn")
+    recommendation(1).operations should be(List.empty)
+
+    recommendation(3).colTypes should be(List.empty)
+
     recommendation(4).colTypes should contain only("GenderColumn", "QualitativeColumn")
-    recommendation(5).colTypes should contain only ("HumanAgeColumn", "QuantitativeColumn")
-    recommendation(5).operations should contain only "DiscretizationSuitable"
+    recommendation(4).operations should be(List.empty)
+
+    recommendation(5).colTypes should contain only("HumanAgeColumn", "QuantitativeColumn")
+    recommendation(5).operations should contain only("DiscretizationSuitable", "MissingValuesSuitable")
   }
 
   it should "predict for income dataset" in {
     val recommendation = recommender.recommend(connector.getDataset(incomeDataSetSource)).map
 
-    recommendation(0).colTypes should contain only ("QuantitativeColumn", "HumanAgeColumn")
+    recommendation(0).colTypes should contain only("QuantitativeColumn", "HumanAgeColumn")
 
-    recommendation(5).colTypes should contain only ("MaritalStatusColumn", "QualitativeColumn")
+    recommendation(5).colTypes should contain only("MaritalStatusColumn", "QualitativeColumn")
   }
 
 }

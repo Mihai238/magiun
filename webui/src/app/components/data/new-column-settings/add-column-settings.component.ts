@@ -57,7 +57,9 @@ export class AddColumnSettingsComponent implements OnInit, OnChanges {
       this.blockRestService.createBlock(addColumnBlock).subscribe(addColBlockId => {
         this.executionService.create(addColBlockId).subscribe(memDataSetId => {
           this.resultEmitter.emit({memDataSetId: memDataSetId});
-        })
+        }, err => {
+          this.resultEmitter.emit({});
+        });
       })
     });
   }

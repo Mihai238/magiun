@@ -49,6 +49,22 @@ class StageTest extends UnitTest {
     }
   }
 
+  it should "add a new column from one column with if statements" in {
+    val task = new AddColumnStage(
+      input,
+      "newCol",
+      "CASE WHEN age <= 25 THEN 1 when age <= 50 then 2 ELSE 3 END"
+    )
+
+    task.perform match {
+      case DatasetOutput(dataSet) =>
+        dataSet.columns.length should be(13)
+        dataSet.take(1).last.getAs[Double]("newCol") should be(1)
+        dataSet.take(5).last.getAs[Double]("newCol") should be(2)
+        dataSet.take(7).last.getAs[Double]("newCol") should be(3)
+    }
+  }
+
   it should "remove and add a column" in {
     val task = new AddColumnStage(
       StageInput(new DropColumnStage(input, "Cabin")),

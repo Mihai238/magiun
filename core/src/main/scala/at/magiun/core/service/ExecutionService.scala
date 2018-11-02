@@ -70,7 +70,10 @@ class ExecutionService(
         val nextBlock = blocks(block.inputs.head.blockId)
         val stage = buildStages(blocks, nextBlock)
         new DropColumnStage(StageInput(stage), block.params("columnName"))
-      case AddColumn => ???
+      case AddColumn =>
+        val nextBlock = blocks(block.inputs.head.blockId)
+        val stage = buildStages(blocks, nextBlock)
+        new AddColumnStage(StageInput(stage), block.params("newColumnName"), block.params("expression"))
       case LinearRegression => ???
     }
   }

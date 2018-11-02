@@ -3,8 +3,8 @@
   <app-chart id="app-chart" *ngIf="selectedDataSet" [dataSet]="selectedDataSet"></app-chart>
 
 
-  <data-new-column-settings [visible]="showNewColumnSettingsComponent" [index]="newColumnIndex"
-                            (resultEmitter)="onNewColumnResult($event)"></data-new-column-settings>
+  <data-add-column-settings [visible]="showAddColumnSettingsComponent" [dataSet]="selectedDataSet"
+                            (resultEmitter)="onAddColumnResult($event)"></data-add-column-settings>
   <data-edit-column *ngIf="selectedColumn" [visible]="showEditColumnComponent" [dataSet]="selectedDataSet" [column]="selectedColumn"
                     (resultEmitter)="onEditColumnResult($event)"></data-edit-column>
 
@@ -37,6 +37,7 @@
                 headerTitle=""
                 (reload)="reloadRows($event)"
                 (columnEditClick)="onColumnEditClicked($event)"
+                (addColumn)="onAddColumnClicked($event)"
                 [items]="rows"
                 [recommendations]="recommendations"
                 [itemCount]="rowsCount"

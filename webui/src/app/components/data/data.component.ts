@@ -5,7 +5,7 @@ import {DataRow} from '../../model/data-row.model';
 import {Column, DataSet} from '../../model/data-set.model';
 import {environment} from '../../../environments/environment';
 import {EditColumnResult} from './process-feature/edit-column.component';
-import {NewColumnResult} from './new-column-settings/new-column-settings.component';
+import {NewColumnResult} from './new-column-settings/add-column-settings.component';
 import {DataTableParams} from '../shared/table';
 import {Recommendations} from "../../model/recommendations";
 
@@ -26,7 +26,7 @@ export class DataComponent implements OnInit {
   selectedColumn: Column;
   recommendations: Recommendations;
 
-  showNewColumnSettingsComponent: boolean;
+  showAddColumnSettingsComponent: boolean;
   newColumnIndex: number;
 
   showEditColumnComponent: boolean;
@@ -37,7 +37,7 @@ export class DataComponent implements OnInit {
 
   ngOnInit() {
     this.getDataSets();
-    this.showNewColumnSettingsComponent = false;
+    this.showAddColumnSettingsComponent = false;
     this.showEditColumnComponent = false;
   }
 
@@ -92,14 +92,23 @@ export class DataComponent implements OnInit {
 
   onEditColumnResult(editColumnResult: EditColumnResult) {
     this.showEditColumnComponent = false;
-    if (editColumnResult.memDataSetId) {
-      this.dataService.getDataSet(editColumnResult.memDataSetId)
+    this.loadMemDataSet(editColumnResult.memDataSetId);
+  }
+
+  onAddColumnResult(newColumnResult: NewColumnResult) {
+    this.showAddColumnSettingsComponent = false;
+    this.loadMemDataSet(newColumnResult.memDataSetId)
+  }
+
+  private loadMemDataSet(dataSetId: string) {
+    if (dataSetId) {
+      this.dataService.getDataSet(dataSetId)
         .subscribe((ds: DataSet) => this.onSelectDataSet(ds));
     }
   }
 
-  onNewColumnResult(newColumnResult: NewColumnResult) {
-    this.showNewColumnSettingsComponent = false;
+  onAddColumnClicked() {
+    this.showAddColumnSettingsComponent = true;
   }
 
   onRecommendClicked() {

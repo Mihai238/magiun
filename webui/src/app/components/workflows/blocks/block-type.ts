@@ -16,6 +16,7 @@ export class BlockType {
    * FEATURE SELECTION
    */
   static DROP_COLUMNS = new BlockType('DropColumn', 'DROP_COLUMNS');
+  static ADD_COLUMN = new BlockType('AddColumn', "ADD_COLUMN");
 
   /**
    * MACHINE LEARNING

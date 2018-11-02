@@ -29,7 +29,7 @@ import {ScatterSettingsComponent} from './components/data/chart/scatter/scatter-
 import {ColumnSelectorComponent} from './components/data/chart/shared/column-selector/column-selector.component';
 import {LinearRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/linear-regression-block.component';
 import {PoissonRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/poisson-regression-block.component';
-import { NewColumnSettingsComponent } from './components/data/new-column-settings/new-column-settings.component';
+import { AddColumnSettingsComponent } from './components/data/new-column-settings/add-column-settings.component';
 import { EditColumnComponent } from './components/data/process-feature/edit-column.component';
 import {WorkflowDirective} from './components/workflows/workflow.directive';
 import {DatabaseBlockComponent} from './components/workflows/blocks/import-data/database-block.component';
@@ -70,7 +70,7 @@ import {ExecutionService} from "./services/execution.service";
     ScatterSettingsComponent,
     BarSettingsComponent,
     ColumnSelectorComponent,
-    NewColumnSettingsComponent,
+    AddColumnSettingsComponent,
     EditColumnComponent,
     WorkflowDirective,
     ParametersModalComponent,

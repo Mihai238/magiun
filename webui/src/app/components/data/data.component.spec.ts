@@ -81,7 +81,7 @@ class ChartStubComponent {
 }
 
 @Component({
-  selector: 'data-new-column-settings',
+  selector: 'data-add-column-settings',
   template: ''
 })
 class NewColumnSettingsStubComponent {

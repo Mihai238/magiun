@@ -73,10 +73,10 @@ class DropColumnStage(input: StageInput, columnName: String) extends Stage {
   }
 }
 
-class AddColumnStage(input: StageInput, newColName: String, e: String) extends Stage {
+class AddColumnStage(input: StageInput, newColName: String, exp: String) extends Stage {
   override def perform: DatasetOutput = {
     val dataSet = getOutputOfPrevStage(input).dataSet
-    val result = dataSet.withColumn(newColName, expr(e))
+    val result = dataSet.withColumn(newColName, expr(exp))
     DatasetOutput(result)
   }
 }

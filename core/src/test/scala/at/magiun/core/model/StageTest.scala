@@ -21,7 +21,7 @@ class StageTest extends UnitTest {
     }
   }
 
-  it should "add a new column" in {
+  it should "add a new column from two columns" in {
     val task = new AddColumnStage(
       input,
       "hihiCol",
@@ -32,6 +32,20 @@ class StageTest extends UnitTest {
       case DatasetOutput(dataSet) =>
         dataSet.columns.length should be(13)
         dataSet.take(1).head.getAs[Double]("hihiCol") should be(25)
+    }
+  }
+
+  it should "add a new column from one column" in {
+    val task = new AddColumnStage(
+      input,
+      "newCol",
+      "Pclass * 2"
+    )
+
+    task.perform match {
+      case DatasetOutput(dataSet) =>
+        dataSet.columns.length should be(13)
+        dataSet.take(1).head.getAs[Double]("newCol") should be(6)
     }
   }
 

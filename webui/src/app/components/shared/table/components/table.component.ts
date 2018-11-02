@@ -211,6 +211,14 @@ export class DataTableComponent implements DataTableParams, OnInit {
 		});
 	}
 
+	// Add Column:
+
+  @Output() addColumn = new EventEmitter();
+
+	addColumnClicked() {
+    this.addColumn.emit();
+  }
+
 	// event handlers:
 
 	@Output() rowClick = new EventEmitter();

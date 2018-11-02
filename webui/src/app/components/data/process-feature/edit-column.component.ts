@@ -62,7 +62,7 @@ export class EditColumnComponent implements OnInit, OnChanges {
   }
 
   onClickExecute(): void {
-    const memDataBlock = {
+    const loadDataSetBlock = {
       id: "",
       type: BlockType.DATA_SET_READER.name,
       inputs: [],
@@ -71,10 +71,10 @@ export class EditColumnComponent implements OnInit, OnChanges {
 
     const processingBlock = this.getProcessingBlock();
     if (processingBlock) {
-      this.blockRestService.createBlock(memDataBlock).subscribe(memDataBlockId => {
-        processingBlock.inputs.push({blockId: memDataBlockId, "index": 0});
-        this.blockRestService.createBlock(processingBlock).subscribe(removeColumnBlockId => {
-          this.executionService.create(removeColumnBlockId).subscribe((memDataSetId) => {
+      this.blockRestService.createBlock(loadDataSetBlock).subscribe(loadDataBlockId => {
+        processingBlock.inputs.push({blockId: loadDataBlockId, "index": 0});
+        this.blockRestService.createBlock(processingBlock).subscribe(processColumnBlockId => {
+          this.executionService.create(processColumnBlockId).subscribe((memDataSetId) => {
             this.resultEmitter.emit({memDataSetId: memDataSetId});
           });
         });

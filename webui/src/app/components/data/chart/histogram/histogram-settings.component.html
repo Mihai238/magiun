@@ -25,11 +25,15 @@
     <input type="checkbox" value="" [(ngModel)]="isCumulativeEnabled" (click)="getDataAndUpdate()">
   </div>
 
-  <div class="d-flex chart-settings-entry">
+  <div class="d-flex chart-settings-entry input-group mb-3">
     <span class="flex-grow-1">{{'DATA.FEATURE' | translate }}:</span>
     <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateGroupByColumn($event)">
     </chart-column-selector>
-    <input type="checkbox" value="" [checked]="isOverlaidEnabled" (click)="onChangeOverlaid()">
+    <div class="input-group-append">
+      <div class="input-group-text">
+        <input type="checkbox" value="" [checked]="isOverlaidEnabled" (click)="onChangeOverlaid()">
+      </div>
+    </div>
   </div>
 
 </div>

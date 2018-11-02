@@ -50,7 +50,7 @@ trait Connector extends LazyLogging {
         } else {
           schema.zipWithIndex.flatMap {
             case (col, colInd) =>
-              Option(sparkRow.get(colInd)).map(_.toString)
+              Option(sparkRow.get(colInd)).orElse(Option("")).map(_.toString)
           }
         }
 

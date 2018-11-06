@@ -103,5 +103,6 @@ export interface EditColumnResult {
 }
 
 export enum ActionType {
-  drop = 'Drop'
+  drop = 'Drop',
+  script = 'Script'
 }

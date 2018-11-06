@@ -1,15 +1,15 @@
 package at.magiun.core.model
 
-import at.magiun.core.TestData.sampleCsvPath
+import at.magiun.core.TestData.titanicCsvPath
 import at.magiun.core.{MainModule, UnitTest}
 
 class StageTest extends UnitTest {
 
   private val mainModule = new MainModule {}
 
-  private val input = StageInput(new FileReaderStage(mainModule.spark, sampleCsvPath))
+  private val input = StageInput(new FileReaderStage(mainModule.spark, titanicCsvPath))
 
-  it should "remove the column called 'statecode'" in {
+  it should "remove the column by name" in {
     val task = new DropColumnStage(
       input,
       "Cabin"
@@ -21,7 +21,7 @@ class StageTest extends UnitTest {
     }
   }
 
-  it should "add a new column" in {
+  it should "add a new column from two columns" in {
     val task = new AddColumnStage(
       input,
       "hihiCol",
@@ -32,6 +32,36 @@ class StageTest extends UnitTest {
       case DatasetOutput(dataSet) =>
         dataSet.columns.length should be(13)
         dataSet.take(1).head.getAs[Double]("hihiCol") should be(25)
+    }
+  }
+
+  it should "add a new column from one column" in {
+    val task = new AddColumnStage(
+      input,
+      "newCol",
+      "Pclass * 2"
+    )
+
+    task.perform match {
+      case DatasetOutput(dataSet) =>
+        dataSet.columns.length should be(13)
+        dataSet.take(1).head.getAs[Double]("newCol") should be(6)
+    }
+  }
+
+  it should "add a new column from one column with if statements" in {
+    val task = new AddColumnStage(
+      input,
+      "newCol",
+      "CASE WHEN age <= 25 THEN 1 when age <= 50 then 2 ELSE 3 END"
+    )
+
+    task.perform match {
+      case DatasetOutput(dataSet) =>
+        dataSet.columns.length should be(13)
+        dataSet.take(1).last.getAs[Double]("newCol") should be(1)
+        dataSet.take(5).last.getAs[Double]("newCol") should be(2)
+        dataSet.take(7).last.getAs[Double]("newCol") should be(3)
     }
   }
 

@@ -4,9 +4,10 @@ import {DataService} from '../../services/data.service';
 import {DataRow} from '../../model/data-row.model';
 import {Column, DataSet} from '../../model/data-set.model';
 import {environment} from '../../../environments/environment';
-import {FeatureProcessResult} from './process-feature/process-feature.component';
-import {NewColumnResult} from './new-column-settings/new-column-settings.component';
+import {EditColumnResult} from './process-feature/edit-column.component';
+import {NewColumnResult} from './new-column-settings/add-column-settings.component';
 import {DataTableParams} from '../shared/table';
+import {Recommendations} from "../../model/recommendations";
 
 @Component({
   selector: 'app-data',
@@ -20,14 +21,15 @@ export class DataComponent implements OnInit {
   rows: DataRow[];
   rowsCount = 0;
 
+  displayNameDataSet: string;
   selectedDataSet: DataSet;
   selectedColumn: Column;
+  recommendations: Recommendations;
 
-  showColumnSettings: boolean[];
-  showNewColumnSettingsComponent: boolean;
+  showAddColumnSettingsComponent: boolean;
   newColumnIndex: number;
 
-  showProcessFeatureComponent: boolean;
+  showEditColumnComponent: boolean;
 
   constructor(private logger: NGXLogger,
               private dataService: DataService) {
@@ -35,8 +37,8 @@ export class DataComponent implements OnInit {
 
   ngOnInit() {
     this.getDataSets();
-    this.showNewColumnSettingsComponent = false;
-    this.showProcessFeatureComponent = false;
+    this.showAddColumnSettingsComponent = false;
+    this.showEditColumnComponent = false;
   }
 
   getDataSets() {
@@ -54,14 +56,13 @@ export class DataComponent implements OnInit {
   onSelectDataSet(dataSet: DataSet) {
     this.logger.info('Data Set selected: ' + dataSet.name);
 
-    this.showColumnSettings = Array(dataSet.schema.columns.length);
-    for (let i = 0; i < this.showColumnSettings.length; i++) {
-      this.showColumnSettings[i] = false;
+    this.rowsCount = dataSet.schema.totalCount || this.rowsCount;
+    if (!dataSet.name.startsWith("mem-")) {
+      this.displayNameDataSet = dataSet.name;
     }
 
-    this.rowsCount = dataSet.schema.totalCount || this.rowsCount;
     this.selectedDataSet = dataSet;
-    this.rows = [];
+    this.recommendations = null;
     this.reloadRows({limit: 10, offset: 0});
   }
 
@@ -72,8 +73,11 @@ export class DataComponent implements OnInit {
     })
   }
 
-  onSelectColumn(column: Column) {
-    this.selectedColumn = column;
+  onColumnEditClicked(columnIndex: number) {
+    this.selectedColumn = this.selectedDataSet.schema.columns[columnIndex];
+    this.logger.info('DataComponent: column selected ' + this.selectedColumn.name);
+
+    this.showEditColumnComponent = true;
   }
 
   onClickRemoveColumn() {
@@ -86,40 +90,38 @@ export class DataComponent implements OnInit {
     this.rows.forEach(row => row.values.splice(index, 1));
   }
 
-  onClickedColumnSettings(column: Column) {
-    this.logger.info('onClickedColumnSettings: ' + column.name);
-    this.showColumnSettings[column.index] = true;
+  onEditColumnResult(editColumnResult: EditColumnResult) {
+    this.showEditColumnComponent = false;
+    this.loadMemDataSet(editColumnResult.memDataSetId);
   }
 
-  onClickedOutside(column: Column) {
-    this.closeDropdownSettings(column);
+  onAddColumnResult(newColumnResult: NewColumnResult) {
+    this.showAddColumnSettingsComponent = false;
+    this.loadMemDataSet(newColumnResult.memDataSetId)
   }
 
-  onClickedProcessFeature(column: Column) {
-    this.logger.info('onClickedProcessFeature: ' + column.name);
-    this.closeDropdownSettings(column);
-
-    this.selectedColumn = column;
-    this.showProcessFeatureComponent = true;
+  private loadMemDataSet(dataSetId: string) {
+    if (dataSetId) {
+      this.dataService.getDataSet(dataSetId)
+        .subscribe((ds: DataSet) => this.onSelectDataSet(ds));
+    }
   }
 
-  onClickAddColumn(column: Column, offset: number) {
-    this.logger.info('onClickAddColumn ' + column.name + ' ,offset ' + offset);
-    this.closeDropdownSettings(column);
-
-    this.showNewColumnSettingsComponent = true;
-    this.newColumnIndex = column.index + offset;
+  onAddColumnClicked() {
+    this.showAddColumnSettingsComponent = true;
   }
 
-  private closeDropdownSettings(column: Column) {
-    this.showColumnSettings[column.index] = false;
-  }
+  onRecommendClicked() {
+    const ds = this.selectedDataSet;
+    if (ds) {
+      this.logger.info("Getting recommendations for dataset " + ds.id);
+      this.dataService.getRecommendations(ds)
+        .subscribe(resp => {
+          if (ds.id === this.selectedDataSet.id) {
+            this.recommendations = resp;
+          }
+        });
+    }
 
-  onFeatureProcessResult(featureProcessResult: FeatureProcessResult) {
-    this.showProcessFeatureComponent = false;
-  }
-
-  onNewColumnResult(newColumnResult: NewColumnResult) {
-    this.showNewColumnSettingsComponent = false;
   }
 }

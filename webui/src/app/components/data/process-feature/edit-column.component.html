@@ -1,0 +1,46 @@
+<i #modalActivator style="visibility: hidden" aria-hidden="true" data-toggle="modal"
+   data-target="#processFeatureModal"></i>
+
+<div class="modal fade" id="processFeatureModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Process feature '{{column.name}}'</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            <span *ngIf="selectedActionType">{{selectedActionType}}</span>
+            <span *ngIf="!selectedActionType">Select action</span>
+          </button>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a *ngFor="let actionType of actionTypes()" (click)="onActionTypeSelected(actionType)"
+               class="dropdown-item clickable">{{actionType}}</a>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="selectedActionType == ActionType.drop">
+        Do you really want to drop the column?
+      </div>
+
+      <div *ngIf="selectedActionType == ActionType.script">
+        Put your script here.
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onClickCancel()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onClickExecute()">
+          Execute
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewColumnSettingsComponent } from './new-column-settings.component';
+import { BarSettingsComponent } from './bar-settings.component';
 
-describe('NewColumnSettingsComponent', () => {
-  let component: NewColumnSettingsComponent;
-  let fixture: ComponentFixture<NewColumnSettingsComponent>;
+describe('BarSettingsComponent', () => {
+  let component: BarSettingsComponent;
+  let fixture: ComponentFixture<BarSettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewColumnSettingsComponent ]
+      declarations: [ BarSettingsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewColumnSettingsComponent);
+    fixture = TestBed.createComponent(BarSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

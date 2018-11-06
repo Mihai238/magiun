@@ -7,7 +7,6 @@ import {RouteReuseStrategy} from '@angular/router';
 import {DragDropDirectiveModule} from 'angular4-drag-drop';
 import {ClickOutsideModule} from 'ng-click-outside';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TagInputModule} from 'ngx-chips';
 
@@ -30,8 +29,8 @@ import {ScatterSettingsComponent} from './components/data/chart/scatter/scatter-
 import {ColumnSelectorComponent} from './components/data/chart/shared/column-selector/column-selector.component';
 import {LinearRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/linear-regression-block.component';
 import {PoissonRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/poisson-regression-block.component';
-import { NewColumnSettingsComponent } from './components/data/new-column-settings/new-column-settings.component';
-import { ProcessFeatureComponent } from './components/data/process-feature/process-feature.component';
+import { AddColumnSettingsComponent } from './components/data/new-column-settings/add-column-settings.component';
+import { EditColumnComponent } from './components/data/process-feature/edit-column.component';
 import {WorkflowDirective} from './components/workflows/workflow.directive';
 import {DatabaseBlockComponent} from './components/workflows/blocks/import-data/database-block.component';
 import {FileBlockComponent} from './components/workflows/blocks/import-data/file-block.component';
@@ -48,6 +47,8 @@ import {DropColumnsBlockComponent} from './components/workflows/blocks/feature-s
 import {MultiInputParameterComponent} from './components/workflows/blocks/parameters-modal/parameters/multi-input/multi-input-parameter.component';
 import {LineService} from './services/line.service';
 import {BlockRestService} from './rest/block.rest.service';
+import { BarSettingsComponent } from './components/data/chart/bar-settings/bar-settings.component';
+import {ExecutionService} from "./services/execution.service";
 
 @NgModule({
   declarations: [
@@ -67,9 +68,10 @@ import {BlockRestService} from './rest/block.rest.service';
     HistogramSettingsComponent,
     PieSettingsComponent,
     ScatterSettingsComponent,
+    BarSettingsComponent,
     ColumnSelectorComponent,
-    NewColumnSettingsComponent,
-    ProcessFeatureComponent,
+    AddColumnSettingsComponent,
+    EditColumnComponent,
     WorkflowDirective,
     ParametersModalComponent,
     SplitDataBlockComponent,
@@ -86,7 +88,6 @@ import {BlockRestService} from './rest/block.rest.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    InfiniteScrollModule,
     DragDropDirectiveModule,
     ClickOutsideModule,
     BootstrapModalModule,
@@ -102,6 +103,7 @@ import {BlockRestService} from './rest/block.rest.service';
     BlockService,
     LineService,
     BlockRestService,
+    ExecutionService,
     {provide: RouteReuseStrategy, useClass: RoutingReuseStrategy}
   ],
   entryComponents: [

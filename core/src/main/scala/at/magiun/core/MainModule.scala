@@ -1,9 +1,10 @@
 package at.magiun.core
 
-import at.magiun.core.config.{AlgorithmOntologyConfig, H2Config, SparkConfig}
+import at.magiun.core.config.{AlgorithmOntologyConfig, H2Config, OntologyConfig, SparkConfig}
+import at.magiun.core.feature.{ColumnMetaDataComputer, _}
 import at.magiun.core.repository.{BlockRepository, DataSetRepository, DatabaseInitializer}
 import at.magiun.core.rest.{BlockController, DataSetController, ExecutionController, RestApi}
-import at.magiun.core.service.{BlockService, DataSetService, ExecutionService, JobService}
+import at.magiun.core.service._
 import at.magiun.core.statistics.AlgorithmRecommender
 import com.softwaremill.macwire._
 import com.typesafe.config.ConfigFactory
@@ -24,9 +25,13 @@ trait MainModule {
   lazy val jobService = wire[JobService]
   lazy val blockService = wire[BlockService]
   lazy val dataSetService = wire[DataSetService]
-  lazy val executor = wire[ExecutionService]
+  lazy val executionService = wire[ExecutionService]
+  lazy val executionContext = wire[ExecutionContext]
 
   // Recommenders
+  lazy val recommender = wire[Recommender]
+  lazy val columnMetaDataComputer = wire[ColumnMetaDataComputer]
+  lazy val restrictionBuilder = wire[RestrictionBuilder]
   lazy val algorithmRecommender = wire[AlgorithmRecommender]
 
   // Repositories
@@ -39,4 +44,5 @@ trait MainModule {
   lazy val spark: SparkSession = wireWith(SparkConfig.create _)
   lazy val h2 = wireWith(H2Config.create _)
   lazy val algorithmOntology = AlgorithmOntologyConfig.create()
+  lazy val model = OntologyConfig.create()
 }

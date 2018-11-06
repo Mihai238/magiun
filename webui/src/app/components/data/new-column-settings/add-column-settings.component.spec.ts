@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProcessFeatureComponent } from './process-feature.component';
+import { AddColumnSettingsComponent } from './add-column-settings.component';
 
-describe('ProcessFeatureComponent', () => {
-  let component: ProcessFeatureComponent;
-  let fixture: ComponentFixture<ProcessFeatureComponent>;
+describe('AddColumnSettingsComponent', () => {
+  let component: AddColumnSettingsComponent;
+  let fixture: ComponentFixture<AddColumnSettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProcessFeatureComponent ]
+      declarations: [ AddColumnSettingsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProcessFeatureComponent);
+    fixture = TestBed.createComponent(AddColumnSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

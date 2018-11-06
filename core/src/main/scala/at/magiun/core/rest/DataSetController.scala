@@ -1,6 +1,7 @@
 package at.magiun.core.rest
 
-import at.magiun.core.model.{MagiunDataSet, DataRow}
+import at.magiun.core.feature.Recommendations
+import at.magiun.core.model.{DataRow, MagiunDataSet}
 import at.magiun.core.rest.FutureConverter._
 import at.magiun.core.service.DataSetService
 import com.typesafe.scalalogging.LazyLogging
@@ -14,11 +15,12 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
 
   private val BASE_PATH = "datasets"
   private val ROWS_PATH = "rows"
+  private val RECOMMENDATIONS_PATH = "recommendations"
 
   //noinspection TypeAnnotation
-  lazy val api = getDataSet :+: getDataSets :+: createDataSet :+: getRows
+  lazy val api = getDataSet :+: getDataSets :+: createDataSet :+: getRows :+: getRecommendation
 
-  val getDataSet: Endpoint[MagiunDataSet] = get(BASE_PATH :: path[Int]) { id: Int =>
+  val getDataSet: Endpoint[MagiunDataSet] = get(BASE_PATH :: path[String]) { id: String =>
 
     dataSetService.find(id)
       .asTwitter
@@ -27,6 +29,8 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
   }
 
   val getDataSets: Endpoint[Seq[MagiunDataSet]] = get(BASE_PATH) {
+    logger.info("Getting all datasets")
+
     dataSetService.findAll()
       .asTwitter
       .map(Ok)
@@ -40,10 +44,10 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
       .map(Ok)
   }
 
-  val getRows: Endpoint[Seq[DataRow]] = get(BASE_PATH :: path[Int] :: ROWS_PATH ::
+  val getRows: Endpoint[Seq[DataRow]] = get(BASE_PATH :: path[String] :: ROWS_PATH ::
     paramOption("_limit") :: paramOption("_page") :: paramOption("_columns")) {
 
-    (dataSetId: Int, limit: Option[String], page: Option[String], stringColumns: Option[String]) =>
+    (dataSetId: String, limit: Option[String], page: Option[String], stringColumns: Option[String]) =>
       logger.info(s"Getting rows for dataset `$dataSetId` with limit `$limit` and page `$page` and cols `$stringColumns`")
 
       val range = for {
@@ -53,11 +57,21 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
         page = Integer.parseInt(p)
       } yield Range((page - 1) * limit, page * limit + 1)
 
-      val columns = stringColumns.map(_.split(",").map(_.trim).toSet)
+      val columns = stringColumns.map(_.split(",").map(_.trim).toSeq)
 
       dataSetService.findRows(dataSetId, range, columns)
         .asTwitter
         .map(_.get)
+        .map(Ok)
+  }
+
+  val getRecommendation: Endpoint[Recommendations] = get(BASE_PATH :: path[String] :: RECOMMENDATIONS_PATH) {
+    dataSetId: String =>
+      logger.info(s"Getting recommendations for dataset `$dataSetId`")
+
+      dataSetService.getRecommendations(dataSetId)
+        .asTwitter
+        .map(e => e.get)
         .map(Ok)
   }
 

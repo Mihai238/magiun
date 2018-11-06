@@ -1,6 +1,8 @@
 <div>
-  <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateFirstColumn($event)">
-  </chart-column-selector>
+  <div class="row chart-settings-entry">
+    <chart-column-selector [columns]="dataSet.schema.columns" (columnUpdated)="onUpdateFirstColumn($event)">
+    </chart-column-selector>
+  </div>
 
   <div [translate]="'DATA.WARN_TOO_MANY_LABELS'" [translateParams]="{max_labels: MAX_LABELS}" *ngIf="tooManyLabels"
        class="alert alert-warning" role="alert">

@@ -1,5 +1,5 @@
 import {Component, Inject, forwardRef, Input} from '@angular/core';
-import {DataTable} from './table.component';
+import {DataTableComponent} from './table.component';
 import {PAGINATION_TEMPLATE} from './pagination.template';
 import {PAGINATION_STYLE} from "./pagination.style";
 
@@ -17,7 +17,7 @@ export class DataTablePagination {
     @Input() show_input = false;
     @Input() show_numbers = true;
 
-    constructor(@Inject(forwardRef(() => DataTable)) public dataTable: DataTable) {
+    constructor(@Inject(forwardRef(() => DataTableComponent)) public dataTable: DataTableComponent) {
     }
 
     pageBack() {

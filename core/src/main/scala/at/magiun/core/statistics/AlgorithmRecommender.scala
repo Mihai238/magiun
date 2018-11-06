@@ -1,8 +1,9 @@
 package at.magiun.core.statistics
 
-import at.magiun.core.config.AlgorithmOntologyConfig
+import at.magiun.core.config.{AlgorithmOntologyConfig, AlgorithmSelectionOntology}
 import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
 import at.magiun.core.model.ontology.{OntologyClass, OntologyProperty}
+import com.softwaremill.tagging.@@
 import org.apache.jena.ontology.{DatatypeProperty, Individual, ObjectProperty, OntModel}
 import org.apache.spark.sql.SparkSession
 
@@ -10,7 +11,7 @@ import scala.collection.JavaConversions._
 
 class AlgorithmRecommender {
 
-  def recommend(spark: SparkSession, ontology: OntModel, metadata: DatasetMetadata): Set[OntologyClass.Value] = {
+  def recommend(spark: SparkSession, ontology: OntModel @@ AlgorithmSelectionOntology, metadata: DatasetMetadata): Set[OntologyClass.Value] = {
     val dataset: Individual = createIndividualForOntClass(ontology, OntologyClass.Dataset.toString)
     val algorithm: Individual = createIndividualForOntClass(ontology, OntologyClass.Algorithm.toString)
     val responseVariableDistribution: Individual = createDistributionIndividual(ontology, metadata.variableDistributions(metadata.responseVariableIndex))

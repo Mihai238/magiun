@@ -3,22 +3,25 @@ import {
 	TemplateRef, ContentChild, ViewChildren, OnInit
 } from '@angular/core';
 import { DataTableColumn } from './column.component';
-import { DataTableRow } from './row.component';
+import { DataTableRowComponent } from './row.component';
 import { DataTableParams } from '../types/data-table-params.type';
 import { RowCallback } from '../types/row-callback.type';
 import { DataTableTranslations } from '../types/data-table-translations.type';
 import { defaultTranslations } from '../types/default-translations.type';
 import { drag } from '../utils/drag';
-import { TABLE_TEMPLATE } from './table.template';
-import { TABLE_STYLE } from './table.style';
+import {Column} from "../../../../model/data-set.model";
+import {Recommendations} from "../../../../model/recommendations";
 
+/**
+ * https://github.com/ggmod/angular-5-data-table
+ */
 @Component({
   moduleId: module.id + '',
   selector: 'data-table',
-  template: TABLE_TEMPLATE,
-  styles: [TABLE_STYLE]
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css']
 })
-export class DataTable implements DataTableParams, OnInit {
+export class DataTableComponent implements DataTableParams, OnInit {
 
   private _items: any[] = [];
 
@@ -33,10 +36,12 @@ export class DataTable implements DataTableParams, OnInit {
 
   @Input() itemCount: number;
 
+  @Input() recommendations: Recommendations;
+
   // UI components:
 
   @ContentChildren(DataTableColumn) columns: QueryList<DataTableColumn>;
-  @ViewChildren(DataTableRow) rows: QueryList<DataTableRow>;
+  @ViewChildren(DataTableRowComponent) rows: QueryList<DataTableRowComponent>;
   @ContentChild('dataTableExpand') expandTemplate: TemplateRef<any>;
 
   // One-time optional bindings with default values:
@@ -48,14 +53,12 @@ export class DataTable implements DataTableParams, OnInit {
   @Input() pagination_limit = false;
   @Input() pagination_input = false;
 	@Input() pagination_numbers = true;
-	@Input() indexColumn = true;
 	@Input() indexColumnHeader = '';
 	@Input() rowColors: RowCallback;
 	@Input() rowTooltip: RowCallback;
 	@Input() selectColumn = false;
 	@Input() multiSelect = true;
 	@Input() substituteRows = true;
-	@Input() expandableRows = false;
 	@Input() translations: DataTableTranslations = defaultTranslations;
 	@Input() selectOnRowClick = false;
 	@Input() autoReload = true;
@@ -64,9 +67,7 @@ export class DataTable implements DataTableParams, OnInit {
 
 	// UI state without input:
 
-  indexColumnVisible: boolean;
 	selectColumnVisible: boolean;
-	expandColumnVisible: boolean;
 
 	// UI state: visible ge/set for the outside with @Input for one-time initial values
 
@@ -151,9 +152,7 @@ export class DataTable implements DataTableParams, OnInit {
 	}
 
 	private _initDefaultValues() {
-		this.indexColumnVisible = this.indexColumn;
 		this.selectColumnVisible = this.selectColumn;
-		this.expandColumnVisible = this.expandableRows;
 	}
 
 	private _initDefaultClickEvents() {
@@ -212,22 +211,25 @@ export class DataTable implements DataTableParams, OnInit {
 		});
 	}
 
+	// Add Column:
+
+  @Output() addColumn = new EventEmitter();
+
+	addColumnClicked() {
+    this.addColumn.emit();
+  }
+
 	// event handlers:
 
 	@Output() rowClick = new EventEmitter();
-	@Output() rowDoubleClick = new EventEmitter();
 	@Output() headerClick = new EventEmitter();
-	@Output() cellClick = new EventEmitter();
+	@Output() columnEditClick = new EventEmitter<Number>();
 
-	public rowClicked(row: DataTableRow, event) {
-		this.rowClick.emit({ row, event });
-	}
+	public columnEditClicked(column: DataTableColumn) {
+    this.columnEditClick.emit(Number(column.index));
+  }
 
-	public rowDoubleClicked(row: DataTableRow, event) {
-		this.rowDoubleClick.emit({ row, event });
-	}
-
-	private headerClicked(column: DataTableColumn, event: Event) {
+	public headerClicked(column: DataTableColumn, event: Event) {
 		if (!this._resizeInProgress) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -235,10 +237,6 @@ export class DataTable implements DataTableParams, OnInit {
 		} else {
 			this._resizeInProgress = false; // this is because I can't prevent click from mousup of the drag end
 		}
-	}
-
-	private cellClicked(column: DataTableColumn, row: DataTableRow, event: MouseEvent) {
-		this.cellClick.emit({ row, column, event });
 	}
 
 	// functions:
@@ -259,32 +257,24 @@ export class DataTable implements DataTableParams, OnInit {
 
 	private sortColumn(column: DataTableColumn) {
 		if (column.sortable) {
-			let ascending = this.sortBy === column.property ? !this.sortAsc : true;
-			this.sort(column.property, ascending);
+			let ascending = this.sortBy === column.index ? !this.sortAsc : true;
+			this.sort(column.index, ascending);
 		}
 	}
 
 	get columnCount() {
 		let count = 0;
-		count += this.indexColumnVisible ? 1 : 0;
 		count += this.selectColumnVisible ? 1 : 0;
-		count += this.expandColumnVisible ? 1 : 0;
 		this.columns.toArray().forEach(column => {
 			count += column.visible ? 1 : 0;
 		});
 		return count;
 	}
 
-	public getRowColor(item: any, index: number, row: DataTableRow) {
-		if (this.rowColors !== undefined) {
-			return (<RowCallback>this.rowColors)(item, row, index);
-		}
-	}
-
 	// selection:
 
-	selectedRow: DataTableRow;
-	selectedRows: DataTableRow[] = [];
+	selectedRow: DataTableRowComponent;
+	selectedRows: DataTableRowComponent[] = [];
 
 	private _selectAllCheckbox = false;
 
@@ -301,7 +291,7 @@ export class DataTable implements DataTableParams, OnInit {
 		this.rows.toArray().forEach(row => row.selected = value);
 	}
 
-	onRowSelectChanged(row: DataTableRow) {
+	onRowSelectChanged(row: DataTableRowComponent) {
 
 		// maintain the selectedRow(s) view
 		if (this.multiSelect) {
@@ -327,12 +317,6 @@ export class DataTable implements DataTableParams, OnInit {
 				}
 			});
 		}
-	}
-
-	// other:
-
-	get substituteItems() {
-		return Array.from({ length: this.displayParams.limit - this.items.length });
 	}
 
 	// column resizing:

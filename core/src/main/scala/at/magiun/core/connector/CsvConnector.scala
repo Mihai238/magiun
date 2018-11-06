@@ -1,7 +1,7 @@
 package at.magiun.core.connector
 
 import at.magiun.core.model._
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 class CsvConnector(spark: SparkSession) extends Connector {
 
@@ -12,20 +12,19 @@ class CsvConnector(spark: SparkSession) extends Connector {
   )
 
   override def getSchema(source: DataSetSource): Schema = {
-    val dataFrame = spark.read
-      .options(readOptions)
-      .csv(source.url)
+    val dataset = getDataset(source)
 
-    val cols = dataFrame.schema.zipWithIndex.map { case (col, index) =>
+    val cols = dataset.schema.zipWithIndex.map { case (col, index) =>
       Column(index, col.name, mapToColumnType(col.dataType))
     }
 
-    Schema(cols.toList, dataFrame.count())
+    Schema(cols.toList, dataset.count())
   }
 
-  override def getDataFrame(source: DataSetSource): DataFrame = {
+  override def getDataset(source: DataSetSource): Dataset[Row] = {
     spark.read
       .options(readOptions)
       .csv(source.url)
   }
+
 }

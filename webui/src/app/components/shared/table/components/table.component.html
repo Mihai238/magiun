@@ -1,0 +1,49 @@
+<div class="data-table-wrapper">
+  <data-table-header *ngIf="header"></data-table-header>
+
+  <div class="data-table-box">
+    <table class="table table-condensed table-bordered data-table">
+      <thead>
+      <tr>
+        <th scope="col" [hide]="!selectColumnVisible" class="select-column-header">
+          <input [hide]="!multiSelect" type="checkbox" [(ngModel)]="selectAllCheckbox"
+                 [attr.aria-label]="translations.selectAllRows" title="checkbox select all"/>
+        </th>
+        <th scope="col" *ngFor="let column of columns" #th [hide]="!column.visible"
+            (click)="headerClicked(column, $event)"
+            (keydown.enter)="headerClicked(column, $event)" (keydown.space)="headerClicked(column, $event)"
+            [class.sortable]="column.sortable" [class.resizable]="column.resizable"
+            [ngClass]="column.styleClassObject" class="column-header" [style.width]="column.width | px"
+            [attr.aria-sort]="column.sortable ? (column.index === sortBy ? (sortAsc ? 'ascending' : 'descending') : 'none') : null"
+            [attr.tabindex]="column.sortable ? '0' : null">
+          <span *ngIf="!column.headerTemplate" [textContent]="column.header"></span>
+          <span *ngIf="column.headerTemplate" [ngTemplateOutlet]="column.headerTemplate"
+                [ngOutletContext]="{column: column}"></span>
+
+          <span class="ti-pencil clickable column-icon" (click)="columnEditClicked(column)"></span>
+          <span *ngIf="recommendations" class="ti-info-alt clickable column-icon" data-html="true" data-toggle="tooltip" data-placement="top"
+                title="Types: [{{recommendations.map[column.index].colTypes}}].  Operations: [{{recommendations.map[column.index].operations}}]"></span>
+
+        </th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let item of items; let index=index" class="data-table-row-wrapper"
+             dataTableRow #row [item]="item" [index]="index" [selectColumnVisible]="selectColumnVisible"
+             (selectedChange)="onRowSelectChanged(row)" [columns]="columns">
+      </tbody>
+      <tbody *ngIf="itemCount === 0 && noDataMessage">
+      <tr>
+        <td [attr.colspan]="columnCount">{{ noDataMessage }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="loading-cover" *ngIf="showReloading && reloading"></div>
+  </div>
+
+  <data-table-pagination
+    *ngIf="pagination"
+    [show_range]="pagination_range"
+    [show_limit]="pagination_limit"
+    [show_input]="pagination_input"
+    [show_numbers]="pagination_numbers"></data-table-pagination>
+</div>

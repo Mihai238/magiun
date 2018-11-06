@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DataComponent} from './data.component';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {DataService} from '../../services/data.service';
 import {HttpClientModule} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
@@ -28,7 +27,6 @@ describe('DataComponent', () => {
         TableColumnStubComponent
       ],
       imports: [
-        InfiniteScrollModule,
         HttpClientModule,
         logging,
         TranslateModule.forRoot()
@@ -83,7 +81,7 @@ class ChartStubComponent {
 }
 
 @Component({
-  selector: 'data-new-column-settings',
+  selector: 'data-add-column-settings',
   template: ''
 })
 class NewColumnSettingsStubComponent {
@@ -92,7 +90,7 @@ class NewColumnSettingsStubComponent {
 }
 
 @Component({
-  selector: 'data-process-feature',
+  selector: 'data-edit-column',
   template: ''
 })
 class ProcessFeatureStubComponent {

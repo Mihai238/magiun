@@ -1,5 +1,5 @@
 import { Component, Inject, forwardRef } from '@angular/core';
-import { DataTable } from './table.component';
+import { DataTableComponent } from './table.component';
 import { HEADER_TEMPLATE } from './header.template';
 import { HEADER_STYLE } from "./header.style";
 
@@ -21,5 +21,5 @@ export class DataTableHeader {
         this.columnSelectorOpen = false;
     }
 
-    constructor(@Inject(forwardRef(() => DataTable)) public dataTable: DataTable) {}
+    constructor(@Inject(forwardRef(() => DataTableComponent)) public dataTable: DataTableComponent) {}
 }

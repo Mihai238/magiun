@@ -6,7 +6,7 @@
       <div id="chart-settings" class="col">
         <h5>{{'DATA.CHART_SETTINGS' | translate}}</h5>
 
-        <div class="row chart-settings-entry">
+        <div class="row chart-settings-entry chart-type-entry">
           <span class="col">{{'DATA.CHART_TYPE' | translate}}</span>
           <div class="col dropdown">
             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -27,6 +27,8 @@
                             *ngIf="selectedChartType === ChartType.pie"></chart-pie-settings>
         <chart-scatter-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)"
                                 *ngIf="selectedChartType === ChartType.scatter"></chart-scatter-settings>
+        <chart-bar-settings [dataSet]="dataSet" (settingsUpdated)="handleSettingsUpdated($event)"
+                                *ngIf="selectedChartType === ChartType.bar"></chart-bar-settings>
 
       </div>
     </div>

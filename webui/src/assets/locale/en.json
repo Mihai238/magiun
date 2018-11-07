@@ -3,6 +3,7 @@
   "NO": "No",
   "NAVBAR": {
     "DATA": "Feature Engineering",
+    "MODEL_SELECTION": "Model Selection",
     "WORKFLOWS": "Workflows"
   },
   "FOOTER": {

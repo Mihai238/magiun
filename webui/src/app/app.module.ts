@@ -49,6 +49,7 @@ import {LineService} from './services/line.service';
 import {BlockRestService} from './rest/block.rest.service';
 import { BarSettingsComponent } from './components/data/chart/bar-settings/bar-settings.component';
 import {ExecutionService} from "./services/execution.service";
+import {ModelSelectionComponent} from "./components/model-selection/model-selection.component";
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import {ExecutionService} from "./services/execution.service";
     SelectParameterComponent,
     InputParameterComponent,
     MultiInputParameterComponent,
-    CheckboxParameterComponent
+    CheckboxParameterComponent,
+    ModelSelectionComponent
   ],
   imports: [
     CommonModule,

@@ -4,7 +4,7 @@ import at.magiun.core.TestData._
 import at.magiun.core.connector.CsvConnector
 import at.magiun.core.{MainModule, UnitTest}
 
-// TODO: fixeme mihailepadat
+// TODO: fixme mihailepadat
 class ColumnMetaDataComputerTest extends UnitTest {
 
   private val mainModule = new MainModule {}

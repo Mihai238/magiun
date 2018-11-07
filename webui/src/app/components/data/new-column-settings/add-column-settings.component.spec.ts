@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddColumnSettingsComponent } from './add-column-settings.component';
+import {ExecutionService} from "../../../services/execution.service";
+import {BlockRestService} from "../../../rest/block.rest.service";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClient, HttpClientModule, HttpHandler} from "@angular/common/http";
+import {logging} from "../../../app.logging";
+import {DataSet} from "../../../model/data-set.model";
 
 describe('AddColumnSettingsComponent', () => {
   let component: AddColumnSettingsComponent;
@@ -8,7 +14,18 @@ describe('AddColumnSettingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddColumnSettingsComponent ]
+      declarations: [
+        AddColumnSettingsComponent
+      ],
+      providers: [
+        ExecutionService,
+        BlockRestService
+      ],
+      imports: [
+        FormsModule,
+        HttpClientModule,
+        logging
+      ]
     })
     .compileComponents();
   }));

@@ -3,6 +3,10 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActionType, EditColumnComponent} from './edit-column.component';
 import {logging} from "../../../app.logging";
 import {DataService} from "../../../services/data.service";
+import {ExecutionService} from "../../../services/execution.service";
+import {BlockRestService} from "../../../rest/block.rest.service";
+import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 describe('EditColumnComponent', () => {
 
@@ -12,13 +16,17 @@ describe('EditColumnComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        EditColumnComponent
+        EditColumnComponent,
       ],
       imports: [
+        FormsModule,
+        HttpClientModule,
         logging
       ],
       providers: [
-        DataService
+        DataService,
+        ExecutionService,
+        BlockRestService
       ]
     })
       .compileComponents();

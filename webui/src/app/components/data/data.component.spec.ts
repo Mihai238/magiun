@@ -9,7 +9,7 @@ import 'rxjs/add/observable/of';
 import {TranslateModule} from '@ngx-translate/core';
 import {Component, Input} from '@angular/core';
 import {Column, DataSet} from '../../model/data-set.model';
-import {RowCallback} from '../shared/table/types/row-callback.type';
+import {RowCallback} from '../shared/table';
 
 describe('DataComponent', () => {
   let component: DataComponent;

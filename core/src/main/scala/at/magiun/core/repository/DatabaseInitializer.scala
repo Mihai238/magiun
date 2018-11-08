@@ -8,7 +8,7 @@ class DatabaseInitializer(dataSetRepository: DataSetRepository,
 
   private val sampleCsvUrl = "file://" + getClass.getClassLoader.getResource("titanic.csv").getFile
   private val incomeCsvUrl = "file://" + getClass.getClassLoader.getResource("income.csv").getFile
-  private val bigCsvUrl = "file://" + getClass.getClassLoader.getResource("big.csv").getFile
+  private lazy val bigCsvUrl = "file://" + getClass.getClassLoader.getResource("big.csv").getFile
 
   def init(): Unit = {
     insertDataSet(MagiunDataSetEntity(0, "titanic", "FileCsv", sampleCsvUrl))

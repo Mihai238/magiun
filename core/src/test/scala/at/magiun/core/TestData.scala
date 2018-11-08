@@ -12,8 +12,8 @@ object TestData {
   val incomeCsvUrl = s"file://$incomeCsvPath"
 
   // https://www.kaggle.com/c/acm-sf-chapter-hackathon-big/data
-  //val bigCsvPath: String = getClass.getClassLoader.getResource("big.csv").getFile
-  //val bigCsvUrl = s"file://$bigCsvPath"
+  lazy val bigCsvPath: String = getClass.getClassLoader.getResource("big.csv").getFile
+  val bigCsvUrl = s"file://$bigCsvPath"
 
   val titanicDataSetSource = DataSetSource(SourceType.FileCsv, titanicCsvUrl)
   val incomeDataSetSource = DataSetSource(SourceType.FileCsv, incomeCsvUrl)

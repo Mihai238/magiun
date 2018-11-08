@@ -1,5 +1,12 @@
 <div class="container">
   <div class="main-content">
- 
+    <div *ngIf="data == null">
+      <p>
+        {{ 'MODEL_SELECTION.NO_DATA_SET' | translate }}
+      </p>
+    </div>
+    <div *ngIf="data != null">
+
+    </div>
   </div>
 </div>

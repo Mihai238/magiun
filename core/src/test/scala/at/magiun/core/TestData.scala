@@ -13,11 +13,11 @@ object TestData {
 
   // https://www.kaggle.com/c/acm-sf-chapter-hackathon-big/data
   lazy val bigCsvPath: String = getClass.getClassLoader.getResource("big.csv").getFile
-  val bigCsvUrl = s"file://$bigCsvPath"
+  lazy val bigCsvUrl = s"file://$bigCsvPath"
 
   val titanicDataSetSource = DataSetSource(SourceType.FileCsv, titanicCsvUrl)
   val incomeDataSetSource = DataSetSource(SourceType.FileCsv, incomeCsvUrl)
-  //val bigDataSetSource = DataSetSource(SourceType.FileCsv, bigCsvUrl)
+  lazy val bigDataSetSource = DataSetSource(SourceType.FileCsv, bigCsvUrl)
   val mongoDataSource = DataSetSource(SourceType.Mongo, "mongodb://127.0.0.1/testDb/testCollection")
 
   val testDs1 = MagiunDataSet("1", "gigi", DataSetSource(SourceType.Mongo, "url") , Option.empty)

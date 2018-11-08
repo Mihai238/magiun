@@ -18,8 +18,8 @@ class ColumnMetaDataComputerTest extends UnitTest {
   ignore should "try to guess column types for titanic dataset" in {
     val columnsMeta = columnMetaDataComputer.compute(connector.getDataset(titanicDataSetSource), restrictions)
 
-    columnsMeta(1).valueTypes should contain only("StringValue", "BooleanValue", "IntValue", "HumanAgeValue")
-    columnsMeta(1).uniqueValues.size should be(1)
+    columnsMeta(1).valueTypes should contain only("StringValue", "BooleanValue", "NumericValue", "IntValue", "HumanAgeValue")
+    columnsMeta(1).uniqueValues.size should be(2)
 
     columnsMeta(4).valueTypes should contain only("StringValue", "GenderValue", "IntValue")
 
@@ -29,7 +29,7 @@ class ColumnMetaDataComputerTest extends UnitTest {
   ignore should "try to guess column types for income dataset" in {
     val columnsMeta = columnMetaDataComputer.compute(connector.getDataset(incomeDataSetSource), restrictions)
 
-    columnsMeta(5).valueTypes should contain only("StringValue", "IntValue", "MaritalStatusValue")
+    columnsMeta(5).valueTypes should contain only("StringValue", "MaritalStatusValue")
   }
 
 }

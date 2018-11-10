@@ -13,16 +13,8 @@ describe('ColumnSelectorComponent', () => {
   let dropDownElem: DebugElement;
 
   const columns: Column[] = [
-    {
-      index: 1,
-      name: 'col1',
-      type: ColumnType.Double
-    },
-    {
-      index: 2,
-      name: 'col2',
-      type: ColumnType.Int
-    }
+    new Column(1,'col1', ColumnType.Double),
+    new Column(2,'col2', ColumnType.Int)
   ];
 
 

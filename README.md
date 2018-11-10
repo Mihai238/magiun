@@ -14,6 +14,6 @@
 
 #### Frontend:
 
-* angular
+* angular 4
 * adminator - html admin template
 * themify - icons

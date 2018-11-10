@@ -6,7 +6,7 @@ import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/observable/throw';
-import {ColumnType, DataSet, Schema} from '../model/data-set.model';
+import {Column, ColumnType, DataSet, Schema} from '../model/data-set.model';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {DataTableParams} from '../components/shared/table';
 import {Recommendations} from "../model/recommendations";
@@ -26,11 +26,7 @@ export class DataService {
       .map((resp: DataSet) => {
         this.logger.info('Got data set' + resp);
 
-        return {
-          id: resp.id,
-          name: resp.name,
-          schema: this.mapSchema(resp.schema)
-        };
+        return new DataSet(resp.id, resp.name, this.mapSchema(resp.schema));
       })
       .catch((error: any) => {
         if (typeof error.json === 'function') {
@@ -46,11 +42,7 @@ export class DataService {
       .map((resp: DataSet[]) => {
         this.logger.debug('Got all data sets' + resp);
 
-        return resp.map(e => ({
-          id: e.id,
-          name: e.name,
-          schema: this.mapSchema(e.schema)
-        }));
+        return resp.map(e => ( new DataSet(e.id, e.name, this.mapSchema(e.schema))));
       })
       .catch((error: any) => {
         if (typeof error.json === 'function') {
@@ -62,20 +54,17 @@ export class DataService {
   }
 
   private mapSchema(schema: Schema): Schema {
-    const columns = schema.columns.map(column => {
+    const columns: Column[] = schema.columns.map(column => {
       const type = ColumnType[column.type];
       if (type === undefined) {
         throw Error('ColumnType not defined: ' + column.type);
       }
 
-      return {
-        index: column.index,
-        name: column.name,
-        type: ColumnType[column.type]
-      };
+      return new Column(column.index, column.name, ColumnType[column.type])
+
     });
 
-    return {columns: columns, totalCount: schema.totalCount};
+    return new Schema(columns, schema.totalCount);
   }
 
   getData(dataSet: DataSet, page = 1): Observable<DataRow[]> {

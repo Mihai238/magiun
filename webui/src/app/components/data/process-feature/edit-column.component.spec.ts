@@ -7,6 +7,7 @@ import {ExecutionService} from "../../../services/execution.service";
 import {BlockRestService} from "../../../rest/block.rest.service";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {Column} from "../../../model/data-set.model";
 
 describe('EditColumnComponent', () => {
 
@@ -35,7 +36,7 @@ describe('EditColumnComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EditColumnComponent);
     component = fixture.componentInstance;
-    component.column = {index: 0, name: "SomeColumnName", type: undefined};
+    component.column = new Column(0, "SomeColumnName", undefined);
     fixture.detectChanges();
   });
 

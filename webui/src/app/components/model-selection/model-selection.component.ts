@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {NGXLogger} from "ngx-logger";
 import {DataService} from "../../services/data.service";
-import {Data, NavigationEnd, Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {DataSet} from "../../model/data-set.model";
+import {MagiunLogger} from "../../util/magiun.logger";
 
 @Component({
   selector: 'app-model-selection',
@@ -11,45 +12,57 @@ import {DataSet} from "../../model/data-set.model";
 })
 export class ModelSelectionComponent {
 
+  private logger: MagiunLogger;
   private datasets: DataSet[] = [];
   private selectedDataset: DataSet;
 
   constructor(
     private dataService: DataService,
-    private logger: NGXLogger,
+    ngxlogger: NGXLogger,
     private router: Router
   ) {
-    this.logger.info("ModelSelectionComponent: created!");
+    this.logger = new MagiunLogger(ModelSelectionComponent.name, ngxlogger);
+    this.logger.info("created!");
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd && val.url == '/model-selection') {
-        this.updateTheDatasets();
+        this.refreshTheDatasets();
       }
     })
   }
 
-  private updateTheDatasets(): void {
-    this.logger.info("ModelSelectionComponent: view selected!");
-    this.logger.info("ModelSelectionComponent: trying to retrieve data!");
+  private refreshTheDatasets(): void {
+    this.logger.info("view selected!");
+    this.logger.info("trying to retrieve current data!");
     this.dataService.getDataSets().subscribe(value => {
       this.datasets = value;
-      this.updatedSelectedDataset();
+      this.refreshSelectedDataset();
     });
   }
 
-  private updatedSelectedDataset(): void {
+  private refreshSelectedDataset(): void {
     let numberOfDatasets = this.datasets.length;
 
     if (this.selectedDataset == null && numberOfDatasets > 0) {
       this.selectedDataset = this.datasets[0];
-    } else if (this.selectedDataset != null && numberOfDatasets > 0 && !this.datasets.some(d => this.compareDatasets(this.selectedDataset, d))) {
+    } else if (this.selectedDataset != null && numberOfDatasets > 0 && !this.datasets.some(d => this.selectedDataset.equals(d))) {
       this.selectedDataset = this.datasets[0];
-      this.logger.info("HOLA!")
     } else if (this.selectedDataset != null && numberOfDatasets == 0) {
       this.selectedDataset = null;
     }
+    this.logSelectedDatasetInfo();
   }
 
-  private compareDatasets(d1: DataSet, d2: DataSet): boolean {
-    return d1 != null && d2 != null && d1.name == d2.name && d1.id == d2.id && d1.schema.totalCount == d2.schema.totalCount;
+  updateSelectedDataset(event: any): void {
+    console.log(event);
+    this.selectedDataset = this.datasets[<number>event];
+    this.logSelectedDatasetInfo();
+  }
+
+  private logSelectedDatasetInfo() {
+    if (this.selectedDataset != null) {
+      this.logger.info("the selected dataset is \"" + this.selectedDataset.name + "\"!");
+    } else {
+      this.logger.info("the selected dataset is null!")
+    }
   }
 }

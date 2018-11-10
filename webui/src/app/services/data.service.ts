@@ -10,15 +10,18 @@ import {Column, ColumnType, DataSet, Schema} from '../model/data-set.model';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {DataTableParams} from '../components/shared/table';
 import {Recommendations} from "../model/recommendations";
+import {MagiunLogger} from "../util/magiun.logger";
 
 @Injectable()
 export class DataService {
 
+  private logger: MagiunLogger;
   private readonly sizePerPage = 20;
   private readonly dataSetsPath = '/datasets/';
 
   constructor(private http: HttpClient,
-              private logger: NGXLogger) {
+              ngxlogger: NGXLogger) {
+    this.logger = new MagiunLogger(DataService.name, ngxlogger)
   }
 
   getDataSet(id: String): Observable<DataSet> {
@@ -83,7 +86,7 @@ export class DataService {
     columns.forEach(col => columnsString += col + ",");
     columnsString = columnsString.substring(0, columnsString.length - 1);
 
-    this.logger.info('DataService: load all data for dataset with id "' + dataSet.id + '" and column(s) "' + columnsString + '"');
+    this.logger.info('load all data for dataset with id "' + dataSet.id + '" and column(s) "' + columnsString + '"');
 
     return this.http.get(environment.baseUrl + this.dataSetsPath + dataSet.id + '/rows' + '?_columns=' + columnsString)
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
@@ -91,7 +94,7 @@ export class DataService {
 
   getDataForTable(dataSet: DataSet, params: DataTableParams): Promise<{ items: DataRow[] | null; count: number }> {
     let queryString = this.paramsToQueryString(params);
-    this.logger.info('DataSerice: get data for table with queryString ' + queryString);
+    this.logger.info('get data for table with queryString ' + queryString);
 
     return this.http.get(environment.baseUrl + this.dataSetsPath + dataSet.id + '/rows?' + queryString, {observe: 'response'}).toPromise()
       .then((resp: HttpResponse<DataRow[]>) => {

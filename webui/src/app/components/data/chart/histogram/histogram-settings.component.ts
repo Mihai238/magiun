@@ -3,6 +3,7 @@ import {ChartData} from '../../../../model/chart-data.model';
 import {Column, DataSet} from '../../../../model/data-set.model';
 import {DataService} from '../../../../services/data.service';
 import {NGXLogger} from "ngx-logger";
+import {MagiunLogger} from "../../../../util/magiun.logger";
 
 @Component({
   selector: 'chart-histogram-settings',
@@ -10,6 +11,8 @@ import {NGXLogger} from "ngx-logger";
   styleUrls: ['./histogram-settings.component.scss']
 })
 export class HistogramSettingsComponent implements OnInit, OnChanges {
+
+  private logger: MagiunLogger;
 
   @Input() dataSet: DataSet;
   @Output() settingsUpdated = new EventEmitter();
@@ -23,7 +26,8 @@ export class HistogramSettingsComponent implements OnInit, OnChanges {
   isOverlaidEnabled: boolean;
 
   constructor(private dataService: DataService,
-              private logger: NGXLogger) {
+              ngxlogger: NGXLogger) {
+    this.logger = new MagiunLogger(HistogramSettingsComponent.name, ngxlogger);
   }
 
   ngOnInit() {
@@ -59,7 +63,7 @@ export class HistogramSettingsComponent implements OnInit, OnChanges {
   }
 
   getDataAndUpdate() {
-    this.logger.info('HistogramSettingsComponent: get data and update');
+    this.logger.info('get data and update');
 
     if (this.isOverlaidEnabled) {
       this.dataService.getAllData(this.dataSet, [this.selectedColumn.name, this.selectedGroupByColumn.name]).subscribe(rows => {

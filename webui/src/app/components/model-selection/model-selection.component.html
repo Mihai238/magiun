@@ -8,8 +8,8 @@
     <div *ngIf="datasets != null && datasets.length > 0">
       <form>
         <label>Dataset:</label>
-        <select>
-          <option *ngFor="let d of datasets">{{d.name}}</option>
+        <select (change)="updateSelectedDataset($event.target.value)">
+          <option *ngFor="let d of datasets" value="{{datasets.indexOf(d)}}">{{d.name}}</option>
         </select>
       </form>
     </div>

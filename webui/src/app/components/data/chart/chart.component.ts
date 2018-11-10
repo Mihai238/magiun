@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChil
 import {ChartData} from '../../../model/chart-data.model';
 import {DataSet} from '../../../model/data-set.model';
 import {NGXLogger} from 'ngx-logger';
+import {MagiunLogger} from "../../../util/magiun.logger";
 
 declare var Plotly: any;
 
@@ -12,13 +13,16 @@ declare var Plotly: any;
 })
 export class ChartComponent implements OnInit, OnChanges {
 
+  private logger: MagiunLogger;
+
   @Input() dataSet: DataSet;
   @ViewChild('chart') chartEl: ElementRef;
 
   public ChartType = ChartType;
   selectedChartType: ChartType;
 
-  constructor(private logger: NGXLogger) {
+  constructor(ngxlogger: NGXLogger) {
+    this.logger = new MagiunLogger(ChartComponent.name, ngxlogger);
   }
 
   ngOnInit() {
@@ -39,7 +43,7 @@ export class ChartComponent implements OnInit, OnChanges {
   }
 
   handleSettingsUpdated(chartData: ChartData) {
-    this.logger.info('ChartComponent: settings updated');
+    this.logger.info('settings updated');
 
     chartData.layout.height = 400;
     chartData.layout.width = 500;

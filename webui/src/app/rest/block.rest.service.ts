@@ -6,13 +6,17 @@ import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {Block} from "../model/block.model";
 import {Observable} from "rxjs";
+import {MagiunLogger} from "../util/magiun.logger";
 
 @Injectable()
 export class BlockRestService {
 
+  private logger: MagiunLogger;
   private blocksUrl = environment.baseUrl + '/blocks/';
 
-  constructor(private http: HttpClient, private logger: NGXLogger) {}
+  constructor(private http: HttpClient, ngxlogger: NGXLogger) {
+    this.logger = new MagiunLogger(BlockRestService.name, ngxlogger);
+  }
 
   createBlock(block: Block): Observable<string> {
     this.logger.info('Creating block: ' + JSON.stringify(block));

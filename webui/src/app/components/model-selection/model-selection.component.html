@@ -43,6 +43,7 @@
             <tag-input-dropdown
               [autocompleteItems]="selectedDataset.schema.columns"
               [displayBy]="'name'"
+              [identifyBy]="'name'"
               [focusFirstElement]="true">
               <ng-template let-item="item" let-index="index">
                 {{ item.name }} : {{ item.type }}

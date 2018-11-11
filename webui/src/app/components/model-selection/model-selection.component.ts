@@ -85,12 +85,4 @@ export class ModelSelectionComponent {
     this.columnsToIgnore = CollectionsUtils.deleteEntryFromArray(this.columnsToIgnore, <Column>column);
     this.logger.info("removing column \"" + column.name + "\" from the ignore list");
   }
-
-  columns = (text: string): Observable<Column[]> => {
-    if (this.selectedDataset != null) {
-      return of(this.selectedDataset.schema.columns)
-    } else {
-      return of()
-    }
-  }
 }

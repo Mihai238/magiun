@@ -27,7 +27,10 @@
     "REMOVE_COLUMN_QUESTION": "Are you sure you want to delete the column \"{{column_name}}\"?"
   },
   "MODEL_SELECTION": {
-    "NO_DATA_SET": "No dataset was uploaded!"
+    "NO_DATA_SET": "No dataset was uploaded!",
+    "DATA_SET": "Dataset:",
+    "TARGET_VARIABLE": "Target variable:",
+    "IGNORE_VARIABLES": "Variables to ignore:"
   },
   "WORKFLOWS": {
     "PLACE_HOLDER": "To create your workflow, drag and drop datasets and modules here!",

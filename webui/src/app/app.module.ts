@@ -1,6 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouteReuseStrategy} from '@angular/router';
@@ -121,6 +121,7 @@ import {ModelSelectionComponent} from "./components/model-selection/model-select
     InputParameterComponent,
     CheckboxParameterComponent
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -7,11 +7,57 @@
     </div>
     <div *ngIf="datasets != null && datasets.length > 0">
       <form>
-        <label>Dataset:</label>
-        <select (change)="updateSelectedDataset($event.target.value)">
-          <option *ngFor="let d of datasets" value="{{datasets.indexOf(d)}}">{{d.name}}</option>
-        </select>
+        <div class="form-group">
+          <label for="datasetSelect">{{ 'MODEL_SELECTION.DATA_SET' | translate }}</label>
+          <select class="form-control" id="datasetSelect" (change)="updateSelectedDataset($event.target.value)">
+            <option *ngFor="let d of datasets" value="{{datasets.indexOf(d)}}">{{d.name}}</option>
+          </select>
+        </div>
       </form>
+      <br/>
+      <hr/>
+      <br/>
+      <form>
+        <div class="form-group">
+          <label for="targetVariableSelect">{{ 'MODEL_SELECTION.TARGET_VARIABLE' | translate }}</label>
+          <select class="form-control" id="targetVariableSelect">
+            <option *ngFor="let c of selectedDataset.schema.columns">{{c.name}} : {{c.type}}</option>
+          </select>
+        </div>
+      </form>
+      <br/>
+      <hr/>
+      <br/>
+      <form>
+        <div class="form-group">
+          <label for="targetVariableSelect">{{ 'MODEL_SELECTION.IGNORE_VARIABLES' | translate }}</label>
+          <tag-input
+                     [ngModel]="columnsToIgnore"
+                     [ngModelOptions]="{standalone: true}"
+                     [placeholder]="'Enter variables to ignore'"
+                     [secondaryPlaceholder]="'Enter variables to ignore'"
+                     [onlyFromAutocomplete]="true"
+                     (onAdd)="addIgnoreColumn($event)"
+                     (onRemove)="removeIgnoreColumn($event)"
+                     theme='bootstrap'>
+            <tag-input-dropdown
+              [autocompleteItems]="selectedDataset.schema.columns"
+              [displayBy]="'name'"
+              [focusFirstElement]="true">
+              <ng-template let-item="item" let-index="index">
+                {{ item.name }} : {{ item.type }}
+              </ng-template>
+            </tag-input-dropdown>
+          </tag-input>
+        </div>
+      </form>
+      <br/>
+      <hr/>
+      <br/>
+      <button type="submit" class="btn btn-primary mb-2">Recommend</button>
+      <br/>
+      <hr/>
+      <br/>
     </div>
   </div>
 </div>

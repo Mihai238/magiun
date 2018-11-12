@@ -20,8 +20,8 @@
       <form>
         <div class="form-group">
           <label for="targetVariableSelect">{{ 'MODEL_SELECTION.TARGET_VARIABLE' | translate }}</label>
-          <select class="form-control" id="targetVariableSelect">
-            <option *ngFor="let c of selectedDataset.schema.columns">{{c.name}} : {{c.type}}</option>
+          <select class="form-control" id="targetVariableSelect" (change)="updateTargetVariable($event.target.value)">
+            <option *ngFor="let c of selectedDataset.schema.columns" value="{{c.index}}">{{c.name}} : {{c.type}}</option>
           </select>
         </div>
       </form>
@@ -55,7 +55,7 @@
       <br/>
       <hr/>
       <br/>
-      <button type="submit" class="btn btn-primary mb-2">Recommend</button>
+      <button type="submit" class="btn btn-primary mb-2" (click)="recommend()">Recommend</button>
       <br/>
       <hr/>
       <br/>

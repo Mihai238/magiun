@@ -23,6 +23,7 @@ export class ModelSelectionComponent {
   private datasets: DataSet[] = [];
   private selectedDataset: DataSet;
   private columnsToIgnore: Column[] = [];
+  private targetVariable: Column;
 
   constructor(
     private dataService: DataService,
@@ -51,13 +52,12 @@ export class ModelSelectionComponent {
     let numberOfDatasets = this.datasets.length;
 
     if (this.selectedDataset == null && numberOfDatasets > 0) {
-      this.selectedDataset = this.datasets[0];
-      this.columnsToIgnore = [];
+      this.refresh();
     } else if (this.selectedDataset != null && numberOfDatasets > 0 && !this.datasets.some(d => this.selectedDataset.equals(d))) {
-      this.selectedDataset = this.datasets[0];
-      this.columnsToIgnore = [];
+      this.refresh();
     } else if (this.selectedDataset != null && numberOfDatasets == 0) {
       this.selectedDataset = null;
+      this.targetVariable = null;
       this.columnsToIgnore = [];
     }
     this.logSelectedDatasetInfo();
@@ -65,24 +65,49 @@ export class ModelSelectionComponent {
 
   updateSelectedDataset(event: any): void {
     this.selectedDataset = this.datasets[<number>event];
+    this.targetVariable = this.selectedDataset.schema.columns[0];
     this.logSelectedDatasetInfo();
   }
 
-  private logSelectedDatasetInfo() {
+  updateTargetVariable(event: any): void {
+    this.targetVariable = this.selectedDataset.schema.columns[<number>event];
+    this.logTargetVariable();
+  }
+
+  private logSelectedDatasetInfo(): void {
     if (this.selectedDataset != null) {
       this.logger.info("the selected dataset is \"" + this.selectedDataset.name + "\"!");
     } else {
-      this.logger.info("the selected dataset is null!")
+      this.logger.info("the selected dataset is null!");
+    }
+    this.logTargetVariable();
+  }
+
+  private logTargetVariable(): void {
+    if (this.targetVariable != null) {
+      this.logger.info("the selected target variable is \"" + this.targetVariable.name + "\"!");
+    } else {
+      this.logger.info("the selected target variable is null!");
     }
   }
 
-  addIgnoreColumn(column: any) {
+  private refresh(): void {
+    this.selectedDataset = this.datasets[0];
+    this.targetVariable = this.selectedDataset.schema.columns[0];
+    this.columnsToIgnore = [];
+  }
+
+  addIgnoreColumn(column: any): void {
     this.columnsToIgnore.push(<Column>column);
     this.logger.info("adding column \"" + column.name + "\" to the ignore list");
   }
 
-  removeIgnoreColumn(column: any) {
+  removeIgnoreColumn(column: any): void {
     this.columnsToIgnore = CollectionsUtils.deleteEntryFromArray(this.columnsToIgnore, <Column>column);
     this.logger.info("removing column \"" + column.name + "\" from the ignore list");
+  }
+
+  recommend(): void {
+    this.logger.warn("hola!");
   }
 }

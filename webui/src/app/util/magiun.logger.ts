@@ -10,27 +10,57 @@ export class MagiunLogger {
     this.logger = logger;
   }
 
-  info(message: string): void {
-    this.logger.info(this.clazz.concat(": ").concat(message));
+  info(message: any, ...additional: any[]): void {
+    let m = this.clazz.concat(": ").concat(message);
+    if (additional != null && additional.length > 0) {
+      this.logger.info(m, additional);
+    } else {
+      this.logger.info(m);
+    }
   }
 
-  debug(message: string): void {
-    this.logger.debug(this.clazz.concat(": ").concat(message));
+  debug(message: any, ...additional: any[]): void {
+    let m = this.clazz.concat(": ").concat(message);
+    if (additional != null && additional.length > 0) {
+      this.logger.debug(m, additional);
+    } else {
+      this.logger.debug(m);
+    }
   }
 
-  error(message: string): void {
-    this.logger.error(this.clazz.concat(": ").concat(message));
+  error(message: any, ...additional: any[]): void {
+    let m = this.clazz.concat(": ").concat(message);
+    if (additional != null && additional.length > 0) {
+      this.logger.error(m, additional);
+    } else {
+      this.logger.error(m);
+    }
   }
 
-  log(message: string): void {
-    this.logger.log(this.clazz.concat(": ").concat(message));
+  log(message: any, ...additional: any[]): void {
+    let m = this.clazz.concat(": ").concat(message);
+    if (additional != null && additional.length > 0) {
+      this.logger.log(m, additional);
+    } else {
+      this.logger.log(m);
+    }
   }
 
-  trace(message: string): void {
-    this.logger.trace(this.clazz.concat(": ").concat(message));
+  trace(message: any, ...additional: any[]): void {
+    let m = this.clazz.concat(": ").concat(message);
+    if (additional != null && additional.length > 0) {
+      this.logger.trace(m, additional);
+    } else {
+      this.logger.trace(m);
+    }
   }
 
-  warn(message: string): void {
-    this.logger.warn(this.clazz.concat(": ").concat(message));
+  warn(message: any, ...additional: any[]): void {
+    let m = this.clazz.concat(": ").concat(message);
+    if (additional != null && additional.length > 0) {
+      this.logger.warn(m, additional);
+    } else {
+      this.logger.warn(m);
+    }
   }
 }

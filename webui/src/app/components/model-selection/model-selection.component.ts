@@ -11,6 +11,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/first';
 import {CollectionsUtils} from "../../util/collections.utils";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-model-selection',
@@ -27,8 +28,9 @@ export class ModelSelectionComponent {
 
   constructor(
     private dataService: DataService,
-    ngxlogger: NGXLogger,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService,
+    ngxlogger: NGXLogger
   ) {
     this.logger = new MagiunLogger(ModelSelectionComponent.name, ngxlogger);
     this.logger.info("created!");
@@ -66,6 +68,7 @@ export class ModelSelectionComponent {
   updateSelectedDataset(event: any): void {
     this.selectedDataset = this.datasets[<number>event];
     this.targetVariable = this.selectedDataset.schema.columns[0];
+    this.columnsToIgnore = [];
     this.logSelectedDatasetInfo();
   }
 
@@ -99,15 +102,21 @@ export class ModelSelectionComponent {
 
   addIgnoreColumn(column: any): void {
     this.columnsToIgnore.push(<Column>column);
-    this.logger.info("adding column \"" + column.name + "\" to the ignore list");
+    this.logger.info("adding column \"" + column.name + "\" to the ignore list!");
   }
 
   removeIgnoreColumn(column: any): void {
     this.columnsToIgnore = CollectionsUtils.deleteEntryFromArray(this.columnsToIgnore, <Column>column);
-    this.logger.info("removing column \"" + column.name + "\" from the ignore list");
+    this.logger.info("removing column \"" + column.name + "\" from the ignore list!");
   }
 
   recommend(): void {
+    if (this.columnsToIgnore.some(c => this.targetVariable.equals(c))) {
+      alert(this.translate.instant("MODEL_SELECTION.TARGET_VARIABLE_IS_IGNORE"));
+    } else if (this.columnsToIgnore.length > 0 && this.columnsToIgnore.length == this.selectedDataset.schema.columns.length - 1) {
+      alert(this.translate.instant("MODEL_SELECTION.NO_VARIABLES_LEFT"));
+    }
+
     this.logger.warn("hola!");
   }
 }

@@ -30,7 +30,10 @@
     "NO_DATA_SET": "No dataset was uploaded!",
     "DATA_SET": "Dataset:",
     "TARGET_VARIABLE": "Target variable:",
-    "IGNORE_VARIABLES": "Variables to ignore:"
+    "IGNORE_VARIABLES": "Variables to ignore:",
+    "IGNORE_VARIABLES_PLACEHOLDER": "Enter variables to ignore",
+    "TARGET_VARIABLE_IS_IGNORE": "The target variable is also selected as an ignore variable!",
+    "NO_VARIABLES_LEFT": "There are no variables left, all variables were selected as ignore variables!"
   },
   "WORKFLOWS": {
     "PLACE_HOLDER": "To create your workflow, drag and drop datasets and modules here!",

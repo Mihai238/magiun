@@ -30,16 +30,17 @@
       <br/>
       <form>
         <div class="form-group">
-          <label for="targetVariableSelect">{{ 'MODEL_SELECTION.IGNORE_VARIABLES' | translate }}</label>
+          <label for="ignoreVariablesTags">{{ 'MODEL_SELECTION.IGNORE_VARIABLES' | translate }}</label>
           <tag-input
-                     [ngModel]="columnsToIgnore"
-                     [ngModelOptions]="{standalone: true}"
-                     [placeholder]="'Enter variables to ignore'"
-                     [secondaryPlaceholder]="'Enter variables to ignore'"
-                     [onlyFromAutocomplete]="true"
-                     (onAdd)="addIgnoreColumn($event)"
-                     (onRemove)="removeIgnoreColumn($event)"
-                     theme='bootstrap'>
+            id="ignoreVariablesTags"
+            [ngModel]="columnsToIgnore"
+            [ngModelOptions]="{standalone: true}"
+            [placeholder]="'MODEL_SELECTION.IGNORE_VARIABLES_PLACEHOLDER' | translate"
+            [secondaryPlaceholder]="'MODEL_SELECTION.IGNORE_VARIABLES_PLACEHOLDER' | translate"
+            [onlyFromAutocomplete]="true"
+            (onAdd)="addIgnoreColumn($event)"
+            (onRemove)="removeIgnoreColumn($event)"
+            theme='bootstrap'>
             <tag-input-dropdown
               [autocompleteItems]="selectedDataset.schema.columns"
               [displayBy]="'name'"

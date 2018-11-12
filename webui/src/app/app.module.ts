@@ -50,6 +50,7 @@ import {BlockRestService} from './rest/block.rest.service';
 import { BarSettingsComponent } from './components/data/chart/bar-settings/bar-settings.component';
 import {ExecutionService} from "./services/execution.service";
 import {ModelSelectionComponent} from "./components/model-selection/model-selection.component";
+import {RecommenderRestService} from "./rest/recommender.rest.service";
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import {ModelSelectionComponent} from "./components/model-selection/model-select
     LineService,
     BlockRestService,
     ExecutionService,
+    RecommenderRestService,
     {provide: RouteReuseStrategy, useClass: RoutingReuseStrategy}
   ],
   entryComponents: [

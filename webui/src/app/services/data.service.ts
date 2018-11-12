@@ -20,8 +20,8 @@ export class DataService {
   private readonly dataSetsPath = '/datasets/';
 
   constructor(private http: HttpClient,
-              ngxlogger: NGXLogger) {
-    this.logger = new MagiunLogger(DataService.name, ngxlogger)
+              ngxLogger: NGXLogger) {
+    this.logger = new MagiunLogger(DataService.name, ngxLogger)
   }
 
   getDataSet(id: String): Observable<DataSet> {

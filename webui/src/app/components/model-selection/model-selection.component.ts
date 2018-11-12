@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/first';
 import {CollectionsUtils} from "../../util/collections.utils";
 import {TranslateService} from "@ngx-translate/core";
+import {RecommenderRestService} from "../../rest/recommender.rest.service";
 
 @Component({
   selector: 'app-model-selection',
@@ -25,14 +26,17 @@ export class ModelSelectionComponent {
   private selectedDataset: DataSet;
   private columnsToIgnore: Column[] = [];
   private targetVariable: Column;
+  private scope: string = "regression";
+  private tradeOff: string = "";
 
   constructor(
     private dataService: DataService,
+    private recommenderService: RecommenderRestService,
     private router: Router,
     private translate: TranslateService,
-    ngxlogger: NGXLogger
+    ngxLogger: NGXLogger
   ) {
-    this.logger = new MagiunLogger(ModelSelectionComponent.name, ngxlogger);
+    this.logger = new MagiunLogger(ModelSelectionComponent.name, ngxLogger);
     this.logger.info("created!");
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd && val.url == '/model-selection') {
@@ -79,18 +83,18 @@ export class ModelSelectionComponent {
 
   private logSelectedDatasetInfo(): void {
     if (this.selectedDataset != null) {
-      this.logger.info("the selected dataset is \"" + this.selectedDataset.name + "\"!");
+      this.logger.info("the selected dataset is \"" + this.selectedDataset.name + "\"");
     } else {
-      this.logger.info("the selected dataset is null!");
+      this.logger.info("the selected dataset is null");
     }
     this.logTargetVariable();
   }
 
   private logTargetVariable(): void {
     if (this.targetVariable != null) {
-      this.logger.info("the selected target variable is \"" + this.targetVariable.name + "\"!");
+      this.logger.info("the selected target variable is \"" + this.targetVariable.name + "\"");
     } else {
-      this.logger.info("the selected target variable is null!");
+      this.logger.info("the selected target variable is null");
     }
   }
 
@@ -100,14 +104,24 @@ export class ModelSelectionComponent {
     this.columnsToIgnore = [];
   }
 
+  updateScope(scope: any) {
+    this.scope = <string>scope;
+    this.logger.info("the selected scope is \"" + this.scope + "\"");
+  }
+
+  updateTradeOff(tradeOff: any) {
+    this.tradeOff = <string>tradeOff;
+    this.logger.info("the selected trade-off is \"" + this.tradeOff + "\"");
+  }
+
   addIgnoreColumn(column: any): void {
     this.columnsToIgnore.push(<Column>column);
-    this.logger.info("adding column \"" + column.name + "\" to the ignore list!");
+    this.logger.info("adding column \"" + column.name + "\" to the ignore list");
   }
 
   removeIgnoreColumn(column: any): void {
     this.columnsToIgnore = CollectionsUtils.deleteEntryFromArray(this.columnsToIgnore, <Column>column);
-    this.logger.info("removing column \"" + column.name + "\" from the ignore list!");
+    this.logger.info("removing column \"" + column.name + "\" from the ignore list");
   }
 
   recommend(): void {

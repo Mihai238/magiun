@@ -15,9 +15,10 @@ class RecommenderController(recommenderService: RecommenderService) extends Lazy
   //noinspection TypeAnnotation
   lazy val api = recommend
 
-  //TODO: implement me
   val recommend: Endpoint[String] = post(BASE_PATH :: ALGORITHM_RECOMMENDATIONS_PATH :: jsonBody[RecommenderRequestBody]) { body: RecommenderRequestBody =>
     logger.info(body.toString)
+
+    recommenderService.recommend(body)
 
     Ok("ok")
   }

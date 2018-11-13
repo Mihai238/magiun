@@ -6,6 +6,6 @@ case class DatasetMetadata(variableTypes: Seq[VariableType],
                            variableDistributions: Seq[Distribution],
                            responseVariableIndex: Int,
                            variablesToIgnoreIndex: Seq[Int],
-                           variablesCount: Int,
-                           observationsCount: Int) {
+                           variablesCount: Long,
+                           observationsCount: Long) {
 }

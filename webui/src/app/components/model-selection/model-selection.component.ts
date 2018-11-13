@@ -144,6 +144,7 @@ export class ModelSelectionComponent {
       this.selectedDataset.id,
       this.scope,
       this.tradeOff,
+      this.targetVariable.index,
       this.columnsToIgnore.map(c => c.index)
     )
   }

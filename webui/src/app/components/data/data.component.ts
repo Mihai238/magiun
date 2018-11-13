@@ -7,7 +7,7 @@ import {environment} from '../../../environments/environment';
 import {EditColumnResult} from './process-feature/edit-column.component';
 import {NewColumnResult} from './new-column-settings/add-column-settings.component';
 import {DataTableParams} from '../shared/table';
-import {Recommendations} from "../../model/recommendations";
+import {Recommendations} from "../../model/recommendations.model";
 
 @Component({
   selector: 'app-data',

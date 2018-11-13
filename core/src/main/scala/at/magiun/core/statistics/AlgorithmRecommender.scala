@@ -9,9 +9,9 @@ import org.apache.spark.sql.SparkSession
 
 import scala.collection.JavaConversions._
 
-class AlgorithmRecommender {
+class AlgorithmRecommender(spark: SparkSession, ontology: OntModel @@ AlgorithmSelectionOntology) {
 
-  def recommend(spark: SparkSession, ontology: OntModel @@ AlgorithmSelectionOntology, metadata: DatasetMetadata): Set[OntologyClass.Value] = {
+  def recommend(metadata: DatasetMetadata): Set[OntologyClass.Value] = {
     val dataset: Individual = createIndividualForOntClass(ontology, OntologyClass.Dataset.toString)
     val algorithm: Individual = createIndividualForOntClass(ontology, OntologyClass.Algorithm.toString)
     val responseVariableDistribution: Individual = createDistributionIndividual(ontology, metadata.variableDistributions(metadata.responseVariableIndex))

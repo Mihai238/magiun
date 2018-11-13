@@ -21,11 +21,11 @@ class AlgorithmRecommenderTest extends UnitTest {
       3000
     )
 
-    val recomendations = algorithmRecommender.recommend(spark, ontology, datasetMetadata)
+    val recommendations = algorithmRecommender.recommend(datasetMetadata)
 
-    recomendations.size should be(3)
-    recomendations should contain(OntologyClass.Algorithm)
-    recomendations should contain(OntologyClass.Regression)
-    recomendations should contain(OntologyClass.LinearLeastRegression)
+    recommendations.size should be(3)
+    recommendations should contain(OntologyClass.Algorithm)
+    recommendations should contain(OntologyClass.Regression)
+    recommendations should contain(OntologyClass.LinearLeastRegression)
   }
 }

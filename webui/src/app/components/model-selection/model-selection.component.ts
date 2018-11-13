@@ -13,6 +13,7 @@ import 'rxjs/add/operator/first';
 import {CollectionsUtils} from "../../util/collections.utils";
 import {TranslateService} from "@ngx-translate/core";
 import {RecommenderRestService} from "../../rest/recommender.rest.service";
+import {RecommenderRequestBody} from "../../model/recommender-request-body.model";
 
 @Component({
   selector: 'app-model-selection',
@@ -131,6 +132,19 @@ export class ModelSelectionComponent {
       alert(this.translate.instant("MODEL_SELECTION.NO_VARIABLES_LEFT"));
     }
 
+    this.recommenderService
+      .recommend(this.createRecommenderRequestBody())
+      .subscribe(a => {});
+
     this.logger.warn("hola!");
+  }
+
+  private createRecommenderRequestBody(): RecommenderRequestBody {
+    return new RecommenderRequestBody(
+      this.selectedDataset.id,
+      this.scope,
+      this.tradeOff,
+      this.columnsToIgnore.map(c => c.index)
+    )
   }
 }

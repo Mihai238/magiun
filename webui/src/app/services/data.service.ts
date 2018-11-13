@@ -9,7 +9,7 @@ import 'rxjs/add/observable/throw';
 import {Column, ColumnType, DataSet, Schema} from '../model/data-set.model';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {DataTableParams} from '../components/shared/table';
-import {Recommendations} from "../model/recommendations";
+import {Recommendations} from "../model/recommendations.model";
 import {MagiunLogger} from "../util/magiun.logger";
 
 @Injectable()

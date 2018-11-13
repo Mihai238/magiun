@@ -3,7 +3,7 @@ package at.magiun.core
 import at.magiun.core.config.{AlgorithmOntologyConfig, H2Config, OntologyConfig, SparkConfig}
 import at.magiun.core.feature.{ColumnMetaDataComputer, _}
 import at.magiun.core.repository.{BlockRepository, DataSetRepository, DatabaseInitializer}
-import at.magiun.core.rest.{BlockController, DataSetController, ExecutionController, RestApi}
+import at.magiun.core.rest._
 import at.magiun.core.service._
 import at.magiun.core.statistics.AlgorithmRecommender
 import com.softwaremill.macwire._
@@ -19,6 +19,7 @@ trait MainModule {
   lazy val dataSetController = wire[DataSetController]
   lazy val blockController = wire[BlockController]
   lazy val executionController = wire[ExecutionController]
+  lazy val recommenderController = wire[RecommenderController]
   lazy val restApi = wire[RestApi]
 
   // Services
@@ -27,6 +28,7 @@ trait MainModule {
   lazy val dataSetService = wire[DataSetService]
   lazy val executionService = wire[ExecutionService]
   lazy val executionContext = wire[ExecutionContext]
+  lazy val recommenderService = wire[RecommenderService]
 
   // Recommenders
   lazy val recommender = wire[Recommender]

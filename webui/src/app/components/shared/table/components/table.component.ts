@@ -10,7 +10,7 @@ import { DataTableTranslations } from '../types/data-table-translations.type';
 import { defaultTranslations } from '../types/default-translations.type';
 import { drag } from '../utils/drag';
 import {Column} from "../../../../model/data-set.model";
-import {Recommendations} from "../../../../model/recommendations";
+import {Recommendations} from "../../../../model/recommendations.model";
 
 /**
  * https://github.com/ggmod/angular-5-data-table

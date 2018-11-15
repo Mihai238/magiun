@@ -1,4 +1,4 @@
-export class RecommenderRequestBody {
+export class RecommenderRequest {
 
   constructor(
     public datasetId: number,

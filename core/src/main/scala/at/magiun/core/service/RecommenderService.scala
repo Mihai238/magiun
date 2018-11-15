@@ -1,7 +1,7 @@
 package at.magiun.core.service
 
 import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
-import at.magiun.core.model.request.RecommenderRequestBody
+import at.magiun.core.model.request.RecommenderRequest
 import at.magiun.core.model.statistics.StatisticsUtil
 import at.magiun.core.model.{ColumnType, MagiunDataSet}
 import at.magiun.core.statistics.AlgorithmRecommender
@@ -13,7 +13,7 @@ import scala.concurrent.Await
 
 class RecommenderService(spark: SparkSession, dataSetService: DataSetService, algoRecommender: AlgorithmRecommender) {
 
-  def recommend(request: RecommenderRequestBody): Unit = {
+  def recommend(request: RecommenderRequest): Unit = {
     import scala.concurrent.duration._
 
     val dataset = Await.result(dataSetService.getDataSet(request.datasetId.toString), 10.seconds).get
@@ -23,7 +23,7 @@ class RecommenderService(spark: SparkSession, dataSetService: DataSetService, al
     println(result)
   }
 
-  private def createMetadata(request: RecommenderRequestBody, dataset: Dataset[Row], magiunDataset: MagiunDataSet): DatasetMetadata = {
+  private def createMetadata(request: RecommenderRequest, dataset: Dataset[Row], magiunDataset: MagiunDataSet): DatasetMetadata = {
     calculateDistributions(dataset)
 
     DatasetMetadata(

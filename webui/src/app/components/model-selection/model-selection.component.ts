@@ -13,7 +13,7 @@ import 'rxjs/add/operator/first';
 import {CollectionsUtils} from "../../util/collections.utils";
 import {TranslateService} from "@ngx-translate/core";
 import {RecommenderRestService} from "../../rest/recommender.rest.service";
-import {RecommenderRequestBody} from "../../model/recommender-request-body.model";
+import {RecommenderRequest} from "../../model/recommender-request.model";
 
 @Component({
   selector: 'app-model-selection',
@@ -133,14 +133,14 @@ export class ModelSelectionComponent {
     }
 
     this.recommenderService
-      .recommend(this.createRecommenderRequestBody())
+      .recommend(this.createRecommenderRequest())
       .subscribe(a => {});
 
     this.logger.warn("hola!");
   }
 
-  private createRecommenderRequestBody(): RecommenderRequestBody {
-    return new RecommenderRequestBody(
+  private createRecommenderRequest(): RecommenderRequest {
+    return new RecommenderRequest(
       this.selectedDataset.id,
       this.scope,
       this.tradeOff,

@@ -113,19 +113,23 @@ ml:BooleanValue rdf:type owl:Class ;
                 sh:property [ sh:or (
                     [sh:pattern "0"]
                     [sh:pattern "1"]
+                    [sh:pattern "[Tt]rue"]
+                    [sh:pattern "[Ff]alse"]
+                    [sh:pattern "t"]
+                    [sh:pattern "f"]
                 )
                 ] .
 
 
 ###  http://www.magiun.io/ontologies/ml#Column
 ml:Column rdf:type owl:Class ;
-          owl:equivalentClass ml:OperationSuitable .
+          owl:equivalentClass ml:OperationSuitableColumn .
 
 
-###  http://www.magiun.io/ontologies/ml#DiscretizationSuitable
-ml:DiscretizationSuitable rdf:type owl:Class ;
+###  http://www.magiun.io/ontologies/ml#DiscretizationSuitableColumn
+ml:DiscretizationSuitableColumn rdf:type owl:Class ;
                           owl:equivalentClass ml:QuantitativeColumn ;
-                          rdfs:subClassOf ml:OperationSuitable .
+                          rdfs:subClassOf ml:OperationSuitableColumn .
 
 
 ###  http://www.magiun.io/ontologies/ml#GenderColumn
@@ -213,9 +217,9 @@ ml:MaritalStatusValue rdf:type owl:Class ;
                       ] .
 
 
-###  http://www.magiun.io/ontologies/ml#MissingValuesSuitable
-ml:MissingValuesSuitable rdf:type owl:Class ;
-                         owl:equivalentClass [ owl:intersectionOf ( ml:OperationSuitable
+###  http://www.magiun.io/ontologies/ml#MissingValuesSuitableColumn
+ml:MissingValuesSuitableColumn rdf:type owl:Class ;
+                         owl:equivalentClass [ owl:intersectionOf ( ml:OperationSuitableColumn
                                                                     [ rdf:type owl:Restriction ;
                                                                       owl:onProperty ml:missingValues ;
                                                                       owl:someValuesFrom [ rdf:type rdfs:Datatype ;
@@ -228,11 +232,11 @@ ml:MissingValuesSuitable rdf:type owl:Class ;
                                                                   ) ;
                                                rdf:type owl:Class
                                              ] ;
-                         rdfs:subClassOf ml:OperationSuitable .
+                         rdfs:subClassOf ml:OperationSuitableColumn .
 
 
-###  http://www.magiun.io/ontologies/ml#OperationSuitable
-ml:OperationSuitable rdf:type owl:Class ;
+###  http://www.magiun.io/ontologies/ml#OperationSuitableColumn
+ml:OperationSuitableColumn rdf:type owl:Class ;
                      rdfs:subClassOf ml:Column .
 
 

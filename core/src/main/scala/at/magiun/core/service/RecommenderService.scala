@@ -26,6 +26,7 @@ class RecommenderService(spark: SparkSession, dataSetService: DataSetService, al
   private def createMetadata(request: RecommenderRequest, dataset: Dataset[Row], magiunDataset: MagiunDataSet): DatasetMetadata = {
     calculateDistributions(dataset)
 
+    /**
     DatasetMetadata(
       getVariableTypes(magiunDataset),
       Seq.fill(dataset.columns.length)(Distribution.Normal),
@@ -34,6 +35,9 @@ class RecommenderService(spark: SparkSession, dataSetService: DataSetService, al
       dataset.columns.length,
       dataset.count()
     )
+      */
+
+    null
   }
 
   private def getVariableTypes(magiunDataset: MagiunDataSet): Seq[VariableType] = {

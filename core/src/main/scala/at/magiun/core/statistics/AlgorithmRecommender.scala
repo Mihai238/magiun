@@ -1,21 +1,18 @@
 package at.magiun.core.statistics
 
 import at.magiun.core.config.{AlgorithmOntologyConfig, AlgorithmSelectionOntology}
-import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
+import at.magiun.core.model.data.{DatasetMetadata, Distribution}
 import at.magiun.core.model.ontology.{OntologyClass, OntologyProperty}
 import com.softwaremill.tagging.@@
 import org.apache.jena.ontology.{DatatypeProperty, Individual, ObjectProperty, OntModel}
-import org.apache.spark.sql.SparkSession
 
 import scala.collection.JavaConversions._
 
-class AlgorithmRecommender(spark: SparkSession, ontology: OntModel @@ AlgorithmSelectionOntology) {
+class AlgorithmRecommender(ontology: OntModel @@ AlgorithmSelectionOntology) {
 
   def recommend(metadata: DatasetMetadata): Set[OntologyClass.Value] = {
-    val dataset: Individual = createIndividualForOntClass(ontology, OntologyClass.Dataset.toString)
-    val algorithm: Individual = createIndividualForOntClass(ontology, OntologyClass.Algorithm.toString)
-    val responseVariableDistribution: Individual = createDistributionIndividual(ontology, metadata.variableDistributions(metadata.responseVariableIndex))
-    val responseVariableType: Individual = createIndividualForOntClass(ontology, OntologyClass.Continuous.toString)
+    val dataset: Individual = createIndividualForOntClass(OntologyClass.Dataset.toString)
+    val algorithm: Individual = createIndividualForOntClass(OntologyClass.Algorithm.toString)
 
     val hasContinuousVariableTypePercentage: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasContinuousVariableTypePercentage)
     val hasDataset: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasDataset)
@@ -29,11 +26,11 @@ class AlgorithmRecommender(spark: SparkSession, ontology: OntModel @@ AlgorithmS
     algorithm.addProperty(hasDataset, dataset)
     dataset.addLiteral(hasVariables, metadata.variablesCount - 1)
     dataset.addLiteral(hasObservations, metadata.observationsCount)
-    dataset.addProperty(hasResponseVariableDistribution, responseVariableDistribution)
-    dataset.addProperty(hasResponseVariableType, responseVariableType)
-    dataset.addLiteral(hasNormalDistributionPercentage, getNormalDistributionPercentage(metadata))
-    dataset.addLiteral(hasContinuousVariableTypePercentage, getContinuousVariableTypePercentage(metadata))
-    dataset.addLiteral(hasObservationVariableRatio, getObservationVariableRatio(metadata))
+    dataset.addProperty(hasResponseVariableDistribution, createDistributionIndividual(metadata.responseVariableDistribution))
+    dataset.addProperty(hasResponseVariableType, createIndividualForOntClass(OntologyClass.getOntologyClass(metadata.responseVariableType).toString))
+    dataset.addLiteral(hasNormalDistributionPercentage, metadata.normalDistributionPercentage)
+    dataset.addLiteral(hasContinuousVariableTypePercentage, metadata.continuousVariableTypePercentage)
+    dataset.addLiteral(hasObservationVariableRatio, metadata.observationVariableRatio)
 
     val rdfTypes = asScalaSet(algorithm.listRDFTypes(false).toSet)
       .filter(p => p.getNameSpace.equals(AlgorithmOntologyConfig.NS))
@@ -47,14 +44,14 @@ class AlgorithmRecommender(spark: SparkSession, ontology: OntModel @@ AlgorithmS
     ontClasses
   }
 
-  private def createDistributionIndividual(ontology: OntModel, distribution: Distribution): Individual = {
+  private def createDistributionIndividual(distribution: Distribution): Individual = {
     distribution match {
-      case Distribution.Normal => createIndividualForOntClass(ontology, OntologyClass.NormalDistribution.toString)
+      case Distribution.Normal => createIndividualForOntClass(OntologyClass.NormalDistribution.toString)
       case _ => throw new IllegalArgumentException(s"Unknown distribution ${distribution.toString} !")
     }
   }
 
-  private def createIndividualForOntClass(ontology: OntModel, ontClass: String): Individual = {
+  private def createIndividualForOntClass(ontClass: String): Individual = {
     ontology.createIndividual(ontology.getOntClass(ontClass))
   }
 
@@ -64,27 +61,5 @@ class AlgorithmRecommender(spark: SparkSession, ontology: OntModel @@ AlgorithmS
 
   private def getDataProperty(ontology: OntModel, property: OntologyProperty.Value): DatatypeProperty = {
     ontology.getDatatypeProperty(property.toString)
-  }
-
-  private def getNormalDistributionPercentage(metadata: DatasetMetadata): java.lang.Double = {
-    val distributions = metadata.variableDistributions.zipWithIndex
-      .filter(d => d._2 != metadata.responseVariableIndex && !metadata.variablesToIgnoreIndex.contains(d._2))
-      .map(_._1)
-
-    1.0 * distributions.count(_.equals(Distribution.Normal))/distributions.size
-  }
-
-  private def getContinuousVariableTypePercentage(metadata: DatasetMetadata): java.lang.Double = {
-    val variableTypes = metadata.variableTypes.zipWithIndex
-      .filter(d => d._2 != metadata.responseVariableIndex && !metadata.variablesToIgnoreIndex.contains(d._2))
-      .map(_._1)
-
-    1.0 * variableTypes.count(_.equals(VariableType.Continuous))/variableTypes.size
-  }
-
-  private def getObservationVariableRatio(metadata: DatasetMetadata): java.lang.Double = {
-    val explanatoryVarCount = metadata.variablesCount - metadata.variablesToIgnoreIndex.size - 1
-
-    1.0 * metadata.observationsCount/explanatoryVarCount
   }
 }

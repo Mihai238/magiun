@@ -32,4 +32,11 @@ object OntologyClass extends Enumeration {
   val Continuous: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Continuous")
 
 
+  def getOntologyClass(variableType: at.magiun.core.model.data.VariableType): OntologyClass.Value = {
+    variableType match {
+      case at.magiun.core.model.data.VariableType.Continuous => Continuous
+      case at.magiun.core.model.data.VariableType.Categorical => Categorical
+    }
+  }
+
 }

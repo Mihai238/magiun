@@ -5,7 +5,7 @@ import at.magiun.core.feature.{ColumnMetaDataComputer, _}
 import at.magiun.core.repository.{BlockRepository, DataSetRepository, DatabaseInitializer}
 import at.magiun.core.rest._
 import at.magiun.core.service._
-import at.magiun.core.statistics.AlgorithmRecommender
+import at.magiun.core.statistics.{AlgorithmRecommender, StatisticsCalculator}
 import com.softwaremill.macwire._
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.sql.SparkSession
@@ -29,6 +29,9 @@ trait MainModule {
   lazy val executionService = wire[ExecutionService]
   lazy val executionContext = wire[ExecutionContext]
   lazy val recommenderService = wire[RecommenderService]
+
+  // Calculators
+  lazy val statisticsCalculator = wire[StatisticsCalculator]
 
   // Recommenders
   lazy val recommender = wire[Recommender]

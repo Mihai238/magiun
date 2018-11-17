@@ -2,16 +2,13 @@ package at.magiun.core.service
 
 import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
 import at.magiun.core.model.request.RecommenderRequest
-import at.magiun.core.model.statistics.StatisticsUtil
 import at.magiun.core.model.{ColumnType, MagiunDataSet}
-import at.magiun.core.statistics.AlgorithmRecommender
-import org.apache.spark.mllib.stat.Statistics
-import org.apache.spark.rdd.RDD
+import at.magiun.core.statistics.{AlgorithmRecommender, StatisticsCalculator}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.concurrent.Await
 
-class RecommenderService(spark: SparkSession, dataSetService: DataSetService, algoRecommender: AlgorithmRecommender) {
+class RecommenderService(spark: SparkSession, dataSetService: DataSetService, statisticsCalculator: StatisticsCalculator, algoRecommender: AlgorithmRecommender) {
 
   def recommend(request: RecommenderRequest): Unit = {
     import scala.concurrent.duration._
@@ -65,16 +62,11 @@ class RecommenderService(spark: SparkSession, dataSetService: DataSetService, al
 
     val doubleCol = dataset.map(r => r.getAs[Double]("Age")).rdd
 
-    println("Age is normally distributed:  " + isNormallyDistributed(doubleCol))
+    println("Age is normally distributed:  " + statisticsCalculator.isNormallyDistributed(doubleCol))
 
     Seq()
   }
 
-  private def isNormallyDistributed(column: RDD[Double]): Boolean = {
-    val testResult = Statistics.kolmogorovSmirnovTest(column, "norm", 29.7, 14.5) //mean & stddev of the column
-    println(testResult)
 
-    !(testResult.pValue <= StatisticsUtil.NORMALITY_TEST_MAX_P_VALUE)
-  }
 
 }

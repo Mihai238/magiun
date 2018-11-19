@@ -84,12 +84,6 @@ ml:missingValues rdf:type owl:DatatypeProperty ;
                  rdfs:range xsd:integer .
 
 
-###  http://www.magiun.io/ontologies/ml#value
-ml:value rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf owl:topDataProperty ;
-         rdfs:domain ml:Value .
-
-
 #################################################################
 #    Classes
 #################################################################
@@ -217,8 +211,8 @@ ml:MaritalStatusValue rdf:type owl:Class ;
                       ] .
 
 
-###  http://www.magiun.io/ontologies/ml#MissingValuesSuitableColumn
-ml:MissingValuesSuitableColumn rdf:type owl:Class ;
+###  http://www.magiun.io/ontologies/ml#HandleMissingValuesSuitableColumn
+ml:HandleMissingValuesSuitableColumn rdf:type owl:Class ;
                          owl:equivalentClass [ owl:intersectionOf ( ml:OperationSuitableColumn
                                                                     [ rdf:type owl:Restriction ;
                                                                       owl:onProperty ml:missingValues ;

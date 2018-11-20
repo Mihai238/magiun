@@ -23,6 +23,12 @@ class ColumnMetaDataComputerTest extends UnitTest {
     columnsMeta(4).valueTypes should contain only("StringValue", "GenderValue")
 
     columnsMeta(5).valueTypes should contain only("StringValue", "NumericValue", "HumanAgeValue")
+    columnsMeta(5).stats.count should be(714)
+    columnsMeta(5).stats.mean.get should be(29.69911764705882)
+    columnsMeta(5).stats.stddev.get should be(14.526497332334035)
+    columnsMeta(5).stats.min.get should be(0.42)
+    columnsMeta(5).stats.max.get should be(80)
+    columnsMeta(5).stats.median.get should be(28)
   }
 
   it should "try to guess column types for income dataset" in {

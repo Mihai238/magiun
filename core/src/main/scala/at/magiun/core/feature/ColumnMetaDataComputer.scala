@@ -2,6 +2,7 @@ package at.magiun.core.feature
 
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.spark.mllib.stat.Statistics
+import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.execution.stat.StatFunctions
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 import org.apache.spark.sql.functions._
@@ -13,10 +14,10 @@ class ColumnMetaDataComputer(
                               sparkSession: SparkSession
                             ) extends LazyLogging with Serializable {
 
+  import sparkSession.implicits._
+
   def compute(ds: Dataset[Row], restrictions: Map[String, Restriction]): Seq[ColumnMetaData] = {
     logger.info("Computing column metadata")
-
-//    val stats = StatFunctions.summary(ds, Seq("count", "mean", "stddev", "min", "max", "50%"))
 
     val columnsMeta = ds.reduce((row1, row2) => {
       val (left, right) =
@@ -48,11 +49,18 @@ class ColumnMetaDataComputer(
     }).toSeq.map(_.asInstanceOf[ColumnMetaData])
 
     val distinctCounts = ds.select(ds.columns.map(c => countDistinct(col(s"`$c`")).alias(c)): _*).first().toSeq
+    val summaryStatistics = computeSummaryStatistics(ds)
 
-    columnsMeta.zip(distinctCounts)
-      .map { case (meta, distinctCount) =>
-        meta.copy(uniqueValues = distinctCount.asInstanceOf[Long])
-      }
+//    val doubleCol = ds.map(r => r.getAs[Double](5)).rdd
+//    isNorm(doubleCol, summaryStatistics(5))
+
+    columnsMeta
+      .zip(distinctCounts).map { case (meta, distinctCount) =>
+      meta.copy(uniqueValues = distinctCount.asInstanceOf[Long])
+    }
+      .zip(summaryStatistics).map { case (meta, stats) =>
+      meta.copy(stats = stats)
+    }
   }
 
   private def combine(left: Seq[ColumnMetaData], right: Seq[ColumnMetaData]): Seq[ColumnMetaData] = {
@@ -96,6 +104,39 @@ class ColumnMetaDataComputer(
       case v: String => v == "" || v.equalsIgnoreCase("NA")
       case _ => false
     }
+  }
+
+  private def computeSummaryStatistics(ds: Dataset[Row]): Seq[SummaryStatistics] = {
+    val stats =
+      StatFunctions.summary(ds, Seq("count", "mean", "stddev", "min", "max", "50%")).collect().toSeq
+        .map(row => {
+          row.toSeq.drop(1)
+            .map(e => Option(e))
+            .map(e => e.map(_.asInstanceOf[String]))
+        })
+
+    val count = stats(0).map(e => e.get.toLong)
+    val mean = stats(1).map(_.flatMap(e => parseDouble(e)))
+    val stddev = stats(2).map(_.flatMap(e => parseDouble(e)))
+    val min = stats(3).map(_.flatMap(e => parseDouble(e)))
+    val max = stats(4).map(_.flatMap(e => parseDouble(e)))
+    val median = stats(5).map(_.flatMap(e => parseDouble(e)))
+
+    ds.schema.indices.map { colIndex =>
+      SummaryStatistics(count(colIndex), mean(colIndex), stddev(colIndex), min(colIndex), max(colIndex), median(colIndex))
+    }
+  }
+
+  private def parseDouble(s: String): Option[Double] = try {
+    Some(s.toDouble)
+  } catch {
+    case _: Exception => None
+  }
+
+  private def isNorm(doubleCol: RDD[Double], stats: SummaryStatistics) = {
+    val testResult = Statistics.kolmogorovSmirnovTest(doubleCol, "norm", stats.mean.get, stats.stddev.get)
+    logger.info(testResult.toString())
+    testResult.pValue > 0.05
   }
 
 }

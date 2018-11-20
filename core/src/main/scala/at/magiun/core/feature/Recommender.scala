@@ -43,6 +43,7 @@ class Recommender(sparkSession: SparkSession,
   def recommendIntern(columnsMetadata: Seq[ColumnMetaData]): Seq[List[String]] = {
     val cardinalityProperty = model.getProperty(NS + "cardinality")
     val missingValuesProperty = model.getProperty(NS + "missingValues")
+    val uniformDistributionProperty = model.getProperty(NS + "uniformDistribution")
     val hasValueProperty = model.getProperty(NS + "hasValue")
 
     columnsMetadata.map { colMeta =>
@@ -50,6 +51,7 @@ class Recommender(sparkSession: SparkSession,
       val indv = model.createIndividual(model.getOntClass(NS + "Column"))
       indv.addProperty(cardinalityProperty, model.createTypedLiteral(colMeta.uniqueValues.asInstanceOf[Any]))
       indv.addProperty(missingValuesProperty, model.createTypedLiteral(colMeta.missingValues.asInstanceOf[Integer]))
+      indv.addProperty(uniformDistributionProperty, model.createTypedLiteral(colMeta.distributions.uniform.asInstanceOf[Any]))
       val tmpIndvs = valueTypes.map(valueType => {
         val tmpIndv = model.createIndividual(model.getOntClass(NS + valueType))
         indv.addProperty(hasValueProperty, tmpIndv)

@@ -7,6 +7,8 @@ import org.apache.spark.sql.execution.stat.StatFunctions
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 import org.apache.spark.sql.functions._
 
+import scala.collection.immutable
+
 /**
   * Computes value types and other metadata for each column of the data set
   */
@@ -50,9 +52,7 @@ class ColumnMetaDataComputer(
 
     val distinctCounts = ds.select(ds.columns.map(c => countDistinct(col(s"`$c`")).alias(c)): _*).first().toSeq
     val summaryStatistics = computeSummaryStatistics(ds)
-
-//    val doubleCol = ds.map(r => r.getAs[Double](5)).rdd
-//    isNorm(doubleCol, summaryStatistics(5))
+    val normalDistributions = checkNormalDistribution(ds, summaryStatistics)
 
     columnsMeta
       .zip(distinctCounts).map { case (meta, distinctCount) =>
@@ -60,6 +60,9 @@ class ColumnMetaDataComputer(
     }
       .zip(summaryStatistics).map { case (meta, stats) =>
       meta.copy(stats = stats)
+    }
+      .zip(normalDistributions).map { case (meta, normalDistributed) =>
+        meta.copy(normalDistributed = normalDistributed)
     }
   }
 
@@ -133,7 +136,25 @@ class ColumnMetaDataComputer(
     case _: Exception => None
   }
 
-  private def isNorm(doubleCol: RDD[Double], stats: SummaryStatistics) = {
+  private def checkNormalDistribution(ds: Dataset[Row], summaryStatistics: Seq[SummaryStatistics]): immutable.Seq[Boolean] = {
+    ds.schema.indices.map { colIndex =>
+      val mean = summaryStatistics(colIndex).mean
+      val stddev = summaryStatistics(colIndex).stddev
+      if (mean.isDefined && stddev.isDefined) {
+        val doubleCol = ds
+          .map(e => Option(e.get(colIndex)).map(_.toString))
+          .map(_.flatMap(e => parseDouble(e)))
+          .filter(_.isDefined)
+          .map(_.get)
+          .rdd
+        isNormalDistributed(doubleCol, summaryStatistics(colIndex))
+      } else {
+        false
+      }
+    }
+  }
+
+  private def isNormalDistributed(doubleCol: RDD[Double], stats: SummaryStatistics) = {
     val testResult = Statistics.kolmogorovSmirnovTest(doubleCol, "norm", stats.mean.get, stats.stddev.get)
     logger.info(testResult.toString())
     testResult.pValue > 0.05

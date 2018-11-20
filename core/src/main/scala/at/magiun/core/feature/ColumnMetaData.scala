@@ -3,7 +3,11 @@ package at.magiun.core.feature
 /**
   * @param valueTypes type of values e.g. StringValue, BooleanValue, GenderValue
   */
-case class ColumnMetaData(valueTypes: Set[String], missingValues: Int, uniqueValues: Long = 0, stats: SummaryStatistics = null) {
+case class ColumnMetaData(valueTypes: Set[String],
+                          missingValues: Int,
+                          uniqueValues: Long = 0,
+                          normalDistributed: Boolean = false,
+                          stats: SummaryStatistics = null) {
 
   private val maxUniqueValues = 100
 
@@ -26,3 +30,5 @@ case class SummaryStatistics(count: Long,
                              min: Option[Double],
                              max: Option[Double],
                              median: Option[Double])
+
+

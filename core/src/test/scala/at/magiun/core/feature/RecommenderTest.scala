@@ -26,7 +26,7 @@ class RecommenderTest extends UnitTest {
     recommendation(4).operations should be(List.empty)
 
     recommendation(5).colTypes should contain only("HumanAgeColumn", "QuantitativeColumn")
-    recommendation(5).operations should contain only("DiscretizationSuitable", "MissingValuesSuitable")
+    recommendation(5).operations should contain only("DiscretizationSuitableColumn", "HandleMissingValuesSuitableColumn")
   }
 
   it should "predict for income dataset" in {

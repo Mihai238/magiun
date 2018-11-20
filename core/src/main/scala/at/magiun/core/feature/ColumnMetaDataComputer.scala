@@ -1,7 +1,10 @@
 package at.magiun.core.feature
 
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.spark.mllib.stat.Statistics
+import org.apache.spark.sql.execution.stat.StatFunctions
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
+import org.apache.spark.sql.functions._
 
 /**
   * Computes value types and other metadata for each column of the data set
@@ -11,9 +14,11 @@ class ColumnMetaDataComputer(
                             ) extends LazyLogging with Serializable {
 
   def compute(ds: Dataset[Row], restrictions: Map[String, Restriction]): Seq[ColumnMetaData] = {
-    val colCount = ds.schema.indices.size
+    logger.info("Computing column metadata")
 
-    ds.reduce((row1, row2) => {
+//    val stats = StatFunctions.summary(ds, Seq("count", "mean", "stddev", "min", "max", "50%"))
+
+    val columnsMeta = ds.reduce((row1, row2) => {
       val (left, right) =
         if (!isColMeta(row1) && !isColMeta(row2)) {
           (
@@ -41,6 +46,13 @@ class ColumnMetaDataComputer(
 
       Row.fromSeq(combine(left, right))
     }).toSeq.map(_.asInstanceOf[ColumnMetaData])
+
+    val distinctCounts = ds.select(ds.columns.map(c => countDistinct(col(s"`$c`")).alias(c)): _*).first().toSeq
+
+    columnsMeta.zip(distinctCounts)
+      .map { case (meta, distinctCount) =>
+        meta.copy(uniqueValues = distinctCount.asInstanceOf[Long])
+      }
   }
 
   private def combine(left: Seq[ColumnMetaData], right: Seq[ColumnMetaData]): Seq[ColumnMetaData] = {
@@ -56,7 +68,7 @@ class ColumnMetaDataComputer(
       val value = row.get(colIndex)
 
       if (isMissingValue(value)) {
-        ColumnMetaData(Set(), Set(), 1)
+        ColumnMetaData(Set(), 1)
 
       } else {
         val valueTypes = restrictions.map { case (valueType, restr) =>
@@ -68,11 +80,11 @@ class ColumnMetaDataComputer(
           }
         }.filter(_ != null)
 
-//        if (colIndex == 5 && !valueTypes.toSet.contains("HumanAgeValue")) {
-//          logger.error(s"$value is wrong")
-//        }
+        //        if (colIndex == 5 && !valueTypes.toSet.contains("HumanAgeValue")) {
+        //          logger.error(s"$value is wrong")
+        //        }
 
-        ColumnMetaData(Set(value.toString), valueTypes.toSet, 0)
+        ColumnMetaData(valueTypes.toSet, 0)
       }
     }
     }

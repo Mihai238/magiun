@@ -25,7 +25,7 @@ class Recommender(sparkSession: SparkSession,
 
     val recs = columnTypes.map(colType => {
       val (types, operations) = colType
-          .filter(e => e != "Column" && e != "OperationSuitable")
+        .filter(e => e != "Column" && e != "OperationSuitableColumn")
         .partition(e => !isOperationSuitable(e))
 
       Recommendation(types, operations)
@@ -38,7 +38,7 @@ class Recommender(sparkSession: SparkSession,
   }
 
   private def isOperationSuitable(colType: String): Boolean = {
-    colType.endsWith("Suitable")
+    colType.endsWith("SuitableColumn")
   }
 
   def recommendIntern(columnsMetadata: Seq[ColumnMetaData]): Seq[List[String]] = {
@@ -49,7 +49,7 @@ class Recommender(sparkSession: SparkSession,
     columnsMetadata.map { colMeta =>
       val valueTypes = colMeta.valueTypes
       val indv = model.createIndividual(model.getOntClass(NS + "Column"))
-      indv.addProperty(cardinalityProperty, model.createTypedLiteral(colMeta.uniqueValues.size.asInstanceOf[Integer]))
+      indv.addProperty(cardinalityProperty, model.createTypedLiteral(colMeta.uniqueValues.asInstanceOf[Any]))
       indv.addProperty(missingValuesProperty, model.createTypedLiteral(colMeta.missingValues.asInstanceOf[Integer]))
       val tmpIndvs = valueTypes.map(valueType => {
         val tmpIndv = model.createIndividual(model.getOntClass(NS + valueType))

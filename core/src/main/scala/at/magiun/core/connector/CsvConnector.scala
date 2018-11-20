@@ -1,9 +1,10 @@
 package at.magiun.core.connector
 
 import at.magiun.core.model._
+import com.typesafe.scalalogging.LazyLogging
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
-class CsvConnector(spark: SparkSession) extends Connector {
+class CsvConnector(spark: SparkSession) extends Connector with LazyLogging {
 
   private val readOptions = Map(
     "sep" -> ",",
@@ -22,6 +23,7 @@ class CsvConnector(spark: SparkSession) extends Connector {
   }
 
   override def getDataset(source: DataSetSource): Dataset[Row] = {
+    logger.info("Loading the dataset in spark")
     spark.read
       .options(readOptions)
       .csv(source.url)

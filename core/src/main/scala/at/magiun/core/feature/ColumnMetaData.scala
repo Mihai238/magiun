@@ -6,10 +6,8 @@ package at.magiun.core.feature
 case class ColumnMetaData(valueTypes: Set[String],
                           missingValues: Int,
                           uniqueValues: Long = 0,
-                          normalDistributed: Boolean = false,
-                          stats: SummaryStatistics = null) {
-
-  private val maxUniqueValues = 100
+                          stats: SummaryStatistics = null,
+                          distributions: Distributions = null) {
 
   def combine(other: ColumnMetaData): ColumnMetaData = {
     val intersectedValueTypes = if (valueTypes.isEmpty) {
@@ -32,3 +30,6 @@ case class SummaryStatistics(count: Long,
                              median: Option[Double])
 
 
+case class Distributions(normal: Boolean = false,
+                         uniform: Boolean = false,
+                         exponential: Boolean = false)

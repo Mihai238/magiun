@@ -18,7 +18,6 @@ class Recommender(sparkSession: SparkSession,
   private lazy val restrictions: Map[String, Restriction] = restrictionBuilder.build(model)
 
   def recommend(ds: Dataset[Row]): Recommendations = {
-    logger.info("Computing columns metadata.")
     val columnsMetaData = columnMetaDataComputer.compute(ds, restrictions)
     logger.info("Predicting columns type.")
     val columnTypes = recommendIntern(columnsMetaData)

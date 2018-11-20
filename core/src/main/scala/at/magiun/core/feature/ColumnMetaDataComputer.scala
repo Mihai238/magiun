@@ -1,13 +1,12 @@
 package at.magiun.core.feature
 
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.commons.math3.distribution._
 import org.apache.spark.mllib.stat.Statistics
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.execution.stat.StatFunctions
-import org.apache.spark.sql.{Dataset, Row, SparkSession}
 import org.apache.spark.sql.functions._
-
-import scala.collection.immutable
+import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 /**
   * Computes value types and other metadata for each column of the data set
@@ -19,7 +18,7 @@ class ColumnMetaDataComputer(
   import sparkSession.implicits._
 
   def compute(ds: Dataset[Row], restrictions: Map[String, Restriction]): Seq[ColumnMetaData] = {
-    logger.info("Computing column metadata")
+    logger.info("Computing column metadata.")
 
     val columnsMeta = ds.reduce((row1, row2) => {
       val (left, right) =
@@ -52,17 +51,17 @@ class ColumnMetaDataComputer(
 
     val distinctCounts = ds.select(ds.columns.map(c => countDistinct(col(s"`$c`")).alias(c)): _*).first().toSeq
     val summaryStatistics = computeSummaryStatistics(ds)
-    val normalDistributions = checkNormalDistribution(ds, summaryStatistics)
+    val distributions = computeDistributions(ds, summaryStatistics)
 
     columnsMeta
       .zip(distinctCounts).map { case (meta, distinctCount) =>
       meta.copy(uniqueValues = distinctCount.asInstanceOf[Long])
     }
-      .zip(summaryStatistics).map { case (meta, stats) =>
-      meta.copy(stats = stats)
+      .zip(summaryStatistics).map { case (meta, s) =>
+      meta.copy(stats = s)
     }
-      .zip(normalDistributions).map { case (meta, normalDistributed) =>
-        meta.copy(normalDistributed = normalDistributed)
+      .zip(distributions).map { case (meta, d) =>
+        meta.copy(distributions = d)
     }
   }
 
@@ -136,27 +135,33 @@ class ColumnMetaDataComputer(
     case _: Exception => None
   }
 
-  private def checkNormalDistribution(ds: Dataset[Row], summaryStatistics: Seq[SummaryStatistics]): immutable.Seq[Boolean] = {
+  private def computeDistributions(ds: Dataset[Row], summaryStatistics: Seq[SummaryStatistics]): Seq[Distributions] = {
+    val schema = ds.schema
+
     ds.schema.indices.map { colIndex =>
-      val mean = summaryStatistics(colIndex).mean
-      val stddev = summaryStatistics(colIndex).stddev
-      if (mean.isDefined && stddev.isDefined) {
-        val doubleCol = ds
+      val stats = summaryStatistics(colIndex)
+      val colType = schema(colIndex).dataType.typeName
+      if (colType == "integer" || colType == "double") {
+        val doubles = ds
           .map(e => Option(e.get(colIndex)).map(_.toString))
           .map(_.flatMap(e => parseDouble(e)))
           .filter(_.isDefined)
           .map(_.get)
           .rdd
-        isNormalDistributed(doubleCol, summaryStatistics(colIndex))
+
+        val normal = isDistributed(doubles, new NormalDistribution(stats.mean.get, stats.stddev.get))
+        val uniform = isDistributed(doubles, new UniformRealDistribution(stats.min.get, stats.max.get))
+        val exponential = isDistributed(doubles, new ExponentialDistribution(null, stats.mean.get))
+
+        Distributions(normal, uniform, exponential)
       } else {
-        false
+        Distributions()
       }
     }
   }
 
-  private def isNormalDistributed(doubleCol: RDD[Double], stats: SummaryStatistics) = {
-    val testResult = Statistics.kolmogorovSmirnovTest(doubleCol, "norm", stats.mean.get, stats.stddev.get)
-    logger.info(testResult.toString())
+  private def isDistributed(doubleCol: RDD[Double], dist: RealDistribution) = {
+    val testResult = Statistics.kolmogorovSmirnovTest(doubleCol, (x:Double) => dist.cumulativeProbability(x))
     testResult.pValue > 0.05
   }
 

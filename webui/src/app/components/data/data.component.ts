@@ -8,6 +8,7 @@ import {EditColumnResult} from './process-feature/edit-column.component';
 import {NewColumnResult} from './new-column-settings/add-column-settings.component';
 import {DataTableParams} from '../shared/table';
 import {Recommendations} from "../../model/recommendations.model";
+import {MagiunLogger} from "../../util/magiun.logger";
 
 @Component({
   selector: 'app-data',
@@ -16,6 +17,8 @@ import {Recommendations} from "../../model/recommendations.model";
   providers: [NGXLogger]
 })
 export class DataComponent implements OnInit {
+
+  private logger: MagiunLogger;
 
   dataSets: DataSet[];
   rows: DataRow[];
@@ -31,8 +34,9 @@ export class DataComponent implements OnInit {
 
   showEditColumnComponent: boolean;
 
-  constructor(private logger: NGXLogger,
+  constructor(ngxLogger: NGXLogger,
               private dataService: DataService) {
+    this.logger = new MagiunLogger(DataComponent.name, ngxLogger);
   }
 
   ngOnInit() {

@@ -71,7 +71,7 @@ class AlgorithmRecommenderTest extends UnitTest {
       0.95,
       0.7,
       200,
-      10,
+      30,
       6000
     )
 
@@ -79,5 +79,81 @@ class AlgorithmRecommenderTest extends UnitTest {
 
     recommendations.size should be(2)
     recommendations shouldNot contain(OntologyClass.LinearLeastRegression)
+  }
+
+  it should s"recommend the ${OntologyClass.LogisticRegression.toString} for dataset metadata of a small dataset" in {
+    val datasetMetadata = DatasetMetadata(
+      VariableType.Binary,
+      Distribution.Binomial,
+      0.9,
+      0.95,
+      90,
+      30,
+      2700
+    )
+
+    val recommendations = algorithmRecommender.recommend(datasetMetadata)
+
+    recommendations.size should be(3)
+    recommendations should contain(OntologyClass.Algorithm)
+    recommendations should contain(OntologyClass.Regression)
+    recommendations should contain(OntologyClass.LogisticRegression)
+  }
+
+  it should s"not recommend the ${OntologyClass.LogisticRegression} for dataset with response variable distribution different from ${OntologyClass.BinomialDistribution}" in {
+    val datasetMetadata = DatasetMetadata(
+      VariableType.Binary,
+      Distribution.Exponential,
+      0.9,
+      0.95,
+      90,
+      30,
+      2700
+    )
+
+    val recommendations = algorithmRecommender.recommend(datasetMetadata)
+
+    recommendations.size should be(2)
+    recommendations should contain(OntologyClass.Algorithm)
+    recommendations should contain(OntologyClass.Regression)
+    recommendations shouldNot contain(OntologyClass.LogisticRegression)
+  }
+
+  it should s"not recommend the ${OntologyClass.LogisticRegression} for dataset with response variable type different from ${OntologyClass.Binary}" in {
+    val datasetMetadata = DatasetMetadata(
+      VariableType.Continuous,
+      Distribution.Binomial,
+      0.9,
+      0.95,
+      90,
+      30,
+      2700
+    )
+
+    val recommendations = algorithmRecommender.recommend(datasetMetadata)
+
+    recommendations.size should be(2)
+    recommendations should contain(OntologyClass.Algorithm)
+    recommendations should contain(OntologyClass.Regression)
+    recommendations shouldNot contain(OntologyClass.LogisticRegression)
+  }
+
+  it should s"not recommend the ${OntologyClass.LogisticRegression} for dataset with insufficient observation-variable ratio" in {
+    val datasetMetadata = DatasetMetadata(
+      VariableType.Continuous,
+      Distribution.Binomial,
+      0.9,
+      0.95,
+      10,
+      30,
+      300
+    )
+
+    val recommendations = algorithmRecommender.recommend(datasetMetadata)
+
+    recommendations.size should be(2)
+    recommendations should contain(OntologyClass.Algorithm)
+    recommendations should contain(OntologyClass.Regression)
+    recommendations shouldNot contain(OntologyClass.LogisticRegression)
   }
 }

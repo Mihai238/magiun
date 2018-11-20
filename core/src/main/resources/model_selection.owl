@@ -218,6 +218,14 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
+    <!-- http://www.magiun.io/ontologies/model-selection#Binomial_Distribution -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Binomial_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.magiun.io/ontologies/model-selection#Categorical -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Categorical">
@@ -420,6 +428,69 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#Logistic_Regression -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Logistic_Regression">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Binomial_Distribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Binary"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">80.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">240</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
     </owl:Class>
     
@@ -500,7 +571,23 @@ It takes values between [0,1]</rdfs:comment>
 
     <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm">
         <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
-        <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset"/>
+        <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#binaryVarType -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#binaryVarType">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Binary"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#binomialDistribution -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#binomialDistribution">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Binomial_Distribution"/>
     </owl:NamedIndividual>
     
 
@@ -513,9 +600,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#dataset -->
+    <!-- http://www.magiun.io/ontologies/model-selection#dataset1 -->
 
-    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset">
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset1">
         <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
         <rdf:type>
             <owl:Restriction>

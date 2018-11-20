@@ -47,6 +47,8 @@ class AlgorithmRecommender(ontology: OntModel @@ AlgorithmSelectionOntology) {
   private def createDistributionIndividual(distribution: Distribution): Individual = {
     distribution match {
       case Distribution.Normal => createIndividualForOntClass(OntologyClass.NormalDistribution.toString)
+      case Distribution.Binomial => createIndividualForOntClass(OntologyClass.BinomialDistribution.toString)
+      case Distribution.Exponential => createIndividualForOntClass(OntologyClass.ExponentialDistribution.toString)
       case _ => throw new IllegalArgumentException(s"Unknown distribution ${distribution.toString} !")
     }
   }

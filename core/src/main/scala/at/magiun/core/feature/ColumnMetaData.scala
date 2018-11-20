@@ -7,7 +7,7 @@ case class ColumnMetaData(valueTypes: Set[String],
                           missingValues: Int,
                           uniqueValues: Long = 0,
                           stats: SummaryStatistics = null,
-                          distributions: Distributions = null) {
+                          distributions: Set[String] = Set()) {
 
   def combine(other: ColumnMetaData): ColumnMetaData = {
     val intersectedValueTypes = if (valueTypes.isEmpty) {
@@ -28,8 +28,3 @@ case class SummaryStatistics(count: Long,
                              min: Option[Double],
                              max: Option[Double],
                              median: Option[Double])
-
-
-case class Distributions(normal: Boolean = false,
-                         uniform: Boolean = false,
-                         exponential: Boolean = false)

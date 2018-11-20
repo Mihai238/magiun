@@ -92,7 +92,6 @@ class ColumnMetaDataComputer(
 
   private def computeSummaryStatistics(ds: Dataset[Row]): Seq[SummaryStatistics] = {
     val statsSummary = StatFunctions.summary(ds, Seq("count", "mean", "stddev", "min", "max", "50%"))
-    statsSummary.show()
 
     val stats = statsSummary.collect().toSeq
         .map(row => {
@@ -118,7 +117,7 @@ class ColumnMetaDataComputer(
     case _: Exception => None
   }
 
-  private def computeDistributions(ds: Dataset[Row], summaryStatistics: Seq[SummaryStatistics]): Seq[Distributions] = {
+  private def computeDistributions(ds: Dataset[Row], summaryStatistics: Seq[SummaryStatistics]): Seq[Set[String]] = {
     val schema = ds.schema
 
     ds.schema.indices.map { colIndex =>
@@ -136,9 +135,13 @@ class ColumnMetaDataComputer(
         val uniform = isDistributed(doubles, new UniformRealDistribution(stats.min.get, stats.max.get))
         val exponential = isDistributed(doubles, new ExponentialDistribution(null, stats.mean.get))
 
-        Distributions(normal, uniform, exponential)
+        Set(
+          if (normal) "NormalDistribution" else null,
+          if (uniform) "UniformDistribution" else null ,
+          if (exponential) "ExponentialDistribution" else null
+        ).filter(e => e != null)
       } else {
-        Distributions()
+        Set[String]()
       }
     }
   }

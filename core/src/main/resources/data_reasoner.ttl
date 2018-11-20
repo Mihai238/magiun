@@ -54,6 +54,13 @@ sh:targetClass rdf:type owl:AnnotationProperty .
 #    Object Properties
 #################################################################
 
+###  http://www.magiun.io/ontologies/ml#hasDistribution
+ml:hasDistribution rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain ml:Column ;
+                   rdfs:range ml:Distribution .
+
+
 ###  http://www.magiun.io/ontologies/ml#hasValue
 ml:hasValue rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf owl:topObjectProperty ;
@@ -76,13 +83,6 @@ ml:missingValues rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf owl:topDataProperty ;
                  rdfs:domain ml:Column ;
                  rdfs:range xsd:integer .
-
-
-###  http://www.magiun.io/ontologies/ml#uniformDistribution
-ml:uniformDistribution rdf:type owl:DatatypeProperty ;
-                       rdfs:subPropertyOf owl:topDataProperty ;
-                       rdfs:domain ml:Column ;
-                       rdfs:range xsd:boolean .
 
 
 #################################################################
@@ -125,6 +125,15 @@ ml:Column rdf:type owl:Class ;
 ml:DiscretizationSuitableColumn rdf:type owl:Class ;
                                 owl:equivalentClass ml:QuantitativeColumn ;
                                 rdfs:subClassOf ml:OperationSuitableColumn .
+
+
+###  http://www.magiun.io/ontologies/ml#Distribution
+ml:Distribution rdf:type owl:Class .
+
+
+###  http://www.magiun.io/ontologies/ml#ExponentialDistribution
+ml:ExponentialDistribution rdf:type owl:Class ;
+                           rdfs:subClassOf ml:Distribution .
 
 
 ###  http://www.magiun.io/ontologies/ml#GenderColumn
@@ -223,6 +232,11 @@ ml:MaritalStatusValue rdf:type owl:Class ;
                       ] .
 
 
+###  http://www.magiun.io/ontologies/ml#NormalDistribution
+ml:NormalDistribution rdf:type owl:Class ;
+                      rdfs:subClassOf ml:Distribution .
+
+
 ###  http://www.magiun.io/ontologies/ml#NumericValue
 ml:NumericValue rdf:type owl:Class ;
                 rdfs:subClassOf ml:Value ;
@@ -281,8 +295,8 @@ ml:QuantitativeColumn rdf:type owl:Class ;
 ml:RemovalSuitableColumn rdf:type owl:Class ;
                          owl:equivalentClass [ owl:intersectionOf ( ml:Column
                                                                     [ rdf:type owl:Restriction ;
-                                                                      owl:onProperty ml:uniformDistribution ;
-                                                                      owl:hasValue "true"^^xsd:boolean
+                                                                      owl:onProperty ml:hasDistribution ;
+                                                                      owl:someValuesFrom ml:UniformDistribution
                                                                     ]
                                                                   ) ;
                                                rdf:type owl:Class
@@ -293,6 +307,11 @@ ml:RemovalSuitableColumn rdf:type owl:Class ;
 ###  http://www.magiun.io/ontologies/ml#StringValue
 ml:StringValue rdf:type owl:Class ;
                rdfs:subClassOf ml:Value .
+
+
+###  http://www.magiun.io/ontologies/ml#UniformDistribution
+ml:UniformDistribution rdf:type owl:Class ;
+                       rdfs:subClassOf ml:Distribution .
 
 
 ###  http://www.magiun.io/ontologies/ml#Value
@@ -355,82 +374,34 @@ ml:qualitativeColumn rdf:type owl:NamedIndividual ;
                      ml:cardinality 2 .
 
 
-[ sh:pattern "Divorced"
+[ sh:pattern "[Mm]"
 ] .
 
-[ sh:pattern "[Ff]"
+[ sh:pattern "Separated"
  ] .
 
-[ sh:pattern "f"
- ] .
-
-[ sh:pattern "[Ff]emale"
- ] .
-
-[ sh:pattern "[Ff]emale"
- ] .
-
-[ sh:pattern "male"
- ] .
-
-[ sh:pattern "Divorced"
- ] .
-
-[ sh:pattern "[Ff]emale"
- ] .
-
-[ sh:pattern "Divorced"
+[ sh:pattern "Widowed"
  ] .
 
 [ sh:pattern "1"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "0"
  ] .
 
 [ sh:pattern ".*[Mm]arried.*"
  ] .
 
-[ sh:pattern "[Mm]ale"
- ] .
-
-[ sh:pattern "Separated"
- ] .
-
-[ sh:pattern "[Mm]"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern "[Ff]"
- ] .
-
-[ sh:pattern "1"
- ] .
-
-[ sh:pattern "[Mm]"
- ] .
-
-[ sh:pattern "[Ff]emale"
- ] .
-
-[ sh:pattern "Separated"
- ] .
-
-[ sh:pattern "1"
- ] .
-
 [ sh:pattern "Divorced"
  ] .
 
-[ sh:pattern "m"
- ] .
-
-[ sh:pattern "1"
- ] .
-
 [ sh:pattern "0"
- ] .
-
-[ sh:pattern "Separated"
  ] .
 
 [ sh:pattern "Widowed"
@@ -439,202 +410,46 @@ ml:qualitativeColumn rdf:type owl:NamedIndividual ;
 [ sh:pattern "female"
  ] .
 
-[ sh:pattern "Widowed"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern "f"
- ] .
-
-[ sh:pattern ".*[Mm]arried.*"
- ] .
-
-[ sh:pattern "m"
- ] .
-
-[ sh:pattern "[Ff]"
- ] .
-
-[ sh:pattern "male"
- ] .
-
-[ sh:pattern "1"
- ] .
-
-[ sh:pattern "Separated"
- ] .
-
-[ sh:pattern ".*[Mm]arried.*"
- ] .
-
-[ sh:pattern "Widowed"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern ".*[Mm]arried.*"
- ] .
-
-[ sh:pattern "[Mm]"
- ] .
-
 [ sh:pattern "[Ff]emale"
  ] .
 
-[ sh:pattern ".*[Mm]arried.*"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern "1"
- ] .
-
-[ sh:pattern "Widowed"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern ".*[Mm]arried.*"
- ] .
-
-[ sh:pattern "Divorced"
- ] .
-
-[ sh:pattern "[Ff]"
- ] .
-
 [ sh:pattern "[Mm]ale"
- ] .
-
-[ sh:pattern "[Mm]"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern "[Ff]"
- ] .
-
-[ sh:pattern "[Mm]ale"
- ] .
-
-[ sh:pattern "[Ff]emale"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern "[Ff]emale"
- ] .
-
-[ sh:pattern "[Ff]"
- ] .
-
-[ sh:pattern "Separated"
- ] .
-
-[ sh:pattern ".*[Mm]arried.*"
- ] .
-
-[ sh:pattern "[Mm]ale"
- ] .
-
-[ sh:pattern "[Mm]ale"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern "Divorced"
- ] .
-
-[ sh:pattern "Separated"
- ] .
-
-[ sh:pattern "[Mm]"
- ] .
-
-[ sh:pattern "Widowed"
- ] .
-
-[ sh:pattern "1"
- ] .
-
-[ sh:pattern "male"
- ] .
-
-[ sh:pattern "female"
- ] .
-
-[ sh:pattern "1"
- ] .
-
-[ sh:pattern "female"
- ] .
-
-[ sh:pattern "1"
- ] .
-
-[ sh:pattern "f"
- ] .
-
-[ sh:pattern "Widowed"
- ] .
-
-[ sh:pattern "Widowed"
- ] .
-
-[ sh:pattern "[Mm]ale"
- ] .
-
-[ sh:pattern "[Mm]ale"
- ] .
-
-[ sh:pattern "0"
- ] .
-
-[ sh:pattern "1"
- ] .
-
-[ sh:pattern "[Mm]"
- ] .
-
-[ sh:pattern "[Mm]"
- ] .
-
-[ sh:pattern "Divorced"
- ] .
-
-[ sh:pattern "[Mm]"
- ] .
-
-[ sh:pattern "Separated"
- ] .
-
-[ sh:pattern "1"
  ] .
 
 [ sh:pattern "[Tt]rue"
  ] .
 
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "[Tt]rue"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "[Ff]alse"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
 [ sh:pattern "1"
  ] .
 
-[ sh:pattern "Separated"
+[ sh:pattern "f"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "female"
+ ] .
+
+[ sh:pattern "[Mm]ale"
  ] .
 
 [ sh:pattern "[Ff]"
@@ -643,13 +458,49 @@ ml:qualitativeColumn rdf:type owl:NamedIndividual ;
 [ sh:pattern "0"
  ] .
 
-[ sh:pattern ".*[Mm]arried.*"
+[ sh:pattern "male"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "[Mm]ale"
  ] .
 
 [ sh:pattern "1"
  ] .
 
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "[Ff]alse"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
 [ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern "t"
+ ] .
+
+[ sh:pattern "[Tt]rue"
+ ] .
+
+[ sh:pattern "t"
  ] .
 
 [ sh:pattern "[Ff]alse"
@@ -658,10 +509,295 @@ ml:qualitativeColumn rdf:type owl:NamedIndividual ;
 [ sh:pattern "[Ff]emale"
  ] .
 
+[ sh:pattern "t"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
 [ sh:pattern "1"
  ] .
 
 [ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern "[Ff]alse"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "t"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern "f"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "m"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "male"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "f"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "f"
+ ] .
+
+[ sh:pattern "male"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "female"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern "[Tt]rue"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "f"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "[Ff]alse"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "m"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "Divorced"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "[Ff]emale"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "[Mm]"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "f"
+ ] .
+
+[ sh:pattern "[Mm]"
  ] .
 
 [ sh:pattern "t"
@@ -670,7 +806,58 @@ ml:qualitativeColumn rdf:type owl:NamedIndividual ;
 [ sh:pattern "[Ff]"
  ] .
 
-[ sh:pattern "Divorced"
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "[Tt]rue"
+ ] .
+
+[ sh:pattern "f"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern "Widowed"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "1"
+ ] .
+
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern "Separated"
+ ] .
+
+[ sh:pattern "[Mm]ale"
+ ] .
+
+[ sh:pattern "[Ff]"
+ ] .
+
+[ sh:pattern "0"
+ ] .
+
+[ sh:pattern ".*[Mm]arried.*"
+ ] .
+
+[ sh:pattern "[Ff]emale"
  ] .
 
 ###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

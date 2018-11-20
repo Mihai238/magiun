@@ -21,36 +21,18 @@ class ColumnMetaDataComputer(
     logger.info("Computing column metadata.")
 
     val columnsMeta = ds.reduce((row1, row2) => {
-      val (left, right) =
-        if (!isColMeta(row1) && !isColMeta(row2)) {
-          (
-            computeValueTypeForRow(row1, restrictions),
-            computeValueTypeForRow(row2, restrictions)
-          )
-        } else if (isColMeta(row1) && !isColMeta(row2)) {
-          (
-            row1.toSeq.asInstanceOf[Seq[ColumnMetaData]],
-            computeValueTypeForRow(row2, restrictions)
-          )
-        } else if (!isColMeta(row1) && isColMeta(row2)) {
-          (
-            computeValueTypeForRow(row2, restrictions),
-            row2.toSeq.asInstanceOf[Seq[ColumnMetaData]]
-          )
-        } else if (isColMeta(row1) && isColMeta(row2)) {
-          (
-            row1.toSeq.asInstanceOf[Seq[ColumnMetaData]],
-            row2.toSeq.asInstanceOf[Seq[ColumnMetaData]]
-          )
-        } else {
-          throw new IllegalStateException
-        }
+      val left = if (isColMeta(row1)) row1.toSeq.asInstanceOf[Seq[ColumnMetaData]] else computeValueTypeForRow(row1, restrictions)
+      val right = if (isColMeta(row2)) row2.toSeq.asInstanceOf[Seq[ColumnMetaData]] else computeValueTypeForRow(row2, restrictions)
 
       Row.fromSeq(combine(left, right))
     }).toSeq.map(_.asInstanceOf[ColumnMetaData])
 
     val distinctCounts = ds.select(ds.columns.map(c => countDistinct(col(s"`$c`")).alias(c)): _*).first().toSeq
+
+    logger.info("Computing summary statistics for column metadata.")
     val summaryStatistics = computeSummaryStatistics(ds)
+
+    logger.info("Computing distributions for column metadata.")
     val distributions = computeDistributions(ds, summaryStatistics)
 
     columnsMeta
@@ -109,12 +91,13 @@ class ColumnMetaDataComputer(
   }
 
   private def computeSummaryStatistics(ds: Dataset[Row]): Seq[SummaryStatistics] = {
-    val stats =
-      StatFunctions.summary(ds, Seq("count", "mean", "stddev", "min", "max", "50%")).collect().toSeq
+    val statsSummary = StatFunctions.summary(ds, Seq("count", "mean", "stddev", "min", "max", "50%"))
+    statsSummary.show()
+
+    val stats = statsSummary.collect().toSeq
         .map(row => {
           row.toSeq.drop(1)
-            .map(e => Option(e))
-            .map(e => e.map(_.asInstanceOf[String]))
+            .map(e => Option(e).map(_.asInstanceOf[String]))
         })
 
     val count = stats(0).map(e => e.get.toLong)

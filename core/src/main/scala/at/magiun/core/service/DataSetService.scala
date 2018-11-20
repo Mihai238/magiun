@@ -4,6 +4,7 @@ import at.magiun.core.connector.Connector
 import at.magiun.core.feature.{Recommendations, Recommender}
 import at.magiun.core.model.{DataRow, DataSetSource, MagiunDataSet, SourceType}
 import at.magiun.core.repository.{DataSetRepository, MagiunDataSetEntity}
+import com.typesafe.scalalogging.LazyLogging
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.Option._
@@ -15,7 +16,7 @@ class DataSetService(
                       executionContext: ExecutionContext,
                       spark: SparkSession,
                       recommender: Recommender
-                    ) {
+                    ) extends LazyLogging {
 
   def find(id: String): Future[Option[MagiunDataSet]] = {
     if (isMemoryDataSet(id)) {
@@ -103,6 +104,7 @@ class DataSetService(
   }
 
   private def getConnector(sourceType: SourceType): Connector = {
+    logger.info("Getting connector for " + sourceType)
     new ConnectorFactory(spark, executionContext).getConnector(sourceType)
   }
 

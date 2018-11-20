@@ -100,6 +100,21 @@ export class DataService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  private readonly sampleSize = 1000;
+
+  getDataSample(dataSet: DataSet, columns: string[]): Observable<DataRow[]> {
+    let columnsString: string = "";
+    columns.forEach(col => columnsString += col + ",");
+    this.logger.info('DataService: load sample data for dataset with id "' + dataSet.id + '" and column(s) "' + columnsString + '"');
+
+    let columnsQuery = '_columns=' + columnsString.substring(0, columnsString.length - 1);
+    let limitQuery = "_limit=" + this.sampleSize;
+
+    return this.http.get(environment.baseUrl + this.dataSetsPath + dataSet.id + '/rows?' + columnsQuery + "&" + limitQuery)
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+
+  }
+
   getDataForTable(dataSet: DataSet, params: DataTableParams): Promise<{ items: DataRow[] | null; count: number }> {
     let queryString = this.paramsToQueryString(params);
     this.logger.info('DataSerice: get data for table with queryString ' + queryString);

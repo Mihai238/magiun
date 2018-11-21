@@ -25,7 +25,7 @@ export class PieSettingsComponent implements OnInit {
     this.tooManyLabels = false;
   }
 
-  onUpdateFirstColumn(column: Column) {
+  onUpdateColumn(column: Column) {
     this.selectedColumn = column;
     this.getDataAndUpdate();
   }

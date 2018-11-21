@@ -35,7 +35,7 @@ class ColumnMetaDataComputerTest extends UnitTest {
     columnsMeta(5).stats.median.get should be(28)
   }
 
-  ignore should "try to guess column types for income dataset" in {
+  it should "try to guess column types for income dataset" in {
     val columnsMeta = columnMetaDataComputer.compute(connector.getDataset(incomeDataSetSource), restrictions)
 
     columnsMeta(5).valueTypes should contain only("StringValue", "MaritalStatusValue")

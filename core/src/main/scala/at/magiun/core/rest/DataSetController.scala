@@ -52,7 +52,7 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
 
       val range = for {
         l <- limit
-        p <- page
+        p <- page.orElse(Option("1"))
         limit = Integer.parseInt(l)
         page = Integer.parseInt(p)
       } yield Range((page - 1) * limit, page * limit + 1)

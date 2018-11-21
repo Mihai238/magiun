@@ -13,7 +13,7 @@ export class PieSettingsComponent implements OnInit {
   @Input() dataSet: DataSet;
   @Output() settingsUpdated = new EventEmitter();
 
-  MAX_LABELS = 30;
+  readonly MAX_LABELS = 30;
 
   tooManyLabels: boolean;
   selectedColumn: Column;

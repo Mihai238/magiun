@@ -5,7 +5,7 @@
     </chart-column-selector>
   </div>
 
-  <div [translate]="'DATA.WARN_TOO_MANY_LABELS'" [translateParams]="{max_labels: 10}" *ngIf="tooManyLabels"
+  <div [translate]="'DATA.WARN_TOO_MANY_LABELS'" [translateParams]="{max_labels: MAX_LABELS}" *ngIf="tooManyLabels"
        class="alert alert-warning mt-3" role="alert">
   </div>
 </div>

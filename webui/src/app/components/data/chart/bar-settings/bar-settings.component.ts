@@ -14,6 +14,8 @@ export class BarSettingsComponent implements OnInit {
   @Input() dataSet: DataSet;
   @Output() settingsUpdated = new EventEmitter<ChartData>();
 
+  readonly MAX_LABELS = 10;
+
   tooManyLabels: boolean;
   selectedColumn: Column;
 
@@ -45,7 +47,7 @@ export class BarSettingsComponent implements OnInit {
   }
 
   private check(keyWithOccurrences: Map<any, number>): boolean {
-    return keyWithOccurrences.size <= 10;
+    return keyWithOccurrences.size <= this.MAX_LABELS;
   }
 
   private update(keyWithOccurrences: Map<any, number>): void {

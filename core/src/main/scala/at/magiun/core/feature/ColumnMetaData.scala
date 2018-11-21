@@ -1,5 +1,7 @@
 package at.magiun.core.feature
 
+import at.magiun.core.model.data.Distribution
+
 /**
   * @param valueTypes type of values e.g. StringValue, BooleanValue, GenderValue
   */
@@ -7,7 +9,7 @@ case class ColumnMetaData(valueTypes: Set[String],
                           missingValues: Int,
                           uniqueValues: Long = 0,
                           stats: SummaryStatistics = null,
-                          distributions: Set[String] = Set()) {
+                          distributions: Set[Distribution] = Set()) {
 
   def combine(other: ColumnMetaData): ColumnMetaData = {
     val intersectedValueTypes = if (valueTypes.isEmpty) {

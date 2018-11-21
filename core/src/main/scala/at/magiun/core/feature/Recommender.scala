@@ -72,7 +72,7 @@ class Recommender(sparkSession: SparkSession,
     indv.addProperty(missingValuesProperty, model.createTypedLiteral(colMeta.missingValues.asInstanceOf[Integer]))
 
     val tmpDistrIndvs = colMeta.distributions.map(distrType => {
-      val tmpIndv = model.createIndividual(model.getOntClass(NS + distrType))
+      val tmpIndv = model.createIndividual(model.getOntClass(NS + distrType.ontClassName))
       indv.addProperty(hasDistributionProperty, tmpIndv)
       tmpIndv
     })

@@ -31,7 +31,7 @@ export class PieSettingsComponent implements OnInit {
   }
 
   private getDataAndUpdate() {
-    this.dataService.getAllData(this.dataSet, [this.selectedColumn.name])
+    this.dataService.getDataSample(this.dataSet, [this.selectedColumn.name])
       .subscribe(dataRows => {
         const keys: any[] = dataRows.map(row => row.values[0]);
 

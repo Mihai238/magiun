@@ -63,7 +63,7 @@ class ColumnMetaDataComputer(
       val value = row.get(colIndex)
 
       if (isMissingValue(value)) {
-        ColumnMetaData(Set(), 1)
+        ColumnMetaData(Set(), Set(), 1)
 
       } else {
         val valueTypes = restrictions.map { case (valueType, restr) =>
@@ -79,7 +79,7 @@ class ColumnMetaDataComputer(
         //          logger.error(s"$value is wrong")
         //        }
 
-        ColumnMetaData(valueTypes.toSet, 0)
+        ColumnMetaData(valueTypes.toSet, valueTypes.toSet, 0)
       }
     }
     }

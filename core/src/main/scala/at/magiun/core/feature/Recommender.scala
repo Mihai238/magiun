@@ -4,7 +4,7 @@ import at.magiun.core.config.FeatureEngOntology
 import at.magiun.core.config.OntologyConfig.NS
 import com.softwaremill.tagging.@@
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.jena.ontology.{Individual, OntModel}
+import org.apache.jena.ontology.{Individual, OntModel, OntResource}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.collection.JavaConversions._
@@ -44,8 +44,8 @@ class Recommender(sparkSession: SparkSession,
 
   def recommendIntern(columnsMetadata: Seq[ColumnMetaData]): Seq[List[String]] = {
     columnsMetadata.map { colMeta =>
-      val valueTypes = colMeta.valueTypes
-      val (indv, tmpIndvs) = createIndividual(colMeta)
+      val valueTypes = colMeta.intersectedValueTypes
+      val (indv, tmpRes) = createIndividual(colMeta)
 
       val colTypes = model.listStatements(indv.asResource(), null, null).toList.toList
         .filter(model.contains)
@@ -53,14 +53,14 @@ class Recommender(sparkSession: SparkSession,
         .filter(_.getObject.asResource().getNameSpace == NS)
         .map(_.getObject.asResource().getLocalName)
 
-      tmpIndvs.foreach(e => model.removeAll(e, null, null))
+      tmpRes.foreach(e => model.removeAll(e, null, null))
       model.removeAll(indv, null, null)
 
       colTypes
     }
   }
 
-  private def createIndividual(colMeta: ColumnMetaData): (Individual, Set[Individual]) = {
+  private def createIndividual(colMeta: ColumnMetaData): (Individual, Set[OntResource]) = {
     val cardinalityProperty = model.getProperty(NS + "cardinality")
     val missingValuesProperty = model.getProperty(NS + "missingValues")
     val hasValueProperty = model.getProperty(NS + "hasValue")
@@ -77,13 +77,23 @@ class Recommender(sparkSession: SparkSession,
       tmpIndv
     })
 
-    val tmpValueIndvs = colMeta.valueTypes.map(valueType => {
-      val tmpIndv = model.createIndividual(model.getOntClass(NS + valueType))
-      indv.addProperty(hasValueProperty, tmpIndv)
-      tmpIndv
+    var list = model.createList()
+    val tmpValueRestr1 = colMeta.intersectedValueTypes.map(valueType => {
+      val tmpRestr = model.createAllValuesFromRestriction(null, hasValueProperty, model.getOntClass(NS + valueType))
+      list = list.`with`(tmpRestr)
+      tmpRestr
     })
 
-    (indv, tmpDistrIndvs ++ tmpValueIndvs)
+    val tmpValueRestr2 = colMeta.unionValueTypes.map(valueType => {
+      val tmpRestr = model.createSomeValuesFromRestriction(null, hasValueProperty, model.getOntClass(NS + valueType))
+      list = list.`with`(tmpRestr)
+      tmpRestr
+    })
+
+    val intersectionClass = model.createIntersectionClass(null, list)
+    indv.addOntClass(intersectionClass)
+
+    (indv, tmpDistrIndvs ++ tmpValueRestr1 ++ tmpValueRestr2 + intersectionClass)
   }
 }
 

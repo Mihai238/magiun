@@ -18,12 +18,12 @@ class RecommenderTest extends UnitTest {
     recommendation(0).colTypes should contain only "QuantitativeColumn"
     recommendation(0).operations should contain ("RemovalSuitableColumn")
 
-    recommendation(1).colTypes should contain only("BooleanColumn", "QualitativeColumn")
+    recommendation(1).colTypes should contain only "BooleanColumn"
     recommendation(1).operations should be(List.empty)
 
     recommendation(3).colTypes should be(List.empty)
 
-    recommendation(4).colTypes should contain only("GenderColumn", "QualitativeColumn")
+    recommendation(4).colTypes should contain only "GenderColumn"
     recommendation(4).operations should be(List.empty)
 
     recommendation(5).colTypes should contain only("HumanAgeColumn", "QuantitativeColumn")
@@ -35,9 +35,11 @@ class RecommenderTest extends UnitTest {
 
     recommendation(0).colTypes should contain only("QuantitativeColumn", "HumanAgeColumn")
 
-    recommendation(5).colTypes should contain only("MaritalStatusColumn", "QualitativeColumn")
+    recommendation(5).colTypes should contain only "MaritalStatusColumn"
 
-    recommendation(8).colTypes should contain only("HumanRaceColumn", "QualitativeColumn")
+    recommendation(8).colTypes should contain only "HumanRaceColumn"
+
+    recommendation(13).colTypes should contain only "CountryColumn"
   }
 
 }

@@ -39,6 +39,9 @@ class RestrictionBuilderTest extends UnitTest {
 
     restrictions("HumanRaceValue").check("asian") should be (true)
     restrictions("HumanRaceValue").check("miami") should be (false)
+
+    restrictions("CountryValue").check("USA") should be (true)
+    restrictions("CountryValue").check("asia") should be (false)
   }
 
 }

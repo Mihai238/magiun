@@ -40,6 +40,8 @@ class ColumnMetaDataComputerTest extends UnitTest {
     val columnsMeta = columnMetaDataComputer.compute(connector.getDataset(incomeDataSetSource), restrictions)
 
     columnsMeta(5).valueTypes should contain only("StringValue", "MaritalStatusValue")
+
+    columnsMeta(8).valueTypes should contain only("StringValue", "HumanRaceValue")
   }
 
 }

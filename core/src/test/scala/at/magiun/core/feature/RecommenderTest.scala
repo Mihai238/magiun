@@ -36,6 +36,8 @@ class RecommenderTest extends UnitTest {
     recommendation(0).colTypes should contain only("QuantitativeColumn", "HumanAgeColumn")
 
     recommendation(5).colTypes should contain only("MaritalStatusColumn", "QualitativeColumn")
+
+    recommendation(8).colTypes should contain only("HumanRaceColumn", "QualitativeColumn")
   }
 
 }

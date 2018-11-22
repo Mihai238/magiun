@@ -36,6 +36,9 @@ class RestrictionBuilderTest extends UnitTest {
     restrictions("NumericValue").check(42) should be (true)
     restrictions("NumericValue").check("1.8") should be (true)
     restrictions("NumericValue").check("hello") should be (false)
+
+    restrictions("HumanRaceValue").check("asian") should be (true)
+    restrictions("HumanRaceValue").check("miami") should be (false)
   }
 
 }

@@ -101,6 +101,18 @@ ml:BooleanColumn rdf:type owl:Class ;
                                      ] ;
                  rdfs:subClassOf ml:QualitativeColumn .
 
+###  http://www.magiun.io/ontologies/ml#HumanRaceColumn
+ml:HumanRaceColumn rdf:type owl:Class ;
+              owl:equivalentClass [ owl:intersectionOf ( ml:QualitativeColumn
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty ml:hasValue ;
+                                                           owl:someValuesFrom ml:HumanRaceValue
+                                                         ]
+                                                       ) ;
+                                    rdf:type owl:Class
+                                  ] ;
+              rdfs:subClassOf ml:QualitativeColumn .
+
 
 ###  http://www.magiun.io/ontologies/ml#BooleanValue
 ml:BooleanValue rdf:type owl:Class ;
@@ -112,6 +124,17 @@ ml:BooleanValue rdf:type owl:Class ;
                     [sh:pattern "[Ff]alse"]
                     [sh:pattern "t"]
                     [sh:pattern "f"]
+                )
+                ] .
+
+###  http://www.magiun.io/ontologies/ml#HumanRaceValue
+ml:HumanRaceValue rdf:type owl:Class ;
+                rdfs:subClassOf ml:Value ;
+                sh:property [ sh:or (
+                    [sh:pattern "(?i)black"]
+                    [sh:pattern "(?i)white"]
+                    [sh:pattern "(?i).*asian.*"]
+                    [sh:pattern "(?i).*amer.*"]
                 )
                 ] .
 

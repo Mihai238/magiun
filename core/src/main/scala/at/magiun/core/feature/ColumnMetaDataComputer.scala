@@ -1,5 +1,7 @@
 package at.magiun.core.feature
 
+import java.util.regex.Pattern
+
 import at.magiun.core.model.data.Distribution
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.commons.math3.distribution._
@@ -83,10 +85,12 @@ class ColumnMetaDataComputer(
     }
   }
 
+  private val MissingValuePattern = Pattern.compile("(?i)NA|other|unknown")
+
   def isMissingValue(value: Any): Boolean = {
     value match {
       case null => true
-      case v: String => v == "" || v.equalsIgnoreCase("NA")
+      case v: String => v == "" || MissingValuePattern.matcher(v).matches()
       case _ => false
     }
   }

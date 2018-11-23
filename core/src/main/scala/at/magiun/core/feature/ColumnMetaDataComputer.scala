@@ -1,5 +1,7 @@
 package at.magiun.core.feature
 
+import java.util.regex.Pattern
+
 import at.magiun.core.model.data.Distribution
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.commons.math3.distribution._
@@ -61,7 +63,7 @@ class ColumnMetaDataComputer(
       val value = row.get(colIndex)
 
       if (isMissingValue(value)) {
-        ColumnMetaData(Set(), 1)
+        ColumnMetaData(Set(), Set(), 1)
 
       } else {
         val valueTypes = restrictions.map { case (valueType, restr) =>
@@ -77,16 +79,18 @@ class ColumnMetaDataComputer(
         //          logger.error(s"$value is wrong")
         //        }
 
-        ColumnMetaData(valueTypes.toSet, 0)
+        ColumnMetaData(valueTypes.toSet, valueTypes.toSet, 0)
       }
     }
     }
   }
 
+  private val MissingValuePattern = Pattern.compile("(?i)NA|other|unknown")
+
   def isMissingValue(value: Any): Boolean = {
     value match {
       case null => true
-      case v: String => v == "" || v.equalsIgnoreCase("NA")
+      case v: String => v == "" || MissingValuePattern.matcher(v).matches()
       case _ => false
     }
   }
@@ -132,9 +136,9 @@ class ColumnMetaDataComputer(
           .map(_.get)
           .rdd
 
-        val normal = isDistributed(doubles, new NormalDistribution(stats.mean.get, stats.stddev.get))
+        val normal = false //isDistributed(doubles, new NormalDistribution(stats.mean.get, stats.stddev.get))
         val uniform = isDistributed(doubles, new UniformRealDistribution(stats.min.get, stats.max.get))
-        val exponential = isDistributed(doubles, new ExponentialDistribution(null, stats.mean.get))
+        val exponential = false //isDistributed(doubles, new ExponentialDistribution(null, stats.mean.get))
 
         Set[Distribution](
           if (normal) Distribution.Normal else null,

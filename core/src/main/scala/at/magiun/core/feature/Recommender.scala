@@ -4,7 +4,7 @@ import at.magiun.core.config.FeatureEngOntology
 import at.magiun.core.config.OntologyConfig.NS
 import com.softwaremill.tagging.@@
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.jena.ontology.{Individual, OntModel}
+import org.apache.jena.ontology.{Individual, OntModel, OntResource}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.collection.JavaConversions._
@@ -18,6 +18,18 @@ class Recommender(sparkSession: SparkSession,
                   columnMetaDataComputer: ColumnMetaDataComputer) extends LazyLogging {
 
   private lazy val restrictions: Map[String, Restriction] = restrictionBuilder.build(model)
+
+  private lazy val cardinalityProperty = model.getProperty(NS + "uniqueCount")
+  private lazy val missingValuesProperty = model.getProperty(NS + "missingValues")
+  private lazy val countProperty = model.getProperty(NS + "count")
+  private lazy val meanProperty = model.getProperty(NS + "mean")
+  private lazy val stddevProperty = model.getProperty(NS + "stddev")
+  private lazy val minProperty = model.getProperty(NS + "min")
+  private lazy val maxProperty = model.getProperty(NS + "max")
+  private lazy val medianProperty = model.getProperty(NS + "median")
+
+  private lazy val hasValueProperty = model.getProperty(NS + "hasValue")
+  private lazy val hasDistributionProperty = model.getProperty(NS + "hasDistribution")
 
   def recommend(ds: Dataset[Row]): Recommendations = {
     val columnsMetaData = columnMetaDataComputer.compute(ds, restrictions)
@@ -44,8 +56,8 @@ class Recommender(sparkSession: SparkSession,
 
   def recommendIntern(columnsMetadata: Seq[ColumnMetaData]): Seq[List[String]] = {
     columnsMetadata.map { colMeta =>
-      val valueTypes = colMeta.valueTypes
-      val (indv, tmpIndvs) = createIndividual(colMeta)
+      val valueTypes = colMeta.intersectedValueTypes
+      val (indv, tmpRes) = createIndividual(colMeta)
 
       val colTypes = model.listStatements(indv.asResource(), null, null).toList.toList
         .filter(model.contains)
@@ -53,23 +65,25 @@ class Recommender(sparkSession: SparkSession,
         .filter(_.getObject.asResource().getNameSpace == NS)
         .map(_.getObject.asResource().getLocalName)
 
-      tmpIndvs.foreach(e => model.removeAll(e, null, null))
+      tmpRes.foreach(e => model.removeAll(e, null, null))
       model.removeAll(indv, null, null)
 
       colTypes
     }
   }
 
-  private def createIndividual(colMeta: ColumnMetaData): (Individual, Set[Individual]) = {
-    val cardinalityProperty = model.getProperty(NS + "cardinality")
-    val missingValuesProperty = model.getProperty(NS + "missingValues")
-    val hasValueProperty = model.getProperty(NS + "hasValue")
-    val hasDistributionProperty = model.getProperty(NS + "hasDistribution")
-
+  private def createIndividual(colMeta: ColumnMetaData): (Individual, Set[OntResource]) = {
     val indv = model.createIndividual(model.getOntClass(NS + "Column"))
 
     indv.addProperty(cardinalityProperty, model.createTypedLiteral(colMeta.uniqueValues.asInstanceOf[Any]))
     indv.addProperty(missingValuesProperty, model.createTypedLiteral(colMeta.missingValues.asInstanceOf[Integer]))
+
+    indv.addProperty(countProperty, model.createTypedLiteral(colMeta.stats.count.asInstanceOf[Any]))
+    colMeta.stats.mean.foreach(x => indv.addProperty(meanProperty, model.createTypedLiteral(x.asInstanceOf[Any])))
+    colMeta.stats.stddev.foreach(x => indv.addProperty(stddevProperty, model.createTypedLiteral(x.asInstanceOf[Any])))
+    colMeta.stats.min.foreach(x => indv.addProperty(minProperty, model.createTypedLiteral(x.asInstanceOf[Any])))
+    colMeta.stats.max.foreach(x => indv.addProperty(maxProperty, model.createTypedLiteral(x.asInstanceOf[Any])))
+    colMeta.stats.median.foreach(x => indv.addProperty(medianProperty, model.createTypedLiteral(x.asInstanceOf[Any])))
 
     val tmpDistrIndvs = colMeta.distributions.map(distrType => {
       val tmpIndv = model.createIndividual(model.getOntClass(NS + distrType.ontClassName))
@@ -77,13 +91,23 @@ class Recommender(sparkSession: SparkSession,
       tmpIndv
     })
 
-    val tmpValueIndvs = colMeta.valueTypes.map(valueType => {
-      val tmpIndv = model.createIndividual(model.getOntClass(NS + valueType))
-      indv.addProperty(hasValueProperty, tmpIndv)
-      tmpIndv
+    var list = model.createList()
+    val tmpValueRestr1 = colMeta.intersectedValueTypes.map(valueType => {
+      val tmpRestr = model.createAllValuesFromRestriction(null, hasValueProperty, model.getOntClass(NS + valueType))
+      list = list.`with`(tmpRestr)
+      tmpRestr
     })
 
-    (indv, tmpDistrIndvs ++ tmpValueIndvs)
+    val tmpValueRestr2 = colMeta.unionValueTypes.map(valueType => {
+      val tmpRestr = model.createSomeValuesFromRestriction(null, hasValueProperty, model.getOntClass(NS + valueType))
+      list = list.`with`(tmpRestr)
+      tmpRestr
+    })
+
+    val intersectionClass = model.createIntersectionClass(null, list)
+    indv.addOntClass(intersectionClass)
+
+    (indv, tmpDistrIndvs ++ tmpValueRestr1 ++ tmpValueRestr2 + intersectionClass)
   }
 }
 

@@ -20,13 +20,13 @@ class ColumnMetaDataComputerTest extends UnitTest {
 
     columnsMeta(0).distributions should contain only Distribution.Uniform
 
-    columnsMeta(1).valueTypes should contain only("StringValue", "BooleanValue", "NumericValue", "IntValue", "HumanAgeValue")
+    columnsMeta(1).intersectedValueTypes should contain only("StringValue", "BooleanValue", "NumericValue", "IntValue", "HumanAgeValue")
     columnsMeta(1).uniqueValues should be(2)
     columnsMeta(1).distributions should be(Set.empty)
 
-    columnsMeta(4).valueTypes should contain only("StringValue", "GenderValue")
+    columnsMeta(4).intersectedValueTypes should contain only("StringValue", "GenderValue")
 
-    columnsMeta(5).valueTypes should contain only("StringValue", "NumericValue", "HumanAgeValue")
+    columnsMeta(5).intersectedValueTypes should contain only("StringValue", "NumericValue", "HumanAgeValue")
     columnsMeta(5).distributions should be(Set.empty)
     columnsMeta(5).stats.count should be(714)
     columnsMeta(5).stats.mean.get should be(29.69911764705882)
@@ -39,7 +39,11 @@ class ColumnMetaDataComputerTest extends UnitTest {
   it should "try to guess column types for income dataset" in {
     val columnsMeta = columnMetaDataComputer.compute(connector.getDataset(incomeDataSetSource), restrictions)
 
-    columnsMeta(5).valueTypes should contain only("StringValue", "MaritalStatusValue")
+    columnsMeta(5).intersectedValueTypes should contain only("StringValue", "MaritalStatusValue")
+
+    columnsMeta(8).intersectedValueTypes should contain only("StringValue", "HumanEthnicityValue")
+
+    columnsMeta(13).unionValueTypes should contain ("CountryValue")
   }
 
 }

@@ -3,24 +3,33 @@ package at.magiun.core.feature
 import at.magiun.core.model.data.Distribution
 
 /**
-  * @param valueTypes type of values e.g. StringValue, BooleanValue, GenderValue
+  * @param intersectedValueTypes type of values e.g. StringValue, BooleanValue, GenderValue
   */
-case class ColumnMetaData(valueTypes: Set[String],
+case class ColumnMetaData(intersectedValueTypes: Set[String],
+                          unionValueTypes: Set[String],
                           missingValues: Int,
                           uniqueValues: Long = 0,
                           stats: SummaryStatistics = null,
                           distributions: Set[Distribution] = Set()) {
 
   def combine(other: ColumnMetaData): ColumnMetaData = {
-    val intersectedValueTypes = if (valueTypes.isEmpty) {
-      other.valueTypes
-    } else if (other.valueTypes.isEmpty) {
-      valueTypes
+    val newIntersected = if (intersectedValueTypes.isEmpty) {
+      other.intersectedValueTypes
+    } else if (other.intersectedValueTypes.isEmpty) {
+      intersectedValueTypes
     } else {
-      valueTypes.intersect(other.valueTypes)
+      intersectedValueTypes.intersect(other.intersectedValueTypes)
     }
 
-    ColumnMetaData(intersectedValueTypes, missingValues + other.missingValues)
+    val newUnion = if (unionValueTypes.isEmpty) {
+      other.unionValueTypes
+    } else if (other.unionValueTypes.isEmpty) {
+      unionValueTypes
+    } else {
+      unionValueTypes.union(other.unionValueTypes)
+    }
+
+    ColumnMetaData(newIntersected, newUnion, missingValues + other.missingValues)
   }
 }
 

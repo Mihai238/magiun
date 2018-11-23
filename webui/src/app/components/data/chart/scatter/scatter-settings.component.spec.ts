@@ -1,10 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ScatterSettingsComponent } from './scatter-settings.component';
+import {ScatterSettingsComponent} from './scatter-settings.component';
 import {DataService} from '../../../../services/data.service';
 import {HttpClientModule} from '@angular/common/http';
 import {logging} from '../../../../app.logging';
 import {StubColumnSelectorComponent} from '../../../../../testing/stub-column-selector.component';
+import {translate} from "../../../../app.translate";
 
 describe('ScatterSettingsComponent', () => {
   let component: ScatterSettingsComponent;
@@ -19,7 +20,8 @@ describe('ScatterSettingsComponent', () => {
       ],
       imports: [
         HttpClientModule,
-        logging
+        logging,
+        translate
       ],
       providers: [
         DataService

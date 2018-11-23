@@ -136,9 +136,9 @@ class ColumnMetaDataComputer(
           .map(_.get)
           .rdd
 
-        val normal = isDistributed(doubles, new NormalDistribution(stats.mean.get, stats.stddev.get))
+        val normal = false //isDistributed(doubles, new NormalDistribution(stats.mean.get, stats.stddev.get))
         val uniform = isDistributed(doubles, new UniformRealDistribution(stats.min.get, stats.max.get))
-        val exponential = isDistributed(doubles, new ExponentialDistribution(null, stats.mean.get))
+        val exponential = false //isDistributed(doubles, new ExponentialDistribution(null, stats.mean.get))
 
         Set[Distribution](
           if (normal) Distribution.Normal else null,

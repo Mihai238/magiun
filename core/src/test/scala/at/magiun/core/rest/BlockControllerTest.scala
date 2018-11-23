@@ -18,7 +18,7 @@ class BlockControllerTest extends UnitTest {
   val stubService: BlockService = mainModule.blockService
   val controller: BlockController = mainModule.blockController
 
-  ignore should "read a block" in {
+  it should "read a block" in {
     val input = Input.get("/blocks/2")
     stubService.find _ when "2" returns Future.successful(TestData.testBlock2)
 
@@ -29,7 +29,7 @@ class BlockControllerTest extends UnitTest {
     block.`type` should be(BlockType.FileReader)
   }
 
-  ignore should "create a block" in {
+  it should "create a block" in {
     val input = Input.post("/blocks/").withBody[Application.Json](Buf.Utf8("""{"id":"id-2","type":"FileReader","inputs":[{"blockId":"1","index":0}],"params":{"x":"4"}}"""))
     val result = controller.upsertBlock(input)
     stubService.upsert _ when * returns Future.successful(TestData.testBlock2)

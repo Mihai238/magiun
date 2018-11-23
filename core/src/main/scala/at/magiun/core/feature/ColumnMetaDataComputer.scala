@@ -1,5 +1,6 @@
 package at.magiun.core.feature
 
+import at.magiun.core.model.data.Distribution
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.commons.math3.distribution._
 import org.apache.spark.mllib.stat.Statistics
@@ -117,7 +118,7 @@ class ColumnMetaDataComputer(
     case _: Exception => None
   }
 
-  private def computeDistributions(ds: Dataset[Row], summaryStatistics: Seq[SummaryStatistics]): Seq[Set[String]] = {
+  private def computeDistributions(ds: Dataset[Row], summaryStatistics: Seq[SummaryStatistics]): Seq[Set[Distribution]] = {
     val schema = ds.schema
 
     ds.schema.indices.map { colIndex =>
@@ -135,13 +136,13 @@ class ColumnMetaDataComputer(
         val uniform = isDistributed(doubles, new UniformRealDistribution(stats.min.get, stats.max.get))
         val exponential = isDistributed(doubles, new ExponentialDistribution(null, stats.mean.get))
 
-        Set(
-          if (normal) "NormalDistribution" else null,
-          if (uniform) "UniformDistribution" else null ,
-          if (exponential) "ExponentialDistribution" else null
+        Set[Distribution](
+          if (normal) Distribution.Normal else null,
+          if (uniform) Distribution.Uniform else null ,
+          if (exponential) Distribution.Exponential else null
         ).filter(e => e != null)
       } else {
-        Set[String]()
+        Set[Distribution]()
       }
     }
   }

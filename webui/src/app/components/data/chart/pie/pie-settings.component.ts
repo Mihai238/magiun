@@ -13,7 +13,7 @@ export class PieSettingsComponent implements OnInit {
   @Input() dataSet: DataSet;
   @Output() settingsUpdated = new EventEmitter();
 
-  MAX_LABELS = 30;
+  readonly MAX_LABELS = 30;
 
   tooManyLabels: boolean;
   selectedColumn: Column;
@@ -25,13 +25,13 @@ export class PieSettingsComponent implements OnInit {
     this.tooManyLabels = false;
   }
 
-  onUpdateFirstColumn(column: Column) {
+  onUpdateColumn(column: Column) {
     this.selectedColumn = column;
     this.getDataAndUpdate();
   }
 
   private getDataAndUpdate() {
-    this.dataService.getAllData(this.dataSet, [this.selectedColumn.name])
+    this.dataService.getDataSample(this.dataSet, [this.selectedColumn.name])
       .subscribe(dataRows => {
         const keys: any[] = dataRows.map(row => row.values[0]);
 

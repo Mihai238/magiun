@@ -66,12 +66,12 @@ export class HistogramSettingsComponent implements OnInit, OnChanges {
     this.logger.info('get data and update');
 
     if (this.isOverlaidEnabled) {
-      this.dataService.getAllData(this.dataSet, [this.selectedColumn.name, this.selectedGroupByColumn.name]).subscribe(rows => {
+      this.dataService.getDataSample(this.dataSet, [this.selectedColumn.name, this.selectedGroupByColumn.name]).subscribe(rows => {
         rows = rows.filter(row => row.values[0] && row.values[1]);
         this.update(rows.map(row => row.values[0]), rows.map(row => row.values[1]));
       });
     } else {
-      this.dataService.getAllData(this.dataSet, [this.selectedColumn.name]).subscribe(rows => {
+      this.dataService.getDataSample(this.dataSet, [this.selectedColumn.name]).subscribe(rows => {
         this.update(rows.map(row => row.values[0]), null);
       });
     }

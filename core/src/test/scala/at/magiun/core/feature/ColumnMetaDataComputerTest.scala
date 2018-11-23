@@ -2,6 +2,7 @@ package at.magiun.core.feature
 
 import at.magiun.core.TestData._
 import at.magiun.core.connector.CsvConnector
+import at.magiun.core.model.data.Distribution
 import at.magiun.core.{MainModule, UnitTest}
 
 class ColumnMetaDataComputerTest extends UnitTest {
@@ -17,7 +18,7 @@ class ColumnMetaDataComputerTest extends UnitTest {
   it should "try to guess column types for titanic dataset" in {
     val columnsMeta = columnMetaDataComputer.compute(connector.getDataset(titanicDataSetSource), restrictions)
 
-    columnsMeta(0).distributions should contain only "UniformDistribution"
+    columnsMeta(0).distributions should contain only Distribution.Uniform
 
     columnsMeta(1).valueTypes should contain only("StringValue", "BooleanValue", "NumericValue", "IntValue", "HumanAgeValue")
     columnsMeta(1).uniqueValues should be(2)
@@ -35,7 +36,7 @@ class ColumnMetaDataComputerTest extends UnitTest {
     columnsMeta(5).stats.median.get should be(28)
   }
 
-  ignore should "try to guess column types for income dataset" in {
+  it should "try to guess column types for income dataset" in {
     val columnsMeta = columnMetaDataComputer.compute(connector.getDataset(incomeDataSetSource), restrictions)
 
     columnsMeta(5).valueTypes should contain only("StringValue", "MaritalStatusValue")

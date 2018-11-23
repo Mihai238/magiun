@@ -4,15 +4,15 @@ import enumeratum._
 
 import scala.collection.immutable
 
-sealed abstract class Distribution(val name: String) extends EnumEntry
+sealed abstract class Distribution(val name: String, val ontClassName: String) extends EnumEntry
 
 object Distribution extends Enum[Distribution] with CirceEnum[Distribution] {
 
-  case object Normal extends Distribution("Normal Distribution")
-  case object Uniform extends Distribution("Uniform Distribution")
-  case object Exponential extends Distribution("Exponential Distribution")
-  case object Log extends Distribution("Log Distribution")
-  case object Binomial extends Distribution("Binomial Distribution")
+  case object Normal extends Distribution("Normal Distribution", "NormalDistribution")
+  case object Uniform extends Distribution("Uniform Distribution", "UniformDistribution")
+  case object Exponential extends Distribution("Exponential Distribution", "ExponentialDistribution")
+  case object Log extends Distribution("Log Distribution", "LogDistribution")
+  case object Binomial extends Distribution("Binomial Distribution", "BinomialDistribution")
 
 
   val values: immutable.IndexedSeq[Distribution] = findValues

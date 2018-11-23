@@ -72,8 +72,8 @@ ml:hasValue rdf:type owl:ObjectProperty ;
 #    Data properties
 #################################################################
 
-###  http://www.magiun.io/ontologies/ml#cardinality
-ml:cardinality rdf:type owl:DatatypeProperty ;
+###  http://www.magiun.io/ontologies/ml#uniqueCount
+ml:uniqueCount rdf:type owl:DatatypeProperty ;
                rdfs:domain ml:Column ;
                rdfs:range xsd:integer .
 
@@ -83,6 +83,42 @@ ml:missingValues rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf owl:topDataProperty ;
                  rdfs:domain ml:Column ;
                  rdfs:range xsd:integer .
+
+###  http://www.magiun.io/ontologies/ml#count
+ml:count rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain ml:Column ;
+                 rdfs:range xsd:integer .
+
+###  http://www.magiun.io/ontologies/ml#mean
+ml:mean rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain ml:Column ;
+                 rdfs:range xsd:double .
+
+###  http://www.magiun.io/ontologies/ml#stddev
+ml:stddev rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain ml:Column ;
+                 rdfs:range xsd:double .
+
+###  http://www.magiun.io/ontologies/ml#min
+ml:min rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain ml:Column ;
+                 rdfs:range xsd:double .
+
+###  http://www.magiun.io/ontologies/ml#max
+ml:max rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain ml:Column ;
+                 rdfs:range xsd:double .
+
+###  http://www.magiun.io/ontologies/ml#median
+ml:median rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain ml:Column ;
+                 rdfs:range xsd:double .
 
 
 #################################################################
@@ -486,7 +522,7 @@ ml:QuantitativeColumn rdf:type owl:Class ;
                                                                    owl:allValuesFrom ml:NumericValue
                                                                  ]
                                                                  [ rdf:type owl:Restriction ;
-                                                                                                                                    owl:onProperty ml:cardinality ;
+                                                                                                                                    owl:onProperty ml:uniqueCount ;
                                                                                                                                     owl:someValuesFrom [ rdf:type rdfs:Datatype ;
                                                                                                                                                          owl:onDatatype xsd:integer ;
                                                                                                                                                          owl:withRestrictions ( [ xsd:minExclusive 10
@@ -537,7 +573,7 @@ sh:NodeShape rdf:type owl:Class .
 
 ###  http://www.magiun.io/ontologies/ml#booleanColumn
 ml:booleanColumn rdf:type owl:NamedIndividual ;
-                 ml:cardinality 2 .
+                 ml:uniqueCount 2 .
 
 
 ###  http://www.magiun.io/ontologies/ml#femaleValue
@@ -553,14 +589,14 @@ ml:genderColumn rdf:type owl:NamedIndividual ;
                 ml:hasValue ml:femaleValue ,
                             ml:femaleValue2 ,
                             ml:maleValue ;
-                ml:cardinality 2 .
+                ml:uniqueCount 2 .
 
 
 ###  http://www.magiun.io/ontologies/ml#humanAgeColumn
 ml:humanAgeColumn rdf:type owl:NamedIndividual ;
                   ml:hasValue ml:humanAgeValue ,
                               ml:intValue ;
-                  ml:cardinality 20 .
+                  ml:uniqueCount 20 .
 
 
 ###  http://www.magiun.io/ontologies/ml#humanAgeValue

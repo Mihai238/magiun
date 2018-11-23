@@ -19,6 +19,18 @@ class Recommender(sparkSession: SparkSession,
 
   private lazy val restrictions: Map[String, Restriction] = restrictionBuilder.build(model)
 
+  private lazy val cardinalityProperty = model.getProperty(NS + "uniqueCount")
+  private lazy val missingValuesProperty = model.getProperty(NS + "missingValues")
+  private lazy val countProperty = model.getProperty(NS + "count")
+  private lazy val meanProperty = model.getProperty(NS + "mean")
+  private lazy val stddevProperty = model.getProperty(NS + "stddev")
+  private lazy val minProperty = model.getProperty(NS + "min")
+  private lazy val maxProperty = model.getProperty(NS + "max")
+  private lazy val medianProperty = model.getProperty(NS + "median")
+
+  private lazy val hasValueProperty = model.getProperty(NS + "hasValue")
+  private lazy val hasDistributionProperty = model.getProperty(NS + "hasDistribution")
+
   def recommend(ds: Dataset[Row]): Recommendations = {
     val columnsMetaData = columnMetaDataComputer.compute(ds, restrictions)
     logger.info("Predicting columns type.")
@@ -61,15 +73,17 @@ class Recommender(sparkSession: SparkSession,
   }
 
   private def createIndividual(colMeta: ColumnMetaData): (Individual, Set[OntResource]) = {
-    val cardinalityProperty = model.getProperty(NS + "cardinality")
-    val missingValuesProperty = model.getProperty(NS + "missingValues")
-    val hasValueProperty = model.getProperty(NS + "hasValue")
-    val hasDistributionProperty = model.getProperty(NS + "hasDistribution")
-
     val indv = model.createIndividual(model.getOntClass(NS + "Column"))
 
     indv.addProperty(cardinalityProperty, model.createTypedLiteral(colMeta.uniqueValues.asInstanceOf[Any]))
     indv.addProperty(missingValuesProperty, model.createTypedLiteral(colMeta.missingValues.asInstanceOf[Integer]))
+
+    indv.addProperty(countProperty, model.createTypedLiteral(colMeta.stats.count.asInstanceOf[Any]))
+    colMeta.stats.mean.foreach(x => indv.addProperty(meanProperty, model.createTypedLiteral(x.asInstanceOf[Any])))
+    colMeta.stats.stddev.foreach(x => indv.addProperty(stddevProperty, model.createTypedLiteral(x.asInstanceOf[Any])))
+    colMeta.stats.min.foreach(x => indv.addProperty(minProperty, model.createTypedLiteral(x.asInstanceOf[Any])))
+    colMeta.stats.max.foreach(x => indv.addProperty(maxProperty, model.createTypedLiteral(x.asInstanceOf[Any])))
+    colMeta.stats.median.foreach(x => indv.addProperty(medianProperty, model.createTypedLiteral(x.asInstanceOf[Any])))
 
     val tmpDistrIndvs = colMeta.distributions.map(distrType => {
       val tmpIndv = model.createIndividual(model.getOntClass(NS + distrType.ontClassName))

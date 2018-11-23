@@ -37,7 +37,7 @@ class RecommenderTest extends UnitTest {
 
     recommendation(5).colTypes should contain only "MaritalStatusColumn"
 
-    recommendation(8).colTypes should contain only "HumanRaceColumn"
+    recommendation(8).colTypes should contain only "HumanEthnicityColumn"
 
     recommendation(13).colTypes should contain only "CountryColumn"
   }

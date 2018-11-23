@@ -41,7 +41,7 @@ class ColumnMetaDataComputerTest extends UnitTest {
 
     columnsMeta(5).intersectedValueTypes should contain only("StringValue", "MaritalStatusValue")
 
-    columnsMeta(8).intersectedValueTypes should contain only("StringValue", "HumanRaceValue")
+    columnsMeta(8).intersectedValueTypes should contain only("StringValue", "HumanEthnicityValue")
 
     columnsMeta(13).unionValueTypes should contain ("CountryValue")
   }

@@ -37,11 +37,35 @@ class RestrictionBuilderTest extends UnitTest {
     restrictions("NumericValue").check("1.8") should be (true)
     restrictions("NumericValue").check("hello") should be (false)
 
-    restrictions("HumanRaceValue").check("asian") should be (true)
-    restrictions("HumanRaceValue").check("miami") should be (false)
+    restrictions("HumanEthnicityValue").check("asian") should be (true)
+    restrictions("HumanEthnicityValue").check("miami") should be (false)
 
     restrictions("CountryValue").check("USA") should be (true)
     restrictions("CountryValue").check("asia") should be (false)
+
+    restrictions("EmailValue").check("wrongEmail@") should be (false)
+    restrictions("EmailValue").check("me@tuwien.ac.at") should be (true)
+    restrictions("EmailValue").check("me@TUWIEN.ac.at") should be (true)
+
+    restrictions("MoneyValue").check("12") should be (false)
+    restrictions("MoneyValue").check("12 $") should be (true)
+    restrictions("MoneyValue").check("12$") should be (true)
+    restrictions("MoneyValue").check("12.2$") should be (true)
+    restrictions("MoneyValue").check("12,2€") should be (true)
+    restrictions("MoneyValue").check("€12,2") should be (true)
+    restrictions("MoneyValue").check("€ 12,2") should be (true)
+
+    restrictions("EducationValue").check("master degree") should be (true)
+    restrictions("EducationValue").check("it") should be (false)
+
+    restrictions("EmploymentStatusValue").check("Self-employed") should be (true)
+    restrictions("EmploymentStatusValue").check("it") should be (false)
+
+    restrictions("ProfessionValue").check("ff") should be (false)
+    restrictions("ProfessionValue").check("software dev") should be (true)
+
+    restrictions("YearValue").check("2000") should be (true)
+    restrictions("YearValue").check("1") should be (false)
   }
 
 }

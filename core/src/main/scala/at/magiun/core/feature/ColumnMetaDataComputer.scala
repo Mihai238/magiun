@@ -23,12 +23,9 @@ class ColumnMetaDataComputer(
   def compute(ds: Dataset[Row], restrictions: Map[String, Restriction]): Seq[ColumnMetaData] = {
     logger.info("Computing column metadata.")
 
-    val columnsMeta = ds.reduce((row1, row2) => {
-      val left = if (isColMeta(row1)) row1.toSeq.asInstanceOf[Seq[ColumnMetaData]] else computeValueTypeForRow(row1, restrictions)
-      val right = if (isColMeta(row2)) row2.toSeq.asInstanceOf[Seq[ColumnMetaData]] else computeValueTypeForRow(row2, restrictions)
-
-      Row.fromSeq(combine(left, right))
-    }).toSeq.map(_.asInstanceOf[ColumnMetaData])
+    val basicMeta = ds
+      .map(row => computeValueTypeForRow(row, restrictions))
+      .reduce((colMeta1, colMeta2) => combine(colMeta1, colMeta2))
 
     val distinctCounts = ds.select(ds.columns.map(c => countDistinct(col(s"`$c`")).alias(c)): _*).first().toSeq
 
@@ -38,7 +35,7 @@ class ColumnMetaDataComputer(
     logger.info("Computing distributions for column metadata.")
     val distributions = computeDistributions(ds, summaryStatistics)
 
-    columnsMeta
+    basicMeta.map(ColumnMetaData(_))
       .zip(distinctCounts).map { case (meta, distinctCount) =>
       meta.copy(uniqueValues = distinctCount.asInstanceOf[Long])
     }
@@ -46,11 +43,11 @@ class ColumnMetaDataComputer(
       meta.copy(stats = s)
     }
       .zip(distributions).map { case (meta, d) =>
-        meta.copy(distributions = d)
+      meta.copy(distributions = d)
     }
   }
 
-  private def combine(left: Seq[ColumnMetaData], right: Seq[ColumnMetaData]): Seq[ColumnMetaData] = {
+  private def combine(left: Seq[BasicMeta], right: Seq[BasicMeta]): Seq[BasicMeta] = {
     (left zip right).map { case (l, r) => l.combine(r) }
   }
 
@@ -58,12 +55,12 @@ class ColumnMetaDataComputer(
     row.get(0).isInstanceOf[ColumnMetaData]
   }
 
-  def computeValueTypeForRow(row: Row, restrictions: Map[String, Restriction]): Seq[ColumnMetaData] = {
+  def computeValueTypeForRow(row: Row, restrictions: Map[String, Restriction]): Seq[BasicMeta] = {
     (0 until row.size).map { colIndex => {
       val value = row.get(colIndex)
 
       if (isMissingValue(value)) {
-        ColumnMetaData(Set(), Set(), 1)
+        BasicMeta(Set(), Set(), 1)
 
       } else {
         val valueTypes = restrictions.map { case (valueType, restr) =>
@@ -79,7 +76,7 @@ class ColumnMetaDataComputer(
         //          logger.error(s"$value is wrong")
         //        }
 
-        ColumnMetaData(valueTypes.toSet, valueTypes.toSet, 0)
+        BasicMeta(valueTypes.toSet, valueTypes.toSet, 0)
       }
     }
     }
@@ -99,10 +96,10 @@ class ColumnMetaDataComputer(
     val statsSummary = StatFunctions.summary(ds, Seq("count", "mean", "stddev", "min", "max", "50%"))
 
     val stats = statsSummary.collect().toSeq
-        .map(row => {
-          row.toSeq.drop(1)
-            .map(e => Option(e).map(_.asInstanceOf[String]))
-        })
+      .map(row => {
+        row.toSeq.drop(1)
+          .map(e => Option(e).map(_.asInstanceOf[String]))
+      })
 
     val count = stats(0).map(e => e.get.toLong)
     val mean = stats(1).map(_.flatMap(e => parseDouble(e)))
@@ -142,7 +139,7 @@ class ColumnMetaDataComputer(
 
         Set[Distribution](
           if (normal) Distribution.Normal else null,
-          if (uniform) Distribution.Uniform else null ,
+          if (uniform) Distribution.Uniform else null,
           if (exponential) Distribution.Exponential else null
         ).filter(e => e != null)
       } else {
@@ -152,7 +149,7 @@ class ColumnMetaDataComputer(
   }
 
   private def isDistributed(doubleCol: RDD[Double], dist: RealDistribution) = {
-    val testResult = Statistics.kolmogorovSmirnovTest(doubleCol, (x:Double) => dist.cumulativeProbability(x))
+    val testResult = Statistics.kolmogorovSmirnovTest(doubleCol, (x: Double) => dist.cumulativeProbability(x))
     testResult.pValue > 0.05
   }
 

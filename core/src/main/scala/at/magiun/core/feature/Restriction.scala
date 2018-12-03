@@ -82,6 +82,10 @@ class DataTypeRestriction(requiredType: String) extends Restriction {
 // Composite restrictions
 //
 
+class NotRestriction(restriction: Restriction) extends Restriction {
+  override def check(value: Any): Boolean = !restriction.check(value)
+}
+
 class OrRestriction(restrictions: List[Restriction]) extends Restriction {
   override def check(value: Any): Boolean = restrictions.exists(_.check(value))
 }

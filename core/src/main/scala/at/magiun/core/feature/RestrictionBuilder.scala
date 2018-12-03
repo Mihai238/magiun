@@ -34,6 +34,11 @@ class RestrictionBuilder {
           case "minInclusive" => new MinInclusiveRestriction(stmt.getLiteral.getInt)
           case "maxInclusive" => new MaxInclusiveRestriction(stmt.getLiteral.getInt)
           case "datatype" => new DataTypeRestriction(stmt.getObject.asResource().getLocalName)
+          case "not" =>
+            val it = stmt.getObject.asResource().as(classOf[RDFList]).iterator()
+            val restr = buildRestriction(it.next().asResource())
+            new NotRestriction(restr)
+
           case "or" =>
             val it = stmt.getObject.asResource().as(classOf[RDFList]).iterator()
             val rs = for {

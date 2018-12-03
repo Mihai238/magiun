@@ -137,18 +137,6 @@ ml:BooleanColumn rdf:type owl:Class ;
                                      ] ;
                  rdfs:subClassOf ml:Column .
 
-###  http://www.magiun.io/ontologies/ml#ReligionColumn
-ml:ReligionColumn rdf:type owl:Class ;
-                 owl:equivalentClass [ owl:intersectionOf ( ml:Column
-                                                            [ rdf:type owl:Restriction ;
-                                                              owl:onProperty ml:hasValue ;
-                                                              owl:someValuesFrom ml:ReligionValue
-                                                            ]
-                                                          ) ;
-                                       rdf:type owl:Class
-                                     ] ;
-                 rdfs:subClassOf ml:Column .
-
 ###  http://www.magiun.io/ontologies/ml#LanguageColumn
 ml:LanguageColumn rdf:type owl:Class ;
                  owl:equivalentClass [ owl:intersectionOf ( ml:Column
@@ -185,41 +173,8 @@ ml:MoneyColumn rdf:type owl:Class ;
                                      ] ;
                  rdfs:subClassOf ml:QuantitativeColumn .
 
-###  http://www.magiun.io/ontologies/ml#EducationColumn
-ml:EducationColumn rdf:type owl:Class ;
-                 owl:equivalentClass [ owl:intersectionOf ( ml:Column
-                                                            [ rdf:type owl:Restriction ;
-                                                              owl:onProperty ml:hasValue ;
-                                                              owl:someValuesFrom ml:EducationValue
-                                                            ]
-                                                          ) ;
-                                       rdf:type owl:Class
-                                     ] ;
-                 rdfs:subClassOf ml:Column .
 
-###  http://www.magiun.io/ontologies/ml#EmploymentStatusColumn
-ml:EmploymentStatusColumn rdf:type owl:Class ;
-                 owl:equivalentClass [ owl:intersectionOf ( ml:Column
-                                                            [ rdf:type owl:Restriction ;
-                                                              owl:onProperty ml:hasValue ;
-                                                              owl:someValuesFrom ml:EmploymentStatusValue
-                                                            ]
-                                                          ) ;
-                                       rdf:type owl:Class
-                                     ] ;
-                 rdfs:subClassOf ml:Column .
 
-###  http://www.magiun.io/ontologies/ml#ProfessionColumn
-ml:ProfessionColumn rdf:type owl:Class ;
-                 owl:equivalentClass [ owl:intersectionOf ( ml:Column
-                                                            [ rdf:type owl:Restriction ;
-                                                              owl:onProperty ml:hasValue ;
-                                                              owl:someValuesFrom ml:ProfessionValue
-                                                            ]
-                                                          ) ;
-                                       rdf:type owl:Class
-                                     ] ;
-                 rdfs:subClassOf ml:Column .
 
 
 ###  http://www.magiun.io/ontologies/ml#BooleanValue
@@ -235,41 +190,12 @@ ml:BooleanValue rdf:type owl:Class ;
                 )
                 ] .
 
-###  http://www.magiun.io/ontologies/ml#ProfessionValue
-ml:ProfessionValue rdf:type owl:Class ;
-                rdfs:subClassOf ml:Value ;
-                sh:property [ sh:or (
-                    [sh:pattern "software\\sdev.*"]
-                )
-                ] .
-
-###  http://www.magiun.io/ontologies/ml#HumanEthnicityValue
-ml:HumanEthnicityValue rdf:type owl:Class ;
-                rdfs:subClassOf ml:Value ;
-                sh:property [ sh:or (
-                    [sh:pattern "(?i)black"]
-                    [sh:pattern "(?i)white"]
-                    [sh:pattern "(?i).*asian.*"]
-                    [sh:pattern "(?i).*amer.*"]
-                )
-                ] .
 
 ###  http://www.magiun.io/ontologies/ml#EmailValue
 ml:EmailValue rdf:type owl:Class ;
                 rdfs:subClassOf ml:Value ;
                 sh:property [ sh:or (
                     [sh:pattern "(?i)^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$"]
-                )
-                ] .
-
-###  http://www.magiun.io/ontologies/ml#ReligionValue
-ml:ReligionValue rdf:type owl:Class ;
-                rdfs:subClassOf ml:Value ;
-                sh:property [ sh:or (
-                    [sh:pattern "(?i)atheist"]
-                    [sh:pattern "(?i)catholic"]
-                    [sh:pattern "(?i)orthodox"]
-                    [sh:pattern "(?i)muslim"]
                 )
                 ] .
 
@@ -282,52 +208,10 @@ ml:MoneyValue rdf:type owl:Class ;
                 )
                 ] .
 
-###  http://www.magiun.io/ontologies/ml#EducationValue
-ml:EducationValue rdf:type owl:Class ;
-                rdfs:subClassOf ml:Value ;
-                sh:property [ sh:or (
-                    [sh:pattern "(?i)master.*degree"]
-                    [sh:pattern "(?i)doctorate.*degree"]
-                    [sh:pattern "(?i)no degree"]
-                )
-                ] .
-
-###  http://www.magiun.io/ontologies/ml#EmploymentStatusValue
-ml:EmploymentStatusValue rdf:type owl:Class ;
-                rdfs:subClassOf ml:Value ;
-                sh:property [ sh:or (
-                    [sh:pattern "(?i)self.*employed"]
-                    [sh:pattern "(?i)retired"]
-                )
-                ] .
-
 
 ###  http://www.magiun.io/ontologies/ml#Column
 ml:Column rdf:type owl:Class ;
           owl:equivalentClass ml:OperationSuitableColumn .
-
-
-###  http://www.magiun.io/ontologies/ml#CountryColumn
-ml:CountryColumn rdf:type owl:Class ;
-                 owl:equivalentClass [ owl:intersectionOf ( ml:Column
-                                                            [ rdf:type owl:Restriction ;
-                                                              owl:onProperty ml:hasValue ;
-                                                              owl:someValuesFrom ml:CountryValue
-                                                            ]
-                                                          ) ;
-                                       rdf:type owl:Class
-                                     ] ;
-                 rdfs:subClassOf ml:Column .
-
-
-###  http://www.magiun.io/ontologies/ml#CountryValue
-ml:CountryValue rdf:type owl:Class ;
-                rdfs:subClassOf ml:Value ;
-                sh:property [ sh:or (
-                    [sh:pattern "USA"]
-                    [sh:pattern "United-States"]
-                )
-                ] .
 
 
 ###  http://www.magiun.io/ontologies/ml#DiscretizationSuitableColumn
@@ -344,31 +228,6 @@ ml:Distribution rdf:type owl:Class .
 ml:ExponentialDistribution rdf:type owl:Class ;
                            rdfs:subClassOf ml:Distribution .
 
-
-###  http://www.magiun.io/ontologies/ml#GenderColumn
-ml:GenderColumn rdf:type owl:Class ;
-                owl:equivalentClass [ owl:intersectionOf ( ml:Column
-                                                           [ rdf:type owl:Restriction ;
-                                                             owl:onProperty ml:hasValue ;
-                                                             owl:allValuesFrom ml:GenderValue
-                                                           ]
-                                                         ) ;
-                                      rdf:type owl:Class
-                                    ] ;
-                rdfs:subClassOf ml:Column .
-
-
-###  http://www.magiun.io/ontologies/ml#GenderValue
-ml:GenderValue rdf:type owl:Class ;
-               rdfs:subClassOf ml:Value ;
-              sh:property [ sh:or (
-                                                 [sh:pattern "(?i)m"]
-                                                 [sh:pattern "(?i)f"]
-                                                 [sh:pattern "(?i)male"]
-                                                 [sh:pattern "(?i)female"]
-                                                 [sh:pattern "(?i)transgender"]
-                                             )
-                                             ].
 
 
 ###  http://www.magiun.io/ontologies/ml#HandleMissingValuesSuitableColumn
@@ -389,18 +248,6 @@ ml:HandleMissingValuesSuitableColumn rdf:type owl:Class ;
                                      rdfs:subClassOf ml:OperationSuitableColumn .
 
 
-###  http://www.magiun.io/ontologies/ml#HumanAgeColumn
-ml:HumanAgeColumn rdf:type owl:Class ;
-                  owl:equivalentClass [ owl:intersectionOf ( ml:QuantitativeColumn
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty ml:hasValue ;
-                                                               owl:allValuesFrom ml:HumanAgeValue
-                                                             ]
-                                                           ) ;
-                                        rdf:type owl:Class
-                                      ] ;
-                  rdfs:subClassOf ml:QuantitativeColumn .
-
 
 ###  http://www.magiun.io/ontologies/ml#YearColumn
 ml:YearColumn rdf:type owl:Class ;
@@ -415,13 +262,6 @@ ml:YearColumn rdf:type owl:Class ;
                   rdfs:subClassOf ml:QuantitativeColumn .
 
 
-###  http://www.magiun.io/ontologies/ml#HumanAgeValue
-ml:HumanAgeValue rdf:type owl:Class ;
-                 rdfs:subClassOf ml:Value ;
-                 sh:property [ sh:maxInclusive 150 ;
-                               sh:minInclusive 0
-                             ] .
-
 ###  http://www.magiun.io/ontologies/ml#YearValue
 ml:YearValue rdf:type owl:Class ;
               rdfs:subClassOf ml:Value ;
@@ -429,30 +269,6 @@ ml:YearValue rdf:type owl:Class ;
                             sh:minInclusive 1500
                           ] .
 
-
-###  http://www.magiun.io/ontologies/ml#HumanEthnicityColumn
-ml:HumanEthnicityColumn rdf:type owl:Class ;
-                   owl:equivalentClass [ owl:intersectionOf ( ml:Column
-                                                              [ rdf:type owl:Restriction ;
-                                                                owl:onProperty ml:hasValue ;
-                                                                owl:allValuesFrom ml:HumanEthnicityValue
-                                                              ]
-                                                            ) ;
-                                         rdf:type owl:Class
-                                       ] ;
-                   rdfs:subClassOf ml:Column .
-
-
-###  http://www.magiun.io/ontologies/ml#HumanEthnicityValue
-ml:HumanEthnicityValue rdf:type owl:Class ;
-                  rdfs:subClassOf ml:Value ;
-                  sh:property [ sh:or (
-                  [sh:pattern "(?i)black"]
-                                      [sh:pattern "(?i)white"]
-                                      [sh:pattern "(?i).*asian.*"]
-                                      [sh:pattern "(?i).*amer.*"]
-                                      )
-                  ] .
 
 ###  http://www.magiun.io/ontologies/ml#LanguageValue
 ml:LanguageValue rdf:type owl:Class ;
@@ -471,31 +287,6 @@ ml:IntValue rdf:type owl:Class ;
             rdfs:subClassOf ml:Value ;
             sh:property [ sh:datatype xsd:integer
                         ] .
-
-
-###  http://www.magiun.io/ontologies/ml#MaritalStatusColumn
-ml:MaritalStatusColumn rdf:type owl:Class ;
-                       owl:equivalentClass [ owl:intersectionOf ( ml:Column
-                                                                  [ rdf:type owl:Restriction ;
-                                                                    owl:onProperty ml:hasValue ;
-                                                                    owl:someValuesFrom ml:MaritalStatusValue
-                                                                  ]
-                                                                ) ;
-                                             rdf:type owl:Class
-                                           ] ;
-                       rdfs:subClassOf ml:Column .
-
-
-###  http://www.magiun.io/ontologies/ml#MaritalStatusValue
-ml:MaritalStatusValue rdf:type owl:Class ;
-                      rdfs:subClassOf ml:Value ;
-                      sh:property [ sh:or (
-                            [sh:pattern "Widowed"]
-                            [sh:pattern "Divorced"]
-                            [sh:pattern "Separated"]
-                            [sh:pattern ".*[Mm]arried.*"]
-                        )
-                      ] .
 
 
 ###  http://www.magiun.io/ontologies/ml#NormalDistribution
@@ -590,18 +381,6 @@ ml:genderColumn rdf:type owl:NamedIndividual ;
                             ml:femaleValue2 ,
                             ml:maleValue ;
                 ml:uniqueCount 2 .
-
-
-###  http://www.magiun.io/ontologies/ml#humanAgeColumn
-ml:humanAgeColumn rdf:type owl:NamedIndividual ;
-                  ml:hasValue ml:humanAgeValue ,
-                              ml:intValue ;
-                  ml:uniqueCount 20 .
-
-
-###  http://www.magiun.io/ontologies/ml#humanAgeValue
-ml:humanAgeValue rdf:type owl:NamedIndividual ,
-                          ml:HumanAgeValue .
 
 
 ###  http://www.magiun.io/ontologies/ml#intValue

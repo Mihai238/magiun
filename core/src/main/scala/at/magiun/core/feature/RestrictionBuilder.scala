@@ -42,6 +42,16 @@ class RestrictionBuilder {
             } yield restriction
 
             new OrRestriction(rs.toList)
+
+          case "and" =>
+            val it = stmt.getObject.asResource().as(classOf[RDFList]).iterator()
+            val rs = for {
+              orEntry <- it
+              restriction = buildRestriction(orEntry.asResource())
+            } yield restriction
+
+            new AndRestriction(rs.toList)
+
           case _ => new NoOpRestriction()
         }
       )

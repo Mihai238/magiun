@@ -8,7 +8,7 @@ import org.apache.spark.sql.functions.expr
 import scala.concurrent.Await
 
 
-abstract class Stage {
+trait Stage {
   def perform: StageOutput
 }
 

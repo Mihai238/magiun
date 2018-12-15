@@ -101,6 +101,9 @@ ml:CountryValue rdf:type owl:Class ;
                 sh:property [ sh:or (
                     [sh:pattern "USA"]
                     [sh:pattern "United-States"]
+                    [sh:pattern "Romania"]
+                    [sh:pattern "Spain"]
+                    [sh:pattern "Germany"]
                 )
                 ] .
 
@@ -147,6 +150,7 @@ ml:HumanEthnicityValue rdf:type owl:Class ;
                     [sh:pattern "(?i)white"]
                     [sh:pattern "(?i).*asian.*"]
                     [sh:pattern "(?i).*amer.*"]
+                    [sh:pattern "(?i).*hispanic.*"]
                 )
                 ] .
 

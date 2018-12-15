@@ -52,7 +52,7 @@ class DataTypeRestriction(requiredType: String) extends Restriction {
     requiredType match {
       case "integer" =>
         value match {
-          case v: Int => true
+          case _: Int => true
           case v: String => try {
             v.toInt
             true
@@ -63,8 +63,8 @@ class DataTypeRestriction(requiredType: String) extends Restriction {
         }
       case "decimal" =>
         value match {
-          case v: Int => true
-          case v: Double => true
+          case _: Int => true
+          case _: Double => true
           case v: String => try {
             v.toDouble
             true
@@ -81,6 +81,10 @@ class DataTypeRestriction(requiredType: String) extends Restriction {
 //
 // Composite restrictions
 //
+
+class NotRestriction(restriction: Restriction) extends Restriction {
+  override def check(value: Any): Boolean = !restriction.check(value)
+}
 
 class OrRestriction(restrictions: List[Restriction]) extends Restriction {
   override def check(value: Any): Boolean = restrictions.exists(_.check(value))

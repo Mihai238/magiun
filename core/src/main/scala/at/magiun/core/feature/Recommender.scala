@@ -56,7 +56,6 @@ class Recommender(sparkSession: SparkSession,
 
   def recommendIntern(columnsMetadata: Seq[ColumnMetaData]): Seq[List[String]] = {
     columnsMetadata.map { colMeta =>
-      val valueTypes = colMeta.intersectedValueTypes
       val (indv, tmpRes) = createIndividual(colMeta)
 
       val colTypes = model.listStatements(indv.asResource(), null, null).toList.toList

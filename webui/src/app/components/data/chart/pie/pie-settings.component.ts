@@ -59,7 +59,7 @@ export class PieSettingsComponent implements OnInit {
     }];
 
     const layout = {
-      title: 'Pie chart title'
+      title: `Pie chart "${this.selectedColumn.name}" feature`
     };
 
     const chartData: ChartData = {

@@ -8,17 +8,17 @@ import org.apache.spark.sql.functions.expr
 import scala.concurrent.Await
 
 
-abstract class Stage {
+trait Stage {
   def perform: StageOutput
 }
 
 object Stage {
   def getOutputOfPrevStage(stageInput: StageInput): DatasetOutput = {
     stageInput.stage.perform match {
-      case x@DatasetOutput(dataSet) => x
+      case x@DatasetOutput(_) => x
       case MultiOutput(outputs) =>
         outputs(stageInput.index) match {
-          case x@DatasetOutput(dataSet) => x
+          case x@DatasetOutput(_) => x
           case _ => throw new RuntimeException
         }
     }

@@ -14,7 +14,7 @@ object SparkConfig extends LazyLogging {
       .appName(config.getString("spark.app_name"))
       .master(config.getString("spark.master"))
       .config("spark.serializer", config.getString("spark.serializer"))
-      .config("spark.executor.memory", "2g")
+      .config("spark.executor.memory", config.getString("spark.executor.memory"))
       .getOrCreate()
 
     spark

@@ -5,15 +5,12 @@ import at.magiun.core.repository.{BlockEntity, MagiunDataSetEntity}
 
 object TestData {
 
-  // https://www.kaggle.com/c/titanic/data
   val titanicCsvPath: String = getClass.getClassLoader.getResource("titanic.csv").getFile
   val titanicCsvUrl = s"file://$titanicCsvPath"
 
-  // https://www.kaggle.com/wenruliu/adult-income-dataset
   val incomeCsvPath: String = getClass.getClassLoader.getResource("income.csv").getFile
   val incomeCsvUrl = s"file://$incomeCsvPath"
 
-  // https://www.kaggle.com/c/acm-sf-chapter-hackathon-big/data
   lazy val bigCsvPath: String = getClass.getClassLoader.getResource("big.csv").getFile
   lazy val bigCsvUrl = s"file://$bigCsvPath"
 

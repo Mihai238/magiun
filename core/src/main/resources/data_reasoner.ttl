@@ -232,20 +232,19 @@ ml:ExponentialDistribution rdf:type owl:Class ;
 
 ###  http://www.magiun.io/ontologies/ml#HandleMissingValuesSuitableColumn
 ml:HandleMissingValuesSuitableColumn rdf:type owl:Class ;
-                                     owl:equivalentClass [ owl:intersectionOf ( ml:OperationSuitableColumn
-                                                                                [ rdf:type owl:Restriction ;
-                                                                                  owl:onProperty ml:missingValues ;
-                                                                                  owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                                                                                                       owl:onDatatype xsd:integer ;
-                                                                                                       owl:withRestrictions ( [ xsd:minInclusive 1
-                                                                                                                              ]
-                                                                                                                            )
-                                                                                                     ]
-                                                                                ]
-                                                                              ) ;
-                                                           rdf:type owl:Class
-                                                         ] ;
-                                     rdfs:subClassOf ml:OperationSuitableColumn .
+    owl:equivalentClass [ owl:intersectionOf
+        (ml:OperationSuitableColumn
+            [ rdf:type owl:Restriction ;
+                owl:onProperty ml:missingValues ;
+                owl:someValuesFrom [
+                    rdf:type rdfs:Datatype ;
+                    owl:onDatatype xsd:integer ;
+                    owl:withRestrictions ([ xsd:minInclusive 1])
+                ]
+            ]) ;
+        rdf:type owl:Class
+        ] ;
+    rdfs:subClassOf ml:OperationSuitableColumn .
 
 
 

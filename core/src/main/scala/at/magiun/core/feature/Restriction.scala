@@ -17,6 +17,11 @@ class PatternRestriction(pattern: String) extends Restriction {
   override def check(value: Any): Boolean = regex.matcher(value.toString).matches()
 }
 
+class EqualsRestriction(refValue: String) extends Restriction {
+
+  override def check(value: Any): Boolean = refValue == value.toString
+}
+
 class MinInclusiveRestriction(min: Double) extends Restriction {
   override def check(value: Any): Boolean = {
     value match {

@@ -280,6 +280,17 @@ ml:LanguageValue rdf:type owl:Class ;
                         )
                   ] .
 
+###  http://www.magiun.io/ontologies/ml#MissingValue
+ml:MissingValue rdf:type owl:Class ;
+                rdfs:subClassOf ml:Value ;
+                sh:property [ sh:or (
+                      [sh:pattern "(?i)na"]
+                      [sh:pattern "(?i)other"]
+                      [sh:pattern "(?i)unknown"]
+                      [sh:equals ""]
+                      )
+                ] .
+
 
 ###  http://www.magiun.io/ontologies/ml#IntValue
 ml:IntValue rdf:type owl:Class ;

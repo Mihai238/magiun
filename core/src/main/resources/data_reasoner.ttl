@@ -287,6 +287,8 @@ ml:MissingValue rdf:type owl:Class ;
                       [sh:pattern "(?i)na"]
                       [sh:pattern "(?i)other"]
                       [sh:pattern "(?i)unknown"]
+                      [sh:pattern "(?i)missing"]
+                      [sh:equals "-"]
                       [sh:equals ""]
                       )
                 ] .
@@ -335,19 +337,6 @@ ml:QuantitativeColumn rdf:type owl:Class ;
                                             rdf:type owl:Class
                                           ] ;
                       rdfs:subClassOf ml:Column .
-
-
-###  http://www.magiun.io/ontologies/ml#RemovalSuitableColumn
-ml:RemovalSuitableColumn rdf:type owl:Class ;
-                         owl:equivalentClass [ owl:intersectionOf ( ml:OperationSuitableColumn
-                                                                    [ rdf:type owl:Restriction ;
-                                                                      owl:onProperty ml:hasDistribution ;
-                                                                      owl:someValuesFrom ml:UniformDistribution
-                                                                    ]
-                                                                  ) ;
-                                               rdf:type owl:Class
-                                             ] ;
-                         rdfs:subClassOf ml:OperationSuitableColumn .
 
 
 ###  http://www.magiun.io/ontologies/ml#StringValue

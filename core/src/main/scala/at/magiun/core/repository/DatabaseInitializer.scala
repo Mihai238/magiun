@@ -18,9 +18,6 @@ class DatabaseInitializer(dataSetRepository: DataSetRepository,
   // https://www.kaggle.com/szamil/who-suicide-statistics
   private lazy val suicideUrl = "file://" + getClass.getClassLoader.getResource("datasets/suicide.csv").getFile
 
-  // https://www.kaggle.com/gaborfodor/additional-kiva-snapshot
-  private lazy val kivaUrl = "file://" + getClass.getClassLoader.getResource("datasets/country_stats.csv").getFile
-
   // https://www.kaggle.com/hackerrank/developer-survey-2018
   private lazy val hackerUrl = "file://" + getClass.getClassLoader.getResource("datasets/hacker_rank.csv").getFile
 

@@ -2,7 +2,8 @@
   "YES": "Yes",
   "NO": "No",
   "NAVBAR": {
-    "DATA": "Data Exploration",
+    "DATA": "Feature Engineering",
+    "MODEL_SELECTION": "Model Selection",
     "WORKFLOWS": "Workflows"
   },
   "FOOTER": {
@@ -24,6 +25,21 @@
     "CHART_TYPE": "Chart type:",
     "WARN_TOO_MANY_LABELS": "Chart was not updated since there are more than {{max_labels}} labels on this feature.",
     "REMOVE_COLUMN_QUESTION": "Are you sure you want to delete the column \"{{column_name}}\"?"
+  },
+  "MODEL_SELECTION": {
+    "NO_DATA_SET": "No dataset was uploaded!",
+    "SCOPE": "Scope:",
+    "REGRESSION": "Regression",
+    "CLASSIFICATION": "Classification",
+    "TRADE_OFF": "Trade-Off:",
+    "SPEED": "Speed",
+    "ACCURACY": "Accuracy",
+    "DATA_SET": "Dataset:",
+    "TARGET_VARIABLE": "Target variable:",
+    "IGNORE_VARIABLES": "Variables to ignore:",
+    "IGNORE_VARIABLES_PLACEHOLDER": "Enter variables to ignore",
+    "TARGET_VARIABLE_IS_IGNORE": "The target variable is also selected as an ignore variable!",
+    "NO_VARIABLES_LEFT": "There are no variables left, all variables were selected as ignore variables!"
   },
   "WORKFLOWS": {
     "PLACE_HOLDER": "To create your workflow, drag and drop datasets and modules here!",

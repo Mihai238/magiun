@@ -5,6 +5,7 @@ export class BlockType {
    */
   static DATABASE = new BlockType('DatabaseReader', 'DATABASE');
   static FILE = new BlockType('FileReader', 'FILE');
+  static DATA_SET_READER = new BlockType('DataSetReader', 'DataSetReader');
 
   /**
    * DATA TRANSFORMATION
@@ -15,6 +16,7 @@ export class BlockType {
    * FEATURE SELECTION
    */
   static DROP_COLUMNS = new BlockType('DropColumn', 'DROP_COLUMNS');
+  static ADD_COLUMN = new BlockType('AddColumn', "ADD_COLUMN");
 
   /**
    * MACHINE LEARNING

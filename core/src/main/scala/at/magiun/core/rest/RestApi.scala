@@ -10,12 +10,14 @@ import io.finch.{Application, Output}
 
 class RestApi(blockController: BlockController,
               dataSetController: DataSetController,
-              executionController: ExecutionController
+              executionController: ExecutionController,
+              recommenderController: RecommenderController
              ) extends LazyLogging {
 
   private val api = blockController.api :+:
     dataSetController.api :+:
-    executionController.api
+    executionController.api :+:
+    recommenderController.api
 
   private val service: Service[Request, Response] = api.handle({
     case e: Exception =>

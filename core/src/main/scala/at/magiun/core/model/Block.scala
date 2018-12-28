@@ -11,6 +11,7 @@ object BlockType extends Enum[BlockType] with CirceEnum[BlockType] {
 
   // Readers and writers
   case object FileReader extends BlockType
+  case object DataSetReader extends BlockType
   case object DatabaseReader extends BlockType
   case object FileWriter extends BlockType
 

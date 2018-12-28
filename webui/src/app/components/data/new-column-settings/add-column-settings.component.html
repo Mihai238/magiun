@@ -1,0 +1,39 @@
+<i #modalActivator style="visibility: hidden" aria-hidden="true" data-toggle="modal"
+   data-target="#newColumnSettingsModal"></i>
+
+<div class="modal fade" id="newColumnSettingsModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New feature settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Name" [(ngModel)]="columnName" name="columnName">
+          </div>
+          <div class="form-group">
+            <textarea rows="5" class="form-control" placeholder="Expression" [(ngModel)]="expression"
+                      name="expression"></textarea>
+          </div>
+        </form>
+
+        <div class="alert light" role="alert">
+          This requires Spark SQL syntax.
+          <a href="https://spark.apache.org/docs/2.3.2/api/sql/index.html" target="_blank">Check documentation.</a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onClickCancel()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onClickExecute()">
+          Execute
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

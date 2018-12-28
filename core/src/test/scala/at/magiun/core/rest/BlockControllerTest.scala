@@ -38,7 +38,7 @@ class BlockControllerTest extends UnitTest {
     block.id should be ("id-2")
 
     val matcher = where {
-      (b: Block) => b.id == "id-2" && b.`type` == FileReader && b.inputs.head.blockId == "1"
+      b: Block => b.id == "id-2" && b.`type` == FileReader && b.inputs.head.blockId == "1"
     }
 
     stubService.upsert _ verify matcher

@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/mihai/ontologies/2018/5/untitled-ontology-14#"
+     xml:base="http://www.semanticweb.org/mihai/ontologies/2018/5/untitled-ontology-14"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:data-ontology="http://www.magiun.io/ontologies/data-ontology#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.magiun.io/ontologies/data-ontology"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#hasType -->
+
+    <owl:ObjectProperty rdf:about="http://www.magiun.io/ontologies/data-ontology#hasType">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.magiun.io/ontologies/data-ontology#Column"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#name -->
+
+    <owl:DatatypeProperty rdf:about="http://www.magiun.io/ontologies/data-ontology#name">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.magiun.io/ontologies/data-ontology#Column"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#values -->
+
+    <owl:DatatypeProperty rdf:about="http://www.magiun.io/ontologies/data-ontology#values">
+        <rdfs:domain rdf:resource="http://www.magiun.io/ontologies/data-ontology#Column"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#Column -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/data-ontology#Column"/>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#Double -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/data-ontology#Double">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/data-ontology#Type"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#HumanAgeColumn -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/data-ontology#HumanAgeColumn">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/data-ontology#Column"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/data-ontology#hasType"/>
+                <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/data-ontology#Numeric"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/data-ontology#values"/>
+                <owl:allValuesFrom>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</xsd:minExclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/data-ontology#values"/>
+                <owl:allValuesFrom>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#int">115</xsd:maxExclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#Int -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/data-ontology#Int">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/data-ontology#Type"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#NameColumn -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/data-ontology#NameColumn">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/data-ontology#Column"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/data-ontology#hasType"/>
+                <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/data-ontology#String"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#Numeric -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/data-ontology#Numeric">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/data-ontology#Type"/>
+        <owl:disjointUnionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.magiun.io/ontologies/data-ontology#Double"/>
+            <rdf:Description rdf:about="http://www.magiun.io/ontologies/data-ontology#Int"/>
+        </owl:disjointUnionOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#String -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/data-ontology#String">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/data-ontology#Type"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#Type -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/data-ontology#Type"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.magiun.io/ontologies/data-ontology#col1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/data-ontology#col1">
+        <data-ontology:name>gica</data-ontology:name>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+

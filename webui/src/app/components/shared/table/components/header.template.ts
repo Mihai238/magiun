@@ -7,6 +7,9 @@ export const HEADER_TEMPLATE = `
             [attr.aria-label]="dataTable.translations.headerReload" [title]="dataTable.translations.headerReload">
             <span class="ti-reload"></span>
         </button>
+        <button type="button" class="btn btn-default btn-sm" (click)="dataTable.addColumnClicked()">
+            <span class="ti-plus"></span>
+        </button>
         <button type="button" class="btn btn-default btn-sm column-selector-button" [class.active]="columnSelectorOpen"
             (click)="columnSelectorOpen = !columnSelectorOpen; $event.stopPropagation()" 
             [attr.aria-label]="dataTable.translations.headerColumnSelector" [title]="dataTable.translations.headerColumnSelector">

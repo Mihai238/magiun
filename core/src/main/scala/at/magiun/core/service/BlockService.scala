@@ -1,5 +1,7 @@
 package at.magiun.core.service
 
+import java.util.concurrent.atomic.AtomicInteger
+
 import at.magiun.core.model.{Block, BlockInput, BlockType}
 import at.magiun.core.repository.{BlockEntity, BlockRepository}
 import io.circe.generic.auto._
@@ -10,6 +12,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class BlockService(blockRepository: BlockRepository) {
+
+  private val idGenerator = new AtomicInteger(100)
 
   case class Config(inputs: Seq[BlockInput], params: Map[String, String])
 
@@ -38,7 +42,12 @@ class BlockService(blockRepository: BlockRepository) {
 
   private def mapToEntity(block: Block): BlockEntity = {
     val config = Config(block.inputs, block.params).asJson.noSpaces
-    BlockEntity(block.id, block.`type`.toString, config)
+    val id = if (block.id.isEmpty) {
+      s"block-${idGenerator.getAndIncrement()}"
+    } else {
+      block.id
+    }
+    BlockEntity(id, block.`type`.toString, config)
   }
 
 }

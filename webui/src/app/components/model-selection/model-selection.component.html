@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="main-content">
+    <div *ngIf="datasets == null || datasets.length == 0">
+      <p>
+        {{ 'MODEL_SELECTION.NO_DATA_SET' | translate }}
+      </p>
+    </div>
+    <div class="container" *ngIf="datasets != null && datasets.length > 0">
+      <div class="row">
+        <div class="col">
+          <form>
+            <div class="form-group">
+              <label for="scope">{{ 'MODEL_SELECTION.SCOPE' | translate }}</label>
+              <select class="form-control" id="scope" (change)="updateScope($event.target.value)">
+                <option value="regression">{{ 'MODEL_SELECTION.REGRESSION' | translate }}</option>
+                <option value="classification">{{ 'MODEL_SELECTION.CLASSIFICATION' | translate }}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="col">
+          <form>
+            <div class="form-group">
+              <label for="tradeOff">{{ 'MODEL_SELECTION.TRADE_OFF' | translate }}</label>
+              <select class="form-control" id="tradeOff" (change)="updateTradeOff($event.target.value)">
+                <option value=""></option>
+                <option value="speed">{{ 'MODEL_SELECTION.SPEED' | translate }}</option>
+                <option value="correctness">{{ 'MODEL_SELECTION.ACCURACY' | translate }}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      <br/>
+      <hr/>
+      <br/>
+      <div class="container" *ngIf="datasets != null && datasets.length > 0">
+      <div class="row">
+        <div class="col">
+          <form>
+            <div class="form-group">
+              <label for="datasetSelect">{{ 'MODEL_SELECTION.DATA_SET' | translate }}</label>
+              <select class="form-control" id="datasetSelect" (change)="updateSelectedDataset($event.target.value)">
+                <option *ngFor="let d of datasets" value="{{datasets.indexOf(d)}}">{{d.name}}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="col">
+          <form>
+            <div class="form-group">
+              <label for="targetVariableSelect">{{ 'MODEL_SELECTION.TARGET_VARIABLE' | translate }}</label>
+              <select class="form-control" id="targetVariableSelect" (change)="updateTargetVariable($event.target.value)">
+                <option *ngFor="let c of selectedDataset.schema.columns" value="{{c.index}}">{{c.name}} : {{c.type}}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      <br/>
+      <hr/>
+      <br/>
+      <form>
+        <div class="form-group">
+          <label for="ignoreVariablesTags">{{ 'MODEL_SELECTION.IGNORE_VARIABLES' | translate }}</label>
+          <tag-input
+            id="ignoreVariablesTags"
+            [ngModel]="columnsToIgnore"
+            [ngModelOptions]="{standalone: true}"
+            [placeholder]="'MODEL_SELECTION.IGNORE_VARIABLES_PLACEHOLDER' | translate"
+            [secondaryPlaceholder]="'MODEL_SELECTION.IGNORE_VARIABLES_PLACEHOLDER' | translate"
+            [onlyFromAutocomplete]="true"
+            (onAdd)="addIgnoreColumn($event)"
+            (onRemove)="removeIgnoreColumn($event)"
+            theme='bootstrap'>
+            <tag-input-dropdown
+              [autocompleteItems]="selectedDataset.schema.columns"
+              [displayBy]="'name'"
+              [identifyBy]="'name'"
+              [focusFirstElement]="true">
+              <ng-template let-item="item" let-index="index">
+                {{ item.name }} : {{ item.type }}
+              </ng-template>
+            </tag-input-dropdown>
+          </tag-input>
+        </div>
+      </form>
+      <br/>
+      <hr/>
+      <br/>
+      <button type="submit" class="btn btn-primary mb-2" (click)="recommend()">Recommend</button>
+      <br/>
+      <hr/>
+      <br/>
+    </div>
+  </div>
+</div>

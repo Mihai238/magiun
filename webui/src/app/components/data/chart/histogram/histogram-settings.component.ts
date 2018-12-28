@@ -3,6 +3,7 @@ import {ChartData} from '../../../../model/chart-data.model';
 import {Column, DataSet} from '../../../../model/data-set.model';
 import {DataService} from '../../../../services/data.service';
 import {NGXLogger} from "ngx-logger";
+import {MagiunLogger} from "../../../../util/magiun.logger";
 
 @Component({
   selector: 'chart-histogram-settings',
@@ -11,22 +12,28 @@ import {NGXLogger} from "ngx-logger";
 })
 export class HistogramSettingsComponent implements OnInit, OnChanges {
 
+  private logger: MagiunLogger;
+
   @Input() dataSet: DataSet;
   @Output() settingsUpdated = new EventEmitter();
 
   public HistNorm = HistNorm;
 
   selectedColumn: Column;
+  selectedGroupByColumn: Column;
   selectedHistNorm: HistNorm;
   isCumulativeEnabled: boolean;
+  isOverlaidEnabled: boolean;
 
   constructor(private dataService: DataService,
-              private logger: NGXLogger) {
+              ngxlogger: NGXLogger) {
+    this.logger = new MagiunLogger(HistogramSettingsComponent.name, ngxlogger);
   }
 
   ngOnInit() {
     this.selectedHistNorm = HistNorm.default;
     this.isCumulativeEnabled = false;
+    this.isOverlaidEnabled = false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -38,44 +45,93 @@ export class HistogramSettingsComponent implements OnInit, OnChanges {
     this.getDataAndUpdate();
   }
 
+  onUpdateGroupByColumn(column: Column) {
+    this.selectedGroupByColumn = column;
+    if (this.isOverlaidEnabled) {
+      this.getDataAndUpdate();
+    }
+  }
+
   onSelectHistNorm(histNorm: HistNorm) {
     this.selectedHistNorm = histNorm;
     this.getDataAndUpdate();
   }
 
-  onChangeCumulative() {
+  onChangeOverlaid() {
+    this.isOverlaidEnabled = !this.isOverlaidEnabled;
     this.getDataAndUpdate();
   }
 
-  private getDataAndUpdate() {
-    this.logger.info('HistogramSettingsComponent: get data and update');
+  getDataAndUpdate() {
+    this.logger.info('get data and update');
 
-    this.dataService.getAllData(this.dataSet, new Set([this.selectedColumn.name]))
-      .subscribe(dataRows => {
-        const values = dataRows.map(row => row.values[0]);
-        this.update(values);
+    if (this.isOverlaidEnabled) {
+      this.dataService.getDataSample(this.dataSet, [this.selectedColumn.name, this.selectedGroupByColumn.name]).subscribe(rows => {
+        rows = rows.filter(row => row.values[0] && row.values[1]);
+        this.update(rows.map(row => row.values[0]), rows.map(row => row.values[1]));
       });
+    } else {
+      this.dataService.getDataSample(this.dataSet, [this.selectedColumn.name]).subscribe(rows => {
+        this.update(rows.map(row => row.values[0]), null);
+      });
+    }
   }
 
-  private update(values: any[]) {
-    const data = [{
-      x: values,
-      type: 'histogram',
-      histnorm: this.selectedHistNorm.value,
-      cumulative: {
-        enabled: this.isCumulativeEnabled
-      }
-    }];
+  private update(values: any[], groupByValues: any[]) {
+    let data = [];
+    let layout = {};
 
-    const layout = {
-      title: `Histogram "${this.selectedColumn.name}" feature`,
-      xaxis: {
-        title: this.selectedColumn.name,
-      },
-      yaxis: {
-        title: this.selectedHistNorm.labelText
-      }
-    };
+    const colors = ["blue", "red", "green"];
+
+
+    if (groupByValues) {
+      const groupedBy = this.groupBy(values, groupByValues);
+      let i = 0;
+      groupedBy.forEach((value: any[], key: any) => {
+        data.push({
+          x: value,
+          name: this.selectedGroupByColumn.name + ": " + key,
+          type: 'histogram',
+          opacity: 0.5,
+          marker: {
+            color: colors[i++],
+          },
+          histnorm: this.selectedHistNorm.value
+        })
+      });
+
+      layout = {
+        title: `Histogram "${this.selectedColumn.name}" feature`,
+        barmode: "overlay",
+        xaxis: {
+          title: this.selectedColumn.name,
+        },
+        yaxis: {
+          title: this.selectedHistNorm.labelText
+        }
+      };
+
+    } else {
+      data = [{
+        x: values,
+        type: 'histogram',
+        histnorm: this.selectedHistNorm.value,
+        cumulative: {
+          enabled: this.isCumulativeEnabled
+        }
+      }];
+
+      layout = {
+        title: `Histogram "${this.selectedColumn.name}" feature`,
+        xaxis: {
+          title: this.selectedColumn.name,
+        },
+        yaxis: {
+          title: this.selectedHistNorm.labelText
+        }
+      };
+    }
+
 
     const chartData: ChartData = {
       data: data,
@@ -83,6 +139,22 @@ export class HistogramSettingsComponent implements OnInit, OnChanges {
     };
 
     this.settingsUpdated.emit(chartData);
+  }
+
+  private groupBy(values: any[], groupByValues: any[]): Map<any, any[]> {
+    const map = new Map<any, any[]>();
+    values.forEach((value, index) => {
+      const key = groupByValues[index];
+      if (map.has(key)) {
+        map.get(key).push(value);
+      } else {
+        let array = [];
+        array.push(value);
+        map.set(key, array);
+      }
+    });
+
+    return map;
   }
 
 }

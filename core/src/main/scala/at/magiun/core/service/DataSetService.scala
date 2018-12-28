@@ -1,10 +1,11 @@
 package at.magiun.core.service
 
-import at.magiun.core.connector.{Connector, CsvConnector, MongoDbConnector}
-import at.magiun.core.model.SourceType.{FileCsv, Mongo}
+import at.magiun.core.connector.Connector
+import at.magiun.core.feature.{Recommendations, Recommender}
 import at.magiun.core.model.{DataRow, DataSetSource, MagiunDataSet, SourceType}
 import at.magiun.core.repository.{DataSetRepository, MagiunDataSetEntity}
-import org.apache.spark.sql.SparkSession
+import com.typesafe.scalalogging.LazyLogging
+import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.Option._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -12,12 +13,24 @@ import scala.concurrent.Future
 
 class DataSetService(
                       dataSetRepository: DataSetRepository,
-                      sparkSession: SparkSession
-                    ) {
+                      executionContext: ExecutionContext,
+                      spark: SparkSession,
+                      recommender: Recommender
+                    ) extends LazyLogging {
 
-  def find(id: Long): Future[Option[MagiunDataSet]] = {
-    dataSetRepository.find(id)
-      .map(_.map(mapToModel))
+  def find(id: String): Future[Option[MagiunDataSet]] = {
+    if (isMemoryDataSet(id)) {
+      Future {
+        Option {
+          val source = DataSetSource(SourceType.Memory, id)
+          val schema = getConnector(SourceType.Memory).getSchema(source)
+          MagiunDataSet(id, id, source, Option(schema))
+        }
+      }
+    } else {
+      dataSetRepository.find(id.toLong)
+        .map(_.map(mapToModel))
+    }
   }
 
 
@@ -37,7 +50,7 @@ class DataSetService(
     val schema = getConnector(sourceType).getSchema(source)
 
     MagiunDataSet(
-      entity.id,
+      entity.id.toString,
       entity.name,
       source,
       Option(schema)
@@ -46,24 +59,57 @@ class DataSetService(
 
   private def mapToEntity(dataSet: MagiunDataSet): MagiunDataSetEntity = {
     MagiunDataSetEntity(
-      dataSet.id,
+      dataSet.id.toLong,
       dataSet.name,
       dataSet.dataSetSource.sourceType.toString,
       dataSet.dataSetSource.url
     )
   }
 
-  def findRows(dataSetId: Int, range: Option[Range] = empty, columns: Option[Set[String]] = empty): Future[Option[Seq[DataRow]]] = {
-    find(dataSetId)
-      .map(_.map(ds => {
-        val connector = getConnector(ds.dataSetSource.sourceType)
-        connector.getRows(ds.dataSetSource, range, columns)
-      }))
+  def findRows(dataSetId: String, range: Option[Range] = empty, columns: Option[Seq[String]] = empty): Future[Option[Seq[DataRow]]] = {
+    getConnectorAndSource(dataSetId)
+      .map(_.map { case (connector, source) =>
+        connector.getRows(source, range, columns)
+      })
   }
 
-  private def getConnector(sourceType: SourceType): Connector = sourceType match {
-    case FileCsv => new CsvConnector(sparkSession)
-    case Mongo => new MongoDbConnector(sparkSession)
+  def getRecommendations(dataSetId: String): Future[Option[Recommendations]] = {
+    getDataSet(dataSetId)
+      .map(_.map(ds => recommender.recommend(ds)))
+  }
+
+  def getDataSet(dataSetId: String): Future[Option[Dataset[Row]]] = {
+    getConnectorAndSource(dataSetId)
+      .map(_.map { case (connector, source) =>
+        connector.getDataset(source)
+      })
+  }
+
+  private def getConnectorAndSource(dataSetId: String): Future[Option[(Connector, DataSetSource)]] = {
+    if (isMemoryDataSet(dataSetId)) {
+      val source = DataSetSource(SourceType.Memory, dataSetId)
+      val connector = getConnector(SourceType.Memory)
+      Future {
+        Option {
+          (connector, source)
+        }
+      }
+    } else {
+      find(dataSetId)
+        .map(_.map(ds => {
+          val connector = getConnector(ds.dataSetSource.sourceType)
+          (connector, ds.dataSetSource)
+        }))
+    }
+  }
+
+  private def getConnector(sourceType: SourceType): Connector = {
+    logger.info("Getting connector for " + sourceType)
+    new ConnectorFactory(spark, executionContext).getConnector(sourceType)
+  }
+
+  private def isMemoryDataSet(id: String) = {
+    id.startsWith("mem-")
   }
 
 }

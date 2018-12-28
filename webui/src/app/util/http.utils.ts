@@ -1,7 +1,6 @@
 import {HttpHeaders} from '@angular/common/http';
 import {BlockComponent} from '../components/workflows/blocks/block.component';
 import {BlockParameter} from '../components/workflows/blocks/block-parameter';
-import {WireType} from '../components/workflows/blocks/wire-type';
 import {Tuple} from './tuple';
 
 export class HttpUtils {

@@ -1,21 +1,24 @@
 package at.magiun.core.model
 
 import at.magiun.core.model.Stage.getOutputOfPrevStage
+import at.magiun.core.service.DataSetService
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.expr
 
+import scala.concurrent.Await
 
-abstract class Stage {
+
+trait Stage {
   def perform: StageOutput
 }
 
 object Stage {
   def getOutputOfPrevStage(stageInput: StageInput): DatasetOutput = {
     stageInput.stage.perform match {
-      case x@DatasetOutput(dataSet) => x
+      case x@DatasetOutput(_) => x
       case MultiOutput(outputs) =>
         outputs(stageInput.index) match {
-          case x@DatasetOutput(dataSet) => x
+          case x@DatasetOutput(_) => x
           case _ => throw new RuntimeException
         }
     }
@@ -27,6 +30,15 @@ case class StageInput(stage: Stage, index: Int = 0)
 // ***
 // Readers and writers
 // ***
+
+class DataSetReaderStage(dataSetService: DataSetService, dataSetId: String) extends Stage {
+  import scala.concurrent.duration._
+
+  override def perform: StageOutput = {
+    val output = Await.result(dataSetService.getDataSet(dataSetId), 10.seconds).get
+    DatasetOutput(output)
+  }
+}
 
 class FileReaderStage(spark: SparkSession, fileName: String) extends Stage {
   override def perform: StageOutput = {
@@ -61,10 +73,10 @@ class DropColumnStage(input: StageInput, columnName: String) extends Stage {
   }
 }
 
-class AddColumnStage(input: StageInput, newColName: String, e: String) extends Stage {
+class AddColumnStage(input: StageInput, newColName: String, exp: String) extends Stage {
   override def perform: DatasetOutput = {
     val dataSet = getOutputOfPrevStage(input).dataSet
-    val result = dataSet.withColumn(newColName, expr(e))
+    val result = dataSet.withColumn(newColName, expr(exp))
     DatasetOutput(result)
   }
 }

@@ -1,61 +1,39 @@
-import {
-    Component, Input, Inject, forwardRef, Output, EventEmitter, OnDestroy
-} from '@angular/core';
-import { DataTable } from './table.component';
-import { ROW_TEMPLATE } from './row.template';
-import { ROW_STYLE } from './row.style';
+import {Component, EventEmitter, Input, OnDestroy, Output, QueryList} from '@angular/core';
+import {DataTableColumn} from "./column.component";
 
 
 @Component({
-    moduleId: module.id + '',
-    selector: '[dataTableRow]',
-    template: ROW_TEMPLATE,
-    styles: [ROW_STYLE]
+  moduleId: module.id + '',
+  selector: '[dataTableRow]',
+  templateUrl: './row.component.html',
+  styleUrls: ['./row.component.css']
 })
-export class DataTableRow implements OnDestroy {
+export class DataTableRowComponent implements OnDestroy {
 
-    @Input() item: any;
-    @Input() index: number;
+  @Input() item: any;
+  @Input() index: number;
+  @Input() selectColumnVisible: boolean;
+  @Input() columns: QueryList<DataTableColumn>;
 
-    expanded: boolean;
+  private _selected: boolean;
 
-    // row selection:
+  @Output() selectedChange = new EventEmitter();
 
-    private _selected: boolean;
+  constructor() {
+  }
 
-    @Output() selectedChange = new EventEmitter();
+  get selected() {
+    return this._selected;
+  }
 
-    get selected() {
-        return this._selected;
-    }
+  set selected(selected) {
+    this._selected = selected;
+    this.selectedChange.emit(selected);
+  }
 
-    set selected(selected) {
-        this._selected = selected;
-        this.selectedChange.emit(selected);
-    }
+  ngOnDestroy() {
+    this.selected = false;
+  }
 
-    // other:
-
-    get displayIndex() {
-        if (this.dataTable.pagination) {
-            return this.dataTable.displayParams.offset + this.index + 1;
-        } else {
-            return this.index + 1;
-        }
-    }
-
-    getTooltip() {
-        if (this.dataTable.rowTooltip) {
-            return this.dataTable.rowTooltip(this.item, this, this.index);
-        }
-        return '';
-    }
-
-    constructor(@Inject(forwardRef(() => DataTable)) public dataTable: DataTable) {}
-
-    ngOnDestroy() {
-        this.selected = false;
-    }
-
-    public _this = this; // FIXME is there no template keyword for this in angular 2?
+  public _this = this; // FIXME is there no template keyword for this in angular 2?
 }

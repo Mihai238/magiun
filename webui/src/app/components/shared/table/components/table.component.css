@@ -1,4 +1,3 @@
-export const TABLE_STYLE = `
 /* bootstrap override: */
 
 :host /deep/ .data-table.table > tbody+tbody {
@@ -69,6 +68,11 @@ export const TABLE_STYLE = `
     cursor: col-resize;
 }
 
+.column-icon {
+  font-size: 17px;
+  float: right;
+}
+
 /* cover: */
 
 .data-table-box {
@@ -82,4 +86,3 @@ export const TABLE_STYLE = `
    background-color: rgba(255, 255, 255, 0.3);
    top: 0;
 }
-`;

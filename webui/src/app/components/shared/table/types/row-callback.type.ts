@@ -1,3 +1,3 @@
-import { DataTableRow } from '../components/row.component';
+import { DataTableRowComponent } from '../components/row.component';
 
-export type RowCallback = (item: any, row: DataTableRow, index: number) => string;
+export type RowCallback = (item: any, row: DataTableRowComponent, index: number) => string;

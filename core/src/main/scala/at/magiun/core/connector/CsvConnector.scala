@@ -1,9 +1,13 @@
 package at.magiun.core.connector
 
-import at.magiun.core.model._
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import java.util.concurrent.ConcurrentHashMap
 
-class CsvConnector(spark: SparkSession) extends Connector {
+import at.magiun.core.connector.CsvConnector.cache
+import at.magiun.core.model._
+import com.typesafe.scalalogging.LazyLogging
+import org.apache.spark.sql.{Dataset, Row, SparkSession}
+
+class CsvConnector(spark: SparkSession) extends Connector with LazyLogging {
 
   private val readOptions = Map(
     "sep" -> ",",
@@ -12,20 +16,34 @@ class CsvConnector(spark: SparkSession) extends Connector {
   )
 
   override def getSchema(source: DataSetSource): Schema = {
-    val dataFrame = spark.read
-      .options(readOptions)
-      .csv(source.url)
+    val dataset = getDataset(source)
 
-    val cols = dataFrame.schema.zipWithIndex.map { case (col, index) =>
+    val cols = dataset.schema.zipWithIndex.map { case (col, index) =>
       Column(index, col.name, mapToColumnType(col.dataType))
     }
 
-    Schema(cols.toList, dataFrame.count())
+    Schema(cols.toList, dataset.count())
   }
 
-  override def getDataFrame(source: DataSetSource): DataFrame = {
-    spark.read
-      .options(readOptions)
-      .csv(source.url)
+  override def getDataset(source: DataSetSource): Dataset[Row] = {
+    if (cache.containsKey(source)) {
+      logger.info("Dataset found in memory")
+      cache.get(source)
+    } else {
+      logger.info("Loading the dataset in spark")
+
+      val ds = spark.read
+        .options(readOptions)
+        .csv(source.url)
+      cache.put(source, ds)
+      ds
+    }
+
+
   }
+
+}
+
+object CsvConnector {
+  private val cache: ConcurrentHashMap[DataSetSource, Dataset[Row]] = new ConcurrentHashMap[DataSetSource, Dataset[Row]]()
 }

@@ -126,6 +126,7 @@ ml:EducationValue rdf:type owl:Class ;
                 sh:property [ sh:or (
                     [sh:pattern "(?i)master.*degree"]
                     [sh:pattern "(?i)doctorate.*degree"]
+                    [sh:pattern "(?i)college"]
                     [sh:pattern "(?i)no degree"]
                     [sh:pattern "(?i)Bachelors"]
                     [sh:pattern "(?i)HS-grad"]
@@ -196,6 +197,7 @@ ml:ProfessionValue rdf:type owl:Class ;
              rdfs:subClassOf ml:Value ;
              sh:property [ sh:or (
                  [sh:pattern "(?i)software\\sdev.*"]
+                 [sh:pattern "(?i)software engineer"]
                  [sh:pattern "(?i)craft-repair"]
              )
              ] .

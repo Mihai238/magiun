@@ -290,6 +290,7 @@ ml:MissingValue rdf:type owl:Class ;
                       [sh:pattern "(?i)missing"]
                       [sh:equals "-"]
                       [sh:equals ""]
+                      [sh:equals "?"]
                       )
                 ] .
 

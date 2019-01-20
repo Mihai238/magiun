@@ -47,8 +47,5 @@ describe('EditColumnComponent', () => {
   it('should only show relevant info based on action type', () => {
     component.onActionTypeSelected('drop');
     expect(component.selectedActionType).toBe(ActionType.drop);
-
-    component.onActionTypeSelected('script');
-    expect(component.selectedActionType).toBe(ActionType.script);
   })
 });

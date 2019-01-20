@@ -16,7 +16,6 @@ class RecommenderTest extends UnitTest {
 
     recommendation should have size 12
     recommendation(0).colTypes should contain only "QuantitativeColumn"
-    recommendation(0).operations should contain ("RemovalSuitableColumn")
 
     recommendation(1).colTypes should contain only "BooleanColumn"
     recommendation(1).operations should be(List.empty)

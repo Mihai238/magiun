@@ -59,18 +59,19 @@ class ColumnMetaDataComputer(
     (0 until row.size).map { colIndex => {
       val value = row.get(colIndex)
 
-      if (isMissingValue(value)) {
+      if (isMissingValue(value, restrictions("MissingValue"))) {
         BasicMeta(Set(), Set(), 1)
 
       } else {
-        val valueTypes = restrictions.map { case (valueType, restr) =>
-          logger.debug(s"Checking type $valueType for value $value")
-          if (restr.check(value)) {
-            valueType
-          } else {
-            null
-          }
-        }.filter(_ != null)
+        val valueTypes = restrictions
+          .map { case (valueType, restr) =>
+            logger.debug(s"Checking type $valueType for value $value")
+            if (restr.check(value)) {
+              valueType
+            } else {
+              null
+            }
+          }.filter(_ != null)
 
         //        if (colIndex == 5 && !valueTypes.toSet.contains("HumanAgeValue")) {
         //          logger.error(s"$value is wrong")
@@ -82,13 +83,10 @@ class ColumnMetaDataComputer(
     }
   }
 
-  private val MissingValuePattern = Pattern.compile("(?i)NA|other|unknown")
-
-  def isMissingValue(value: Any): Boolean = {
+  private def isMissingValue(value: Any, restriction: Restriction): Boolean = {
     value match {
       case null => true
-      case v: String => v == "" || MissingValuePattern.matcher(v).matches()
-      case _ => false
+      case v => restriction.check(v)
     }
   }
 

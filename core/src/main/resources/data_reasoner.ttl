@@ -232,20 +232,19 @@ ml:ExponentialDistribution rdf:type owl:Class ;
 
 ###  http://www.magiun.io/ontologies/ml#HandleMissingValuesSuitableColumn
 ml:HandleMissingValuesSuitableColumn rdf:type owl:Class ;
-                                     owl:equivalentClass [ owl:intersectionOf ( ml:OperationSuitableColumn
-                                                                                [ rdf:type owl:Restriction ;
-                                                                                  owl:onProperty ml:missingValues ;
-                                                                                  owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                                                                                                       owl:onDatatype xsd:integer ;
-                                                                                                       owl:withRestrictions ( [ xsd:minInclusive 1
-                                                                                                                              ]
-                                                                                                                            )
-                                                                                                     ]
-                                                                                ]
-                                                                              ) ;
-                                                           rdf:type owl:Class
-                                                         ] ;
-                                     rdfs:subClassOf ml:OperationSuitableColumn .
+    owl:equivalentClass [ owl:intersectionOf
+        (ml:OperationSuitableColumn
+            [ rdf:type owl:Restriction ;
+                owl:onProperty ml:missingValues ;
+                owl:someValuesFrom [
+                    rdf:type rdfs:Datatype ;
+                    owl:onDatatype xsd:integer ;
+                    owl:withRestrictions ([ xsd:minInclusive 1])
+                ]
+            ]) ;
+        rdf:type owl:Class
+        ] ;
+    rdfs:subClassOf ml:OperationSuitableColumn .
 
 
 
@@ -280,6 +279,19 @@ ml:LanguageValue rdf:type owl:Class ;
                         [sh:pattern "(?i)german"]
                         )
                   ] .
+
+###  http://www.magiun.io/ontologies/ml#MissingValue
+ml:MissingValue rdf:type owl:Class ;
+                rdfs:subClassOf ml:Value ;
+                sh:property [ sh:or (
+                      [sh:pattern "(?i)na"]
+                      [sh:pattern "(?i)other"]
+                      [sh:pattern "(?i)unknown"]
+                      [sh:pattern "(?i)missing"]
+                      [sh:equals "-"]
+                      [sh:equals ""]
+                      )
+                ] .
 
 
 ###  http://www.magiun.io/ontologies/ml#IntValue
@@ -325,19 +337,6 @@ ml:QuantitativeColumn rdf:type owl:Class ;
                                             rdf:type owl:Class
                                           ] ;
                       rdfs:subClassOf ml:Column .
-
-
-###  http://www.magiun.io/ontologies/ml#RemovalSuitableColumn
-ml:RemovalSuitableColumn rdf:type owl:Class ;
-                         owl:equivalentClass [ owl:intersectionOf ( ml:OperationSuitableColumn
-                                                                    [ rdf:type owl:Restriction ;
-                                                                      owl:onProperty ml:hasDistribution ;
-                                                                      owl:someValuesFrom ml:UniformDistribution
-                                                                    ]
-                                                                  ) ;
-                                               rdf:type owl:Class
-                                             ] ;
-                         rdfs:subClassOf ml:OperationSuitableColumn .
 
 
 ###  http://www.magiun.io/ontologies/ml#StringValue

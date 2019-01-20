@@ -314,6 +314,14 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
+    <!-- http://www.magiun.io/ontologies/model-selection#Exponential_Distribution -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Exponential_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.magiun.io/ontologies/model-selection#Interval -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Interval">
@@ -567,11 +575,20 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#algorithm -->
+    <!-- http://www.magiun.io/ontologies/model-selection#algorithm1 -->
 
-    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm">
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm1">
         <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
         <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#algorithm2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm2">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
+        <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset2"/>
     </owl:NamedIndividual>
     
 
@@ -636,7 +653,35 @@ It takes values between [0,1]</rdfs:comment>
         </rdf:type>
         <hasResponseVariableDistribution rdf:resource="http://www.magiun.io/ontologies/model-selection#normalDistribution"/>
         <hasResponseVariableType rdf:resource="http://www.magiun.io/ontologies/model-selection#continuousVarType"/>
-        <isDatasetOf rdf:resource="http://www.magiun.io/ontologies/model-selection#algorithm"/>
+        <isDatasetOf rdf:resource="http://www.magiun.io/ontologies/model-selection#algorithm1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#dataset2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset2">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">90.0</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">270</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <hasResponseVariableDistribution rdf:resource="http://www.magiun.io/ontologies/model-selection#binomialDistribution"/>
+        <hasResponseVariableType rdf:resource="http://www.magiun.io/ontologies/model-selection#binaryVarType"/>
     </owl:NamedIndividual>
     
 

@@ -23,8 +23,16 @@ object OntologyClass extends Enumeration {
 
   /** Algorithm - Regression */
   val Regression: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Regression")
-  val LinearLeastRegression: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Linear_Least_Regression")
-  val LogisticRegression: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Logistic_Regression")
+  val LinearLeastRegressionPartial: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Linear_Least_Regression_Partial")
+  val LinearLeastRegressionComplete: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Linear_Least_Regression_Complete")
+  val BinaryLogisticRegressionPartial: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Binary_Logistic_Regression_Partial")
+  val BinaryLogisticRegressionComplete: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Binary_Logistic_Regression_Complete")
+  val OrdinalLogisticRegressionPartial: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Ordinal_Logistic_Regression_Partial")
+  val OrdinalLogisticRegressionComplete: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Ordinal_Logistic_Regression_Complete")
+  val GeneralizedLinearRegressionPartial: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Generalized_Linear_Regression_Partial")
+  val GeneralizedLinearRegressionComplete: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Generalized_Linear_Regression_Complete")
+  val DecisionTreePartial: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Decision_Tree_Regression_Partial")
+  val DecisionTreeComplete: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Decision_Tree_Regression_Complete")
 
   /** Variable Type */
   val VariableType: OntologyClass.Value = Value(AlgorithmOntologyConfig.NS + "Variable_Type")

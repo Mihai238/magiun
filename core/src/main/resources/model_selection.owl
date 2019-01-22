@@ -35,6 +35,12 @@
     
 
 
+    <!-- http://www.magiun.io/ontologies/model-selection#hasGoal -->
+
+    <owl:ObjectProperty rdf:about="http://www.magiun.io/ontologies/model-selection#hasGoal"/>
+    
+
+
     <!-- http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution -->
 
     <owl:ObjectProperty rdf:about="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution">
@@ -96,6 +102,28 @@
         </rdfs:range>
         <rdfs:comment>This property represents the percentage of variables of the type continuous in the dataset (respone variable is not included).
 It takes values between [0,1]</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#hasIndependentObservations -->
+
+    <owl:DatatypeProperty rdf:about="http://www.magiun.io/ontologies/model-selection#hasIndependentObservations">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#hasMulticollinearity -->
+
+    <owl:DatatypeProperty rdf:about="http://www.magiun.io/ontologies/model-selection#hasMulticollinearity">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
     </owl:DatatypeProperty>
     
 
@@ -162,6 +190,17 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
+    <!-- http://www.magiun.io/ontologies/model-selection#hasOutliers -->
+
+    <owl:DatatypeProperty rdf:about="http://www.magiun.io/ontologies/model-selection#hasOutliers">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.magiun.io/ontologies/model-selection#hasVariables -->
 
     <owl:DatatypeProperty rdf:about="http://www.magiun.io/ontologies/model-selection#hasVariables">
@@ -210,10 +249,183 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
+    <!-- http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Bernoulli_distribution</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
     <!-- http://www.magiun.io/ontologies/model-selection#Binary -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Binary">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Discrete"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Dummy_variable_(statistics)</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Binary_Logistic_Regression_Complete -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Binary_Logistic_Regression_Complete">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Binomial_Distribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Binary"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">110.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">330</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasIndependentObservations"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasMulticollinearity"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasOutliers"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Logistic_regression</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-logistic-regression/</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Binary_Logistic_Regression_Partial -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Binary_Logistic_Regression_Partial">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Binary"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">90.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">270</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:comment>the suffix &quot;Partial&quot; indicates that this method will be chosen if not all assumptions of the linear least regression are met</rdfs:comment>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Logistic_regression</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-logistic-regression/</rdfs:seeAlso>
     </owl:Class>
     
 
@@ -222,6 +434,7 @@ It takes values between [0,1]</rdfs:comment>
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Binomial_Distribution">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Binomial_distribution</rdfs:seeAlso>
     </owl:Class>
     
 
@@ -230,6 +443,16 @@ It takes values between [0,1]</rdfs:comment>
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Categorical">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Variable_Type"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Categorical_variable</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Categorical_Distribution -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Categorical_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Categorical_distribution</rdfs:seeAlso>
     </owl:Class>
     
 
@@ -245,13 +468,13 @@ It takes values between [0,1]</rdfs:comment>
                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
                         <owl:allValuesFrom>
                             <owl:Restriction>
-                                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
                                 <owl:allValuesFrom>
                                     <rdfs:Datatype>
-                                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
                                         <owl:withRestrictions rdf:parseType="Collection">
                                             <rdf:Description>
-                                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200</xsd:maxInclusive>
+                                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">2.0E7</xsd:minInclusive>
                                             </rdf:Description>
                                         </owl:withRestrictions>
                                     </rdfs:Datatype>
@@ -262,6 +485,7 @@ It takes values between [0,1]</rdfs:comment>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
     </owl:Class>
     
 
@@ -270,6 +494,8 @@ It takes values between [0,1]</rdfs:comment>
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Continuous">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Numerical"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Continuous_or_discrete_variable#Continuous_variable</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticshowto.datasciencecentral.com/continuous-variable/</rdfs:seeAlso>
     </owl:Class>
     
 
@@ -300,10 +526,295 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
+    <!-- http://www.magiun.io/ontologies/model-selection#Decision_Tree_Classification_Complete -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Decision_Tree_Classification_Complete">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Classification"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Discrete"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">50.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Classification"/>
+        <rdfs:comment>the suffix &quot;Partial&quot; indicates that this method will be chosen if not all assumptions of the linear least regression are met</rdfs:comment>
+        <rdfs:seeAlso>http://www.dcc.fc.up.pt/~ltorgo/PhD/th3.pdf</rdfs:seeAlso>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Decision_tree_learning</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.saedsayad.com/decision_tree_reg.htm</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Decision_Tree_Classification_Partial -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Decision_Tree_Classification_Partial">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Classification"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Discrete"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">20.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Classification"/>
+        <rdfs:comment>the suffix &quot;Partial&quot; indicates that this method will be chosen if not all assumptions of the linear least regression are met</rdfs:comment>
+        <rdfs:seeAlso>http://www.dcc.fc.up.pt/~ltorgo/PhD/th3.pdf</rdfs:seeAlso>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Decision_tree_learning</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.saedsayad.com/decision_tree_reg.htm</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Decision_Tree_Regression_Complete -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Decision_Tree_Regression_Complete">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">50.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:comment>the suffix &quot;Partial&quot; indicates that this method will be chosen if not all assumptions of the linear least regression are met</rdfs:comment>
+        <rdfs:seeAlso>http://www.dcc.fc.up.pt/~ltorgo/PhD/th3.pdf</rdfs:seeAlso>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Decision_tree_learning</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.saedsayad.com/decision_tree_reg.htm</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Decision_Tree_Regression_Partial -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Decision_Tree_Regression_Partial">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">20.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:comment>the suffix &quot;Partial&quot; indicates that this method will be chosen if not all assumptions of the linear least regression are met</rdfs:comment>
+        <rdfs:seeAlso>http://www.dcc.fc.up.pt/~ltorgo/PhD/th3.pdf</rdfs:seeAlso>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Decision_tree_learning</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.saedsayad.com/decision_tree_reg.htm</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
     <!-- http://www.magiun.io/ontologies/model-selection#Discrete -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Discrete">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Numerical"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Continuous_or_discrete_variable#Continuous_variable</rdfs:seeAlso>
     </owl:Class>
     
 
@@ -318,6 +829,307 @@ It takes values between [0,1]</rdfs:comment>
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Exponential_Distribution">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Exponential_distribution</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Gamma_Distribution -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Gamma_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Gamma_distribution</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Generalized_Linear_Regression_Complete -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Generalized_Linear_Regression_Complete">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Class>
+                                        <owl:unionOf rdf:parseType="Collection">
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Binary"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Categorical_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Categorical"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Exponential_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Non-Negative"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Gamma_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Non-Negative"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Normal_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Poisson_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Ordinal"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                        </owl:unionOf>
+                                    </owl:Class>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">50.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasMulticollinearity"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasOutliers"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Generalized_linear_model</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticssolutions.com/generalized-linear-models/</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Generalized_Linear_Regression_Partial -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Generalized_Linear_Regression_Partial">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Class>
+                                        <owl:unionOf rdf:parseType="Collection">
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Binary"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Categorical_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Categorical"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Exponential_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Non-Negative"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Gamma_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Non-Negative"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Normal_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Poisson_Distribution"/>
+                                                    </owl:Restriction>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Ordinal"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                        </owl:unionOf>
+                                    </owl:Class>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">20.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:comment>the suffix &quot;Partial&quot; indicates that this method will be chosen if not all assumptions of the linear least regression are met</rdfs:comment>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Generalized_linear_model</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticssolutions.com/generalized-linear-models/</rdfs:seeAlso>
     </owl:Class>
     
 
@@ -330,9 +1142,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Linear_Least_Regression -->
+    <!-- http://www.magiun.io/ontologies/model-selection#Linear_Least_Regression_Complete -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Linear_Least_Regression">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Linear_Least_Regression_Complete">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -389,6 +1201,119 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
                                                 <owl:withRestrictions rdf:parseType="Collection">
                                                     <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">50.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasMulticollinearity"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasOutliers"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Linear_regression</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-linear-regression/</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Linear_Least_Regression_Partial -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Linear_Least_Regression_Partial">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Normal_Distribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasContinuousVariableTypePercentage"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.7</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                    <rdf:Description>
+                                                        <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</xsd:maxInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasNormalDistributionPercentage"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.7</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                    <rdf:Description>
+                                                        <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</xsd:maxInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
                                                         <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">20.0</xsd:minInclusive>
                                                     </rdf:Description>
                                                 </owl:withRestrictions>
@@ -402,7 +1327,7 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
                                                 <owl:withRestrictions rdf:parseType="Collection">
                                                     <rdf:Description>
-                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">250</xsd:minInclusive>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</xsd:minInclusive>
                                                     </rdf:Description>
                                                 </owl:withRestrictions>
                                             </rdfs:Datatype>
@@ -429,13 +1354,50 @@ It takes values between [0,1]</rdfs:comment>
             </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:comment>the suffix &quot;Partial&quot; indicates that this method will be chosen if not all assumptions of the linear least regression are met</rdfs:comment>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Linear_regression</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-linear-regression/</rdfs:seeAlso>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Logistic_Regression -->
+    <!-- http://www.magiun.io/ontologies/model-selection#Non-Negative -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Logistic_Regression">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Non-Negative">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Normal_Distribution -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Normal_Distribution">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Normal_distribution</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Numerical -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Numerical">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Variable_Type"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Ordinal -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Ordinal">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Ordinal_data</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Ordinal_Logistic_Regression_Complete -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Ordinal_Logistic_Regression_Complete">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -447,11 +1409,11 @@ It takes values between [0,1]</rdfs:comment>
                                 <owl:intersectionOf rdf:parseType="Collection">
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Binomial_Distribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
                                     </owl:Restriction>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Binary"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Ordinal"/>
                                     </owl:Restriction>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
@@ -460,7 +1422,7 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
                                                 <owl:withRestrictions rdf:parseType="Collection">
                                                     <rdf:Description>
-                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">80.0</xsd:minInclusive>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">110.0</xsd:minInclusive>
                                                     </rdf:Description>
                                                 </owl:withRestrictions>
                                             </rdfs:Datatype>
@@ -473,7 +1435,92 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
                                                 <owl:withRestrictions rdf:parseType="Collection">
                                                     <rdf:Description>
-                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">240</xsd:minInclusive>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">330</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasIndependentObservations"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasMulticollinearity"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasOutliers"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Logistic_regression</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-logistic-regression/</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#Ordinal_Logistic_Regression_Partial -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Ordinal_Logistic_Regression_Partial">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Ordinal"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">90.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">270</xsd:minInclusive>
                                                     </rdf:Description>
                                                 </owl:withRestrictions>
                                             </rdfs:Datatype>
@@ -500,38 +1547,18 @@ It takes values between [0,1]</rdfs:comment>
             </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:comment>the suffix &quot;Partial&quot; indicates that this method will be chosen if not all assumptions of the linear least regression are met</rdfs:comment>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Logistic_regression</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-logistic-regression/</rdfs:seeAlso>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Non-Negative -->
+    <!-- http://www.magiun.io/ontologies/model-selection#Poisson_Distribution -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Non-Negative">
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.magiun.io/ontologies/model-selection#Normal_Distribution -->
-
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Normal_Distribution">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Poisson_Distribution">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.magiun.io/ontologies/model-selection#Numerical -->
-
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Numerical">
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Variable_Type"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.magiun.io/ontologies/model-selection#Ordinal -->
-
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Ordinal">
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Poisson_distribution</rdfs:seeAlso>
     </owl:Class>
     
 
@@ -560,7 +1587,10 @@ It takes values between [0,1]</rdfs:comment>
 
     <!-- http://www.magiun.io/ontologies/model-selection#Variable_Type -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Variable_Type"/>
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Variable_Type">
+        <rdfs:seeAlso>https://stats.idre.ucla.edu/other/mult-pkg/whatstat/what-is-the-difference-between-categorical-ordinal-and-interval-variables/</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/types-of-variables/</rdfs:seeAlso>
+    </owl:Class>
     
 
 
@@ -575,51 +1605,143 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#algorithm1 -->
+    <!-- http://www.magiun.io/ontologies/model-selection#algorithm_should_be_BinaryLogisticRegressionPartial -->
 
-    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm1">
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm_should_be_BinaryLogisticRegressionPartial">
         <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
-        <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset1"/>
+        <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset_of_BinaryLogisticRegressionPartial"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#algorithm2 -->
+    <!-- http://www.magiun.io/ontologies/model-selection#algorithm_should_be_LinearLeastRegressionComplete -->
 
-    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm2">
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm_should_be_LinearLeastRegressionComplete">
         <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
-        <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset2"/>
+        <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionComplete"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#binaryVarType -->
+    <!-- http://www.magiun.io/ontologies/model-selection#algorithm_should_be_LinearLeastRegressionPartial_1 -->
 
-    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#binaryVarType">
-        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Binary"/>
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm_should_be_LinearLeastRegressionPartial_1">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
+        <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionPartial_1"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#binomialDistribution -->
+    <!-- http://www.magiun.io/ontologies/model-selection#algorithm_should_be_LinearLeastRegressionPartial_2 -->
 
-    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#binomialDistribution">
-        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Binomial_Distribution"/>
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm_should_be_LinearLeastRegressionPartial_2">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
+        <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionPartial_2"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#continuousVarType -->
+    <!-- http://www.magiun.io/ontologies/model-selection#algorithm_should_be_LinearLeastRegressionPartial_3 -->
 
-    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#continuousVarType">
-        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm_should_be_LinearLeastRegressionPartial_3">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
+        <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionPartial_3"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#dataset1 -->
+    <!-- http://www.magiun.io/ontologies/model-selection#algorithm_should_be_OrdinalLogisticRegressionPartial -->
 
-    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset1">
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#algorithm_should_be_OrdinalLogisticRegressionPartial">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
+        <hasDataset rdf:resource="http://www.magiun.io/ontologies/model-selection#dataset_of_OrdinalLogisticRegresionPartial"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#dataset_of_BinaryLogisticRegressionPartial -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset_of_BinaryLogisticRegressionPartial">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">110.0</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">330</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <hasResponseVariableDistribution rdf:resource="http://www.magiun.io/ontologies/model-selection#distribution_bernoulli"/>
+        <hasResponseVariableType rdf:resource="http://www.magiun.io/ontologies/model-selection#variableType_Binary"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionComplete -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionComplete">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasContinuousVariableTypePercentage"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasMulticollinearity"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasNormalDistributionPercentage"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.9</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">100.0</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">400</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasOutliers"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <hasResponseVariableDistribution rdf:resource="http://www.magiun.io/ontologies/model-selection#distribution_normal"/>
+        <hasResponseVariableType rdf:resource="http://www.magiun.io/ontologies/model-selection#variableType_Continuous"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionPartial_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionPartial_1">
         <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
         <rdf:type>
             <owl:Restriction>
@@ -651,27 +1773,133 @@ It takes values between [0,1]</rdfs:comment>
                 <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</owl:hasValue>
             </owl:Restriction>
         </rdf:type>
-        <hasResponseVariableDistribution rdf:resource="http://www.magiun.io/ontologies/model-selection#normalDistribution"/>
-        <hasResponseVariableType rdf:resource="http://www.magiun.io/ontologies/model-selection#continuousVarType"/>
-        <isDatasetOf rdf:resource="http://www.magiun.io/ontologies/model-selection#algorithm1"/>
+        <hasResponseVariableDistribution rdf:resource="http://www.magiun.io/ontologies/model-selection#distribution_normal"/>
+        <hasResponseVariableType rdf:resource="http://www.magiun.io/ontologies/model-selection#variableType_Continuous"/>
+        <isDatasetOf rdf:resource="http://www.magiun.io/ontologies/model-selection#algorithm_should_be_LinearLeastRegressionPartial_1"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#dataset2 -->
+    <!-- http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionPartial_2 -->
 
-    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset2">
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionPartial_2">
         <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
         <rdf:type>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasContinuousVariableTypePercentage"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasMulticollinearity"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasNormalDistributionPercentage"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.9</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
-                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">90.0</owl:hasValue>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">49.0</owl:hasValue>
             </owl:Restriction>
         </rdf:type>
         <rdf:type>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
-                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">270</owl:hasValue>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">350</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasOutliers"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <hasResponseVariableDistribution rdf:resource="http://www.magiun.io/ontologies/model-selection#distribution_normal"/>
+        <hasResponseVariableType rdf:resource="http://www.magiun.io/ontologies/model-selection#variableType_Continuous"/>
+        <rdfs:comment>this dataset fulfils all restrictions but one (hasMulticollinearity) in order to inferr it&apos;s algorithm as LinearLeastRegressionComplete</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionPartial_3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset_of_LinearLeastRegressionPartial_3">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasContinuousVariableTypePercentage"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasMulticollinearity"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasNormalDistributionPercentage"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.9</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">49.0</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">350</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasOutliers"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasVariables"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <hasResponseVariableDistribution rdf:resource="http://www.magiun.io/ontologies/model-selection#distribution_normal"/>
+        <hasResponseVariableType rdf:resource="http://www.magiun.io/ontologies/model-selection#variableType_Continuous"/>
+        <rdfs:comment>this dataset fulfils all restrictions but one (hasOutliers) in order to inferr it&apos;s algorithm as LinearLeastRegressionComplete</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#dataset_of_OrdinalLogisticRegresionPartial -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#dataset_of_OrdinalLogisticRegresionPartial">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">110.0</owl:hasValue>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservations"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">330</owl:hasValue>
             </owl:Restriction>
         </rdf:type>
         <rdf:type>
@@ -680,15 +1908,31 @@ It takes values between [0,1]</rdfs:comment>
                 <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</owl:hasValue>
             </owl:Restriction>
         </rdf:type>
-        <hasResponseVariableDistribution rdf:resource="http://www.magiun.io/ontologies/model-selection#binomialDistribution"/>
-        <hasResponseVariableType rdf:resource="http://www.magiun.io/ontologies/model-selection#binaryVarType"/>
+        <hasResponseVariableDistribution rdf:resource="http://www.magiun.io/ontologies/model-selection#distribution_bernoulli"/>
+        <hasResponseVariableType rdf:resource="http://www.magiun.io/ontologies/model-selection#variableType_Ordinal"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#normalDistribution -->
+    <!-- http://www.magiun.io/ontologies/model-selection#distribution_bernoulli -->
 
-    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#normalDistribution">
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#distribution_bernoulli">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#distribution_binomial -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#distribution_binomial">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Binomial_Distribution"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#distribution_normal -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#distribution_normal">
         <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Normal_Distribution"/>
     </owl:NamedIndividual>
     
@@ -698,6 +1942,30 @@ It takes values between [0,1]</rdfs:comment>
 
     <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#responseVariable">
         <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Response_Variable"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#variableType_Binary -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#variableType_Binary">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Binary"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#variableType_Continuous -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#variableType_Continuous">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#variableType_Ordinal -->
+
+    <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#variableType_Ordinal">
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Ordinal"/>
     </owl:NamedIndividual>
 </rdf:RDF>
 

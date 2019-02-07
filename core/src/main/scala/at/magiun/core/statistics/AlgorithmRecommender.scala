@@ -13,19 +13,18 @@ class AlgorithmRecommender(ontology: OntModel @@ AlgorithmSelectionOntology) {
   def recommend(metadata: DatasetMetadata): Set[OntologyClass.Value] = {
     val dataset: Individual = createIndividualForOntClass(OntologyClass.Dataset.toString)
     val algorithm: Individual = createIndividualForOntClass(OntologyClass.Algorithm.toString)
+    val goal: Individual = createIndividualForOntClass(metadata.goal.ontologyClass.toString)
 
-    val hasContinuousVariableTypePercentage: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasContinuousVariableTypePercentage)
+    val hasGoal: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasGoal)
     val hasDataset: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasDataset)
+    val hasContinuousVariableTypePercentage: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasContinuousVariableTypePercentage)
     val hasNormalDistributionPercentage: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasNormalDistributionPercentage)
-    val hasObservations: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasObservations)
     val hasObservationVariableRatio: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasObservationVariableRatio)
     val hasResponseVariableDistribution: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasResponseVariableDistribution)
     val hasResponseVariableType: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasResponseVariableType)
-    val hasVariables: DatatypeProperty = getDataProperty(ontology, OntologyProperty.hasVariables)
 
     algorithm.addProperty(hasDataset, dataset)
-    dataset.addLiteral(hasVariables, metadata.variablesCount - 1)
-    dataset.addLiteral(hasObservations, metadata.observationsCount)
+    algorithm.addProperty(hasGoal, goal)
     dataset.addProperty(hasResponseVariableDistribution, createDistributionIndividual(metadata.responseVariableDistribution))
     dataset.addProperty(hasResponseVariableType, createIndividualForOntClass(OntologyClass.getOntologyClass(metadata.responseVariableType).toString))
     dataset.addLiteral(hasNormalDistributionPercentage, metadata.normalDistributionPercentage)

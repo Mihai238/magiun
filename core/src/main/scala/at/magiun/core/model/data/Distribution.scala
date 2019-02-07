@@ -14,6 +14,7 @@ object Distribution extends Enum[Distribution] with CirceEnum[Distribution] {
   case object Log extends Distribution("Log Distribution", "LogDistribution")
   case object Binomial extends Distribution("Binomial Distribution", "BinomialDistribution")
   case object Bernoulli extends Distribution("Bernoulli Distribution", "BernoulliDistribution")
+  case object Multinomial extends Distribution("Multinomial Distribution", "MultinomialDistribution")
 
 
   val values: immutable.IndexedSeq[Distribution] = findValues

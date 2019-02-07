@@ -533,7 +533,7 @@ It takes values between [0,1]</rdfs:comment>
                     <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasGoal"/>
-                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#GoalClassification"/>
+                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal_Classification"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -1103,24 +1103,24 @@ It takes values between [0,1]</rdfs:comment>
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Goal">
         <owl:disjointUnionOf rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#GoalClassification"/>
-            <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#GoalRegression"/>
+            <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Goal_Classification"/>
+            <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Goal_Regression"/>
         </owl:disjointUnionOf>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#GoalClassification -->
+    <!-- http://www.magiun.io/ontologies/model-selection#Goal_Classification -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GoalClassification">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Goal_Classification">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal"/>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#GoalRegression -->
+    <!-- http://www.magiun.io/ontologies/model-selection#Goal_Regression -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GoalRegression">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Goal_Regression">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal"/>
     </owl:Class>
     
@@ -2027,7 +2027,7 @@ It takes values between [0,1]</rdfs:comment>
                     <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasGoal"/>
-                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#GoalRegression"/>
+                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal_Regression"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -2575,7 +2575,7 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#goalClassification -->
 
     <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#goalClassification">
-        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#GoalClassification"/>
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal_Classification"/>
     </owl:NamedIndividual>
     
 
@@ -2583,7 +2583,7 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#goalRegression -->
 
     <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#goalRegression">
-        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#GoalRegression"/>
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal_Regression"/>
     </owl:NamedIndividual>
     
 

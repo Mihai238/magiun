@@ -1,11 +1,11 @@
 package at.magiun.core
 
 import at.magiun.core.config.{AlgorithmOntologyConfig, H2Config, OntologyConfig, SparkConfig}
-import at.magiun.core.feature.{ColumnMetaDataComputer, _}
+import at.magiun.core.feature._
 import at.magiun.core.repository.{BlockRepository, DataSetRepository, DatabaseInitializer}
 import at.magiun.core.rest._
 import at.magiun.core.service._
-import at.magiun.core.statistics.{AlgorithmRecommender, StatisticsCalculator}
+import at.magiun.core.statistics.{AlgorithmRecommender, ColumnMetaDataCalculator, StatisticsCalculator}
 import com.softwaremill.macwire._
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.sql.SparkSession
@@ -35,7 +35,7 @@ trait MainModule {
 
   // Recommenders
   lazy val recommender = wire[Recommender]
-  lazy val columnMetaDataComputer = wire[ColumnMetaDataComputer]
+  lazy val columnMetaDataComputer = wire[ColumnMetaDataCalculator]
   lazy val restrictionBuilder = wire[RestrictionBuilder]
   lazy val algorithmRecommender = wire[AlgorithmRecommender]
 

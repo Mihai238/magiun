@@ -5,7 +5,7 @@ import at.magiun.core.connector.CsvConnector
 import at.magiun.core.model.data.Distribution
 import at.magiun.core.{MainModule, UnitTest}
 
-class ColumnMetaDataComputerTest extends UnitTest {
+class ColumnMetaDataCalculatorTest extends UnitTest {
 
   private val mainModule = new MainModule {}
 

@@ -8,7 +8,7 @@ import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.concurrent.Await
 
-class RecommenderService(spark: SparkSession, dataSetService: DataSetService, statisticsCalculator: StatisticsCalculator, algoRecommender: AlgorithmRecommender) {
+class RecommenderService(spark: SparkSession, dataSetService: DataSetService, statisticsCalculator: StatisticsCalculator, algorithmRecommender: AlgorithmRecommender) {
 
   def recommend(request: RecommenderRequest): Unit = {
     import scala.concurrent.duration._
@@ -16,7 +16,7 @@ class RecommenderService(spark: SparkSession, dataSetService: DataSetService, st
     val dataset = Await.result(dataSetService.getDataSet(request.datasetId.toString), 10.seconds).get
     val magiunDataset = Await.result(dataSetService.find(request.datasetId.toString), 10.seconds).get
     val metadata = createMetadata(request, dataset, magiunDataset)
-    val result = algoRecommender.recommend(metadata)
+    val result = algorithmRecommender.recommend(metadata)
     println(result)
   }
 

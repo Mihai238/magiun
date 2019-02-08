@@ -2,6 +2,7 @@ package at.magiun.core.feature
 
 import at.magiun.core.config.FeatureEngOntology
 import at.magiun.core.config.OntologyConfig.NS
+import at.magiun.core.statistics.ColumnMetaDataCalculator
 import com.softwaremill.tagging.@@
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.jena.ontology.{Individual, OntModel, OntResource}
@@ -15,7 +16,7 @@ import scala.collection.JavaConversions._
 class Recommender(sparkSession: SparkSession,
                   model: OntModel @@ FeatureEngOntology,
                   restrictionBuilder: RestrictionBuilder,
-                  columnMetaDataComputer: ColumnMetaDataComputer) extends LazyLogging {
+                  columnMetaDataComputer: ColumnMetaDataCalculator) extends LazyLogging {
 
   private lazy val restrictions: Map[String, Restriction] = restrictionBuilder.build(model)
 

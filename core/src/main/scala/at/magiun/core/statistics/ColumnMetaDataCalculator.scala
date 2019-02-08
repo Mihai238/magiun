@@ -1,7 +1,6 @@
-package at.magiun.core.feature
+package at.magiun.core.statistics
 
-import java.util.regex.Pattern
-
+import at.magiun.core.feature.{BasicMeta, ColumnMetaData, Restriction, SummaryStatistics}
 import at.magiun.core.model.data.Distribution
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.commons.math3.distribution._
@@ -14,7 +13,7 @@ import org.apache.spark.sql.{Dataset, Row, SparkSession}
 /**
   * Computes value types and other metadata for each column of the data set
   */
-class ColumnMetaDataComputer(
+class ColumnMetaDataCalculator(
                               sparkSession: SparkSession
                             ) extends LazyLogging with Serializable {
 
@@ -73,10 +72,6 @@ class ColumnMetaDataComputer(
             }
           }.filter(_ != null)
 
-        //        if (colIndex == 5 && !valueTypes.toSet.contains("HumanAgeValue")) {
-        //          logger.error(s"$value is wrong")
-        //        }
-
         BasicMeta(valueTypes.toSet, valueTypes.toSet, 0)
       }
     }
@@ -99,7 +94,7 @@ class ColumnMetaDataComputer(
           .map(e => Option(e).map(_.asInstanceOf[String]))
       })
 
-    val count = stats(0).map(e => e.get.toLong)
+    val count = stats.head.map(e => e.get.toLong)
     val mean = stats(1).map(_.flatMap(e => parseDouble(e)))
     val stddev = stats(2).map(_.flatMap(e => parseDouble(e)))
     val min = stats(3).map(_.flatMap(e => parseDouble(e)))
@@ -131,9 +126,9 @@ class ColumnMetaDataComputer(
           .map(_.get)
           .rdd
 
-        val normal = false //isDistributed(doubles, new NormalDistribution(stats.mean.get, stats.stddev.get))
+        val normal = isDistributed(doubles, new NormalDistribution(stats.mean.get, stats.stddev.get))
         val uniform = isDistributed(doubles, new UniformRealDistribution(stats.min.get, stats.max.get))
-        val exponential = false //isDistributed(doubles, new ExponentialDistribution(null, stats.mean.get))
+        val exponential = isDistributed(doubles, new ExponentialDistribution(null, stats.mean.get))
 
         Set[Distribution](
           if (normal) Distribution.Normal else null,

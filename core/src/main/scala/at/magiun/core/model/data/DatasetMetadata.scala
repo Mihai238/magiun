@@ -8,8 +8,13 @@ case class DatasetMetadata(goal: AlgorithmGoal,
                             responseVariableType: VariableType,
                            responseVariableDistribution: Distribution,
                            normalDistributionPercentage: Double,
+                           bernoulliDistributionPercentage: Double,
+                           multinomialDistributionPercentage: Double,
                            continuousVariableTypePercentage: Double,
-                           observationVariableRatio: Double
+                           binaryVariableTypePercentage: Double,
+                           discreteVariableTypePercentage: Double,
+                           observationVariableRatio: Double,
+                           multicollinearity: Boolean
                           ) {
 
 }

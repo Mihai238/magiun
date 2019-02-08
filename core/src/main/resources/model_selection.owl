@@ -60,7 +60,7 @@
     <owl:ObjectProperty rdf:about="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://www.magiun.io/ontologies/model-selection#Dataset"/>
-        <rdfs:range rdf:resource="http://www.magiun.io/ontologies/model-selection#Variable_Type"/>
+        <rdfs:range rdf:resource="http://www.magiun.io/ontologies/model-selection#VariableType"/>
     </owl:ObjectProperty>
     
 
@@ -310,18 +310,18 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution -->
+    <!-- http://www.magiun.io/ontologies/model-selection#BernoulliDistribution -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Bernoulli_distribution</rdfs:seeAlso>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Bernoulli_Naive_Bayes_Classification -->
+    <!-- http://www.magiun.io/ontologies/model-selection#BernoulliNaiveBayesClassification -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Bernoulli_Naive_Bayes_Classification">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#BernoulliNaiveBayesClassification">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -386,9 +386,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Binary_Logistic_Regression_Complete -->
+    <!-- http://www.magiun.io/ontologies/model-selection#BinaryLogisticRegressionComplete -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Binary_Logistic_Regression_Complete">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#BinaryLogisticRegressionComplete">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -400,11 +400,11 @@ It takes values between [0,1]</rdfs:comment>
                                 <owl:intersectionOf rdf:parseType="Collection">
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution"/>
                                     </owl:Restriction>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Binomial_Distribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BinomialDistribution"/>
                                     </owl:Restriction>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -449,9 +449,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Binary_Logistic_Regression_Partial -->
+    <!-- http://www.magiun.io/ontologies/model-selection#BinaryLogisticRegressionPartial -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Binary_Logistic_Regression_Partial">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#BinaryLogisticRegressionPartial">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -463,7 +463,7 @@ It takes values between [0,1]</rdfs:comment>
                                 <owl:intersectionOf rdf:parseType="Collection">
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution"/>
                                     </owl:Restriction>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -497,9 +497,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Binomial_Distribution -->
+    <!-- http://www.magiun.io/ontologies/model-selection#BinomialDistribution -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Binomial_Distribution">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#BinomialDistribution">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Binomial_distribution</rdfs:seeAlso>
     </owl:Class>
@@ -509,15 +509,15 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#Categorical -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Categorical">
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Variable_Type"/>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#VariableType"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Categorical_variable</rdfs:seeAlso>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Categorical_Distribution -->
+    <!-- http://www.magiun.io/ontologies/model-selection#CategoricalDistribution -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Categorical_Distribution">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#CategoricalDistribution">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Categorical_distribution</rdfs:seeAlso>
     </owl:Class>
@@ -533,7 +533,7 @@ It takes values between [0,1]</rdfs:comment>
                     <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasGoal"/>
-                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal_Classification"/>
+                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#GoalClassification"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -568,7 +568,7 @@ It takes values between [0,1]</rdfs:comment>
                             </owl:Restriction>
                             <owl:Restriction>
                                 <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
-                                <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Variable_Type"/>
+                                <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#VariableType"/>
                             </owl:Restriction>
                         </owl:intersectionOf>
                     </owl:Class>
@@ -579,9 +579,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Decision_Tree_Classification_Complete -->
+    <!-- http://www.magiun.io/ontologies/model-selection#DecisionTreeClassificationComplete -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Decision_Tree_Classification_Complete">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#DecisionTreeClassificationComplete">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -627,9 +627,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Decision_Tree_Classification_Partial -->
+    <!-- http://www.magiun.io/ontologies/model-selection#DecisionTreeClassificationPartial -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Decision_Tree_Classification_Partial">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#DecisionTreeClassificationPartial">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -673,9 +673,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Decision_Tree_Regression_Complete -->
+    <!-- http://www.magiun.io/ontologies/model-selection#DecisionTreeRegressionComplete -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Decision_Tree_Regression_Complete">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#DecisionTreeRegressionComplete">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -723,9 +723,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Decision_Tree_Regression_Partial -->
+    <!-- http://www.magiun.io/ontologies/model-selection#DecisionTreeRegressionPartial -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Decision_Tree_Regression_Partial">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#DecisionTreeRegressionPartial">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -784,27 +784,27 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Exponential_Distribution -->
+    <!-- http://www.magiun.io/ontologies/model-selection#ExponentialDistribution -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Exponential_Distribution">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#ExponentialDistribution">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Exponential_distribution</rdfs:seeAlso>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Gamma_Distribution -->
+    <!-- http://www.magiun.io/ontologies/model-selection#GammaDistribution -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Gamma_Distribution">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GammaDistribution">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Gamma_distribution</rdfs:seeAlso>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Gaussian_Naive_Bayes_Classification -->
+    <!-- http://www.magiun.io/ontologies/model-selection#GaussianNaiveBayesClassification -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Gaussian_Naive_Bayes_Classification">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GaussianNaiveBayesClassification">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -860,9 +860,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Generalized_Linear_Regression_Complete -->
+    <!-- http://www.magiun.io/ontologies/model-selection#GeneralizedLinearRegressionComplete -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Generalized_Linear_Regression_Complete">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GeneralizedLinearRegressionComplete">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -878,7 +878,7 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -890,7 +890,7 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Categorical_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#CategoricalDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -902,11 +902,11 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Exponential_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#ExponentialDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Non-Negative"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#NonNegative"/>
                                                     </owl:Restriction>
                                                 </owl:intersectionOf>
                                             </owl:Class>
@@ -914,11 +914,11 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Gamma_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#GammaDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Non-Negative"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#NonNegative"/>
                                                     </owl:Restriction>
                                                 </owl:intersectionOf>
                                             </owl:Class>
@@ -926,7 +926,7 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Normal_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#NormalDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -938,7 +938,7 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Poisson_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#PoissonDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -983,9 +983,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Generalized_Linear_Regression_Partial -->
+    <!-- http://www.magiun.io/ontologies/model-selection#GeneralizedLinearRegressionPartial -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Generalized_Linear_Regression_Partial">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GeneralizedLinearRegressionPartial">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1001,7 +1001,7 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -1013,7 +1013,7 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Categorical_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#CategoricalDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -1025,11 +1025,11 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Exponential_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#ExponentialDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Non-Negative"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#NonNegative"/>
                                                     </owl:Restriction>
                                                 </owl:intersectionOf>
                                             </owl:Class>
@@ -1037,11 +1037,11 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Gamma_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#GammaDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Non-Negative"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#NonNegative"/>
                                                     </owl:Restriction>
                                                 </owl:intersectionOf>
                                             </owl:Class>
@@ -1049,7 +1049,7 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Normal_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#NormalDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -1061,7 +1061,7 @@ It takes values between [0,1]</rdfs:comment>
                                                 <owl:intersectionOf rdf:parseType="Collection">
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Poisson_Distribution"/>
+                                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#PoissonDistribution"/>
                                                     </owl:Restriction>
                                                     <owl:Restriction>
                                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -1103,32 +1103,32 @@ It takes values between [0,1]</rdfs:comment>
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Goal">
         <owl:disjointUnionOf rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Goal_Classification"/>
-            <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Goal_Regression"/>
+            <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#GoalClassification"/>
+            <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#GoalRegression"/>
         </owl:disjointUnionOf>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Goal_Classification -->
+    <!-- http://www.magiun.io/ontologies/model-selection#GoalClassification -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Goal_Classification">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GoalClassification">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal"/>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Goal_Regression -->
+    <!-- http://www.magiun.io/ontologies/model-selection#GoalRegression -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Goal_Regression">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GoalRegression">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal"/>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Gradient_Boost_Tree_Classification -->
+    <!-- http://www.magiun.io/ontologies/model-selection#GradientBoostTreeClassification -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Gradient_Boost_Tree_Classification">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GradientBoostTreeClassification">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1176,9 +1176,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Gradient_Boost_Tree_Regression_Complete -->
+    <!-- http://www.magiun.io/ontologies/model-selection#GradientBoostTreeRegressionComplete -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Gradient_Boost_Tree_Regression_Complete">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GradientBoostTreeRegressionComplete">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1226,9 +1226,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Gradient_Boost_Tree_Regression_Partial -->
+    <!-- http://www.magiun.io/ontologies/model-selection#GradientBoostTreeRegressionPartial -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Gradient_Boost_Tree_Regression_Partial">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GradientBoostTreeRegressionPartial">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1280,9 +1280,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Isotonic_Regression -->
+    <!-- http://www.magiun.io/ontologies/model-selection#IsotonicRegression -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Isotonic_Regression">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#IsotonicRegression">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1345,9 +1345,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Linear_Least_Regression_Complete -->
+    <!-- http://www.magiun.io/ontologies/model-selection#LinearLeastRegressionComplete -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Linear_Least_Regression_Complete">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#LinearLeastRegressionComplete">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1359,7 +1359,7 @@ It takes values between [0,1]</rdfs:comment>
                                 <owl:intersectionOf rdf:parseType="Collection">
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Normal_Distribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#NormalDistribution"/>
                                     </owl:Restriction>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -1432,9 +1432,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Linear_Least_Regression_Partial -->
+    <!-- http://www.magiun.io/ontologies/model-selection#LinearLeastRegressionPartial -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Linear_Least_Regression_Partial">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#LinearLeastRegressionPartial">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1446,7 +1446,7 @@ It takes values between [0,1]</rdfs:comment>
                                 <owl:intersectionOf rdf:parseType="Collection">
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Normal_Distribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#NormalDistribution"/>
                                     </owl:Restriction>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -1512,9 +1512,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Linear_Support_Vector_Machine -->
+    <!-- http://www.magiun.io/ontologies/model-selection#LinearSupportVectorMachine -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Linear_Support_Vector_Machine">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#LinearSupportVectorMachine">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1558,9 +1558,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Multilayer_Perceptron_Classification -->
+    <!-- http://www.magiun.io/ontologies/model-selection#MultilayerPerceptronClassification -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Multilayer_Perceptron_Classification">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#MultilayerPerceptronClassification">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1604,18 +1604,18 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Multinomial_Distribution -->
+    <!-- http://www.magiun.io/ontologies/model-selection#MultinomialDistribution -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Multinomial_Distribution">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#MultinomialDistribution">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Multinomial_distribution</rdfs:seeAlso>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Multinomial_Naive_Bayes_Classification -->
+    <!-- http://www.magiun.io/ontologies/model-selection#MultinomialNaiveBayesClassification -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Multinomial_Naive_Bayes_Classification">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#MultinomialNaiveBayesClassification">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1672,17 +1672,17 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Non-Negative -->
+    <!-- http://www.magiun.io/ontologies/model-selection#NonNegative -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Non-Negative">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#NonNegative">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Normal_Distribution -->
+    <!-- http://www.magiun.io/ontologies/model-selection#NormalDistribution -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Normal_Distribution">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#NormalDistribution">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Normal_distribution</rdfs:seeAlso>
     </owl:Class>
@@ -1692,7 +1692,7 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#Numerical -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Numerical">
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Variable_Type"/>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#VariableType"/>
     </owl:Class>
     
 
@@ -1706,9 +1706,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Ordinal_Logistic_Regression_Complete -->
+    <!-- http://www.magiun.io/ontologies/model-selection#OrdinalLogisticRegressionComplete -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Ordinal_Logistic_Regression_Complete">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#OrdinalLogisticRegressionComplete">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1720,7 +1720,7 @@ It takes values between [0,1]</rdfs:comment>
                                 <owl:intersectionOf rdf:parseType="Collection">
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution"/>
                                     </owl:Restriction>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -1765,9 +1765,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Ordinal_Logistic_Regression_Partial -->
+    <!-- http://www.magiun.io/ontologies/model-selection#OrdinalLogisticRegressionPartial -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Ordinal_Logistic_Regression_Partial">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#OrdinalLogisticRegressionPartial">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1779,7 +1779,7 @@ It takes values between [0,1]</rdfs:comment>
                                 <owl:intersectionOf rdf:parseType="Collection">
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution"/>
                                     </owl:Restriction>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -1813,18 +1813,18 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Poisson_Distribution -->
+    <!-- http://www.magiun.io/ontologies/model-selection#PoissonDistribution -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Poisson_Distribution">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#PoissonDistribution">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Poisson_distribution</rdfs:seeAlso>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Random_Forest_Classification_Complete -->
+    <!-- http://www.magiun.io/ontologies/model-selection#RandomForestClassificationComplete -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Random_Forest_Classification_Complete">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#RandomForestClassificationComplete">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1873,9 +1873,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Random_Forest_Classification_Partial -->
+    <!-- http://www.magiun.io/ontologies/model-selection#RandomForestClassificationPartial -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Random_Forest_Classification_Partial">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#RandomForestClassificationPartial">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1920,9 +1920,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Random_Forest_Regression_Complete -->
+    <!-- http://www.magiun.io/ontologies/model-selection#RandomForestRegressionComplete -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Random_Forest_Regression_Complete">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#RandomForestRegressionComplete">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1971,9 +1971,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Random_Forest_Regression_Partial -->
+    <!-- http://www.magiun.io/ontologies/model-selection#RandomForestRegressionPartial -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Random_Forest_Regression_Partial">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#RandomForestRegressionPartial">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -2027,7 +2027,7 @@ It takes values between [0,1]</rdfs:comment>
                     <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Algorithm"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasGoal"/>
-                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal_Regression"/>
+                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#GoalRegression"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -2043,9 +2043,9 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Survival_Regression -->
+    <!-- http://www.magiun.io/ontologies/model-selection#SurvivalRegression -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Survival_Regression">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#SurvivalRegression">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -2113,14 +2113,14 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#Text -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Text">
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Variable_Type"/>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#VariableType"/>
     </owl:Class>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#Variable_Type -->
+    <!-- http://www.magiun.io/ontologies/model-selection#VariableType -->
 
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Variable_Type">
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#VariableType">
         <rdfs:seeAlso>https://stats.idre.ucla.edu/other/mult-pkg/whatstat/what-is-the-difference-between-categorical-ordinal-and-interval-variables/</rdfs:seeAlso>
         <rdfs:seeAlso>https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/types-of-variables/</rdfs:seeAlso>
     </owl:Class>
@@ -2551,7 +2551,7 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#distribution_bernoulli -->
 
     <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#distribution_bernoulli">
-        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Bernoulli_Distribution"/>
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution"/>
     </owl:NamedIndividual>
     
 
@@ -2559,7 +2559,7 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#distribution_binomial -->
 
     <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#distribution_binomial">
-        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Binomial_Distribution"/>
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#BinomialDistribution"/>
     </owl:NamedIndividual>
     
 
@@ -2567,7 +2567,7 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#distribution_normal -->
 
     <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#distribution_normal">
-        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Normal_Distribution"/>
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#NormalDistribution"/>
     </owl:NamedIndividual>
     
 
@@ -2575,7 +2575,7 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#goalClassification -->
 
     <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#goalClassification">
-        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal_Classification"/>
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#GoalClassification"/>
     </owl:NamedIndividual>
     
 
@@ -2583,7 +2583,7 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#goalRegression -->
 
     <owl:NamedIndividual rdf:about="http://www.magiun.io/ontologies/model-selection#goalRegression">
-        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#Goal_Regression"/>
+        <rdf:type rdf:resource="http://www.magiun.io/ontologies/model-selection#GoalRegression"/>
     </owl:NamedIndividual>
     
 

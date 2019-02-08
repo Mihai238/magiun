@@ -5,7 +5,7 @@ import enumeratum._
 
 import scala.collection.immutable
 
-sealed abstract class AlgorithmGoal(val name: String, val ontologyClass: OntologyClass.Value) extends EnumEntry
+sealed abstract class AlgorithmGoal(val name: String, val ontologyClass: OntologyClass) extends EnumEntry
 
 object AlgorithmGoal extends Enum[AlgorithmGoal] with CirceEnum[AlgorithmGoal] {
   case object GoalRegression extends AlgorithmGoal("GoalRegression", OntologyClass.GoalRegression)

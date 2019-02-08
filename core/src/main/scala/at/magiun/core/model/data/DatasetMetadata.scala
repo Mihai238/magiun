@@ -5,7 +5,7 @@ import at.magiun.core.model.algorithm.AlgorithmGoal
 
 // todo to be extended
 case class DatasetMetadata(goal: AlgorithmGoal,
-                            responseVariableType: VariableType,
+                           responseVariableType: VariableType,
                            responseVariableDistribution: Distribution,
                            normalDistributionPercentage: Double,
                            bernoulliDistributionPercentage: Double,

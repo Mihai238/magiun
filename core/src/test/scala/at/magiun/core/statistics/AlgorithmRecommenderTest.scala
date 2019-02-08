@@ -10,7 +10,7 @@ class AlgorithmRecommenderTest extends UnitTest {
   private val mainModule = new MainModule {}
   private val algorithmRecommender = mainModule.algorithmRecommender
 
-  it should s"recommend the ${OntologyClass.LinearLeastRegressionPartial.toString} for dataset metadata of a small dataset" in {
+  it should s"recommend ${OntologyClass.LinearLeastRegressionPartial.name} for dataset metadata of a small dataset" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalRegression,
       VariableType.Continuous,
@@ -32,10 +32,17 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations should contain(OntologyClass.Regression)
     recommendations should contain(OntologyClass.LinearLeastRegressionPartial)
     recommendations should contain(OntologyClass.GeneralizedLinearRegressionPartial)
-    recommendations should contain(OntologyClass.DecisionTreePartial)
+    recommendations should contain(OntologyClass.GradientBoostTreeRegressionComplete)
+    recommendations should contain(OntologyClass.GradientBoostTreeRegressionPartial)
+    recommendations should contain(OntologyClass.IsotonicRegression)
+    recommendations should contain(OntologyClass.SurvivalRegression)
+    recommendations should contain(OntologyClass.DecisionTreeRegressionPartial)
+    recommendations should contain(OntologyClass.DecisionTreeRegressionComplete)
+    recommendations should contain(OntologyClass.RandomForestRegressionPartial)
+    recommendations should contain(OntologyClass.RandomForestRegressionComplete)
   }
 
-  it should s"not recommend ${OntologyClass.LinearLeastRegressionPartial.toString} for dataset with percentage of normal distribution < 0.7" in {
+  it should s"not recommend ${OntologyClass.LinearLeastRegressionPartial.name} for dataset with percentage of normal distribution < 0.7" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalRegression,
       VariableType.Continuous,
@@ -54,11 +61,17 @@ class AlgorithmRecommenderTest extends UnitTest {
 
     recommendations.size should be(11)
     recommendations shouldNot contain(OntologyClass.LinearLeastRegressionPartial)
+    recommendations should contain(OntologyClass.Regression)
     recommendations should contain(OntologyClass.GeneralizedLinearRegressionPartial)
-    recommendations should contain(OntologyClass.DecisionTreePartial)
+    recommendations should contain(OntologyClass.SurvivalRegression)
+    recommendations should contain(OntologyClass.GradientBoostTreeRegressionPartial)
+    recommendations should contain(OntologyClass.RandomForestRegressionPartial)
+    recommendations should contain(OntologyClass.RandomForestRegressionComplete)
+    recommendations should contain(OntologyClass.DecisionTreeRegressionPartial)
+    recommendations should contain(OntologyClass.DecisionTreeRegressionComplete)
   }
 
-  it should s"not recommend ${OntologyClass.LinearLeastRegressionPartial.toString} for dataset with percentage of continuous variably tye < 0.7" in {
+  it should s"not recommend ${OntologyClass.LinearLeastRegressionPartial.name} for dataset with percentage of continuous variably tye < 0.7" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalRegression,
       VariableType.Continuous,
@@ -77,11 +90,18 @@ class AlgorithmRecommenderTest extends UnitTest {
 
     recommendations.size should be(9)
     recommendations shouldNot contain(OntologyClass.LinearLeastRegressionPartial)
+    recommendations should contain(OntologyClass.Algorithm)
+    recommendations should contain(OntologyClass.Regression)
     recommendations should contain(OntologyClass.GeneralizedLinearRegressionPartial)
-    recommendations should contain(OntologyClass.DecisionTreePartial)
+    recommendations should contain(OntologyClass.GradientBoostTreeRegressionPartial)
+    recommendations should contain(OntologyClass.GradientBoostTreeRegressionComplete)
+    recommendations should contain(OntologyClass.RandomForestRegressionPartial)
+    recommendations should contain(OntologyClass.RandomForestRegressionComplete)
+    recommendations should contain(OntologyClass.DecisionTreeRegressionPartial)
+    recommendations should contain(OntologyClass.DecisionTreeRegressionComplete)
   }
 
-  it should s"not recommend ${OntologyClass.LinearLeastRegressionPartial.toString} for dataset with observation-variable ratio < 20" in {
+  it should s"not recommend ${OntologyClass.LinearLeastRegressionPartial.name} for dataset with observation-variable ratio < 20" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalRegression,
       VariableType.Continuous,
@@ -101,11 +121,9 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations.size should be(2)
     recommendations shouldNot contain(OntologyClass.LinearLeastRegressionPartial)
     recommendations shouldNot contain(OntologyClass.GeneralizedLinearRegressionPartial)
-    recommendations shouldNot contain(OntologyClass.DecisionTreePartial)
-    recommendations shouldNot contain(OntologyClass.DecisionTreeComplete)
   }
 
-  it should s"recommend the ${OntologyClass.BinaryLogisticRegressionPartial.toString} for dataset metadata of a small dataset" in {
+  it should s"recommend ${OntologyClass.BinaryLogisticRegressionPartial.name} for dataset metadata of a small dataset" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalRegression,
       VariableType.Binary,
@@ -129,7 +147,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations should contain(OntologyClass.GeneralizedLinearRegressionPartial)
   }
 
-  it should s"recommend the ${OntologyClass.GaussianNaiveBayesClassification} for dataset metadata of a small dataset" in {
+  it should s"recommend ${OntologyClass.GaussianNaiveBayesClassification.name} for dataset metadata of a small dataset" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalClassification,
       VariableType.Binary,
@@ -159,7 +177,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations should contain(OntologyClass.MultilayerPerceptronClassification)
   }
 
-  it should s"not recommend the ${OntologyClass.GaussianNaiveBayesClassification} for dataset metadata of a small dataset with multicollinearity" in {
+  it should s"not recommend ${OntologyClass.GaussianNaiveBayesClassification.name} for dataset metadata of a small dataset with multicollinearity" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalClassification,
       VariableType.Binary,
@@ -186,7 +204,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations shouldNot contain(OntologyClass.GaussianNaiveBayesClassification)
   }
 
-  it should s"recommend the ${OntologyClass.BernoulliNaiveBayesClassification} for dataset metadata of a small dataset" in {
+  it should s"recommend ${OntologyClass.BernoulliNaiveBayesClassification.name} for dataset metadata of a small dataset" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalClassification,
       VariableType.Binary,
@@ -216,7 +234,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations should contain(OntologyClass.MultilayerPerceptronClassification)
   }
 
-  it should s"not recommend the ${OntologyClass.BernoulliNaiveBayesClassification} for dataset metadata of a small dataset with multicollinearity" in {
+  it should s"not recommend ${OntologyClass.BernoulliNaiveBayesClassification.name} for dataset metadata of a small dataset with multicollinearity" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalClassification,
       VariableType.Binary,
@@ -243,7 +261,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations shouldNot contain(OntologyClass.BernoulliNaiveBayesClassification)
   }
 
-  it should s"recommend the ${OntologyClass.MultinomialNaiveBayesClassification} for dataset metadata of a small dataset" in {
+  it should s"recommend ${OntologyClass.MultinomialNaiveBayesClassification.name} for dataset metadata of a small dataset" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalClassification,
       VariableType.Binary,
@@ -273,7 +291,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations should contain(OntologyClass.MultilayerPerceptronClassification)
   }
 
-  it should s"not recommend the ${OntologyClass.MultinomialNaiveBayesClassification} for dataset metadata of a small dataset with multicollinearity" in {
+  it should s"not recommend ${OntologyClass.MultinomialNaiveBayesClassification.name} for dataset metadata of a small dataset with multicollinearity" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalClassification,
       VariableType.Binary,
@@ -300,7 +318,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations shouldNot contain(OntologyClass.MultinomialNaiveBayesClassification)
   }
 
-    it should s"not recommend the ${OntologyClass.BinaryLogisticRegressionPartial} for dataset with response variable distribution different from ${OntologyClass.BernoulliDistribution}" in {
+    it should s"not recommend ${OntologyClass.BinaryLogisticRegressionPartial.name} for dataset with response variable distribution different from ${OntologyClass.BernoulliDistribution}" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalRegression,
       VariableType.Binary,
@@ -323,7 +341,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations shouldNot contain(OntologyClass.BinaryLogisticRegressionPartial)
   }
 
-  it should s"not recommend the ${OntologyClass.BinaryLogisticRegressionPartial} for dataset with response variable type different from ${OntologyClass.Binary}" in {
+  it should s"not recommend ${OntologyClass.BinaryLogisticRegressionPartial.name} for dataset with response variable type different from ${OntologyClass.Binary}" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalRegression,
       VariableType.Continuous,
@@ -350,7 +368,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations shouldNot contain(OntologyClass.BinaryLogisticRegressionPartial)
   }
 
-  it should s"not recommend the ${OntologyClass.BinaryLogisticRegressionPartial} for dataset with insufficient observation-variable ratio" in {
+  it should s"not recommend ${OntologyClass.BinaryLogisticRegressionPartial.name} for dataset with insufficient observation-variable ratio" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalRegression,
       VariableType.Continuous,

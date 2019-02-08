@@ -10,10 +10,10 @@ import scala.collection.JavaConversions._
 
 class AlgorithmRecommender(ontology: OntModel @@ AlgorithmSelectionOntology) {
 
-  def recommend(metadata: DatasetMetadata): Set[OntologyClass.Value] = {
-    val dataset: Individual = createIndividualForOntClass(OntologyClass.Dataset.toString)
-    val algorithm: Individual = createIndividualForOntClass(OntologyClass.Algorithm.toString)
-    val goal: Individual = createIndividualForOntClass(metadata.goal.ontologyClass.toString)
+  def recommend(metadata: DatasetMetadata): Set[OntologyClass] = {
+    val dataset: Individual = createIndividualForOntClass(OntologyClass.Dataset.ontologyUri)
+    val algorithm: Individual = createIndividualForOntClass(OntologyClass.Algorithm.ontologyUri)
+    val goal: Individual = createIndividualForOntClass(metadata.goal.ontologyClass.ontologyUri)
 
     val hasGoal: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasGoal)
     val hasDataset: ObjectProperty = getObjectProperty(ontology, OntologyProperty.hasDataset)
@@ -31,7 +31,7 @@ class AlgorithmRecommender(ontology: OntModel @@ AlgorithmSelectionOntology) {
     algorithm.addProperty(hasDataset, dataset)
     algorithm.addProperty(hasGoal, goal)
     dataset.addProperty(hasResponseVariableDistribution, createDistributionIndividual(metadata.responseVariableDistribution))
-    dataset.addProperty(hasResponseVariableType, createIndividualForOntClass(OntologyClass.getOntologyClass(metadata.responseVariableType).toString))
+    dataset.addProperty(hasResponseVariableType, createIndividualForOntClass(OntologyClass.getOntologyClass(metadata.responseVariableType).ontologyUri))
     dataset.addLiteral(hasNormalDistributionPercentage, metadata.normalDistributionPercentage)
     dataset.addLiteral(hasBernoulliDistributionPercentage, metadata.bernoulliDistributionPercentage)
     dataset.addLiteral(hasMultinomialDistributionPercentage, metadata.multinomialDistributionPercentage)
@@ -44,7 +44,7 @@ class AlgorithmRecommender(ontology: OntModel @@ AlgorithmSelectionOntology) {
     val rdfTypes = asScalaSet(algorithm.listRDFTypes(false).toSet)
       .filter(p => p.getNameSpace.equals(AlgorithmOntologyConfig.NS))
 
-    val ontClasses = rdfTypes.map(a => OntologyClass.withName(a.getURI)).toSet
+    val ontClasses = rdfTypes.map(a => OntologyClass.withName(a.getLocalName)).toSet
 
     for (i <- ontology.listIndividuals()) {
       ontology.removeAll(i.asResource(), null, null)
@@ -55,10 +55,10 @@ class AlgorithmRecommender(ontology: OntModel @@ AlgorithmSelectionOntology) {
 
   private def createDistributionIndividual(distribution: Distribution): Individual = {
     distribution match {
-      case Distribution.Normal => createIndividualForOntClass(OntologyClass.NormalDistribution.toString)
-      case Distribution.Binomial => createIndividualForOntClass(OntologyClass.BinomialDistribution.toString)
-      case Distribution.Exponential => createIndividualForOntClass(OntologyClass.ExponentialDistribution.toString)
-      case Distribution.Bernoulli => createIndividualForOntClass(OntologyClass.BernoulliDistribution.toString)
+      case Distribution.Normal => createIndividualForOntClass(OntologyClass.NormalDistribution.ontologyUri)
+      case Distribution.Binomial => createIndividualForOntClass(OntologyClass.BinomialDistribution.ontologyUri)
+      case Distribution.Exponential => createIndividualForOntClass(OntologyClass.ExponentialDistribution.ontologyUri)
+      case Distribution.Bernoulli => createIndividualForOntClass(OntologyClass.BernoulliDistribution.ontologyUri)
       case _ => throw new IllegalArgumentException(s"Unknown distribution ${distribution.toString} !")
     }
   }

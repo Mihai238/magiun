@@ -14,9 +14,16 @@ object TestData {
   lazy val bigCsvPath: String = getClass.getClassLoader.getResource("big.csv").getFile
   lazy val bigCsvUrl = s"file://$bigCsvPath"
 
+  /**
+    * https://www.kaggle.com/sanbelief/housing
+    */
+  val housingCsvPath: String = getClass.getClassLoader.getResource("housing.csv").getFile
+  val housingCsvUrl = s"file://$housingCsvPath"
+
   val titanicDataSetSource = DataSetSource(SourceType.FileCsv, titanicCsvUrl)
   val incomeDataSetSource = DataSetSource(SourceType.FileCsv, incomeCsvUrl)
   lazy val bigDataSetSource = DataSetSource(SourceType.FileCsv, bigCsvUrl)
+  val housingDatasetSource = DataSetSource(SourceType.FileCsv, housingCsvUrl)
   val mongoDataSource = DataSetSource(SourceType.Mongo, "mongodb://127.0.0.1/testDb/testCollection")
 
   val testDs1 = MagiunDataSet("1", "gigi", DataSetSource(SourceType.Mongo, "url") , Option.empty)

@@ -1,14 +1,14 @@
 package at.magiun.core.service
 
-import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
+import at.magiun.core.model.{MagiunDataSet, Schema}
+import at.magiun.core.model.data.DatasetMetadata
 import at.magiun.core.model.request.RecommenderRequest
-import at.magiun.core.model.{ColumnType, MagiunDataSet}
-import at.magiun.core.statistics.{AlgorithmRecommender, StatisticsCalculator}
+import at.magiun.core.statistics.{AlgorithmRecommender, DatasetMetadataCalculator}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 import scala.concurrent.Await
 
-class RecommenderService(spark: SparkSession, dataSetService: DataSetService, statisticsCalculator: StatisticsCalculator, algorithmRecommender: AlgorithmRecommender) {
+class RecommenderService(spark: SparkSession, dataSetService: DataSetService, datasetMetadataCalculator: DatasetMetadataCalculator, algorithmRecommender: AlgorithmRecommender) {
 
   def recommend(request: RecommenderRequest): Unit = {
     import scala.concurrent.duration._
@@ -21,8 +21,13 @@ class RecommenderService(spark: SparkSession, dataSetService: DataSetService, st
   }
 
   private def createMetadata(request: RecommenderRequest, dataset: Dataset[Row], magiunDataset: MagiunDataSet): DatasetMetadata = {
-    calculateDistributions(dataset)
+    val columnsToRemove: Seq[String] = request.variablesToIgnore.map(i => dataset.columns(i))
+    val cleanDataset = columnsToRemove.foldLeft(dataset)((df, col) => df.drop(col))
 
+    val cleanColumns = columnsToRemove.foldLeft(magiunDataset.schema.get.columns)((l, r) => l.filterNot(_.name == r))
+    val cleanMagiunDataset = MagiunDataSet(magiunDataset.id, magiunDataset.name, magiunDataset.dataSetSource, Option(Schema(cleanColumns, cleanColumns.length)))
+
+    datasetMetadataCalculator.compute(request, cleanDataset, cleanMagiunDataset)
     /**
     DatasetMetadata(
       getVariableTypes(magiunDataset),
@@ -36,37 +41,4 @@ class RecommenderService(spark: SparkSession, dataSetService: DataSetService, st
 
     null
   }
-
-  private def getVariableTypes(magiunDataset: MagiunDataSet): Seq[VariableType] = {
-    magiunDataset
-      .schema
-      .get
-      .columns
-      .map(c => getVariableTypeForColumnType(c.`type`))
-  }
-
-  private def getVariableTypeForColumnType(columnType: ColumnType): VariableType = {
-    columnType match {
-      case ColumnType.String => VariableType.Text
-      case ColumnType.Boolean => VariableType.Binary
-      case ColumnType.Date => VariableType.Categorical
-      case ColumnType.Int | ColumnType.Double => VariableType.Continuous
-      case _ => VariableType.Text
-    }
-  }
-
-  private def calculateDistributions(dataset: Dataset[Row]): Seq[Distribution] = {
-    import spark.implicits._
-
-    dataset.describe().show()
-
-    val doubleCol = dataset.map(r => r.getAs[Double]("Age")).rdd
-
-    println("Age is normally distributed:  " + statisticsCalculator.isNormallyDistributed(doubleCol))
-
-    Seq()
-  }
-
-
-
 }

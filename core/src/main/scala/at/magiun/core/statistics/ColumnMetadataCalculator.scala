@@ -13,7 +13,7 @@ import org.apache.spark.sql.{Dataset, Row, SparkSession}
 /**
   * Computes value types and other metadata for each column of the data set
   */
-class ColumnMetaDataCalculator(
+class ColumnMetadataCalculator(
                               sparkSession: SparkSession
                             ) extends LazyLogging with Serializable {
 

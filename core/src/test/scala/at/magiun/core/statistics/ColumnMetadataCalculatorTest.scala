@@ -1,16 +1,16 @@
-package at.magiun.core.feature
+package at.magiun.core.statistics
 
 import at.magiun.core.TestData._
 import at.magiun.core.connector.CsvConnector
 import at.magiun.core.model.data.Distribution
 import at.magiun.core.{MainModule, UnitTest}
 
-class ColumnMetaDataCalculatorTest extends UnitTest {
+class ColumnMetadataCalculatorTest extends UnitTest {
 
   private val mainModule = new MainModule {}
 
   private val connector = new CsvConnector(mainModule.spark)
-  private val columnMetaDataComputer = mainModule.columnMetaDataComputer
+  private val columnMetaDataComputer = mainModule.columnMetadataCalculator
   private val restrictionBuilder = mainModule.restrictionBuilder
 
   private val restrictions = restrictionBuilder.build(mainModule.model)

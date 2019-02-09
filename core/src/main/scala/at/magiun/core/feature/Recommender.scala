@@ -2,7 +2,7 @@ package at.magiun.core.feature
 
 import at.magiun.core.config.FeatureEngOntology
 import at.magiun.core.config.OntologyConfig.NS
-import at.magiun.core.statistics.ColumnMetaDataCalculator
+import at.magiun.core.statistics.ColumnMetadataCalculator
 import com.softwaremill.tagging.@@
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.jena.ontology.{Individual, OntModel, OntResource}
@@ -16,7 +16,7 @@ import scala.collection.JavaConversions._
 class Recommender(sparkSession: SparkSession,
                   model: OntModel @@ FeatureEngOntology,
                   restrictionBuilder: RestrictionBuilder,
-                  columnMetaDataComputer: ColumnMetaDataCalculator) extends LazyLogging {
+                  columnMetadataComputer: ColumnMetadataCalculator) extends LazyLogging {
 
   private lazy val restrictions: Map[String, Restriction] = restrictionBuilder.build(model)
 
@@ -33,7 +33,7 @@ class Recommender(sparkSession: SparkSession,
   private lazy val hasDistributionProperty = model.getProperty(NS + "hasDistribution")
 
   def recommend(ds: Dataset[Row]): Recommendations = {
-    val columnsMetaData = columnMetaDataComputer.compute(ds, restrictions)
+    val columnsMetaData = columnMetadataComputer.compute(ds, restrictions)
     logger.info("Predicting columns type.")
     val columnTypes = recommendIntern(columnsMetaData)
 

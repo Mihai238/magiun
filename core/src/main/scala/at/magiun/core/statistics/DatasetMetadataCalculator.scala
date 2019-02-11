@@ -13,6 +13,8 @@ import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.stat.Statistics
 import org.apache.spark.sql._
 
+import scala.collection.mutable
+
 class DatasetMetadataCalculator(sparkSession: SparkSession,
                                 columnMetaDataCalculator: ColumnMetadataCalculator,
                                 model: OntModel @@ FeatureEngOntology,
@@ -37,8 +39,22 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
     */
   private def computeMulticollinearity(dataset: Dataset[Row]): Boolean = {
     val correlationMatrix = computeCorrelationMatrix(dataset)
+    val queue = mutable.Queue[(String, String, Double)]()
 
-    false
+    (1 until correlationMatrix.numCols).foreach(i => {
+      (0 until i).foreach(j => {
+        if (correlationMatrix(i, j) >= correlationThreshold) {
+          queue += Tuple3(correlationMatrix.columnNames(i), correlationMatrix.rowNames(j), correlationMatrix(i, j))
+        }
+      })
+    })
+
+    if (queue.isEmpty) {
+      false
+    } else {
+      logger.warn(s"Following variables are high correlated ${queue.toString()}")
+      true
+    }
   }
 
   private def computeCorrelationMatrix(dataset: Dataset[Row], method: String = "pearson"): MagiunMatrix = {

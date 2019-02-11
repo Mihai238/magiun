@@ -36,8 +36,7 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
     * https://stats.stackexchange.com/questions/100175/when-can-we-speak-of-collinearity
     */
   private def computeMulticollinearity(dataset: Dataset[Row]): Boolean = {
-    val correlationMatrix = computeMulticollinearity(dataset)
-
+    val correlationMatrix = computeCorrelationMatrix(dataset)
 
     false
   }

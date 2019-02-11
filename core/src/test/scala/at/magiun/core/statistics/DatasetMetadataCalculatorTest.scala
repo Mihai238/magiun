@@ -13,8 +13,6 @@ class DatasetMetadataCalculatorTest extends UnitTest with PrivateMethodTester {
   private val connector = new CsvConnector(sparkSession)
   private val metadataCalculator = mainModule.datasetMetadataCalculator
 
-  import sparkSession.implicits._
-
   it should "calculate the correlation matrix for a small dataset" in {
     import sparkSession.implicits._
 
@@ -46,7 +44,7 @@ class DatasetMetadataCalculatorTest extends UnitTest with PrivateMethodTester {
   }
 
   private def assertCorrelationMatrixDiagonal(matrix: MagiunMatrix): Unit = {
-    Range.apply(0, matrix.numRows - 1).foreach(i => {
+    (0 until matrix.numRows).foreach(i => {
       matrix(i, i) shouldBe 1
     })
   }

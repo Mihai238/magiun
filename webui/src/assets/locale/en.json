@@ -28,7 +28,7 @@
   },
   "MODEL_SELECTION": {
     "NO_DATA_SET": "No dataset was uploaded!",
-    "SCOPE": "Scope:",
+    "GOAL": "Goal:",
     "REGRESSION": "Regression",
     "CLASSIFICATION": "Classification",
     "TRADE_OFF": "Trade-Off:",

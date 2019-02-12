@@ -27,7 +27,7 @@ export class ModelSelectionComponent {
   private selectedDataset: DataSet;
   private columnsToIgnore: Column[] = [];
   private targetVariable: Column;
-  private scope: string = "regression";
+  private goal: string = "regression";
   private tradeOff: string = "";
 
   constructor(
@@ -105,9 +105,9 @@ export class ModelSelectionComponent {
     this.columnsToIgnore = [];
   }
 
-  updateScope(scope: any) {
-    this.scope = <string>scope;
-    this.logger.info("the selected scope is \"" + this.scope + "\"");
+  updateGoal(goal: any) {
+    this.goal = <string>goal;
+    this.logger.info("the selected goal is \"" + this.goal + "\"");
   }
 
   updateTradeOff(tradeOff: any) {
@@ -142,7 +142,7 @@ export class ModelSelectionComponent {
   private createRecommenderRequest(): RecommenderRequest {
     return new RecommenderRequest(
       this.selectedDataset.id,
-      this.scope,
+      this.goal,
       this.tradeOff,
       this.targetVariable.index,
       this.columnsToIgnore.map(c => c.index)

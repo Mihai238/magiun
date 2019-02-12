@@ -10,8 +10,8 @@
         <div class="col">
           <form>
             <div class="form-group">
-              <label for="scope">{{ 'MODEL_SELECTION.SCOPE' | translate }}</label>
-              <select class="form-control" id="scope" (change)="updateScope($event.target.value)">
+              <label for="goal">{{ 'MODEL_SELECTION.GOAL' | translate }}</label>
+              <select class="form-control" id="goal" (change)="updateGoal($event.target.value)">
                 <option value="regression">{{ 'MODEL_SELECTION.REGRESSION' | translate }}</option>
                 <option value="classification">{{ 'MODEL_SELECTION.CLASSIFICATION' | translate }}</option>
               </select>

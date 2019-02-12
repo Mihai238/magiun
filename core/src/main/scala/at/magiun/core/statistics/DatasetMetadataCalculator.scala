@@ -100,11 +100,11 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
 
   // todo implement me
   private def computeDistributionPercentage(): Double = {
-    null
+    0.0
   }
 
   // todo implement me
   private def computeVariableTypePercentage(): Double = {
-    null
+    0.0
   }
 }

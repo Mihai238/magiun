@@ -13,5 +13,12 @@ object AlgorithmGoal extends Enum[AlgorithmGoal] with CirceEnum[AlgorithmGoal] {
 
   val values: immutable.IndexedSeq[AlgorithmGoal] = findValues
 
+  def getFromString(value: String): AlgorithmGoal = {
+    if (value == null || value.isEmpty) {
+      return null
+    }
+
+    AlgorithmGoal.withName(value)
+  }
 
 }

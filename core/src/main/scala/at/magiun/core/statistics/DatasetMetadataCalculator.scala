@@ -1,9 +1,10 @@
 package at.magiun.core.statistics
 
 import at.magiun.core.config.FeatureEngOntology
-import at.magiun.core.feature.{Restriction, RestrictionBuilder}
+import at.magiun.core.feature.{ColumnMetaData, Restriction, RestrictionBuilder}
 import at.magiun.core.model.MagiunDataSet
-import at.magiun.core.model.data.DatasetMetadata
+import at.magiun.core.model.algorithm.AlgorithmGoal
+import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
 import at.magiun.core.model.math.MagiunMatrix
 import at.magiun.core.model.request.RecommenderRequest
 import com.softwaremill.tagging.@@
@@ -28,7 +29,21 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
   def compute(request: RecommenderRequest, dataset: Dataset[Row], magiunDataset: MagiunDataSet): DatasetMetadata = {
     val columnMetadata = columnMetaDataCalculator.compute(dataset, restrictions)
     val multicollinearity = computeMulticollinearity(dataset)
-    null
+    val observationVariableRatio = dataset.count()/dataset.columns.length
+
+    DatasetMetadata(
+      AlgorithmGoal.getFromString(request.goal),
+      computeResponseVariableType(columnMetadata, request.responseVariable),
+      computeResponseVariableDistribution(columnMetadata, request.responseVariable),
+      computeDistributionPercentage(),
+      computeDistributionPercentage(),
+      computeDistributionPercentage(),
+      computeVariableTypePercentage(),
+      computeVariableTypePercentage(),
+      computeVariableTypePercentage(),
+      observationVariableRatio,
+      multicollinearity
+    )
   }
 
   /**
@@ -71,5 +86,25 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
       .map{row => Vectors.dense(row.toSeq.map(_.toString.toDouble).toArray)}
 
     MagiunMatrix(Statistics.corr(featureRDD, method), columnNames, columnNames)
+  }
+
+  // todo implement me
+  private def computeResponseVariableType(columnMetadata: Seq[ColumnMetaData], responseVariableIndex: Int): VariableType = {
+    null
+  }
+
+  // todo implement me
+  private def computeResponseVariableDistribution(columnMetadata: Seq[ColumnMetaData], responseVariableIndex: Int): Distribution = {
+    null
+  }
+
+  // todo implement me
+  private def computeDistributionPercentage(): Double = {
+    null
+  }
+
+  // todo implement me
+  private def computeVariableTypePercentage(): Double = {
+    null
   }
 }

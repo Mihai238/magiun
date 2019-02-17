@@ -10,7 +10,7 @@ import org.scalatest.PrivateMethodTester
 class DatasetMetadataCalculatorTest extends UnitTest with PrivateMethodTester {
 
   private val mainModule = new MainModule {}
-  private  val sparkSession = mainModule.spark
+  private val sparkSession = mainModule.spark
   private val connector = new CsvConnector(sparkSession)
   private val metadataCalculator = mainModule.datasetMetadataCalculator
 

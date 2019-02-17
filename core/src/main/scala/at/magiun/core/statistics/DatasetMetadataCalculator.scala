@@ -49,8 +49,8 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
   /**
     * Following links are directing to topics where it is discussed the correlation threshold value which indicates multicollinearity
     *
-    * https://www.researchgate.net/post/Whats_the_difference_between_correlation_and_VIF
-    * https://stats.stackexchange.com/questions/100175/when-can-we-speak-of-collinearity
+    * @see https://www.researchgate.net/post/Whats_the_difference_between_correlation_and_VIF
+    * @see https://stats.stackexchange.com/questions/100175/when-can-we-speak-of-collinearity
     */
   private def computeMulticollinearity(dataset: Dataset[Row]): Boolean = {
     val correlationMatrix = computeCorrelationMatrix(dataset)
@@ -95,6 +95,12 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
 
   // todo implement me
   private def computeResponseVariableDistribution(columnMetadata: Seq[ColumnMetaData], responseVariableIndex: Int): Distribution = {
+    val distributions = columnMetadata(responseVariableIndex).distributions
+    if (distributions.nonEmpty) {
+
+    } else {
+      // todo: maybe a fallback distribution?!
+    }
     null
   }
 

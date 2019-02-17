@@ -45,7 +45,7 @@ class DistributionFitterUtilTest extends UnitTest with PrivateMethodTester {
     assert(defaultArguments.isInstanceOf[PoissonDistributionFitterArgument])
 
     val defArg = defaultArguments.asInstanceOf[PoissonDistributionFitterArgument]
-    defArg.lambda shouldBe (p +- 0.3)
+    defArg.lambda shouldBe (p +- 0.5)
   }
 
   it should s"throw exception when passing data < 0 for ${Distribution.Exponential}" in {
@@ -72,7 +72,7 @@ class DistributionFitterUtilTest extends UnitTest with PrivateMethodTester {
     assert(defaultArguments.isInstanceOf[ExponentialDistributionFitterArgument])
 
     val defArg = defaultArguments.asInstanceOf[ExponentialDistributionFitterArgument]
-    defArg.rate shouldBe (1/mean +- 0.03)
+    defArg.rate shouldBe (1/mean +- 0.5)
   }
 
 }

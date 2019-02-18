@@ -37,8 +37,8 @@ class DatasetMetadataCalculatorTest extends UnitTest with PrivateMethodTester {
     val matrix = (metadataCalculator invokePrivate computeCorrelationMatrix(dataset, "pearson")).asInstanceOf[MagiunMatrix]
 
     // then
-    matrix.numCols shouldBe 10
-    matrix.numRows shouldBe 10
+    matrix.numCols shouldBe 13
+    matrix.numRows shouldBe 13
     assertCorrelationMatrixDiagonal(matrix)
   }
 

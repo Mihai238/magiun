@@ -31,29 +31,32 @@ object DistributionFitterUtil {
     val mean = data.mean()
 
     if (distribution.equals(Distribution.Normal)) {
-      val sd0 = Math.sqrt((n - 1) / n) * data.stdev()
-      return NormalDistributionFitterArgument(mean, sd0)
+      val sd0 = Math.sqrt((n - 1.0) / n) * data.stdev()
+      NormalDistributionFitterArgument(mean, sd0)
     } else if (distribution.equals(Distribution.LogNormal)) {
       require(data.min() > 0, "The values must be positive in order to fit a lognormal distribution")
       val logData = data.map(d => Math.log(d))
 
-      val sd0 = Math.sqrt((n - 1) / n) * logData.stdev()
-      return NormalDistributionFitterArgument(logData.mean(), sd0)
+      val sd0 = Math.sqrt((n - 1.0) / n) * logData.stdev()
+      NormalDistributionFitterArgument(logData.mean(), sd0)
     } else if (distribution.equals(Distribution.Poisson)) {
-      return PoissonDistributionFitterArgument(mean)
+      PoissonDistributionFitterArgument(mean)
     } else if (distribution.equals(Distribution.Gamma)) {
       require(data.min() > 0, "The values must be positive in order to fit a gamma distribution")
 
-      val v = (n - 1)/n * data.variance()
-      return GammaDistributionFitterArgument(Math.exp(mean)/v, mean/v)
+      val v: Double = (n - 1.0)/n * data.variance()
+      GammaDistributionFitterArgument(Math.exp(mean)/v, mean/v)
     } else if (distribution.equals(Distribution.Exponential)) {
       require(data.min() > 0, "The values must be positive in order to fit an exponential distribution")
 
-      return ExponentialDistributionFitterArgument(1/mean)
+      ExponentialDistributionFitterArgument(1/mean)
     } else if (distribution.equals(Distribution.Binomial)) {
-      val v = (n - 1)/n * data.variance()
-      // todo implement me
+      val v: Double = (n - 1.0)/n * data.variance()
+
+      val size = if (v > mean) Math.exp(mean)/(v - mean) else 100
+      BinomialDistributionFitterArgument(size, mean)
+    } else {
+      throw new IllegalArgumentException(s"Unsupported or unknown distribution ${distribution.name}")
     }
-    null
   }
 }

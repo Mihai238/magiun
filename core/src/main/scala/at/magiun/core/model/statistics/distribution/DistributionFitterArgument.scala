@@ -7,3 +7,4 @@ case class PoissonDistributionFitterArgument(lambda: Double) extends Distributio
 case class GammaDistributionFitterArgument(shape: Double, rate: Double) extends DistributionFitterArgument {}
 case class ExponentialDistributionFitterArgument(rate: Double) extends DistributionFitterArgument {}
 case class BinomialDistributionFitterArgument(size: Double, mu: Double) extends DistributionFitterArgument {}
+case class BernoulliDistributionFitterArgument(mu: Double) extends DistributionFitterArgument {}

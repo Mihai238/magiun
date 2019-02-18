@@ -34,7 +34,7 @@ object DistributionFitterUtil {
       val sd0 = Math.sqrt((n - 1.0) / n) * data.stdev()
       NormalDistributionFitterArgument(mean, sd0)
     } else if (distribution.equals(Distribution.LogNormal)) {
-      require(data.min() > 0, "The values must be positive in order to fit a lognormal distribution")
+      require(data.min() > 0, s"The values must be positive in order to fit a ${distribution.name}")
       val logData = data.map(d => Math.log(d))
 
       val sd0 = Math.sqrt((n - 1.0) / n) * logData.stdev()
@@ -42,19 +42,24 @@ object DistributionFitterUtil {
     } else if (distribution.equals(Distribution.Poisson)) {
       PoissonDistributionFitterArgument(mean)
     } else if (distribution.equals(Distribution.Gamma)) {
-      require(data.min() > 0, "The values must be positive in order to fit a gamma distribution")
+      require(data.min() > 0, s"The values must be positive in order to fit a ${distribution.name}")
 
       val v: Double = (n - 1.0)/n * data.variance()
       GammaDistributionFitterArgument(Math.exp(mean)/v, mean/v)
     } else if (distribution.equals(Distribution.Exponential)) {
-      require(data.min() > 0, "The values must be positive in order to fit an exponential distribution")
+      require(data.min() > 0, s"The values must be positive in order to fit an ${distribution.name}")
 
       ExponentialDistributionFitterArgument(1/mean)
     } else if (distribution.equals(Distribution.Binomial)) {
+      require(data.min() >= 0, s"The values must be positive in order to fit an ${distribution.name}")
       val v: Double = (n - 1.0)/n * data.variance()
 
       val size = if (v > mean) Math.exp(mean)/(v - mean) else 100
       BinomialDistributionFitterArgument(size, mean)
+    } else if (distribution.equals(Distribution.Bernoulli)) {
+      require(data.min() >= 0, s"The values must be positive in order to fit a ${distribution.name}")
+
+      BernoulliDistributionFitterArgument(mean)
     } else {
       throw new IllegalArgumentException(s"Unsupported or unknown distribution ${distribution.name}")
     }

@@ -93,6 +93,23 @@ class DistributionFitterUtilTest extends UnitTest with PrivateMethodTester {
     defArg.mu shouldBe (1.0 +- .6)
   }
 
+  it should s"compute the default arguments for ${Distribution.Bernoulli}" in {
+    // given
+    val trials = 1
+    val p = .6
+    val data: RDD[Double] = sparkSession.sparkContext.parallelize(new BinomialDistribution(trials, p).sample(sampleSize).map(i => i.toDouble))
+
+    // when
+    val computeDefaultArguments = PrivateMethod[DistributionFitterUtil.type]('computeDefaultArguments)
+    val defaultArguments = (DistributionFitterUtil invokePrivate computeDefaultArguments(data, Distribution.Bernoulli)).asInstanceOf[DistributionFitterArgument]
+
+    // then
+    assert(defaultArguments.isInstanceOf[BernoulliDistributionFitterArgument])
+
+    val defArg = defaultArguments.asInstanceOf[BernoulliDistributionFitterArgument]
+    defArg.mu shouldBe (p +- .1)
+  }
+
   it should "throw an exception when trying to compute the default arguments for an unsupported distribution" in {
     // given
     val trials = 5

@@ -11,8 +11,8 @@ object DistributionFitterUtil {
     * @see https://github.com/cran/fitdistrplus/blob/master/R/fitdist.R
     */
   def manageParameters(startArgument: DistributionFitterArgument, fixedArgument: DistributionFitterArgument, data: RDD[Double], distribution: Distribution): Unit = {
-    manageStartArgument(startArgument, data, distribution)
-
+    val computedStartArgument = manageStartArgument(startArgument, data, distribution)
+    val computedFixedArgument = manageFixedArgument(fixedArgument, distribution)
   }
 
   private def manageStartArgument(startArgument: DistributionFitterArgument, data: RDD[Double], distribution: Distribution): DistributionFitterArgument = {
@@ -21,6 +21,28 @@ object DistributionFitterUtil {
     } else {
       startArgument
     }
+  }
+
+  private def manageFixedArgument(fixedArgument: DistributionFitterArgument, distribution: Distribution): DistributionFitterArgument = {
+    if (fixedArgument == null) {
+      return null
+    } else {
+      if (distribution.equals(Distribution.Normal) && !fixedArgument.isInstanceOf[NormalDistributionFitterArgument]) {
+        throw new IllegalArgumentException(s"The fixed argument for ${distribution.name} must be of type ${NormalDistributionFitterArgument.getClass.getSimpleName}")
+      } else if (distribution.equals(Distribution.Poisson) && !fixedArgument.isInstanceOf[PoissonDistributionFitterArgument]) {
+        throw new IllegalArgumentException(s"The fixed argument for ${distribution.name} must be of type ${PoissonDistributionFitterArgument.getClass.getSimpleName}")
+      } else if (distribution.equals(Distribution.Gamma) && !fixedArgument.isInstanceOf[GammaDistributionFitterArgument]) {
+        throw new IllegalArgumentException(s"The fixed argument for ${distribution.name} must be of type ${GammaDistributionFitterArgument.getClass.getSimpleName}")
+      } else if (distribution.equals(Distribution.Exponential) && !fixedArgument.isInstanceOf[ExponentialDistributionFitterArgument]) {
+        throw new IllegalArgumentException(s"The fixed argument for ${distribution.name} must be of type ${ExponentialDistributionFitterArgument.getClass.getSimpleName}")
+      } else if (distribution.equals(Distribution.Binomial) && !fixedArgument.isInstanceOf[BinomialDistributionFitterArgument]) {
+        throw new IllegalArgumentException(s"The fixed argument for ${distribution.name} must be of type ${BinomialDistributionFitterArgument.getClass.getSimpleName}")
+      } else if (distribution.equals(Distribution.Bernoulli) && !fixedArgument.isInstanceOf[BernoulliDistributionFitterArgument]) {
+        throw new IllegalArgumentException(s"The fixed argument for ${distribution.name} must be of type ${BernoulliDistributionFitterArgument.getClass.getSimpleName}")
+      }
+    }
+
+    fixedArgument
   }
 
   /**

@@ -28,7 +28,7 @@ class DistributionFitterUtilTest extends UnitTest with PrivateMethodTester {
     assert(defaultArguments.isInstanceOf[NormalDistributionFitterArgument])
 
     val defArg = defaultArguments.asInstanceOf[NormalDistributionFitterArgument]
-    defArg.mean shouldBe (mean +- 0.2)
+    defArg.mean shouldBe (mean +- 0.5)
     defArg.sd shouldBe (sd +- 0.2)
   }
 

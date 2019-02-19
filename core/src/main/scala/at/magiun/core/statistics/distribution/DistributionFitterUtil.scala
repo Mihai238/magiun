@@ -7,12 +7,16 @@ import org.apache.spark.rdd.RDD
 object DistributionFitterUtil {
 
   /**
-    *
-    * @see https://github.com/cran/fitdistrplus/blob/master/R/fitdist.R
+    * @see https://github.com/cran/fitdistrplus/blob/master/R/util-manageparam.R
     */
-  def manageParameters(startArgument: DistributionFitterArgument, fixedArgument: DistributionFitterArgument, data: RDD[Double], distribution: Distribution): Unit = {
+  def manageParameters(startArgument: DistributionFitterArgument,
+                       fixedArgument: DistributionFitterArgument,
+                       data: RDD[Double],
+                       distribution: Distribution): (DistributionFitterArgument, DistributionFitterArgument) = {
     val computedStartArgument = manageStartArgument(startArgument, data, distribution)
     val computedFixedArgument = manageFixedArgument(fixedArgument, distribution)
+
+    (computedStartArgument, computedFixedArgument)
   }
 
   private def manageStartArgument(startArgument: DistributionFitterArgument, data: RDD[Double], distribution: Distribution): DistributionFitterArgument = {
@@ -67,7 +71,7 @@ object DistributionFitterUtil {
       require(data.min() > 0, s"The values must be positive in order to fit a ${distribution.name}")
 
       val v: Double = (n - 1.0)/n * data.variance()
-      GammaDistributionFitterArgument(Math.exp(mean)/v, mean/v)
+      GammaDistributionFitterArgument(Math.pow(mean, 2.0)/v, mean/v)
     } else if (distribution.equals(Distribution.Exponential)) {
       require(data.min() > 0, s"The values must be positive in order to fit an ${distribution.name}")
 
@@ -76,7 +80,7 @@ object DistributionFitterUtil {
       require(data.min() >= 0, s"The values must be positive in order to fit an ${distribution.name}")
       val v: Double = (n - 1.0)/n * data.variance()
 
-      val size = if (v > mean) Math.exp(mean)/(v - mean) else 100
+      val size = if (v > mean) Math.pow(mean, 2.0)/(v - mean) else 100
       BinomialDistributionFitterArgument(size, mean)
     } else if (distribution.equals(Distribution.Bernoulli)) {
       require(data.min() >= 0, s"The values must be positive in order to fit a ${distribution.name}")

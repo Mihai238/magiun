@@ -107,7 +107,7 @@ class DistributionFitterUtilTest extends UnitTest with PrivateMethodTester {
     assert(defaultArguments.isInstanceOf[BernoulliDistributionFitterArgument])
 
     val defArg = defaultArguments.asInstanceOf[BernoulliDistributionFitterArgument]
-    defArg.mu shouldBe (p +- .1)
+    defArg.mu shouldBe (p +- .2)
   }
 
   it should "throw an exception when trying to compute the default arguments for an unsupported distribution" in {

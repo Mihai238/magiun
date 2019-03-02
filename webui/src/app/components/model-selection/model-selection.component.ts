@@ -107,22 +107,21 @@ export class ModelSelectionComponent {
 
   updateGoal(goal: any) {
     this.goal = <string>goal;
-    this.logger.info("the selected goal is \"" + this.goal + "\"");
+    this.logger.info(`the selected goal is "${this.goal}"`);
   }
 
   updateTradeOff(tradeOff: any) {
     this.tradeOff = <string>tradeOff;
-    this.logger.info("the selected trade-off is \"" + this.tradeOff + "\"");
+    this.logger.info(`the selected trade-off is "${this.tradeOff}"`);
   }
 
-  addIgnoreColumn(column: any): void {
-    this.columnsToIgnore.push(<Column>column);
-    this.logger.info("adding column \"" + column.name + "\" to the ignore list");
-  }
-
-  removeIgnoreColumn(column: any): void {
-    this.columnsToIgnore = CollectionsUtils.deleteEntryFromArray(this.columnsToIgnore, <Column>column);
-    this.logger.info("removing column \"" + column.name + "\" from the ignore list");
+  addCheckBoxChange(column: any, checked: boolean): void {
+    if (checked) {
+      this.columnsToIgnore.push(<Column>column);
+    } else {
+      this.columnsToIgnore = CollectionsUtils.deleteEntryFromArray(this.columnsToIgnore, <Column>column);
+    }
+    this.logger.info(`${(checked) ? "adding" : "removing"} column "${column.name}" ${(checked) ? "to" : "from"} the ignore list`);
   }
 
   recommend(): void {

@@ -60,31 +60,17 @@
       <br/>
       <hr/>
       <br/>
-      <form>
-        <div class="form-group">
-          <label for="ignoreVariablesTags">{{ 'MODEL_SELECTION.IGNORE_VARIABLES' | translate }}</label>
-          <tag-input
-            id="ignoreVariablesTags"
-            [ngModel]="columnsToIgnore"
-            [ngModelOptions]="{standalone: true}"
-            [placeholder]="'MODEL_SELECTION.IGNORE_VARIABLES_PLACEHOLDER' | translate"
-            [secondaryPlaceholder]="'MODEL_SELECTION.IGNORE_VARIABLES_PLACEHOLDER' | translate"
-            [onlyFromAutocomplete]="true"
-            (onAdd)="addIgnoreColumn($event)"
-            (onRemove)="removeIgnoreColumn($event)"
-            theme='bootstrap'>
-            <tag-input-dropdown
-              [autocompleteItems]="selectedDataset.schema.columns"
-              [displayBy]="'name'"
-              [identifyBy]="'name'"
-              [focusFirstElement]="true">
-              <ng-template let-item="item" let-index="index">
-                {{ item.name }} : {{ item.type }}
-              </ng-template>
-            </tag-input-dropdown>
-          </tag-input>
+      <label>{{ 'MODEL_SELECTION.IGNORE_VARIABLES' | translate }}</label>
+      <div class="row">
+        <div class="toIgnore" *ngFor="let c of selectedDataset.schema.columns">
+          <form>
+            <label>
+              <input type="checkbox" [checked]="checked" (change)="addCheckBoxChange(c, $event.target.checked)">
+              {{c.name}}
+            </label>
+          </form>
         </div>
-      </form>
+      </div>
       <br/>
       <hr/>
       <br/>

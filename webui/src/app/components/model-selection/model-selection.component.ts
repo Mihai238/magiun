@@ -16,6 +16,7 @@ import {RecommenderRestService} from "../../rest/recommender.rest.service";
 import {RecommenderRequest} from "../../model/recommender-request.model";
 import {DialogService} from 'ng2-bootstrap-modal';
 import {DistributionsModalComponent} from "./distributions-modal/distributions-modal.component";
+import {Distribution} from "../../model/distribution";
 
 @Component({
   selector: 'app-model-selection',
@@ -45,6 +46,7 @@ export class ModelSelectionComponent {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd && val.url == '/model-selection') {
         this.refreshTheDatasets();
+        this.getDistributions();
       }
     })
   }
@@ -56,6 +58,10 @@ export class ModelSelectionComponent {
       this.datasets = value;
       this.refreshSelectedDataset();
     });
+  }
+
+  private getDistributions(): void {
+
   }
 
   private refreshSelectedDataset(): void {
@@ -143,7 +149,7 @@ export class ModelSelectionComponent {
 
   //TODO: implement me
   showDistributions(): void {
-    this.dialogService.addDialog(DistributionsModalComponent)
+    this.dialogService.addDialog(DistributionsModalComponent, {columns: this.selectedDataset.schema.columns})
       .subscribe((result) => {
         console.log(result)
       });

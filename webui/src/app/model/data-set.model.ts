@@ -1,3 +1,5 @@
+import {Distribution} from "./distribution";
+
 export class DataSet {
   id: number;
   name: string;
@@ -42,12 +44,14 @@ export class Column {
   index: number;
   name: string;
   type: ColumnType;
+  distribution: Distribution;
 
 
-  constructor(index: number, name: string, type: ColumnType) {
+  constructor(index: number, name: string, type: ColumnType, distribution: Distribution = null) {
     this.index = index;
     this.name = name;
     this.type = type;
+    this.distribution = distribution;
   }
 
   public equals(c: Column): boolean {

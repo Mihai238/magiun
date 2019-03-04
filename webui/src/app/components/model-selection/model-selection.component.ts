@@ -14,6 +14,8 @@ import {CollectionsUtils} from "../../util/collections.utils";
 import {TranslateService} from "@ngx-translate/core";
 import {RecommenderRestService} from "../../rest/recommender.rest.service";
 import {RecommenderRequest} from "../../model/recommender-request.model";
+import {DialogService} from 'ng2-bootstrap-modal';
+import {DistributionsModalComponent} from "./distributions-modal/distributions-modal.component";
 
 @Component({
   selector: 'app-model-selection',
@@ -35,6 +37,7 @@ export class ModelSelectionComponent {
     private recommenderService: RecommenderRestService,
     private router: Router,
     private translate: TranslateService,
+    private dialogService: DialogService,
     ngxLogger: NGXLogger
   ) {
     this.logger = new MagiunLogger(ModelSelectionComponent.name, ngxLogger);
@@ -136,6 +139,14 @@ export class ModelSelectionComponent {
       .subscribe(a => {});
 
     this.logger.warn("hola!");
+  }
+
+  //TODO: implement me
+  showDistributions(): void {
+    this.dialogService.addDialog(DistributionsModalComponent)
+      .subscribe((result) => {
+        console.log(result)
+      });
   }
 
   private createRecommenderRequest(): RecommenderRequest {

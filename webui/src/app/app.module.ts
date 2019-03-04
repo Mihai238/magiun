@@ -51,6 +51,7 @@ import { BarSettingsComponent } from './components/data/chart/bar-settings/bar-s
 import {ExecutionService} from "./services/execution.service";
 import {ModelSelectionComponent} from "./components/model-selection/model-selection.component";
 import {RecommenderRestService} from "./rest/recommender.rest.service";
+import {DistributionsModalComponent} from "./components/model-selection/distributions-modal/distributions-modal.component";
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import {RecommenderRestService} from "./rest/recommender.rest.service";
     InputParameterComponent,
     MultiInputParameterComponent,
     CheckboxParameterComponent,
-    ModelSelectionComponent
+    ModelSelectionComponent,
+    DistributionsModalComponent
   ],
   imports: [
     CommonModule,
@@ -121,7 +123,8 @@ import {RecommenderRestService} from "./rest/recommender.rest.service";
     FileParameterComponent,
     SelectParameterComponent,
     InputParameterComponent,
-    CheckboxParameterComponent
+    CheckboxParameterComponent,
+    DistributionsModalComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

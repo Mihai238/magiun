@@ -39,7 +39,10 @@
     "IGNORE_VARIABLES": "Variables to ignore:",
     "IGNORE_VARIABLES_PLACEHOLDER": "Enter variables to ignore",
     "TARGET_VARIABLE_IS_IGNORE": "The target variable is also selected as an ignore variable!",
-    "NO_VARIABLES_LEFT": "There are no variables left, all variables were selected as ignore variables!"
+    "NO_VARIABLES_LEFT": "There are no variables left, all variables were selected as ignore variables!",
+    "DISTRIBUTIONS_MODAL": {
+      "TITLE": "Variables Distributions"
+    }
   },
   "WORKFLOWS": {
     "PLACE_HOLDER": "To create your workflow, drag and drop datasets and modules here!",

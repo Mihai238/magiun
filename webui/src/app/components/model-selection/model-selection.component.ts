@@ -149,7 +149,7 @@ export class ModelSelectionComponent {
 
   //TODO: implement me
   showDistributions(): void {
-    this.dialogService.addDialog(DistributionsModalComponent, {columns: this.selectedDataset.schema.columns})
+    this.dialogService.addDialog(DistributionsModalComponent, { columns: this.selectedDataset.schema.columns })
       .subscribe((result) => {
         console.log(result)
       });

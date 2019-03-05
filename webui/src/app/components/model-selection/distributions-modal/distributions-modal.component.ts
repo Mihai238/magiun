@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal';
 import {Column} from "../../../model/data-set.model";
 import {Distribution} from "../../../model/distribution";
+import {PlotsModalComponent} from "../plots-modal/plots-modal.component";
 
 export interface DistributionsModal {
   columns: Column[]
@@ -23,5 +24,9 @@ export class DistributionsModalComponent extends DialogComponent<DistributionsMo
 
   confirm() {
     this.close();
+  }
+
+  plot(c: Column) {
+    this.dialogService.addDialog(PlotsModalComponent, { column: c }).subscribe()
   }
 }

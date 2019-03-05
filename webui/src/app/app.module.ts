@@ -52,6 +52,7 @@ import {ExecutionService} from "./services/execution.service";
 import {ModelSelectionComponent} from "./components/model-selection/model-selection.component";
 import {RecommenderRestService} from "./rest/recommender.rest.service";
 import {DistributionsModalComponent} from "./components/model-selection/distributions-modal/distributions-modal.component";
+import {PlotsModalComponent} from "./components/model-selection/plots-modal/plots-modal.component";
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import {DistributionsModalComponent} from "./components/model-selection/distribu
     MultiInputParameterComponent,
     CheckboxParameterComponent,
     ModelSelectionComponent,
-    DistributionsModalComponent
+    DistributionsModalComponent,
+    PlotsModalComponent
   ],
   imports: [
     CommonModule,
@@ -124,7 +126,8 @@ import {DistributionsModalComponent} from "./components/model-selection/distribu
     SelectParameterComponent,
     InputParameterComponent,
     CheckboxParameterComponent,
-    DistributionsModalComponent
+    DistributionsModalComponent,
+    PlotsModalComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

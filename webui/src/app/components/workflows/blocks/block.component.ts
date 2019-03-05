@@ -28,7 +28,7 @@ export abstract class BlockComponent implements AfterViewInit {
   protected constructor(private blockService: BlockService, private dialogService: DialogService) {}
 
   protected showParametersModal() {
-    this.dialogService.addDialog(ParametersModalComponent, {parameters: this.configurationParameters})
+    this.dialogService.addDialog(ParametersModalComponent, { parameters: this.configurationParameters })
       .subscribe(
         (result) => {
         this.configurationParameters = result;

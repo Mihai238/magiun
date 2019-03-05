@@ -41,7 +41,11 @@
     "TARGET_VARIABLE_IS_IGNORE": "The target variable is also selected as an ignore variable!",
     "NO_VARIABLES_LEFT": "There are no variables left, all variables were selected as ignore variables!",
     "DISTRIBUTIONS_MODAL": {
-      "TITLE": "Variables Distributions"
+      "TITLE": "Variables Distributions",
+      "ICON_TITLE": "Plot variable's statistics"
+    },
+    "PLOTS_MODAL": {
+      "TITLE": "statistical plots"
     }
   },
   "WORKFLOWS": {

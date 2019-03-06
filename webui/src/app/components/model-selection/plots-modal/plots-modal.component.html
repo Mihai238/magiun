@@ -1,8 +1,19 @@
-<div class="modal-dialog">
+<div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
-      <h6 class="modal-title">{{column.name + " "}}{{ 'MODEL_SELECTION.PLOTS_MODAL.TITLE' | translate }}</h6>
+      <h6 class="modal-title"><i>{{column.name + " "}}</i>{{ 'MODEL_SELECTION.PLOTS_MODAL.TITLE' | translate }}</h6>
       <button type="button" class="close float-right" (click)="close()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6" id="histogram"></div>
+          <div class="col-md-6" id="boxPlot"></div>
+        </div>
+        <div class="row">
+
+        </div>
+      </div>
     </div>
   </div>
 </div>

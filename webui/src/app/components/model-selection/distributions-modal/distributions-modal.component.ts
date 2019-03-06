@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal';
-import {Column} from "../../../model/data-set.model";
+import {Column, DataSet} from "../../../model/data-set.model";
 import {Distribution} from "../../../model/distribution";
 import {PlotsModalComponent} from "../plots-modal/plots-modal.component";
+import {DataService} from "../../../services/data.service";
 
 export interface DistributionsModal {
-  columns: Column[]
+  dataset: DataSet
 }
 
 @Component({
@@ -13,12 +14,12 @@ export interface DistributionsModal {
   templateUrl: './distributions-modal.component.html',
   styleUrls: ['./distributions-modal.component.scss']
 })
-export class DistributionsModalComponent extends DialogComponent<DistributionsModal, Column[]> implements DistributionsModal {
+export class DistributionsModalComponent extends DialogComponent<DistributionsModal, DataSet> implements DistributionsModal {
 
   Distribution = Distribution;
-  columns: Column[];
+  dataset: DataSet;
 
-  constructor(dialogService: DialogService) {
+  constructor(dialogService: DialogService, private dataService: DataService) {
     super(dialogService);
   }
 
@@ -27,6 +28,10 @@ export class DistributionsModalComponent extends DialogComponent<DistributionsMo
   }
 
   plot(c: Column) {
-    this.dialogService.addDialog(PlotsModalComponent, { column: c }).subscribe()
+    this.dataService.getDataSample(this.dataset, [c.name]).subscribe(
+      rows => {
+        this.dialogService.addDialog(PlotsModalComponent, { column: c, data: rows.map(row => parseFloat(row.values[c.index]))}).subscribe()
+      });
+
   }
 }

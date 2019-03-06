@@ -22,15 +22,19 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   private static PLOT_HEIGHT = 400;
   column: Column;
   data: number[];
+  gaussian = new NormalDistribution();
+  normalDistributed: number[];
 
   constructor(dialogService: DialogService) {
     super(dialogService);
   }
 
   ngAfterViewInit(): void {
+    this.normalDistributed = this.gaussian.sample(this.data.length);
     this.plotHistogram();
     this.plotBoxPlot();
     this.qqPlot();
+    this.ppPlot();
   }
 
   private plotHistogram(): void {
@@ -67,7 +71,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   }
 
   private qqPlot(): void {
-    let theoreticalQuantiles = new NormalDistribution().sample(this.data.length).sort((n1, n2) => n2 - n1);
+    let theoreticalQuantiles = this.normalDistributed.sort((n1, n2) => n2 - n1);
 
     const trace = {
       x: theoreticalQuantiles,
@@ -115,6 +119,58 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     };
 
     this.plot("qqPlot", plotData, layout)
+  }
+
+  private ppPlot(): void {
+    let theoreticalCD = this.normalDistributed.map(x => this.gaussian.cdf(x)).sort((n1, n2) => n2- n1);
+    let empiricalCD = this.data.map(x => this.gaussian.cdf(x)).sort((n1, n2) => n2 - n1);
+
+    const trace = {
+      x: theoreticalCD,
+      y: empiricalCD,
+      type: 'scatter',
+      mode: "markers",
+      name: this.column.name,
+      marker: {
+        size: 8
+      }
+    };
+
+    const coordinates = this.calculateLineCoordinates(empiricalCD, theoreticalCD);
+
+    const straightLine = {
+      x0: coordinates[0],
+      y0: coordinates[1],
+      x1: coordinates[2],
+      y1: coordinates[3],
+      type: "line",
+      line: {
+        color: 'rgb(139,0,0)',
+        width: 3
+      }
+    };
+
+    const plotData = [trace];
+
+    const layout = {
+      height: PlotsModalComponent.PLOT_HEIGHT,
+      width: PlotsModalComponent.PLOT_WIDTH,
+      title: "Normal P-P Plot",
+      xaxis: {
+        showgrid: true,
+        showline: true,
+        title: 'Theoretical Cumulative Distribution'
+      },
+      yaxis: {
+        nticks: 11,
+        showgrid: true,
+        showline: true,
+        title: "Empirical Cumulative Distribution"
+      },
+      shapes: [straightLine]
+    };
+
+    this.plot("ppPlot", plotData, layout)
   }
 
   private plot(target: String, data: any[], layout: any): void {

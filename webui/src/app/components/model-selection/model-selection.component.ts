@@ -93,7 +93,7 @@ export class ModelSelectionComponent {
 
   private logSelectedDatasetInfo(): void {
     if (this.selectedDataset != null) {
-      this.logger.info("the selected dataset is \"" + this.selectedDataset.name + "\"");
+      this.logger.info(`the selected dataset is "${this.selectedDataset.name}"`);
     } else {
       this.logger.info("the selected dataset is null");
     }
@@ -102,7 +102,7 @@ export class ModelSelectionComponent {
 
   private logTargetVariable(): void {
     if (this.targetVariable != null) {
-      this.logger.info("the selected target variable is \"" + this.targetVariable.name + "\"");
+      this.logger.info(`the selected target variable is "${this.targetVariable.name}"`);
     } else {
       this.logger.info("the selected target variable is null");
     }

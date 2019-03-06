@@ -2,6 +2,7 @@ import {AfterViewInit, Component} from "@angular/core";
 import {Column} from "../../../model/data-set.model";
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal'
 import {NormalDistribution} from "../../../model/statistics/NormalDistribution";
+import {StatisticsUtils} from "../../../util/statistics.utils";
 
 declare var Plotly: any;
 
@@ -17,6 +18,8 @@ export interface PlotsModal {
 })
 export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, number[]]> implements PlotsModal, AfterViewInit {
 
+  private static PLOT_WIDTH = 500;
+  private static PLOT_HEIGHT = 400;
   column: Column;
   data: number[];
 
@@ -38,14 +41,16 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
 
     const plotData = [trace];
 
-    Plotly.newPlot('histogram', plotData, {
-      height: 400,
-      width: 500,
+    const layout = {
+      height: PlotsModalComponent.PLOT_HEIGHT,
+      width: PlotsModalComponent.PLOT_WIDTH,
       bargap: 0.05,
       xaxis: {title: this.column.name},
       yaxis: {title: "Count"},
       title: "Histogram"
-    })
+    };
+
+    this.plot("histogram", plotData, layout)
   }
 
   private plotBoxPlot(): void {
@@ -57,16 +62,15 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
 
     const plotData = [trace];
 
-    Plotly.newPlot('boxPlot', plotData, {height: 400, width: 500, title: "Boxplot "})
+    const layout = {height: PlotsModalComponent.PLOT_HEIGHT, width: PlotsModalComponent.PLOT_WIDTH, title: "Boxplot "};
+    this.plot("boxPlot", plotData, layout)
   }
 
   private qqPlot(): void {
-    let n = new NormalDistribution(0 ,1).sample(this.data.length).sort((n1, n2) => n2 - n1);
-
-    console.log(n);
+    let theoreticalQuantiles = new NormalDistribution().sample(this.data.length).sort((n1, n2) => n2 - n1);
 
     const trace = {
-      x: n, // todo
+      x: theoreticalQuantiles,
       y: this.data.sort((n1, n2) => n2 - n1),
       type: 'scatter',
       mode: "markers",
@@ -76,28 +80,25 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       }
     };
 
-    const maxY = Math.max.apply(Math, this.data);
-    const minY = Math.min.apply(Math, this.data);
-    const maxX = Math.max.apply(Math, n);
-    const minX = Math.min.apply(Math, n);
+    const coordinates = this.calculateLineCoordinates(this.data, theoreticalQuantiles);
 
     const straightLine = {
-      x0: minX * 0.9,
-      y0: minY * 0.9,
-      x1: maxX * 1.1,
-      y1: maxY * 1.1,
+      x0: coordinates[0],
+      y0: coordinates[1],
+      x1: coordinates[2],
+      y1: coordinates[3],
       type: "line",
       line: {
         color: 'rgb(139,0,0)',
-        width: 5
+        width: 3
       }
     };
 
     const plotData = [trace];
 
-    Plotly.newPlot('qqPlot', plotData, {
-      height: 400,
-      width: 500,
+    const layout = {
+      height: PlotsModalComponent.PLOT_HEIGHT,
+      width: PlotsModalComponent.PLOT_WIDTH,
       title: "Normal Q-Q Plot",
       xaxis: {
         showgrid: true,
@@ -111,8 +112,30 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
         title: "Sample Quantiles"
       },
       shapes: [straightLine]
-    })
+    };
+
+    this.plot("qqPlot", plotData, layout)
   }
 
+  private plot(target: String, data: any[], layout: any): void {
+    Plotly.newPlot(target, data, layout)
+  }
+
+  private calculateLineCoordinates(sample: number[], theoretical: number[]): [number, number, number, number] {
+    const dx = StatisticsUtils.percentile(theoretical, 75) - StatisticsUtils.percentile(theoretical, 25);
+    const dy = StatisticsUtils.percentile(sample, 75) - StatisticsUtils.percentile(sample, 25);
+
+    const b = dy / dx;
+
+    const xc = (StatisticsUtils.percentile(theoretical, 25) + StatisticsUtils.percentile(theoretical, 75)) / 2;
+    const yc = (StatisticsUtils.percentile(sample, 25) + StatisticsUtils.percentile(sample, 75)) / 2;
+
+    const xmax = Math.max.apply(Math, theoretical);
+    const xmin = Math.min.apply(Math, theoretical);
+    const ymax = yc + b * (xmax - xc);
+    const ymin = yc - b * (xc - xmin);
+
+    return [xmin, ymin, xmax, ymax]
+  }
 
 }

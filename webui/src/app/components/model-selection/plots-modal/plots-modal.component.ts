@@ -35,6 +35,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     this.plotBoxPlot();
     this.qqPlot();
     this.ppPlot();
+    this.cdPlot();
   }
 
   private plotHistogram(): void {
@@ -171,6 +172,42 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     };
 
     this.plot("ppPlot", plotData, layout)
+  }
+
+  private cdPlot(): void {
+    let empiricalCD = this.data.map(x => this.gaussian.cdf(x)).sort((n1, n2) => n2 - n1);
+
+    const trace = {
+      x: this.data.sort((n1, n2) => n2 - n1),
+      y: empiricalCD,
+      type: 'scatter',
+      mode: "markers",
+      name: this.column.name,
+      marker: {
+        size: 8
+      }
+    };
+
+    const plotData = [trace];
+
+    const layout = {
+      height: PlotsModalComponent.PLOT_HEIGHT,
+      width: PlotsModalComponent.PLOT_WIDTH,
+      title: "Cumulative Distribution",
+      xaxis: {
+        showgrid: true,
+        showline: true,
+        title: this.column.name
+      },
+      yaxis: {
+        nticks: 11,
+        showgrid: true,
+        showline: true,
+        title: "CDF"
+      }
+    };
+
+    this.plot("cdPlot", plotData, layout)
   }
 
   private plot(target: String, data: any[], layout: any): void {

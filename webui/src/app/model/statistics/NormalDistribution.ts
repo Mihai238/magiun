@@ -8,6 +8,24 @@ export function erfc(x) {
   return x >= 0 ? r : 2 - r;
 }
 
+export function erf(x){
+  // erf(x) = 2/sqrt(pi) * integrate(from=0, to=x, e^-(t^2) ) dt
+  // with using Taylor expansion,
+  //        = 2/sqrt(pi) * sigma(n=0 to +inf, ((-1)^n * x^(2n+1))/(n! * (2n+1)))
+  // calculationg n=0 to 50 bellow (note that inside sigma equals x when n = 0, and 50 may be enough)
+
+  let m = 1.00;
+  let s = 1.00;
+  let sum = x * 1.0;
+
+  for(let i = 1; i < 50; i++){
+    m *= i;
+    s *= -1;
+    sum += (s * Math.pow(x, 2.0 * i + 1.0)) / (m * (2.0 * i + 1.0));
+  }
+  return 2 * sum / Math.sqrt(Math.PI);
+}
+
 export class NormalDistribution {
 
   private DOUBLE_PI = Math.PI * 2;
@@ -31,6 +49,7 @@ export class NormalDistribution {
   }
 
   cdf(x: number): number {
-    return 0.5 * erfc(-(x - this.mean) / (this.sd * Math.sqrt(2)));
+    //return 0.5 * erfc(-(x - this.mean) / (this.sd * Math.sqrt(2)));
+    return 0.5 * (1 + erf((x - this.mean)/(Math.sqrt(2) * this.sd)))
   }
 }

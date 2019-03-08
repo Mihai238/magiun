@@ -1,4 +1,4 @@
-import {Distribution} from "./distribution";
+import {Distribution} from "./statistics/distribution.type.model";
 
 export class DataSet {
   id: number;

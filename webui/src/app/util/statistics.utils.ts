@@ -14,5 +14,24 @@ export class StatisticsUtils {
     }
   }
 
+  public static mean(data: number[]): number {
+    const s = data.filter(v => v != null && !Number.isNaN(v) && Number.isFinite(v))
+      .reduce((s, v) => {return s + v}, 0);
+
+    return s/data.length;
+  }
+
+  public static sd(data: number[], mean: number = null): number {
+    data = data.filter(v => v != null && !Number.isNaN(v) && Number.isFinite(v));
+    if (mean == null) {
+      mean = this.mean(data);
+    }
+
+    return Math.sqrt(this.mean(this.squareDiffs(data, mean)));
+  }
+
+  private static squareDiffs(data: number[], mean: number): number[] {
+    return data.map(v => Math.pow(v - mean, 2))
+  }
 
 }

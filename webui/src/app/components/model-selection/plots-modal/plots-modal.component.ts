@@ -1,7 +1,7 @@
 import {AfterViewInit, Component} from "@angular/core";
 import {Column} from "../../../model/data-set.model";
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal'
-import {NormalDistribution} from "../../../model/statistics/NormalDistribution";
+import {NormalDistribution} from "../../../model/statistics/normal.distribution.model";
 import {StatisticsUtils} from "../../../util/statistics.utils";
 
 declare var Plotly: any;
@@ -18,11 +18,11 @@ export interface PlotsModal {
 })
 export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, number[]]> implements PlotsModal, AfterViewInit {
 
-  private static PLOT_WIDTH = 500;
-  private static PLOT_HEIGHT = 400;
+  private static PLOT_WIDTH = 450;
+  private static PLOT_HEIGHT = 350;
   column: Column;
   data: number[];
-  gaussian = new NormalDistribution();
+  normalDistribution;
   normalDistributed: number[];
 
   constructor(dialogService: DialogService) {
@@ -30,12 +30,21 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   }
 
   ngAfterViewInit(): void {
-    this.normalDistributed = this.gaussian.sample(this.data.length);
+    this.prepareNeededData();
     this.plotHistogram();
     this.plotBoxPlot();
     this.qqPlot();
     this.ppPlot();
     this.cdPlot();
+  }
+
+  private prepareNeededData() {
+    this.data = this.data.sort((n1, n2) => n2 - n1);
+    let mean = StatisticsUtils.mean(this.data);
+    let sd  =StatisticsUtils.sd(this.data);
+
+    this.normalDistribution = new NormalDistribution(mean, sd);
+    this.normalDistributed = this.normalDistribution.sample(this.data.length).sort((n1, n2) => n2 - n1);
   }
 
   private plotHistogram(): void {
@@ -72,10 +81,8 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   }
 
   private qqPlot(): void {
-    let theoreticalQuantiles = this.normalDistributed.sort((n1, n2) => n2 - n1);
-
     const trace = {
-      x: theoreticalQuantiles,
+      x: this.normalDistributed,
       y: this.data.sort((n1, n2) => n2 - n1),
       type: 'scatter',
       mode: "markers",
@@ -85,7 +92,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       }
     };
 
-    const coordinates = this.calculateLineCoordinates(this.data, theoreticalQuantiles);
+    const coordinates = this.calculateLineCoordinates(this.data, this.normalDistributed);
 
     const straightLine = {
       x0: coordinates[0],
@@ -123,8 +130,8 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   }
 
   private ppPlot(): void {
-    let theoreticalCD = this.normalDistributed.map(x => this.gaussian.cdf(x)).sort((n1, n2) => n2- n1);
-    let empiricalCD = this.data.map(x => this.gaussian.cdf(x)).sort((n1, n2) => n2 - n1);
+    let theoreticalCD = this.normalDistributed.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2- n1);
+    let empiricalCD = this.data.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
 
     const trace = {
       x: theoreticalCD,
@@ -175,7 +182,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   }
 
   private cdPlot(): void {
-    let empiricalCD = this.data.map(x => this.gaussian.cdf(x)).sort((n1, n2) => n2 - n1);
+    let empiricalCD = this.data.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
 
     const trace = {
       x: this.data.sort((n1, n2) => n2 - n1),
@@ -193,7 +200,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     const layout = {
       height: PlotsModalComponent.PLOT_HEIGHT,
       width: PlotsModalComponent.PLOT_WIDTH,
-      title: "Cumulative Distribution",
+      title: "Normal Cumulative Distribution",
       xaxis: {
         showgrid: true,
         showline: true,

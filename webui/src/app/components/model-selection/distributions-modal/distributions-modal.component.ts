@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal';
 import {Column, DataSet} from "../../../model/data-set.model";
-import {Distribution} from "../../../model/distribution";
+import {Distribution} from "../../../model/statistics/distribution.type.model";
 import {PlotsModalComponent} from "../plots-modal/plots-modal.component";
 import {DataService} from "../../../services/data.service";
 

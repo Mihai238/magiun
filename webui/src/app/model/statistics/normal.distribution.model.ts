@@ -49,7 +49,6 @@ export class NormalDistribution {
   }
 
   cdf(x: number): number {
-    //return 0.5 * erfc(-(x - this.mean) / (this.sd * Math.sqrt(2)));
     return 0.5 * (1 + erf((x - this.mean)/(Math.sqrt(2) * this.sd)))
   }
 }

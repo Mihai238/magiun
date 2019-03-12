@@ -22,7 +22,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   private static PLOT_HEIGHT = 350;
   column: Column;
   data: number[];
-  normalDistribution;
+  normalDistribution: NormalDistribution;
   normalDistributed: number[];
 
   constructor(dialogService: DialogService) {
@@ -33,6 +33,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     this.prepareNeededData();
     this.plotHistogram();
     this.plotBoxPlot();
+    this.plotViolinPlot();
     this.qqPlot();
     this.ppPlot();
     this.cdPlot();
@@ -48,19 +49,32 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   }
 
   private plotHistogram(): void {
-    const trace = {
+    const histogramData = {
       x: this.data,
       type: 'histogram',
+      histnorm: 'probability density',
+      showlegend: false
     };
 
-    const plotData = [trace];
+    const probs = this.data.map(x => this.normalDistribution.pdf(x));
+    const normalDistributionLine = {
+      x: this.data,
+      y: probs,
+      mode: 'lines',
+      name: 'Normal Distribution',
+      type: 'scatter',
+      xaxis: this.column.name,
+      yaxis: "Density"
+    };
+
+    const plotData = [histogramData, normalDistributionLine];
 
     const layout = {
       height: PlotsModalComponent.PLOT_HEIGHT,
       width: PlotsModalComponent.PLOT_WIDTH,
       bargap: 0.05,
-      xaxis: {title: this.column.name},
-      yaxis: {title: "Count"},
+      xaxis: {title: this.column.name, autorange: true, zeroline: false},
+      yaxis: {title: "Density", autorange: true, showticklabels: true},
       title: "Histogram"
     };
 
@@ -76,8 +90,28 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
 
     const plotData = [trace];
 
-    const layout = {height: PlotsModalComponent.PLOT_HEIGHT, width: PlotsModalComponent.PLOT_WIDTH, title: "Boxplot "};
+    const layout = {height: PlotsModalComponent.PLOT_HEIGHT, width: PlotsModalComponent.PLOT_WIDTH, title: "Boxplot"};
     this.plot("boxPlot", plotData, layout)
+  }
+
+
+
+  private plotViolinPlot(): void {
+    const trace = {
+      type: 'violin',
+      y: this.data,
+      name: this.column.name,
+      points: 'none',
+      box: {
+        visible: true
+      },
+      meanline: {
+        visible: true
+      }
+    };
+
+    const layout = {height: PlotsModalComponent.PLOT_HEIGHT, width: PlotsModalComponent.PLOT_WIDTH, title: "Violin Plot"};
+    this.plot("violinPlot", [trace], layout)
   }
 
   private qqPlot(): void {

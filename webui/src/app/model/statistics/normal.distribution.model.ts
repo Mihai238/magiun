@@ -34,7 +34,7 @@ export class NormalDistribution {
   }
 
   sample(size: number): number[] {
-    var sample: number[] = [];
+    const sample: number[] = [];
 
     for (let i = 0; i < size; i++) {
       const r1 = Math.random();
@@ -50,5 +50,9 @@ export class NormalDistribution {
 
   cdf(x: number): number {
     return 0.5 * (1 + erf((x - this.mean)/(Math.sqrt(2) * this.sd)))
+  }
+
+  pdf(x: number): number {
+    return (1/Math.sqrt(this.DOUBLE_PI * Math.pow(this.sd, 2))) * Math.pow(Math.E, -(Math.pow(x - this.mean, 2)/(2 * Math.pow(this.sd, 2))))
   }
 }

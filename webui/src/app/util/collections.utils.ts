@@ -46,6 +46,10 @@ export class CollectionsUtils {
     }
   }
 
+  public static withoutElement<T>(values: Array<T>, value: T): Array<T> {
+    return values.filter(v => v !== value);
+  }
+
   public static getMapValueByIndex<K, V>(map: Map<K, V>, index: number): V {
     return this.getMapEntryByIndex(map, index)._2;
   }

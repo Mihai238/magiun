@@ -1,3 +1,5 @@
+import {Distribution} from "./statistics/distribution.type.model";
+
 export class RecommenderRequest {
 
   constructor(
@@ -5,7 +7,9 @@ export class RecommenderRequest {
     public goal: string,
     public tradeOff: string,
     public responseVariable: number,
-    public variablesToIgnore: number[]
+    public explanatoryVariables: number[],
+    public responseVariableDistribution: Distribution,
+    public explanatoryVariablesDistributions: Distribution[]
   ) {
   }
 }

@@ -21,7 +21,7 @@ class RecommenderService(spark: SparkSession, dataSetService: DataSetService, da
   }
 
   private def createMetadata(request: RecommenderRequest, dataset: Dataset[Row], magiunDataset: MagiunDataSet): DatasetMetadata = {
-    val columnsToRemove: Seq[String] = request.variablesToIgnore.map(i => dataset.columns(i))
+    val columnsToRemove: Seq[String] = request.explanatoryVariables.map(i => dataset.columns(i))
     val cleanDataset = columnsToRemove.foldLeft(dataset)((df, col) => df.drop(col))
 
     val cleanColumns = columnsToRemove.foldLeft(magiunDataset.schema.get.columns)((l, r) => l.filterNot(_.name == r))

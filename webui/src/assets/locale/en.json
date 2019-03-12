@@ -36,10 +36,8 @@
     "ACCURACY": "Accuracy",
     "DATA_SET": "Dataset:",
     "TARGET_VARIABLE": "Target variable:",
-    "IGNORE_VARIABLES": "Variables to ignore:",
-    "IGNORE_VARIABLES_PLACEHOLDER": "Enter variables to ignore",
-    "TARGET_VARIABLE_IS_IGNORE": "The target variable is also selected as an ignore variable!",
-    "NO_VARIABLES_LEFT": "There are no variables left, all variables were selected as ignore variables!",
+    "EXPLANATORY_VARIABLES": "Explanatory variables:",
+    "NO_VARIABLES_SELECTED": "There were no explanatory variables selected!",
     "DISTRIBUTIONS_MODAL": {
       "TITLE": "Variables Distributions",
       "ICON_TITLE": "Plot variable's statistics"

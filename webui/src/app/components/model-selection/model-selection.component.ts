@@ -16,6 +16,7 @@ import {RecommenderRestService} from "../../rest/recommender.rest.service";
 import {RecommenderRequest} from "../../model/recommender-request.model";
 import {DialogService} from 'ng2-bootstrap-modal';
 import {DistributionsModalComponent} from "./distributions-modal/distributions-modal.component";
+import {Distribution} from "../../model/statistics/distribution.type.model";
 
 @Component({
   selector: 'app-model-selection',
@@ -27,7 +28,8 @@ export class ModelSelectionComponent {
   private logger: MagiunLogger;
   private datasets: DataSet[] = [];
   private selectedDataset: DataSet;
-  private columnsToIgnore: Column[] = [];
+  private explanatoryVariables: Column[] = [];
+  private possibleExplanatoryVariables: Column[] = [];
   private targetVariable: Column;
   private goal: string = "regression";
   private tradeOff: string = "";
@@ -74,7 +76,7 @@ export class ModelSelectionComponent {
     } else if (this.selectedDataset != null && numberOfDatasets == 0) {
       this.selectedDataset = null;
       this.targetVariable = null;
-      this.columnsToIgnore = [];
+      this.explanatoryVariables = [];
     }
     this.logSelectedDatasetInfo();
   }
@@ -82,12 +84,13 @@ export class ModelSelectionComponent {
   updateSelectedDataset(event: any): void {
     this.selectedDataset = this.datasets[<number>event];
     this.targetVariable = this.selectedDataset.schema.columns[0];
-    this.columnsToIgnore = [];
+    this.explanatoryVariables = [];
     this.logSelectedDatasetInfo();
   }
 
   updateTargetVariable(event: any): void {
     this.targetVariable = this.selectedDataset.schema.columns[<number>event];
+    this.possibleExplanatoryVariables = CollectionsUtils.withoutElement(this.selectedDataset.schema.columns, this.targetVariable);
     this.logTargetVariable();
   }
 
@@ -111,7 +114,8 @@ export class ModelSelectionComponent {
   private refresh(): void {
     this.selectedDataset = this.datasets[0];
     this.targetVariable = this.selectedDataset.schema.columns[0];
-    this.columnsToIgnore = [];
+    this.explanatoryVariables = [];
+    this.possibleExplanatoryVariables = CollectionsUtils.withoutElement(this.selectedDataset.schema.columns, this.targetVariable)
   }
 
   updateGoal(goal: any) {
@@ -126,42 +130,47 @@ export class ModelSelectionComponent {
 
   addCheckBoxChange(column: any, checked: boolean): void {
     if (checked) {
-      this.columnsToIgnore.push(<Column>column);
+      this.explanatoryVariables.push(<Column>column);
     } else {
-      this.columnsToIgnore = CollectionsUtils.deleteEntryFromArray(this.columnsToIgnore, <Column>column);
+      this.explanatoryVariables = CollectionsUtils.deleteEntryFromArray(this.explanatoryVariables, <Column>column);
     }
-    this.logger.info(`${(checked) ? "adding" : "removing"} column "${column.name}" ${(checked) ? "to" : "from"} the ignore list`);
+    this.logger.info(`${(checked) ? "adding" : "removing"} column "${column.name}" ${(checked) ? "to" : "from"} the explanatory variable list`);
   }
 
   recommend(): void {
-    if (this.columnsToIgnore.some(c => this.targetVariable.equals(c))) {
-      alert(this.translate.instant("MODEL_SELECTION.TARGET_VARIABLE_IS_IGNORE"));
-    } else if (this.columnsToIgnore.length > 0 && this.columnsToIgnore.length == this.selectedDataset.schema.columns.length - 1) {
-      alert(this.translate.instant("MODEL_SELECTION.NO_VARIABLES_LEFT"));
+    if (this.explanatoryVariables.length == 0) {
+      alert(this.translate.instant("MODEL_SELECTION.NO_VARIABLES_SELECTED"));
+      return;
     }
 
     this.recommenderService
       .recommend(this.createRecommenderRequest())
-      .subscribe(a => {});
-
-    this.logger.warn("hola!");
+      .subscribe(() => {});
   }
 
   //TODO: implement me
   showDistributions(): void {
-    this.dialogService.addDialog(DistributionsModalComponent, { dataset: this.selectedDataset })
+    if (this.explanatoryVariables.length == 0) {
+      alert(this.translate.instant("MODEL_SELECTION.NO_VARIABLES_SELECTED"));
+      return;
+    }
+
+    this.dialogService.addDialog(DistributionsModalComponent, { dataset: this.selectedDataset, columns: [this.targetVariable, ...this.explanatoryVariables]})
       .subscribe((result) => {
         console.log(result)
       });
   }
 
+  // todo: adapt me
   private createRecommenderRequest(): RecommenderRequest {
     return new RecommenderRequest(
       this.selectedDataset.id,
       this.goal,
       this.tradeOff,
       this.targetVariable.index,
-      this.columnsToIgnore.map(c => c.index)
+      this.explanatoryVariables.map(c => c.index),
+      Distribution.BERNOULLI_DISTRIBUTION,
+      []
     )
   }
 }

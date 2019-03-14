@@ -7,6 +7,7 @@ import {DataService} from "../../../services/data.service";
 
 export interface DistributionsModal {
   dataset: DataSet
+  columns: Column[]
 }
 
 @Component({
@@ -14,10 +15,11 @@ export interface DistributionsModal {
   templateUrl: './distributions-modal.component.html',
   styleUrls: ['./distributions-modal.component.scss']
 })
-export class DistributionsModalComponent extends DialogComponent<DistributionsModal, DataSet> implements DistributionsModal {
+export class DistributionsModalComponent extends DialogComponent<DistributionsModal, [DataSet, Column[]]> implements DistributionsModal {
 
   Distribution = Distribution;
   dataset: DataSet;
+  columns: Column[];
 
   constructor(dialogService: DialogService, private dataService: DataService) {
     super(dialogService);

@@ -60,9 +60,9 @@
       <br/>
       <hr/>
       <br/>
-      <label>{{ 'MODEL_SELECTION.IGNORE_VARIABLES' | translate }}</label>
+      <label>{{ 'MODEL_SELECTION.EXPLANATORY_VARIABLES' | translate }}</label>
       <div class="row">
-        <div class="toIgnore" *ngFor="let c of selectedDataset.schema.columns">
+        <div class="explanatory-variables" *ngFor="let c of possibleExplanatoryVariables">
           <form>
             <label>
               <input type="checkbox" [checked]="checked" (change)="addCheckBoxChange(c, $event.target.checked)">

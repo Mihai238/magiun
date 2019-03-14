@@ -1,3 +1,38 @@
+import {Distribution} from "./distribution.model";
+
+/**
+ * @see https://en.wikipedia.org/wiki/Normal_distribution
+ */
+export class NormalDistribution implements Distribution {
+
+  private DOUBLE_PI = Math.PI * 2;
+
+  constructor(private mean: number = 0, private sd: number = 1) {}
+
+  sample(size: number): number[] {
+    const sample: number[] = [];
+
+    for (let i = 0; i < size; i++) {
+      const r1 = Math.random();
+      const r2 = Math.random();
+
+      let z0 = Math.sqrt(-2.0 * Math.log(r1)) * Math.cos(this.DOUBLE_PI * r2);
+
+      sample[i] = z0 * this.sd + this.mean;
+    }
+
+    return sample;
+  }
+
+  cdf(x: number): number {
+    return 0.5 * (1 + erf((x - this.mean)/(Math.sqrt(2) * this.sd)))
+  }
+
+  pdf(x: number): number {
+    return (1/Math.sqrt(this.DOUBLE_PI * Math.pow(this.sd, 2))) * Math.pow(Math.E, -(Math.pow(x - this.mean, 2)/(2 * Math.pow(this.sd, 2))))
+  }
+}
+
 export function erfc(x) {
   const z = Math.abs(x);
   const t = 1 / (1 + z / 2);
@@ -24,35 +59,4 @@ export function erf(x){
     sum += (s * Math.pow(x, 2.0 * i + 1.0)) / (m * (2.0 * i + 1.0));
   }
   return 2 * sum / Math.sqrt(Math.PI);
-}
-
-export class NormalDistribution {
-
-  private DOUBLE_PI = Math.PI * 2;
-
-  constructor(private mean: number = 0, private sd: number = 1) {
-  }
-
-  sample(size: number): number[] {
-    const sample: number[] = [];
-
-    for (let i = 0; i < size; i++) {
-      const r1 = Math.random();
-      const r2 = Math.random();
-
-      let z0 = Math.sqrt(-2.0 * Math.log(r1)) * Math.cos(this.DOUBLE_PI * r2);
-
-      sample[i] = z0 * this.sd + this.mean;
-    }
-
-    return sample;
-  }
-
-  cdf(x: number): number {
-    return 0.5 * (1 + erf((x - this.mean)/(Math.sqrt(2) * this.sd)))
-  }
-
-  pdf(x: number): number {
-    return (1/Math.sqrt(this.DOUBLE_PI * Math.pow(this.sd, 2))) * Math.pow(Math.E, -(Math.pow(x - this.mean, 2)/(2 * Math.pow(this.sd, 2))))
-  }
 }

@@ -3,6 +3,7 @@ import {Column} from "../../../model/data-set.model";
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal'
 import {NormalDistribution} from "../../../model/statistics/normal.distribution.model";
 import {StatisticsUtils} from "../../../util/statistics.utils";
+import {ExponentialDistribution} from "../../../model/statistics/exponential.distribution.model";
 
 declare var Plotly: any;
 
@@ -24,6 +25,8 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   data: number[];
   normalDistribution: NormalDistribution;
   normalDistributed: number[];
+  exponentialDistribution: ExponentialDistribution;
+  exponentiallyDistributed: number[];
 
   constructor(dialogService: DialogService) {
     super(dialogService);
@@ -34,18 +37,22 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     this.plotHistogram();
     this.plotBoxPlot();
     this.plotViolinPlot();
-    this.qqPlot();
-    this.ppPlot();
-    this.cdPlot();
+    this.qqPlots();
+    this.ppPlots();
+    this.cdPlots();
   }
 
   private prepareNeededData() {
+    const n = this.data.length;
     this.data = this.data.sort((n1, n2) => n2 - n1);
     let mean = StatisticsUtils.mean(this.data);
     let sd  =StatisticsUtils.sd(this.data);
 
     this.normalDistribution = new NormalDistribution(mean, sd);
-    this.normalDistributed = this.normalDistribution.sample(this.data.length).sort((n1, n2) => n2 - n1);
+    this.normalDistributed = this.normalDistribution.sample(n).sort((n1, n2) => n2 - n1);
+
+    this.exponentialDistribution = new ExponentialDistribution();
+    this.exponentiallyDistributed = this.exponentialDistribution.sample(n).sort((n1, n2) => n2 - n1)
   }
 
   private plotHistogram(): void {
@@ -56,18 +63,31 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       showlegend: false
     };
 
-    const probs = this.data.map(x => this.normalDistribution.pdf(x));
+    const normalDistProbs = this.data.map(x => this.normalDistribution.pdf(x));
+    const expDistProbs = this.data.map(x => this.exponentialDistribution.pdf(x));
     const normalDistributionLine = {
       x: this.data,
-      y: probs,
+      y: normalDistProbs,
       mode: 'lines',
       name: 'Normal Distribution',
       type: 'scatter',
       xaxis: this.column.name,
-      yaxis: "Density"
+      yaxis: "Density",
+      showlegend: false
     };
 
-    const plotData = [histogramData, normalDistributionLine];
+    const exponentialDistributionLine = {
+      x: this.data,
+      y: expDistProbs,
+      mode: 'lines',
+      name: 'Exponential Distribution',
+      type: 'scatter',
+      xaxis: this.column.name,
+      yaxis: "Density",
+      showlegend: false
+    };
+
+    const plotData = [histogramData, normalDistributionLine, exponentialDistributionLine];
 
     const layout = {
       height: PlotsModalComponent.PLOT_HEIGHT,
@@ -114,10 +134,15 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     this.plot("violinPlot", [trace], layout)
   }
 
-  private qqPlot(): void {
+  private qqPlots(): void {
+    this.qqPlot(this.normalDistributed, this.data, "Normal Q-Q Plot", "normalQQPlot");
+    this.qqPlot(this.exponentiallyDistributed, this.data, "Normal Q-Q Plot", "expQQPlot");
+  }
+
+  private qqPlot(xdata: number[], ydata: number[], title: string, target: string): void {
     const trace = {
-      x: this.normalDistributed,
-      y: this.data.sort((n1, n2) => n2 - n1),
+      x: xdata,
+      y: ydata,
       type: 'scatter',
       mode: "markers",
       name: this.column.name,
@@ -126,7 +151,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       }
     };
 
-    const coordinates = this.calculateLineCoordinates(this.data, this.normalDistributed);
+    const coordinates = this.calculateLineCoordinates(ydata, xdata);
 
     const straightLine = {
       x0: coordinates[0],
@@ -145,7 +170,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     const layout = {
       height: PlotsModalComponent.PLOT_HEIGHT,
       width: PlotsModalComponent.PLOT_WIDTH,
-      title: "Normal Q-Q Plot",
+      title: title,
       xaxis: {
         showgrid: true,
         showline: true,
@@ -160,16 +185,23 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       shapes: [straightLine]
     };
 
-    this.plot("qqPlot", plotData, layout)
+    this.plot(target, plotData, layout)
   }
 
-  private ppPlot(): void {
-    let theoreticalCD = this.normalDistributed.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2- n1);
-    let empiricalCD = this.data.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
+  private ppPlots(): void {
+    let normalEmpiricalCD = this.data.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
+    let normDistTheoreticalCD = this.normalDistributed.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2- n1);
+    let expEmpiricalCD = this.data.map(x => this.exponentialDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
+    let expDistTheoreticalCD = this.exponentiallyDistributed.map(x => this.exponentialDistribution.cdf(x)).sort((n1, n2) => n2- n1);
 
+    this.ppPlot(normDistTheoreticalCD, normalEmpiricalCD, "Normal P-P Plot", "normalPPPlot");
+    this.ppPlot(expDistTheoreticalCD, expEmpiricalCD, "Exponential P-P Plot", "expPPPlot");
+  }
+
+  private ppPlot(xdata: number[], ydata:number[], title: string, target: string): void {
     const trace = {
-      x: theoreticalCD,
-      y: empiricalCD,
+      x: xdata,
+      y: ydata,
       type: 'scatter',
       mode: "markers",
       name: this.column.name,
@@ -178,7 +210,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       }
     };
 
-    const coordinates = this.calculateLineCoordinates(empiricalCD, theoreticalCD);
+    const coordinates = this.calculateLineCoordinates(ydata, xdata);
 
     const straightLine = {
       x0: coordinates[0],
@@ -197,7 +229,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     const layout = {
       height: PlotsModalComponent.PLOT_HEIGHT,
       width: PlotsModalComponent.PLOT_WIDTH,
-      title: "Normal P-P Plot",
+      title: title,
       xaxis: {
         showgrid: true,
         showline: true,
@@ -212,15 +244,23 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       shapes: [straightLine]
     };
 
-    this.plot("ppPlot", plotData, layout)
+    this.plot(target, plotData, layout)
   }
 
-  private cdPlot(): void {
+  private cdPlots(): void {
+    let normalEmpiricalCD = this.data.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
+    let expEmpiricalCD = this.data.map(x => this.exponentialDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
+
+    this.cdPlot(this.data, normalEmpiricalCD, "Normal Cumulative Distribution", "normalCDPlot");
+    this.cdPlot(this.data, expEmpiricalCD, "Exponential Cumulative Distribution", "expCDPlot");
+  }
+
+  private cdPlot(xdata: number[], ydata: number[], title: string, target: string): void {
     let empiricalCD = this.data.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
 
     const trace = {
-      x: this.data.sort((n1, n2) => n2 - n1),
-      y: empiricalCD,
+      x: xdata,
+      y: ydata,
       type: 'scatter',
       mode: "markers",
       name: this.column.name,
@@ -234,7 +274,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     const layout = {
       height: PlotsModalComponent.PLOT_HEIGHT,
       width: PlotsModalComponent.PLOT_WIDTH,
-      title: "Normal Cumulative Distribution",
+      title: title,
       xaxis: {
         showgrid: true,
         showline: true,
@@ -248,7 +288,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       }
     };
 
-    this.plot("cdPlot", plotData, layout)
+    this.plot(target, plotData, layout)
   }
 
   private plot(target: String, data: any[], layout: any): void {

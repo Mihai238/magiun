@@ -4,6 +4,7 @@ import {DialogComponent, DialogService} from 'ng2-bootstrap-modal'
 import {NormalDistribution} from "../../../model/statistics/normal.distribution.model";
 import {StatisticsUtils} from "../../../util/statistics.utils";
 import {ExponentialDistribution} from "../../../model/statistics/exponential.distribution.model";
+import {UniformDistribution} from "../../../model/statistics/uniform.distribution.model";
 
 declare var Plotly: any;
 
@@ -27,6 +28,8 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   normalDistributed: number[];
   exponentialDistribution: ExponentialDistribution;
   exponentiallyDistributed: number[];
+  uniformDistribution: UniformDistribution;
+  uniformDistributed: number[];
 
   constructor(dialogService: DialogService) {
     super(dialogService);
@@ -52,7 +55,10 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     this.normalDistributed = this.normalDistribution.sample(n).sort((n1, n2) => n2 - n1);
 
     this.exponentialDistribution = new ExponentialDistribution();
-    this.exponentiallyDistributed = this.exponentialDistribution.sample(n).sort((n1, n2) => n2 - n1)
+    this.exponentiallyDistributed = this.exponentialDistribution.sample(n).sort((n1, n2) => n2 - n1);
+
+    this.uniformDistribution = new UniformDistribution();
+    this.uniformDistributed = this.uniformDistribution.sample(n).sort((n1, n2) => n2 - n1);
   }
 
   private plotHistogram(): void {
@@ -65,6 +71,8 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
 
     const normalDistProbs = this.data.map(x => this.normalDistribution.pdf(x));
     const expDistProbs = this.data.map(x => this.exponentialDistribution.pdf(x));
+    const uniDistProbs = this.data.map(x => this.uniformDistribution.pdf(x));
+
     const normalDistributionLine = {
       x: this.data,
       y: normalDistProbs,
@@ -87,7 +95,18 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       showlegend: false
     };
 
-    const plotData = [histogramData, normalDistributionLine, exponentialDistributionLine];
+    const uniformDistributionLine = {
+      x: this.data,
+      y: uniDistProbs,
+      mode: 'lines',
+      name: 'Uniform Distribution',
+      type: 'scatter',
+      xaxis: this.column.name,
+      yaxis: "Density",
+      showlegend: false
+    };
+
+    const plotData = [histogramData, normalDistributionLine, exponentialDistributionLine, uniformDistributionLine];
 
     const layout = {
       height: PlotsModalComponent.PLOT_HEIGHT,
@@ -136,7 +155,8 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
 
   private qqPlots(): void {
     this.qqPlot(this.normalDistributed, this.data, "Normal Q-Q Plot", "normalQQPlot");
-    this.qqPlot(this.exponentiallyDistributed, this.data, "Normal Q-Q Plot", "expQQPlot");
+    this.qqPlot(this.exponentiallyDistributed, this.data, "Exponential Q-Q Plot", "expQQPlot");
+    this.qqPlot(this.uniformDistributed, this.data, "Uniform Q-Q Plot", "uniQQPlot");
   }
 
   private qqPlot(xdata: number[], ydata: number[], title: string, target: string): void {
@@ -193,9 +213,12 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     let normDistTheoreticalCD = this.normalDistributed.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2- n1);
     let expEmpiricalCD = this.data.map(x => this.exponentialDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
     let expDistTheoreticalCD = this.exponentiallyDistributed.map(x => this.exponentialDistribution.cdf(x)).sort((n1, n2) => n2- n1);
+    let uniEmpiricalCD = this.data.map(x => this.exponentialDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
+    let uniDistTheoreticalCD = this.uniformDistributed.map(x => this.uniformDistribution.cdf(x)).sort((n1, n2) => n2- n1);
 
     this.ppPlot(normDistTheoreticalCD, normalEmpiricalCD, "Normal P-P Plot", "normalPPPlot");
     this.ppPlot(expDistTheoreticalCD, expEmpiricalCD, "Exponential P-P Plot", "expPPPlot");
+    this.ppPlot(uniDistTheoreticalCD, uniEmpiricalCD, "Uniform P-P Plot", "uniPPPlot");
   }
 
   private ppPlot(xdata: number[], ydata:number[], title: string, target: string): void {
@@ -250,14 +273,14 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   private cdPlots(): void {
     let normalEmpiricalCD = this.data.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
     let expEmpiricalCD = this.data.map(x => this.exponentialDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
+    let uniEmpiricalCD = this.data.map(x => this.uniformDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
 
     this.cdPlot(this.data, normalEmpiricalCD, "Normal Cumulative Distribution", "normalCDPlot");
     this.cdPlot(this.data, expEmpiricalCD, "Exponential Cumulative Distribution", "expCDPlot");
+    this.cdPlot(this.data, uniEmpiricalCD, "Uniform Cumulative Distribution", "uniCDPlot");
   }
 
   private cdPlot(xdata: number[], ydata: number[], title: string, target: string): void {
-    let empiricalCD = this.data.map(x => this.normalDistribution.cdf(x)).sort((n1, n2) => n2 - n1);
-
     const trace = {
       x: xdata,
       y: ydata,

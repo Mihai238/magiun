@@ -12,9 +12,10 @@
           </label>
         </div>
         <div class="col-md-5">
-          <select class="selectpicker" required>
+          <select class="selectpicker" required (change)="distributionSelected(c, $event.target.value)">
             <option *ngFor="let d of Distribution.values(c.distribution)"
-                    [attr.selected]="c.distribution != null && c.distribution == Distribution[d] ? true : null">
+                    [attr.selected]="c.distribution != null && c.distribution == Distribution[d] ? true : null"
+                    [disabled]="Distribution[d] === Distribution.UNKNOWN">
               {{Distribution[d]}}
             </option>
           </select>

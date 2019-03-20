@@ -4,6 +4,7 @@ import {Column, DataSet} from "../../../model/data-set.model";
 import {Distribution} from "../../../model/statistics/distribution.type.model";
 import {PlotsModalComponent} from "../plots-modal/plots-modal.component";
 import {DataService} from "../../../services/data.service";
+import {TranslateService} from "@ngx-translate/core";
 
 export interface DistributionsModal {
   dataset: DataSet
@@ -21,12 +22,22 @@ export class DistributionsModalComponent extends DialogComponent<DistributionsMo
   dataset: DataSet;
   columns: Column[];
 
-  constructor(dialogService: DialogService, private dataService: DataService) {
+  constructor(dialogService: DialogService, private dataService: DataService, private translate: TranslateService) {
     super(dialogService);
   }
 
   confirm() {
+    if (!this.validateDistributions()) {
+      alert(this.translate.instant('MODEL_SELECTION.DISTRIBUTIONS_MODAL.NOT_ALL_DISTRIBUTIONS'));
+      return;
+    }
+
+    this.result = [this.dataset, this.columns];
     this.close();
+  }
+
+  distributionSelected(c: Column, d: string) {
+    this.columns.filter(column => column.equals(c)).forEach(column => column.distribution = Distribution.value(d));
   }
 
   plot(c: Column) {
@@ -34,6 +45,9 @@ export class DistributionsModalComponent extends DialogComponent<DistributionsMo
       rows => {
         this.dialogService.addDialog(PlotsModalComponent, { column: c, data: rows.map(row => parseFloat(row.values[c.index]))}).subscribe()
       });
+  }
 
+  private validateDistributions(): boolean {
+    return this.columns.filter(c => c.distribution == null || c.distribution == Distribution.UNKNOWN).length == 0
   }
 }

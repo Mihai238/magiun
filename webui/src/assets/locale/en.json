@@ -40,7 +40,8 @@
     "NO_VARIABLES_SELECTED": "There were no explanatory variables selected!",
     "DISTRIBUTIONS_MODAL": {
       "TITLE": "Variables Distributions",
-      "ICON_TITLE": "Plot variable's statistics"
+      "ICON_TITLE": "Plot variable's statistics",
+      "NOT_ALL_DISTRIBUTIONS": "Please select a distribution for each variable"
     },
     "PLOTS_MODAL": {
       "TITLE": "statistical plots"

@@ -33,6 +33,7 @@ export class ModelSelectionComponent {
   private targetVariable: Column;
   private goal: string = "regression";
   private tradeOff: string = "";
+  private definedDistributions: Distribution[] = [];
 
   constructor(
     private dataService: DataService,
@@ -148,7 +149,6 @@ export class ModelSelectionComponent {
       .subscribe(() => {});
   }
 
-  //TODO: implement me
   showDistributions(): void {
     if (this.explanatoryVariables.length == 0) {
       alert(this.translate.instant("MODEL_SELECTION.NO_VARIABLES_SELECTED"));
@@ -157,11 +157,10 @@ export class ModelSelectionComponent {
 
     this.dialogService.addDialog(DistributionsModalComponent, { dataset: this.selectedDataset, columns: [this.targetVariable, ...this.explanatoryVariables]})
       .subscribe((result) => {
-        console.log(result)
+        this.definedDistributions = result[1].map(c => c.distribution);
       });
   }
 
-  // todo: adapt me
   private createRecommenderRequest(): RecommenderRequest {
     return new RecommenderRequest(
       this.selectedDataset.id,
@@ -169,8 +168,8 @@ export class ModelSelectionComponent {
       this.tradeOff,
       this.targetVariable.index,
       this.explanatoryVariables.map(c => c.index),
-      Distribution.BERNOULLI_DISTRIBUTION,
-      []
-    )
+      this.definedDistributions[0],
+      this.definedDistributions.slice(1)
+    );
   }
 }

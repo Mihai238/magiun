@@ -47,6 +47,10 @@ export class CollectionsUtils {
   }
 
   public static withoutElement<T>(values: Array<T>, value: T): Array<T> {
+    if (value == undefined || value == null) {
+      return values;
+    }
+
     return values.filter(v => v !== value);
   }
 

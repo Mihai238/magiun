@@ -26,14 +26,14 @@ import {Distribution} from "../../model/statistics/distribution.type.model";
 export class ModelSelectionComponent {
 
   private logger: MagiunLogger;
-  private datasets: DataSet[] = [];
-  private selectedDataset: DataSet;
-  private explanatoryVariables: Column[] = [];
-  private possibleExplanatoryVariables: Column[] = [];
-  private targetVariable: Column;
-  private goal: string = "regression";
-  private tradeOff: string = "";
-  private definedDistributions: Distribution[] = [];
+  datasets: DataSet[] = [];
+  selectedDataset: DataSet;
+  explanatoryVariables: Column[] = [];
+  possibleExplanatoryVariables: Column[] = [];
+  targetVariable: Column;
+  goal: string = "regression";
+  tradeOff: string = "";
+  definedDistributions: Distribution[] = [];
 
   constructor(
     private dataService: DataService,
@@ -44,13 +44,13 @@ export class ModelSelectionComponent {
     ngxLogger: NGXLogger
   ) {
     this.logger = new MagiunLogger(ModelSelectionComponent.name, ngxLogger);
-    this.logger.info("created!");
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd && val.url == '/model-selection') {
         this.refreshTheDatasets();
         this.getDistributions();
       }
-    })
+    });
+    this.logger.info("created!");
   }
 
   private refreshTheDatasets(): void {
@@ -82,10 +82,11 @@ export class ModelSelectionComponent {
     this.logSelectedDatasetInfo();
   }
 
-  updateSelectedDataset(event: any): void {
-    this.selectedDataset = this.datasets[<number>event];
+  updateSelectedDataset(event: number): void {
+    this.selectedDataset = this.datasets[event];
     this.targetVariable = this.selectedDataset.schema.columns[0];
     this.explanatoryVariables = [];
+    this.possibleExplanatoryVariables = CollectionsUtils.withoutElement(this.selectedDataset.schema.columns, this.targetVariable);
     this.logSelectedDatasetInfo();
   }
 

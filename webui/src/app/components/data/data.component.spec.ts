@@ -10,6 +10,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {Component, Input} from '@angular/core';
 import {Column, DataSet} from '../../model/data-set.model';
 import {RowCallback} from '../shared/table';
+import {Recommendations} from "../../model/recommendations.model";
 
 describe('DataComponent', () => {
   let component: DataComponent;
@@ -39,13 +40,13 @@ describe('DataComponent', () => {
   }));
 
   beforeEach(() => {
+    dataService = TestBed.get(DataService);
     fixture = TestBed.createComponent(DataComponent);
-    component = fixture.componentInstance;
 
-    dataService = fixture.debugElement.injector.get(DataService);
+    component = fixture.componentInstance;
   });
 
-  xit('should be created', () => {
+  it('should be created', () => {
     spyOn(dataService, 'getDataSets')
       .and.returnValue(Observable.of([
       {
@@ -85,6 +86,7 @@ class ChartStubComponent {
   template: ''
 })
 class NewColumnSettingsStubComponent {
+  @Input() dataSet: DataSet;
   @Input() visible: boolean;
   @Input() index: number;
 }
@@ -94,6 +96,7 @@ class NewColumnSettingsStubComponent {
   template: ''
 })
 class ProcessFeatureStubComponent {
+  @Input() dataSet: DataSet;
   @Input() visible: boolean;
   @Input() column: Column;
 }
@@ -110,6 +113,7 @@ class DataTableStubComponent {
   @Input() pagination_limit = false;
   @Input() pagination_input = true;
   @Input() pagination_numbers = false;
+  @Input() recommendations: Recommendations;
 }
 
 @Component({
@@ -117,6 +121,7 @@ class DataTableStubComponent {
   template: ''
 })
 class TableColumnStubComponent {
+  @Input() index: number;
   @Input() property: string;
   @Input() header: string;
   @Input() visible = true;

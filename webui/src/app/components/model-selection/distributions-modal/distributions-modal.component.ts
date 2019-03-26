@@ -5,6 +5,7 @@ import {Distribution} from "../../../model/statistics/distribution.type.model";
 import {PlotsModalComponent} from "../plots-modal/plots-modal.component";
 import {DataService} from "../../../services/data.service";
 import {TranslateService} from "@ngx-translate/core";
+import {CollectionsUtils} from "../../../util/collections.utils";
 
 export interface DistributionsModal {
   dataset: DataSet
@@ -43,7 +44,14 @@ export class DistributionsModalComponent extends DialogComponent<DistributionsMo
   plot(c: Column) {
     this.dataService.getDataSample(this.dataset, [c.name]).subscribe(
       rows => {
-        this.dialogService.addDialog(PlotsModalComponent, { column: c, data: rows.map(row => parseFloat(row.values[c.index]))}).subscribe()
+        this.dialogService.addDialog(
+          PlotsModalComponent,
+          {
+            column: c,
+            data: CollectionsUtils.cleanArray(rows.map(row => parseFloat(row.values[c.index])))
+          }
+        )
+          .subscribe()
       });
   }
 

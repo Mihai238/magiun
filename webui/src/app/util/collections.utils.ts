@@ -1,4 +1,5 @@
 import {Tuple} from './tuple';
+import * as assert from "assert";
 
 export class CollectionsUtils {
 
@@ -44,6 +45,12 @@ export class CollectionsUtils {
       const entry = entries.next().value;
       return new Tuple<K, V>(entry[0], entry[1]);
     }
+  }
+
+  public static cleanArray<T>(values: Array<T>): Array<T> {
+    assert(values != null, "the provided array cannot be null!");
+
+    return values.filter(v => v != null && v != undefined);
   }
 
   public static withoutElement<T>(values: Array<T>, value: T): Array<T> {

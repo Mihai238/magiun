@@ -56,4 +56,40 @@ describe('Utils: CollectionsUtils', () => {
     expect(newValues.length).toBe(3);
     expect(newValues.indexOf('a')).toBe(-1);
   });
+
+  it('should return the list without the null elements', () => {
+    // given
+    const values = ['a', 'b', null, 'c', undefined, 'd'];
+
+    // when
+    const cleanValue = CollectionsUtils.cleanArray(values);
+
+    // then
+    expect(cleanValue.length).toBe(4);
+    expect(cleanValue).toEqual(['a', 'b', 'c', 'd']);
+  });
+
+  it('should return an empty list when receiving an empty one', () => {
+    // given
+    const values = [];
+
+    // when
+    const cleanValue = CollectionsUtils.cleanArray(values);
+
+    // then
+    expect(cleanValue.length).toBe(0);
+    expect(cleanValue).toEqual([]);
+  });
+
+  it('should return an empty list when receiving a list containing only null values', () => {
+    // given
+    const values = [null, null, null, null];
+
+    // when
+    const cleanValue = CollectionsUtils.cleanArray(values);
+
+    // then
+    expect(cleanValue.length).toBe(0);
+    expect(cleanValue).toEqual([]);
+  });
 });

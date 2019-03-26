@@ -83,6 +83,11 @@ export class ModelSelectionComponent {
   }
 
   updateSelectedDataset(event: number): void {
+    if (event == null || event < 0) {
+      this.logger.error(`index should be >= 0 but got ${event}`);
+      return;
+    }
+
     this.selectedDataset = this.datasets[event];
     this.targetVariable = this.selectedDataset.schema.columns[0];
     this.explanatoryVariables = [];
@@ -90,8 +95,13 @@ export class ModelSelectionComponent {
     this.logSelectedDatasetInfo();
   }
 
-  updateTargetVariable(event: any): void {
-    this.targetVariable = this.selectedDataset.schema.columns[<number>event];
+  updateTargetVariable(event: number): void {
+    if (event == null || event < 0) {
+      this.logger.error(`index should be >= 0 but got ${event}`);
+      return;
+    }
+
+    this.targetVariable = this.selectedDataset.schema.columns[event];
     this.possibleExplanatoryVariables = CollectionsUtils.withoutElement(this.selectedDataset.schema.columns, this.targetVariable);
     this.logTargetVariable();
   }

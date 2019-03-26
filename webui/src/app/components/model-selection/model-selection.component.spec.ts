@@ -66,7 +66,33 @@ describe("ModelSelectionComponent", () => {
     expect(component.possibleExplanatoryVariables).toEqual([columnAge, columnMarried]);
   });
 
-  it('should update the selected dataset and all the rest of the variables', () => {
+  it('should not update the selected dataset and the rest of the variables when receiving null as a index', () => {
+    // given
+
+    // when
+    component.updateSelectedDataset(null);
+
+    // then
+    expect(component.selectedDataset).toBe(dataset1);
+    expect(component.targetVariable).toBe(columnName);
+    expect(component.explanatoryVariables).toEqual([]);
+    expect(component.possibleExplanatoryVariables).toEqual([columnAge, columnMarried]);
+  });
+
+  it('should not update the selected dataset and the rest of the variables when receiving index < 0', () => {
+    // given
+
+    // when
+    component.updateSelectedDataset(-3);
+
+    // then
+    expect(component.selectedDataset).toBe(dataset1);
+    expect(component.targetVariable).toBe(columnName);
+    expect(component.explanatoryVariables).toEqual([]);
+    expect(component.possibleExplanatoryVariables).toEqual([columnAge, columnMarried]);
+  });
+
+  it('should update the selected dataset and the rest of the variables', () => {
     // given
 
     // when
@@ -77,7 +103,20 @@ describe("ModelSelectionComponent", () => {
     expect(component.targetVariable).toBe(columnName);
     expect(component.explanatoryVariables).toEqual([]);
     expect(component.possibleExplanatoryVariables).toEqual([columnSex, columnMarried, columnAge, columnUUID]);
-  })
+  });
+
+  it('should update the selected target variable and the possible explanatory variables', () => {
+    // given
+
+    // when
+    component.updateTargetVariable(2);
+
+    // then
+    expect(component.selectedDataset).toBe(dataset1);
+    expect(component.targetVariable).toBe(columnMarried);
+    expect(component.explanatoryVariables).toEqual([]);
+    expect(component.possibleExplanatoryVariables).toEqual([columnName, columnAge]);
+  });
 
 });
 

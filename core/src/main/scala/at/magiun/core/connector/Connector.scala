@@ -26,7 +26,7 @@ trait Connector extends LazyLogging {
 
   final def getRandomSample(souce: DataSetSource, size: Option[Int] = Option(1000), columns: Option[Seq[String]] = empty): Seq[DataRow] = {
     val dataset = getDataset(souce)
-    val dataCount = dataset.count()
+    val dataCount = dataset.count().intValue()
 
     if (size.get > dataCount) {
       return mapToRowValues(dataset.collect(), dataset.schema, columns)
@@ -34,10 +34,10 @@ trait Connector extends LazyLogging {
 
     val r = new Random()
     val indices = size.map(s => {
-      (0 until s).map(i => r.nextInt(s))
+      (0 until s).map(_ => r.nextInt(dataCount))
     }).get
 
-    val rows: Array[Row] = dataset.rdd.zipWithIndex().filter{case (k, v) => indices.contains(v)}.map{case (k, v) => k}.collect()
+    val rows: Array[Row] = dataset.rdd.zipWithIndex().filter{case (_, v) => indices.contains(v)}.map{case (k, _) => k}.collect()
 
     mapToRowValues(rows, dataset.schema, columns)
   }

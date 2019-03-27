@@ -53,4 +53,17 @@ class CsvConnectorTest extends UnitTest {
     firstRow(2) should be ("male")
   }
 
+  it should "get the whole dataset when the requested size is larger than the dataset" in {
+    val rows = connector.getRandomSample(titanicDataSetSource, Option(Int.MaxValue), Option(Seq("PassengerId", "Survived", "Sex")))
+
+    rows should have size 891
+  }
+
+
+  it should "get a sample of given size of the dataset" in {
+    val rows = connector.getRandomSample(titanicDataSetSource, Option(5), Option(Seq("PassengerId", "Survived", "Sex")))
+
+    rows should have size 5
+  }
+
 }

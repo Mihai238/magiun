@@ -6,6 +6,7 @@ import org.apache.spark.sql.types.{DataType, StructType}
 import org.apache.spark.sql.{Dataset, Row}
 
 import scala.Option.empty
+import scala.util.Random
 
 trait Connector extends LazyLogging {
 
@@ -21,6 +22,24 @@ trait Connector extends LazyLogging {
     }).getOrElse(ds.collect())
 
     mapToRowValues(dsRows, ds.schema, columns)
+  }
+
+  final def getRandomSample(souce: DataSetSource, size: Option[Int] = Option(1000), columns: Option[Seq[String]] = empty): Seq[DataRow] = {
+    val dataset = getDataset(souce)
+    val dataCount = dataset.count()
+
+    if (size.get > dataCount) {
+      return mapToRowValues(dataset.collect(), dataset.schema, columns)
+    }
+
+    val r = new Random()
+    val indices = size.map(s => {
+      (0 until s).map(i => r.nextInt(s))
+    }).get
+
+    val rows: Array[Row] = dataset.rdd.zipWithIndex().filter{case (k, v) => indices.contains(v)}.map{case (k, v) => k}.collect()
+
+    mapToRowValues(rows, dataset.schema, columns)
   }
 
   protected def mapToColumnType(dataType: DataType): ColumnType = {

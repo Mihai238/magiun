@@ -73,6 +73,13 @@ class DataSetService(
       })
   }
 
+  def getRandomSample(dataSetId: String, size: Option[Int] = empty, columns: Option[Seq[String]] = empty): Future[Option[Seq[DataRow]]] = {
+    getConnectorAndSource(dataSetId)
+      .map(_.map { case (connector, source) =>
+        connector.getRandomSample(source, size, columns)
+      })
+  }
+
   def getRecommendations(dataSetId: String): Future[Option[Recommendations]] = {
     getDataSet(dataSetId)
       .map(_.map(ds => recommender.recommend(ds)))

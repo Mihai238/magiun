@@ -15,10 +15,11 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
 
   private val BASE_PATH = "datasets"
   private val ROWS_PATH = "rows"
+  private val SAMPLE_PATH = "sample"
   private val RECOMMENDATIONS_PATH = "recommendations"
 
   //noinspection TypeAnnotation
-  lazy val api = getDataSet :+: getDataSets :+: createDataSet :+: getRows :+: getRecommendation
+  lazy val api = getDataSet :+: getDataSets :+: createDataSet :+: getRows :+: getRandomSample :+: getRecommendation
 
   val getDataSet: Endpoint[MagiunDataSet] = get(BASE_PATH :: path[String]) { id: String =>
 
@@ -44,6 +45,10 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
       .map(Ok)
   }
 
+  /**
+    * returns the firsts rows
+    * range based on ${limit} and ${page}
+    */
   val getRows: Endpoint[Seq[DataRow]] = get(BASE_PATH :: path[String] :: ROWS_PATH ::
     paramOption("_limit") :: paramOption("_page") :: paramOption("_columns")) {
 
@@ -57,12 +62,29 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
         page = Integer.parseInt(p)
       } yield Range((page - 1) * limit, page * limit + 1)
 
-      val columns = stringColumns.map(_.split(",").map(_.trim).toSeq)
+      val columns = splitString(stringColumns)
 
       dataSetService.findRows(dataSetId, range, columns)
         .asTwitter
         .map(_.get)
         .map(Ok)
+  }
+
+  val getRandomSample: Endpoint[Seq[DataRow]] = get(BASE_PATH :: path[String] :: SAMPLE_PATH ::
+  paramOption("_size") :: paramOption("_columns")) {
+
+    (datasetId: String, size: Option[String], columns: Option[String]) =>
+      logger.info(s"Getting a random sample of the size `$size` for the columns `$columns` of the dataset `$datasetId`")
+
+      dataSetService.getRandomSample(datasetId, size.map(s => s.toInt), splitString(columns))
+        .asTwitter
+        .map(_.get)
+        .map(Ok)
+
+  }
+
+  private def splitString(value: Option[String], separator: String = ","): Option[Seq[String]] = {
+    value.map(_.split(separator).map(_.trim).toSeq)
   }
 
   val getRecommendation: Endpoint[Recommendations] = get(BASE_PATH :: path[String] :: RECOMMENDATIONS_PATH) {

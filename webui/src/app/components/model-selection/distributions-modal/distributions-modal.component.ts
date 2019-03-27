@@ -42,13 +42,13 @@ export class DistributionsModalComponent extends DialogComponent<DistributionsMo
   }
 
   plot(c: Column) {
-    this.dataService.getDataSample(this.dataset, [c.name]).subscribe(
+    this.dataService.getRandomSample(this.dataset,[c.name]).subscribe(
       rows => {
         this.dialogService.addDialog(
           PlotsModalComponent,
           {
             column: c,
-            data: CollectionsUtils.cleanArray(rows.map(row => parseFloat(row.values[c.index])))
+            data: CollectionsUtils.cleanArray(rows.map(row => parseFloat(row.values.pop())))
           }
         )
           .subscribe()

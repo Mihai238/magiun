@@ -11,6 +11,7 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {DataTableParams} from '../components/shared/table';
 import {Recommendations} from "../model/recommendations.model";
 import {MagiunLogger} from "../util/magiun.logger";
+import {_catch} from "rxjs/operator/catch";
 
 @Injectable()
 export class DataService {
@@ -105,6 +106,19 @@ export class DataService {
     return this.http.get(environment.baseUrl + this.dataSetsPath + dataSet.id + '/rows?' + columnsQuery + "&" + limitQuery)
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 
+  }
+
+  getRandomSample(dataset: DataSet, columns: string[], size: number = 1000): Observable<DataRow[]> {
+    let concatColumns: string = "";
+    columns.forEach(col => concatColumns += col + ",");
+
+    this.logger.info(`Loading a random sample of ${size} observations for the columns ${concatColumns} of the dataset ${dataset.id}`);
+
+    let columnsQuery = '_columns=' + concatColumns.substring(0, concatColumns.length - 1);
+    let sizeQuery = "_size=" + size;
+
+    return this.http.get(environment.baseUrl + this.dataSetsPath + dataset.id + '/sample?' + columnsQuery + '&' + sizeQuery)
+    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   getDataForTable(dataSet: DataSet, params: DataTableParams): Promise<{ items: DataRow[] | null; count: number }> {

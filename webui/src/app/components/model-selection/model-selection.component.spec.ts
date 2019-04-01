@@ -43,6 +43,7 @@ describe("ModelSelectionComponent", () => {
   beforeEach(() => {
     dataService = TestBed.get(DataService);
     spyOn(dataService, "getDataSets").and.returnValue(Observable.of(datasets));
+    spyOn(dataService, "getDistributions").and.returnValue(Observable.of(new Map()));
 
     fixture = TestBed.createComponent(ModelSelectionComponent);
     component = fixture.componentInstance;

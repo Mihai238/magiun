@@ -140,13 +140,6 @@ export class DataService {
   getDistributions(dataset: DataSet): Observable<Map<string, Distribution>> {
     this.logger.info(`Loading the distributions for the dataset ${dataset.id}`);
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Access-Control-Allow-Origin'
-      })
-    };
-
     return this.http.get(environment.baseUrl + this.dataSetsPath + dataset.id + '/distributions')
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

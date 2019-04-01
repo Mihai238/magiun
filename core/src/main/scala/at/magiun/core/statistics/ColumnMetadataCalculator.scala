@@ -127,7 +127,7 @@ class ColumnMetadataCalculator(
           .rdd
 
         val normal = isDistributed(doubles, new NormalDistribution(stats.mean.get, stats.stddev.get))
-        val gamma = isDistributed(doubles, new GammaDistribution(0, 1))
+        val gamma = isDistributed(doubles, new GammaDistribution(1, 2))
         val exponential = isDistributed(doubles, new ExponentialDistribution(null, stats.mean.get))
         val uniform = isDistributed(doubles, new UniformRealDistribution(stats.min.get, stats.max.get))
 

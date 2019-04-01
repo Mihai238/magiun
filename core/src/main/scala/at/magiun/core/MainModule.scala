@@ -5,7 +5,7 @@ import at.magiun.core.feature._
 import at.magiun.core.repository.{BlockRepository, DataSetRepository, DatabaseInitializer}
 import at.magiun.core.rest._
 import at.magiun.core.service._
-import at.magiun.core.statistics.{AlgorithmRecommender, ColumnMetadataCalculator, DatasetMetadataCalculator}
+import at.magiun.core.statistics.{AlgorithmRecommender, ColumnMetadataCalculator, DatasetMetadataCalculator, StatisticsCalculator}
 import com.softwaremill.macwire._
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.sql.SparkSession
@@ -33,6 +33,7 @@ trait MainModule {
   // Calculators
   lazy val columnMetadataCalculator = wire[ColumnMetadataCalculator]
   lazy val datasetMetadataCalculator = wire[DatasetMetadataCalculator]
+  lazy val statisticsCalculator = wire[StatisticsCalculator]
 
   // Recommenders
   lazy val recommender = wire[Recommender]

@@ -47,7 +47,6 @@ export class ModelSelectionComponent {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd && val.url == '/model-selection') {
         this.refreshTheDatasets();
-        this.getDistributions();
       }
     });
     this.logger.info("created!");
@@ -59,12 +58,19 @@ export class ModelSelectionComponent {
     this.dataService.getDataSets().subscribe(value => {
       this.datasets = value;
       this.refreshSelectedDataset();
+      this.getDistributions();
     });
   }
 
-  // todo: implement me
   private getDistributions(): void {
-
+    this.dataService.getDistributions(this.selectedDataset)
+      .subscribe((result) => {
+        for (const key of Object.keys(result)) {
+          this.selectedDataset.schema.columns
+            .filter(c => c.name == key)
+            .forEach(c => c.distribution = result[key])
+        }
+      })
   }
 
   private refreshSelectedDataset(): void {
@@ -92,6 +98,7 @@ export class ModelSelectionComponent {
     this.targetVariable = this.selectedDataset.schema.columns[0];
     this.explanatoryVariables = [];
     this.possibleExplanatoryVariables = CollectionsUtils.withoutElement(this.selectedDataset.schema.columns, this.targetVariable);
+    this.getDistributions();
     this.logSelectedDatasetInfo();
   }
 
@@ -168,7 +175,9 @@ export class ModelSelectionComponent {
 
     this.dialogService.addDialog(DistributionsModalComponent, { dataset: this.selectedDataset, columns: [this.targetVariable, ...this.explanatoryVariables]})
       .subscribe((result) => {
-        this.definedDistributions = result[1].map(c => c.distribution);
+        if (result != undefined) {
+          this.definedDistributions = result[1].map(c => c.distribution);
+        }
       });
   }
 

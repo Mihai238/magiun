@@ -2,8 +2,10 @@ package at.magiun.core.service
 
 import at.magiun.core.connector.Connector
 import at.magiun.core.feature.{Recommendations, Recommender}
+import at.magiun.core.model.data.Distribution
 import at.magiun.core.model.{DataRow, DataSetSource, MagiunDataSet, SourceType}
 import at.magiun.core.repository.{DataSetRepository, MagiunDataSetEntity}
+import at.magiun.core.statistics.StatisticsCalculator
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
@@ -12,10 +14,11 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class DataSetService(
+                      spark: SparkSession,
                       dataSetRepository: DataSetRepository,
                       executionContext: ExecutionContext,
-                      spark: SparkSession,
-                      recommender: Recommender
+                      recommender: Recommender,
+                      statisticsCalculator: StatisticsCalculator
                     ) extends LazyLogging {
 
   def find(id: String): Future[Option[MagiunDataSet]] = {
@@ -78,6 +81,14 @@ class DataSetService(
       .map(_.map { case (connector, source) =>
         connector.getRandomSample(source, size, columns)
       })
+  }
+
+  def getDistributions(dataSetId: String): Future[Option[Map[String, Distribution]]] = {
+    getConnectorAndSource(dataSetId)
+      .map(_.map { case (connector, source) =>
+        statisticsCalculator.calculateDistributions(connector.getRandomSampleDF(source))
+      })
+
   }
 
   def getRecommendations(dataSetId: String): Future[Option[Recommendations]] = {

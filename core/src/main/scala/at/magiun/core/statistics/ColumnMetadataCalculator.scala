@@ -115,7 +115,7 @@ class ColumnMetadataCalculator(
   private def computeDistributions(ds: Dataset[Row], summaryStatistics: Seq[SummaryStatistics]): Seq[Set[Distribution]] = {
     val schema = ds.schema
 
-    ds.schema.indices.map { colIndex =>
+    schema.indices.map { colIndex =>
       val stats = summaryStatistics(colIndex)
       val colType = schema(colIndex).dataType.typeName
       if (colType == "integer" || colType == "double") {
@@ -127,13 +127,15 @@ class ColumnMetadataCalculator(
           .rdd
 
         val normal = isDistributed(doubles, new NormalDistribution(stats.mean.get, stats.stddev.get))
-        val uniform = isDistributed(doubles, new UniformRealDistribution(stats.min.get, stats.max.get))
+        val gamma = isDistributed(doubles, new GammaDistribution(0, 1))
         val exponential = isDistributed(doubles, new ExponentialDistribution(null, stats.mean.get))
+        val uniform = isDistributed(doubles, new UniformRealDistribution(stats.min.get, stats.max.get))
 
         Set[Distribution](
           if (normal) Distribution.Normal else null,
           if (uniform) Distribution.Uniform else null,
-          if (exponential) Distribution.Exponential else null
+          if (exponential) Distribution.Exponential else null,
+          if (gamma) Distribution.Gamma else null
         ).filter(e => e != null)
       } else {
         Set[Distribution]()

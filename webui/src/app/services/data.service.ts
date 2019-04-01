@@ -7,11 +7,12 @@ import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/observable/throw';
 import {Column, ColumnType, DataSet, Schema} from '../model/data-set.model';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {DataTableParams} from '../components/shared/table';
 import {Recommendations} from "../model/recommendations.model";
 import {MagiunLogger} from "../util/magiun.logger";
 import {_catch} from "rxjs/operator/catch";
+import {Distribution} from "../model/statistics/distribution.type.model";
 
 @Injectable()
 export class DataService {
@@ -134,6 +135,20 @@ export class DataService {
           count: Number(totalCount)
         };
       });
+  }
+
+  getDistributions(dataset: DataSet): Observable<Map<string, Distribution>> {
+    this.logger.info(`Loading the distributions for the dataset ${dataset.id}`);
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Access-Control-Allow-Origin'
+      })
+    };
+
+    return this.http.get(environment.baseUrl + this.dataSetsPath + dataset.id + '/distributions')
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   private paramsToQueryString(params: DataTableParams): string {

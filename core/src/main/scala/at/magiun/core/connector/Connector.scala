@@ -3,7 +3,7 @@ package at.magiun.core.connector
 import at.magiun.core.model._
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.spark.sql.types.{DataType, StructType}
-import org.apache.spark.sql.{Dataset, Row}
+import org.apache.spark.sql.{DataFrame, Dataset, Row}
 
 import scala.Option.empty
 import scala.util.Random
@@ -24,22 +24,38 @@ trait Connector extends LazyLogging {
     mapToRowValues(dsRows, ds.schema, columns)
   }
 
-  final def getRandomSample(souce: DataSetSource, size: Option[Int] = Option(1000), columns: Option[Seq[String]] = empty): Seq[DataRow] = {
-    val dataset = getDataset(souce)
+  final def getRandomSample(source: DataSetSource, size: Option[Int] = Option(1000), columns: Option[Seq[String]] = empty): Seq[DataRow] = {
+    val dataset = getDataset(source)
     val dataCount = dataset.count().intValue()
 
     if (size.get > dataCount) {
       return mapToRowValues(dataset.collect(), dataset.schema, columns)
     }
 
-    val r = new Random()
-    val indices = size.map(s => {
-      (0 until s).map(_ => r.nextInt(dataCount))
-    }).get
-
-    val rows: Array[Row] = dataset.rdd.zipWithIndex().filter{case (_, v) => indices.contains(v)}.map{case (k, _) => k}.collect()
+    val rows: Array[Row] = getRandomSample(dataset, size.get, dataCount)
 
     mapToRowValues(rows, dataset.schema, columns)
+  }
+
+  final def getRandomSampleDF(source: DataSetSource, size: Option[Int] = Option(1000)): DataFrame = {
+    val dataset = getDataset(source)
+    val dataCount = dataset.count().intValue()
+
+    if (size.get > dataCount) {
+      return dataset
+    }
+
+    val spark = dataset.sparkSession
+    val randomSample = spark.sparkContext.parallelize(getRandomSample(dataset, size.get, dataCount))
+
+    spark.createDataFrame(randomSample, dataset.schema)
+  }
+
+  private def getRandomSample(dataset: DataFrame, size: Int, dataCount: Int): Array[Row] = {
+    val r = new Random()
+    val indices = (0 until size).map(_ => r.nextInt(dataCount))
+
+    dataset.rdd.zipWithIndex().filter{case (_, v) => indices.contains(v)}.map{case (k, _) => k}.collect()
   }
 
   protected def mapToColumnType(dataType: DataType): ColumnType = {

@@ -1,6 +1,7 @@
 package at.magiun.core.rest
 
 import at.magiun.core.feature.Recommendations
+import at.magiun.core.model.data.Distribution
 import at.magiun.core.model.{DataRow, MagiunDataSet}
 import at.magiun.core.rest.FutureConverter._
 import at.magiun.core.service.DataSetService
@@ -16,10 +17,11 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
   private val BASE_PATH = "datasets"
   private val ROWS_PATH = "rows"
   private val SAMPLE_PATH = "sample"
+  private val DISTRIBUTIONS_PATH = "distributions"
   private val RECOMMENDATIONS_PATH = "recommendations"
 
   //noinspection TypeAnnotation
-  lazy val api = getDataSet :+: getDataSets :+: createDataSet :+: getRows :+: getRandomSample :+: getRecommendation
+  lazy val api = getDataSet :+: getDataSets :+: createDataSet :+: getRows :+: getRandomSample :+: getDistributions :+: getRecommendation
 
   val getDataSet: Endpoint[MagiunDataSet] = get(BASE_PATH :: path[String]) { id: String =>
 
@@ -83,8 +85,15 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
 
   }
 
-  private def splitString(value: Option[String], separator: String = ","): Option[Seq[String]] = {
-    value.map(_.split(separator).map(_.trim).toSeq)
+  val getDistributions: Endpoint[Map[String, Distribution]] = get(BASE_PATH :: path[String] :: DISTRIBUTIONS_PATH) {
+
+    datasetId: String =>
+      logger.info(s"Getting the distributions for the dataset `$datasetId`")
+
+      dataSetService.getDistributions(datasetId)
+        .asTwitter
+        .map(_.get)
+        .map(Ok)
   }
 
   val getRecommendation: Endpoint[Recommendations] = get(BASE_PATH :: path[String] :: RECOMMENDATIONS_PATH) {
@@ -97,5 +106,7 @@ class DataSetController(dataSetService: DataSetService) extends LazyLogging {
         .map(Ok)
   }
 
-
+  private def splitString(value: Option[String], separator: String = ","): Option[Seq[String]] = {
+    value.map(_.split(separator).map(_.trim).toSeq)
+  }
 }

@@ -4,7 +4,7 @@ import at.magiun.core.config.FeatureEngOntology
 import at.magiun.core.feature.{ColumnMetaData, Restriction, RestrictionBuilder}
 import at.magiun.core.model.MagiunDataSet
 import at.magiun.core.model.algorithm.AlgorithmGoal
-import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
+import at.magiun.core.model.data.{DatasetMetadata, VariableType}
 import at.magiun.core.model.math.MagiunMatrix
 import at.magiun.core.model.request.RecommenderRequest
 import com.softwaremill.tagging.@@
@@ -34,7 +34,7 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
     DatasetMetadata(
       AlgorithmGoal.getFromString(request.goal),
       computeResponseVariableType(columnMetadata, request.responseVariable),
-      computeResponseVariableDistribution(columnMetadata, request.responseVariable),
+      request.responseVariableDistribution,
       computeDistributionPercentage(),
       computeDistributionPercentage(),
       computeDistributionPercentage(),
@@ -90,17 +90,6 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
 
   // todo implement me
   private def computeResponseVariableType(columnMetadata: Seq[ColumnMetaData], responseVariableIndex: Int): VariableType = {
-    null
-  }
-
-  // todo implement me
-  private def computeResponseVariableDistribution(columnMetadata: Seq[ColumnMetaData], responseVariableIndex: Int): Distribution = {
-    val distributions = columnMetadata(responseVariableIndex).distributions
-    if (distributions.nonEmpty) {
-
-    } else {
-      // todo: maybe a fallback distribution?!
-    }
     null
   }
 

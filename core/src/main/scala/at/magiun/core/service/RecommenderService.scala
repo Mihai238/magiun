@@ -22,24 +22,15 @@ class RecommenderService(spark: SparkSession, dataSetService: DataSetService, da
 
   private def createMetadata(request: RecommenderRequest, dataset: Dataset[Row], magiunDataset: MagiunDataSet): DatasetMetadata = {
     val explanatoryVariables = request.explanatoryVariables
-    val columnsToRemove: Seq[String] = (0 to dataset.columns.length).filter(i => !explanatoryVariables.contains(i)).map(i => dataset.columns(i))
+    val targetVariable = request.responseVariable
+    val columnsToRemove: Seq[String] = dataset.columns.indices
+      .filter(i => !(explanatoryVariables.contains(i) || i == targetVariable))
+      .map(i => dataset.columns(i))
     val cleanDataset = columnsToRemove.foldLeft(dataset)((df, col) => df.drop(col))
 
     val cleanColumns = columnsToRemove.foldLeft(magiunDataset.schema.get.columns)((l, r) => l.filterNot(_.name == r))
     val cleanMagiunDataset = MagiunDataSet(magiunDataset.id, magiunDataset.name, magiunDataset.dataSetSource, Option(Schema(cleanColumns, cleanColumns.length)))
 
     datasetMetadataCalculator.compute(request, cleanDataset, cleanMagiunDataset)
-    /**
-    DatasetMetadata(
-      getVariableTypes(magiunDataset),
-      Seq.fill(dataset.columns.length)(Distribution.Normal),
-      request.responseVariable,
-      request.variablesToIgnore,
-      dataset.columns.length,
-      dataset.count()
-    )
-      */
-
-    null
   }
 }

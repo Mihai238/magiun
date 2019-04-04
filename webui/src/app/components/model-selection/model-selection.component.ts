@@ -31,7 +31,7 @@ export class ModelSelectionComponent {
   explanatoryVariables: Column[] = [];
   possibleExplanatoryVariables: Column[] = [];
   targetVariable: Column;
-  goal: string = "regression";
+  goal: string = "GoalRegression";
   tradeOff: string = "";
   definedDistributions: Distribution[] = [];
 

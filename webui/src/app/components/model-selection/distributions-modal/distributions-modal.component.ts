@@ -56,6 +56,6 @@ export class DistributionsModalComponent extends DialogComponent<DistributionsMo
   }
 
   private validateDistributions(): boolean {
-    return this.columns.filter(c => c.distribution == null || c.distribution == Distribution.UNKNOWN).length == 0
+    return this.columns.filter(c => c.distribution == null || c.distribution === Distribution.UNKNOWN || Distribution[c.distribution.toString().toUpperCase()] == Distribution.UNKNOWN).length == 0
   }
 }

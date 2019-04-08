@@ -68,7 +68,10 @@ export class ModelSelectionComponent {
         for (const key of Object.keys(result)) {
           this.selectedDataset.schema.columns
             .filter(c => c.name == key)
-            .forEach(c => c.distribution = result[key])
+            .forEach(c => {
+              console.log(result[key]);
+              c.distribution = result[key];
+            })
         }
       })
   }

@@ -16,7 +16,8 @@ export namespace Distribution {
   export function values(d :Distribution): string[] {
     return Object.keys(Distribution).filter(
       (type) => {
-        return !(d != null && type == "UNKNOWN") && isNaN(<any>type) && type !== 'values' && type !== `value`;
+        return !(d != null && d.toString().toUpperCase() != "UNKNOWN" && type == "UNKNOWN") &&
+          isNaN(<any>type) && type !== 'values' && type !== `value`;
       }
     );
   }

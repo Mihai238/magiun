@@ -35,9 +35,9 @@ class DatabaseInitializer(dataSetRepository: DataSetRepository,
   private lazy val bigCsvUrl = "file://" + getClass.getClassLoader.getResource("big.csv").getFile
 
   def init(): Unit = {
+    insertDataSet(MagiunDataSetEntity(0, "generated", "FileCsv", generatedCsvUrl))
     insertDataSet(MagiunDataSetEntity(0, "titanic", "FileCsv", sampleCsvUrl))
     insertDataSet(MagiunDataSetEntity(0, "income", "FileCsv", incomeCsvUrl))
-    insertDataSet(MagiunDataSetEntity(0, "generated", "FileCsv", generatedCsvUrl))
 //    insertDataSet(MagiunDataSetEntity(0, "genderAge", "FileCsv", genderAgeUrl))
 //    insertDataSet(MagiunDataSetEntity(0, "suicide", "FileCsv", suicideUrl))
 //    insertDataSet(MagiunDataSetEntity(0, "hacker", "FileCsv", hackerUrl))

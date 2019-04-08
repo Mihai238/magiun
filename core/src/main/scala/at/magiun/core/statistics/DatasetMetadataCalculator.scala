@@ -4,7 +4,7 @@ import at.magiun.core.config.FeatureEngOntology
 import at.magiun.core.feature.{ColumnMetaData, Restriction, RestrictionBuilder}
 import at.magiun.core.model.MagiunDataSet
 import at.magiun.core.model.algorithm.AlgorithmGoal
-import at.magiun.core.model.data.{DatasetMetadata, VariableType}
+import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
 import at.magiun.core.model.math.MagiunMatrix
 import at.magiun.core.model.request.RecommenderRequest
 import com.softwaremill.tagging.@@
@@ -30,14 +30,16 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
     val columnMetadata = columnMetaDataCalculator.compute(dataset, restrictions)
     val multicollinearity = computeMulticollinearity(dataset)
     val observationVariableRatio = dataset.count()/dataset.columns.length
+    val explanatoryVariablesCount = request.explanatoryVariables.size
+    val distributions = request.explanatoryVariablesDistributions.groupBy(identity).mapValues(_.size)
 
     DatasetMetadata(
       AlgorithmGoal.getFromString(request.goal),
       computeResponseVariableType(columnMetadata, request.responseVariable),
       request.responseVariableDistribution,
-      computeDistributionPercentage(),
-      computeDistributionPercentage(),
-      computeDistributionPercentage(),
+      computeDistributionPercentage(distributions, Distribution.Normal, explanatoryVariablesCount),
+      computeDistributionPercentage(distributions, Distribution.Bernoulli, explanatoryVariablesCount),
+      computeDistributionPercentage(distributions, Distribution.Multinomial, explanatoryVariablesCount),
       computeVariableTypePercentage(),
       computeVariableTypePercentage(),
       computeVariableTypePercentage(),
@@ -93,9 +95,14 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
     null
   }
 
-  // todo implement me
-  private def computeDistributionPercentage(): Double = {
-    0.0
+  private def computeDistributionPercentage(distributionsMap: Map[Distribution, Int], distribution: Distribution, totalCount: Int): Double = {
+    distributionsMap.get(distribution).map { x =>
+      if (x == None || x == 0) {
+        return 0.0
+      } else {
+        return 1.0 * x/totalCount
+      }
+    }.get
   }
 
   // todo implement me

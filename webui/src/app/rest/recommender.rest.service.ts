@@ -17,7 +17,7 @@ export class RecommenderRestService {
     this.logger = new MagiunLogger(RecommenderRestService.name, ngxLogger);
   }
 
-  recommend(body: RecommenderRequest): Observable<string> {
+  recommend(body: RecommenderRequest): Observable<string[]> {
     this.logger.info("getting algorithm recommendations for dataset " + body.datasetId);
 
     return this.http.post(environment.baseUrl + this.recommenderPath + this.algoRecommendationsPath, JSON.stringify(body))

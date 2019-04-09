@@ -2,22 +2,28 @@ package at.magiun.core.service
 
 import at.magiun.core.model.{MagiunDataSet, Schema}
 import at.magiun.core.model.data.DatasetMetadata
+import at.magiun.core.model.ontology.OntologyClass
 import at.magiun.core.model.request.RecommenderRequest
 import at.magiun.core.statistics.{AlgorithmRecommender, DatasetMetadataCalculator}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.concurrent.Await
 
 class RecommenderService(spark: SparkSession, dataSetService: DataSetService, datasetMetadataCalculator: DatasetMetadataCalculator, algorithmRecommender: AlgorithmRecommender) {
 
-  def recommend(request: RecommenderRequest): Unit = {
+  def recommend(request: RecommenderRequest): Future[Option[Set[OntologyClass]]] = {
     import scala.concurrent.duration._
 
-    val dataset = Await.result(dataSetService.getDataSet(request.datasetId.toString), 10.seconds).get
-    val magiunDataset = Await.result(dataSetService.find(request.datasetId.toString), 10.seconds).get
-    val metadata = createMetadata(request, dataset, magiunDataset)
-    val result = algorithmRecommender.recommend(metadata)
-    println(result)
+    Future {
+      Option {
+        val dataset = Await.result(dataSetService.getDataSet(request.datasetId.toString), 30.seconds).get
+        val magiunDataset = Await.result(dataSetService.find(request.datasetId.toString), 10.seconds).get
+        val metadata = createMetadata(request, dataset, magiunDataset)
+        algorithmRecommender.recommend(metadata)
+      }
+    }
   }
 
   private def createMetadata(request: RecommenderRequest, dataset: Dataset[Row], magiunDataset: MagiunDataSet): DatasetMetadata = {

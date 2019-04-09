@@ -26,22 +26,24 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
   // TODO: implement me
   def compute(request: RecommenderRequest, dataset: Dataset[Row], magiunDataset: MagiunDataSet): DatasetMetadata = {
     val multicollinearity = computeMulticollinearity(dataset)
-    val observationVariableRatio = dataset.count()/dataset.columns.length
+    val observationVariableRatio = dataset.count() / dataset.columns.length
     val explanatoryVariablesCount = request.explanatoryVariables.size
-    val distributions = request.explanatoryVariablesDistributions.groupBy(identity).mapValues(_.size)
+    val distributionsMap = request.explanatoryVariablesDistributions.groupBy(identity).mapValues(_.size)
     val responseVariableDistribution = request.responseVariableDistribution
-    val responseVariableColumn = magiunDataset.schema.get.columns.find(c => c.index == request.responseVariable).get
+    val columns = magiunDataset.schema.get.columns
+    val responseVariableColumn = columns.find(c => c.index == request.responseVariable).get
+    val variableTypesMap = computeVariableTypesMap(request.explanatoryVariables, request.explanatoryVariablesDistributions, columns)
 
     DatasetMetadata(
       AlgorithmGoal.getFromString(request.goal),
-      computeResponseVariableType(responseVariableColumn, responseVariableDistribution),
+      computeVariableType(responseVariableColumn, responseVariableDistribution),
       responseVariableDistribution,
-      computeDistributionPercentage(distributions, Distribution.Normal, explanatoryVariablesCount),
-      computeDistributionPercentage(distributions, Distribution.Bernoulli, explanatoryVariablesCount),
-      computeDistributionPercentage(distributions, Distribution.Multinomial, explanatoryVariablesCount),
-      computeVariableTypePercentage(),
-      computeVariableTypePercentage(),
-      computeVariableTypePercentage(),
+      computeElementOccurrencePercentage(distributionsMap, Distribution.Normal, explanatoryVariablesCount),
+      computeElementOccurrencePercentage(distributionsMap, Distribution.Bernoulli, explanatoryVariablesCount),
+      computeElementOccurrencePercentage(distributionsMap, Distribution.Multinomial, explanatoryVariablesCount),
+      computeElementOccurrencePercentage(variableTypesMap, VariableType.Continuous, explanatoryVariablesCount),
+      computeElementOccurrencePercentage(variableTypesMap, VariableType.Binary, explanatoryVariablesCount),
+      computeElementOccurrencePercentage(variableTypesMap, VariableType.Discrete, explanatoryVariablesCount),
       observationVariableRatio,
       multicollinearity
     )
@@ -84,15 +86,19 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
     val columnNames = featureDataset.columns
 
     val featureRDD = featureDataset.rdd
-      .map{row => Vectors.dense(row.toSeq.map(_.toString.toDouble).toArray)}
+      .map { row => Vectors.dense(row.toSeq.map(_.toString.toDouble).toArray) }
 
     MagiunMatrix(Statistics.corr(featureRDD, method), columnNames, columnNames)
   }
 
-  private def computeResponseVariableType(column: Column, distribution: Distribution): VariableType = {
+  private def computeVariableType(column: Column, distribution: Distribution): VariableType = {
     if (column.`type` == ColumnType.Double || column.`type` == ColumnType.Int) {
       if (Distribution.isItDiscrete(distribution)) {
-        VariableType.Discrete
+        if (distribution == Distribution.Bernoulli) {
+          VariableType.Binary
+        } else {
+          VariableType.Discrete
+        }
       } else {
         VariableType.Continuous
       }
@@ -101,18 +107,22 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
     }
   }
 
-  private def computeDistributionPercentage(distributionsMap: Map[Distribution, Int], distribution: Distribution, totalCount: Int): Double = {
-    distributionsMap.get(distribution).map { x =>
+  private def computeVariableTypesMap(explanatoryVariables: Seq[Int], distributions: Seq[Distribution], columns: List[Column]): Map[VariableType, Int] = {
+    explanatoryVariables.indices.map { i =>
+      val variableIndex = explanatoryVariables(i)
+      val column = columns.find(c => c.index == variableIndex).get
+      computeVariableType(column, distributions(i))
+    }.groupBy(identity)
+      .mapValues(_.size)
+  }
+
+  private def computeElementOccurrencePercentage[T](map: Map[T, Int], element: T, totalCount: Int): Double = {
+    map.get(element).map { x =>
       if (x == 0) {
         return 0.0
       } else {
-        return 1.0 * x/totalCount
+        return 1.0 * x / totalCount
       }
     }.getOrElse(0.0)
-  }
-
-  // todo implement me
-  private def computeVariableTypePercentage(): Double = {
-    0.0
   }
 }

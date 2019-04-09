@@ -167,7 +167,9 @@ export class ModelSelectionComponent {
 
     this.recommenderService
       .recommend(this.createRecommenderRequest())
-      .subscribe(() => {});
+      .subscribe((result) => {
+        console.log(result)
+      });
   }
 
   showDistributions(): void {

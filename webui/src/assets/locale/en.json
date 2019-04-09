@@ -38,6 +38,9 @@
     "TARGET_VARIABLE": "Target variable:",
     "EXPLANATORY_VARIABLES": "Explanatory variables:",
     "NO_VARIABLES_SELECTED": "There were no explanatory variables selected!",
+    "CHECK_THE_DISTRIBUTIONS": "Please check the variables distributions, before calling the recommender!",
+    "UNKNOWN_DISTRIBUTIONS": "Some explanatory variable(s) has/have an unknown distribution. Please check and validate the distributions in order to proceed!",
+    "TARGET_VARIABLE_UNKNOWN_DISTRIBUTION": "The dependent variable has an unknown distribution. Please check and validate the distribution in order to proceed!",
     "DISTRIBUTIONS_MODAL": {
       "TITLE": "Variables Distributions",
       "ICON_TITLE": "Plot variable's statistics",

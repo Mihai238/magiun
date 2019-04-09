@@ -17,7 +17,7 @@ export namespace Distribution {
     return Object.keys(Distribution).filter(
       (type) => {
         return !(d != null && d.toString().toUpperCase() != "UNKNOWN" && type == "UNKNOWN") &&
-          isNaN(<any>type) && type !== 'values' && type !== `value`;
+          isNaN(<any>type) && type !== 'values' && type !== `value` && type !== `isNullOrUnknown`;
       }
     );
   }
@@ -44,5 +44,9 @@ export namespace Distribution {
     } else {
       throw new RangeError(`Unknown distribution ${d}`)
     }
+  }
+
+  export function isNullOrUnknown(d: Distribution): boolean {
+    return d == null || d == Distribution.UNKNOWN || Distribution[d.toString().toUpperCase()] == Distribution.UNKNOWN;
   }
 }

@@ -22,5 +22,8 @@ object Distribution extends Enum[Distribution] with CirceEnum[Distribution] {
 
 
   val values: immutable.IndexedSeq[Distribution] = findValues
+  def isItDiscrete(distribution: Distribution): Boolean = {
+    distribution.equals(Bernoulli) || distribution.equals(Binomial) || distribution.equals(Poisson) || distribution.equals(Multinomial)
+  }
 }
 

@@ -1,8 +1,8 @@
 package at.magiun.core.statistics
 
 import at.magiun.core.config.FeatureEngOntology
-import at.magiun.core.feature.{ColumnMetaData, Restriction, RestrictionBuilder}
-import at.magiun.core.model.MagiunDataSet
+import at.magiun.core.feature.RestrictionBuilder
+import at.magiun.core.model.{Column, ColumnType, MagiunDataSet}
 import at.magiun.core.model.algorithm.AlgorithmGoal
 import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
 import at.magiun.core.model.math.MagiunMatrix
@@ -17,26 +17,25 @@ import org.apache.spark.sql._
 import scala.collection.mutable
 
 class DatasetMetadataCalculator(sparkSession: SparkSession,
-                                columnMetaDataCalculator: ColumnMetadataCalculator,
                                 model: OntModel @@ FeatureEngOntology,
                                 restrictionBuilder: RestrictionBuilder
                                ) extends LazyLogging {
 
   private val correlationThreshold = 0.9
-  private lazy val restrictions: Map[String, Restriction] = restrictionBuilder.build(model)
 
   // TODO: implement me
   def compute(request: RecommenderRequest, dataset: Dataset[Row], magiunDataset: MagiunDataSet): DatasetMetadata = {
-    val columnMetadata = columnMetaDataCalculator.compute(dataset, restrictions)
     val multicollinearity = computeMulticollinearity(dataset)
     val observationVariableRatio = dataset.count()/dataset.columns.length
     val explanatoryVariablesCount = request.explanatoryVariables.size
     val distributions = request.explanatoryVariablesDistributions.groupBy(identity).mapValues(_.size)
+    val responseVariableDistribution = request.responseVariableDistribution
+    val responseVariableColumn = magiunDataset.schema.get.columns.find(c => c.index == request.responseVariable).get
 
     DatasetMetadata(
       AlgorithmGoal.getFromString(request.goal),
-      computeResponseVariableType(columnMetadata, request.responseVariable),
-      request.responseVariableDistribution,
+      computeResponseVariableType(responseVariableColumn, responseVariableDistribution),
+      responseVariableDistribution,
       computeDistributionPercentage(distributions, Distribution.Normal, explanatoryVariablesCount),
       computeDistributionPercentage(distributions, Distribution.Bernoulli, explanatoryVariablesCount),
       computeDistributionPercentage(distributions, Distribution.Multinomial, explanatoryVariablesCount),
@@ -90,19 +89,26 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
     MagiunMatrix(Statistics.corr(featureRDD, method), columnNames, columnNames)
   }
 
-  // todo implement me
-  private def computeResponseVariableType(columnMetadata: Seq[ColumnMetaData], responseVariableIndex: Int): VariableType = {
-    null
+  private def computeResponseVariableType(column: Column, distribution: Distribution): VariableType = {
+    if (column.`type` == ColumnType.Double || column.`type` == ColumnType.Int) {
+      if (Distribution.isItDiscrete(distribution)) {
+        VariableType.Discrete
+      } else {
+        VariableType.Continuous
+      }
+    } else {
+      VariableType.Text
+    }
   }
 
   private def computeDistributionPercentage(distributionsMap: Map[Distribution, Int], distribution: Distribution, totalCount: Int): Double = {
     distributionsMap.get(distribution).map { x =>
-      if (x == None || x == 0) {
+      if (x == 0) {
         return 0.0
       } else {
         return 1.0 * x/totalCount
       }
-    }.get
+    }.getOrElse(0.0)
   }
 
   // todo implement me

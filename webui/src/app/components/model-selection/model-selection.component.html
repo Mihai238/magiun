@@ -76,7 +76,7 @@
       <br/>
       <div class="row">
         <button class="btn btn-info mb-2" (click)="showDistributions()">Show Distributions</button>
-        <button type="submit" class="btn btn-primary mb-2" (click)="recommend()">Recommend</button>
+        <button type="submit" class="btn btn-primary mb-2" [disabled]="!checkedDistributions" (click)="recommend()">Recommend</button>
       </div>
       <br/>
       <hr/>

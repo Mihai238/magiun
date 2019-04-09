@@ -4,8 +4,6 @@ import {DataService} from "../../services/data.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {Column, DataSet} from "../../model/data-set.model";
 import {MagiunLogger} from "../../util/magiun.logger";
-import {Observable} from "rxjs";
-import {of} from "rxjs/observable/of";
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
@@ -34,6 +32,7 @@ export class ModelSelectionComponent {
   goal: string = "GoalRegression";
   tradeOff: string = "";
   definedDistributions: Distribution[] = [];
+  checkedDistributions: boolean = false;
 
   constructor(
     private dataService: DataService,
@@ -113,6 +112,7 @@ export class ModelSelectionComponent {
 
     this.targetVariable = this.selectedDataset.schema.columns[event];
     this.possibleExplanatoryVariables = CollectionsUtils.withoutElement(this.selectedDataset.schema.columns, this.targetVariable);
+    this.explanatoryVariables = CollectionsUtils.withoutElement(this.explanatoryVariables, this.targetVariable);
     this.logTargetVariable();
   }
 
@@ -180,11 +180,29 @@ export class ModelSelectionComponent {
       .subscribe((result) => {
         if (result != undefined) {
           this.definedDistributions = result[1].map(c => c.distribution);
+          this.checkedDistributions = true;
         }
       });
   }
 
   private createRecommenderRequest(): RecommenderRequest {
+    if (!this.checkedDistributions) {
+      alert(this.translate.instant("MODEL_SELECTION.CHECK_THE_DISTRIBUTIONS"));
+      return;
+    }
+
+    if (!this.validateExplanatoryVariablesDistributions()) {
+      alert(this.translate.instant("MODEL_SELECTION.UNKNOWN_DISTRIBUTIONS"));
+      this.checkedDistributions = false;
+      return;
+    }
+
+    if (Distribution.isNullOrUnknown(this.targetVariable.distribution)) {
+      alert(this.translate.instant("MODEL_SELECTION.TARGET_VARIABLE_UNKNOWN_DISTRIBUTION"));
+      this.checkedDistributions = false;
+      return;
+    }
+
     return new RecommenderRequest(
       this.selectedDataset.id,
       this.goal,
@@ -194,5 +212,10 @@ export class ModelSelectionComponent {
       this.definedDistributions[0],
       this.definedDistributions.slice(1)
     );
+  }
+
+  private validateExplanatoryVariablesDistributions(): boolean {
+    return this.explanatoryVariables.map(c => c.distribution)
+      .filter(d => Distribution.isNullOrUnknown(d)).length == 0
   }
 }

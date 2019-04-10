@@ -35,52 +35,59 @@
       <hr/>
       <br/>
       <div class="container" *ngIf="datasets != null && datasets.length > 0">
-      <div class="row">
-        <div class="col">
-          <form>
-            <div class="form-group">
-              <label for="datasetSelect">{{ 'MODEL_SELECTION.DATA_SET' | translate }}</label>
-              <select class="form-control" id="datasetSelect" (change)="updateSelectedDataset($event.target.value)">
-                <option *ngFor="let d of datasets" value="{{datasets.indexOf(d)}}">{{d.name}}</option>
-              </select>
-            </div>
-          </form>
+        <div class="row">
+          <div class="col">
+            <form>
+              <div class="form-group">
+                <label for="datasetSelect">{{ 'MODEL_SELECTION.DATA_SET' | translate }}</label>
+                <select class="form-control" id="datasetSelect" (change)="updateSelectedDataset($event.target.value)">
+                  <option *ngFor="let d of datasets" value="{{datasets.indexOf(d)}}">{{d.name}}</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="col">
+            <form>
+              <div class="form-group">
+                <label for="targetVariableSelect">{{ 'MODEL_SELECTION.TARGET_VARIABLE' | translate }}</label>
+                <select class="form-control" id="targetVariableSelect" (change)="updateTargetVariable($event.target.value)">
+                  <option *ngFor="let c of selectedDataset.schema.columns" value="{{c.index}}">{{c.name}} : {{c.type}}</option>
+                </select>
+              </div>
+            </form>
+          </div>
         </div>
-        <div class="col">
-          <form>
-            <div class="form-group">
-              <label for="targetVariableSelect">{{ 'MODEL_SELECTION.TARGET_VARIABLE' | translate }}</label>
-              <select class="form-control" id="targetVariableSelect" (change)="updateTargetVariable($event.target.value)">
-                <option *ngFor="let c of selectedDataset.schema.columns" value="{{c.index}}">{{c.name}} : {{c.type}}</option>
-              </select>
-            </div>
-          </form>
+        <br/>
+        <hr/>
+        <br/>
+        <label>{{ 'MODEL_SELECTION.EXPLANATORY_VARIABLES' | translate }}</label>
+        <div class="row">
+          <div class="explanatory-variables" *ngFor="let c of possibleExplanatoryVariables">
+            <form>
+              <label>
+                <input type="checkbox" [checked]="checked" (change)="addCheckBoxChange(c, $event.target.checked)">
+                {{c.name}}
+              </label>
+            </form>
+          </div>
         </div>
-      </div>
-      <br/>
-      <hr/>
-      <br/>
-      <label>{{ 'MODEL_SELECTION.EXPLANATORY_VARIABLES' | translate }}</label>
-      <div class="row">
-        <div class="explanatory-variables" *ngFor="let c of possibleExplanatoryVariables">
-          <form>
-            <label>
-              <input type="checkbox" [checked]="checked" (change)="addCheckBoxChange(c, $event.target.checked)">
-              {{c.name}}
-            </label>
-          </form>
+        <br/>
+        <hr/>
+        <br/>
+        <div class="row">
+          <button class="btn btn-info mb-2" (click)="showDistributions()">Show Distributions</button>
+          <button type="submit" class="btn btn-primary mb-2" [disabled]="!checkedDistributions" (click)="recommend()">Recommend</button>
         </div>
+        <br/>
+        <hr/>
+        <div class="container" *ngIf="algorithmRecommendations != null && algorithmRecommendations.length > 0">
+          <h4>Recommendations:</h4>
+          <div *ngFor="let algo of algorithmRecommendations">
+            {{algo}}
+          </div>
+        </div>
+        <br/>
       </div>
-      <br/>
-      <hr/>
-      <br/>
-      <div class="row">
-        <button class="btn btn-info mb-2" (click)="showDistributions()">Show Distributions</button>
-        <button type="submit" class="btn btn-primary mb-2" [disabled]="!checkedDistributions" (click)="recommend()">Recommend</button>
-      </div>
-      <br/>
-      <hr/>
-      <br/>
     </div>
   </div>
 </div>

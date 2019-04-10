@@ -15,6 +15,7 @@ import {RecommenderRequest} from "../../model/recommender-request.model";
 import {DialogService} from 'ng2-bootstrap-modal';
 import {DistributionsModalComponent} from "./distributions-modal/distributions-modal.component";
 import {Distribution} from "../../model/statistics/distribution.type.model";
+import {Algorithm} from "../../model/algorithm.model";
 
 @Component({
   selector: 'app-model-selection',
@@ -33,6 +34,7 @@ export class ModelSelectionComponent {
   tradeOff: string = "";
   definedDistributions: Distribution[] = [];
   checkedDistributions: boolean = false;
+  algorithmRecommendations: Algorithm[] = [];
 
   constructor(
     private dataService: DataService,
@@ -168,7 +170,7 @@ export class ModelSelectionComponent {
     this.recommenderService
       .recommend(this.createRecommenderRequest())
       .subscribe((result) => {
-        console.log(result)
+        this.algorithmRecommendations = result.map(r => Algorithm[r]);
       });
   }
 

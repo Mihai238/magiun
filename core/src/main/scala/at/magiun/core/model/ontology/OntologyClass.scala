@@ -64,6 +64,7 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
   case object Categorical extends OntologyClass(NS + "Categorical", "Categorical")
   case object Numerical extends OntologyClass(NS + "Numerical", "Numerical")
   case object Continuous extends OntologyClass(NS + "Continuous", "Continuous")
+  case object Discrete extends OntologyClass(NS + "Discrete", "Discrete")
   case object Binary extends OntologyClass(NS + "Binary", "Binary")
 
   /** Variable Type */
@@ -72,11 +73,17 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
 
   val values: immutable.IndexedSeq[OntologyClass] = findValues
 
+  def isAbstractType(ontologyClass: OntologyClass): Boolean = {
+    ontologyClass.equals(Algorithm) || ontologyClass.equals(Classification) || ontologyClass.equals(Regression) || ontologyClass.equals(VariableType)
+  }
+
   def getOntologyClass(variableType: at.magiun.core.model.data.VariableType): OntologyClass = {
     variableType match {
       case at.magiun.core.model.data.VariableType.Continuous => Continuous
       case at.magiun.core.model.data.VariableType.Categorical => Categorical
+      case at.magiun.core.model.data.VariableType.Discrete => Discrete
       case at.magiun.core.model.data.VariableType.Binary => Binary
+      case _ => Continuous
     }
   }
 }

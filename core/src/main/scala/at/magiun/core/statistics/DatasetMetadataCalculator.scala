@@ -23,7 +23,6 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
 
   private val correlationThreshold = 0.9
 
-  // TODO: implement me
   def compute(request: RecommenderRequest, dataset: Dataset[Row], magiunDataset: MagiunDataSet): DatasetMetadata = {
     val multicollinearity = computeMulticollinearity(dataset)
     val observationVariableRatio = dataset.count() / dataset.columns.length

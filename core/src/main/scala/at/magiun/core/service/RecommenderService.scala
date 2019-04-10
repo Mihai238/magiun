@@ -11,7 +11,13 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.concurrent.Await
 
-class RecommenderService(spark: SparkSession, dataSetService: DataSetService, datasetMetadataCalculator: DatasetMetadataCalculator, algorithmRecommender: AlgorithmRecommender) {
+class RecommenderService(
+                          spark: SparkSession,
+                          dataSetService: DataSetService,
+                          datasetMetadataCalculator: DatasetMetadataCalculator,
+                          algorithmRecommender: AlgorithmRecommender,
+                          recommendationsRanker: RecommendationsRanker
+                        ) {
 
   def recommend(request: RecommenderRequest): Future[Option[Set[OntologyClass]]] = {
     import scala.concurrent.duration._
@@ -21,7 +27,8 @@ class RecommenderService(spark: SparkSession, dataSetService: DataSetService, da
         val dataset = Await.result(dataSetService.getDataSet(request.datasetId.toString), 30.seconds).get
         val magiunDataset = Await.result(dataSetService.find(request.datasetId.toString), 10.seconds).get
         val metadata = createMetadata(request, dataset, magiunDataset)
-        algorithmRecommender.recommend(metadata)
+        val recommendations = algorithmRecommender.recommend(metadata)
+        recommendationsRanker.rank(recommendations)
       }
     }
   }

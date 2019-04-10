@@ -29,6 +29,7 @@ trait MainModule {
   lazy val executionService = wire[ExecutionService]
   lazy val executionContext = wire[ExecutionContext]
   lazy val recommenderService = wire[RecommenderService]
+  lazy val recommendatiosRanker = wire[RecommendationsRanker]
 
   // Calculators
   lazy val columnMetadataCalculator = wire[ColumnMetadataCalculator]

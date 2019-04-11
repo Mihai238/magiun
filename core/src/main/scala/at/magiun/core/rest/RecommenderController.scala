@@ -1,9 +1,9 @@
 package at.magiun.core.rest
 
-import at.magiun.core.model.ontology.OntologyClass
+import at.magiun.core.model.algorithm.Algorithm
 import at.magiun.core.model.request.RecommenderRequest
-import at.magiun.core.service.RecommenderService
 import at.magiun.core.rest.FutureConverter._
+import at.magiun.core.service.RecommenderService
 import com.typesafe.scalalogging.LazyLogging
 import io.circe.generic.auto._
 import io.finch._
@@ -19,7 +19,7 @@ class RecommenderController(recommenderService: RecommenderService) extends Lazy
   //noinspection TypeAnnotation
   lazy val api = recommend
 
-  val recommend: Endpoint[Set[OntologyClass]] = post(BASE_PATH :: ALGORITHM_RECOMMENDATIONS_PATH :: jsonBody[RecommenderRequest]) {
+  val recommend: Endpoint[Set[Algorithm]] = post(BASE_PATH :: ALGORITHM_RECOMMENDATIONS_PATH :: jsonBody[RecommenderRequest]) {
     body: RecommenderRequest =>
       logger.info(body.toString)
 

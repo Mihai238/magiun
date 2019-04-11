@@ -170,7 +170,8 @@ export class ModelSelectionComponent {
     this.recommenderService
       .recommend(this.createRecommenderRequest())
       .subscribe((result) => {
-        this.algorithmRecommendations = result.map(r => Algorithm[r]);
+        this.algorithmRecommendations = result;
+
       });
   }
 

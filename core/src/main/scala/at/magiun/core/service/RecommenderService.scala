@@ -1,14 +1,15 @@
 package at.magiun.core.service
 
+import at.magiun.core.model.algorithm.Algorithm
 import at.magiun.core.model.{MagiunDataSet, Schema}
 import at.magiun.core.model.data.DatasetMetadata
 import at.magiun.core.model.ontology.OntologyClass
 import at.magiun.core.model.request.RecommenderRequest
 import at.magiun.core.statistics.{AlgorithmRecommender, DatasetMetadataCalculator}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
+
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import scala.concurrent.Await
 
 class RecommenderService(
@@ -19,7 +20,7 @@ class RecommenderService(
                           recommendationsRanker: RecommendationsRanker
                         ) {
 
-  def recommend(request: RecommenderRequest): Future[Option[Set[OntologyClass]]] = {
+  def recommend(request: RecommenderRequest): Future[Option[Set[Algorithm]]] = {
     import scala.concurrent.duration._
 
     Future {
@@ -28,7 +29,7 @@ class RecommenderService(
         val magiunDataset = Await.result(dataSetService.find(request.datasetId.toString), 10.seconds).get
         val metadata = createMetadata(request, dataset, magiunDataset)
         val recommendations = algorithmRecommender.recommend(metadata)
-        recommendationsRanker.rank(recommendations)
+        recommendationsRanker.rank(recommendations).map(mapOntologyClassToAlgorithm)
       }
     }
   }
@@ -45,5 +46,9 @@ class RecommenderService(
     val cleanMagiunDataset = MagiunDataSet(magiunDataset.id, magiunDataset.name, magiunDataset.dataSetSource, Option(Schema(cleanColumns, cleanColumns.length)))
 
     datasetMetadataCalculator.compute(request, cleanDataset, cleanMagiunDataset)
+  }
+
+  private def mapOntologyClassToAlgorithm(ontology: OntologyClass): Algorithm = {
+    Algorithm(ontology.name, "", Map())
   }
 }

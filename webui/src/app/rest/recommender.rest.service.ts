@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {NGXLogger} from "ngx-logger";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
+import {Algorithm} from "../model/algorithm.model";
 import {RecommenderRequest} from "../model/recommender-request.model";
 
 @Injectable()
@@ -17,7 +18,7 @@ export class RecommenderRestService {
     this.logger = new MagiunLogger(RecommenderRestService.name, ngxLogger);
   }
 
-  recommend(body: RecommenderRequest): Observable<string[]> {
+  recommend(body: RecommenderRequest): Observable<Algorithm[]> {
     this.logger.info("getting algorithm recommendations for dataset " + body.datasetId);
 
     return this.http.post(environment.baseUrl + this.recommenderPath + this.algoRecommendationsPath, JSON.stringify(body))

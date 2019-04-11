@@ -83,7 +83,7 @@
         <div class="container" *ngIf="algorithmRecommendations != null && algorithmRecommendations.length > 0">
           <h4>Recommendations:</h4>
           <div *ngFor="let algo of algorithmRecommendations">
-            {{algo}}
+            {{algo.name}}
           </div>
         </div>
         <br/>

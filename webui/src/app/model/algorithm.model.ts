@@ -1,28 +1,13 @@
-export enum Algorithm {
-  LinearLeastRegressionPartial = "Linear Least Regression Partial",
-  LinearLeastRegressionComplete = "Linear Least Regression Complete",
-  BinaryLogisticRegressionPartial = "Binary Logistic Regression Partial",
-  BinaryLogisticRegressionComplete = "Binary Logistic Regression Complete",
-  OrdinalLogisticRegressionPartial = "Ordinal Logistic Regression Partial",
-  OrdinalLogisticRegressionComplete = "Ordinal Logistic Regression Complete",
-  GeneralizedLinearRegressionPartial = "Generalized Linear Regression Partial",
-  GeneralizedLinearRegressionComplete = "Generalized Linear Regression Complete",
-  GradientBoostTreeRegressionPartial = "Gradient Boost Tree Regression Partial",
-  GradientBoostTreeRegressionComplete = "Gradient Boost Tree Regression Complete",
-  RandomForestRegressionPartial = "Random Forest RegressionP artial",
-  RandomForestRegressionComplete = "Random Forest Regression Complete",
-  DecisionTreeRegressionPartial = "Decision Tree Regression Partial",
-  DecisionTreeRegressionComplete = "Decision Tree Regression Complete",
-  IsotonicRegression = "Isotonic Regression",
-  SurvivalRegression = "Survival Regression",
-  MultinomialNaiveBayesClassification = "Multinomial Naive Bayes Classification",
-  BernoulliNaiveBayesClassification = "Bernoulli Naive Bayes Classification",
-  GaussianNaiveBayesClassification = "Gaussian Naive Bayes Classification",
-  LinearSupportVectorMachine = "Linear Support Vector Machine",
-  MultilayerPerceptronClassification = "Multilayer Perceptron Classification",
-  RandomForestClassificationComplete = "Random Forest Classification Complete",
-  RandomForestClassificationPartial = "Random Forest Classification Partial",
-  GradientBoostTreeClassification = "Gradient Boost Tree Classification",
-  DecisionTreeClassificationComplete = "Decision Tree Classification Complete",
-  DecisionTreeClassificationPartial = "Decision Tree Classification Partial"
+export class Algorithm {
+
+  readonly name: string;
+  readonly formula: string;
+  readonly parameters: Map<string, string>;
+
+  constructor(name: string, formula: string, parameters: Map<string, string>) {
+    this.name = name;
+    this.formula = formula;
+    this.parameters = parameters;
+  }
+
 }

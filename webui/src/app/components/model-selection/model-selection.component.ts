@@ -171,7 +171,6 @@ export class ModelSelectionComponent {
       .recommend(this.createRecommenderRequest())
       .subscribe((result) => {
         this.algorithmRecommendations = result;
-
       });
   }
 

@@ -82,8 +82,22 @@
         <hr/>
         <div class="container" *ngIf="algorithmRecommendations != null && algorithmRecommendations.length > 0">
           <h4>Recommendations:</h4>
-          <div *ngFor="let algo of algorithmRecommendations">
-            {{algo.name}}
+          <div class="accordion" id="recommendationsAccordion">
+            <div class="card" *ngFor="let algo of algorithmRecommendations">
+              <div class="card-header" id="{{'header-' + algorithmRecommendations.indexOf(algo)}}">
+                <h5 class="mb-0">
+                  <button [ngClass]="(algorithmRecommendations.indexOf(algo) == 0)?'btn btn-link':'btn btn-link collapsed'" type="button" data-toggle="collapse" [attr.data-target]="'#card-' + algorithmRecommendations.indexOf(algo)" aria-expanded="true" [attr.aria-controls]="'card-' + algorithmRecommendations.indexOf(algo)">
+                    {{algo.name}}
+                  </button>
+                </h5>
+              </div>
+
+              <div id="{{'card-' + algorithmRecommendations.indexOf(algo)}}" [ngClass]="(algorithmRecommendations.indexOf(algo) == 0)?'collapse show':'collapse'" [attr.aria-labelledby]="'header-' + algorithmRecommendations.indexOf(algo)" data-parent="#recommendationsAccordion">
+                <div class="card-body">
+                  ----> Parameters here
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <br/>

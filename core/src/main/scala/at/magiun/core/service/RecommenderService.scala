@@ -1,16 +1,15 @@
 package at.magiun.core.service
 
 import at.magiun.core.model.algorithm.Algorithm
-import at.magiun.core.model.{MagiunDataSet, Schema}
 import at.magiun.core.model.data.DatasetMetadata
 import at.magiun.core.model.ontology.OntologyClass
 import at.magiun.core.model.request.RecommenderRequest
+import at.magiun.core.model.{MagiunDataSet, Schema}
 import at.magiun.core.statistics.{AlgorithmRecommender, DatasetMetadataCalculator}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Await
+import scala.concurrent.{Await, Future}
 
 class RecommenderService(
                           spark: SparkSession,

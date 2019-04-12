@@ -31,7 +31,7 @@ import {LinearRegressionBlockComponent} from './components/workflows/blocks/mach
 import {PoissonRegressionBlockComponent} from './components/workflows/blocks/machine-learning/regression/poisson-regression-block.component';
 import { AddColumnSettingsComponent } from './components/data/new-column-settings/add-column-settings.component';
 import { EditColumnComponent } from './components/data/process-feature/edit-column.component';
-import {WorkflowDirective} from './components/workflows/workflow.directive';
+import {WorkflowDirective} from './directives/workflow.directive';
 import {DatabaseBlockComponent} from './components/workflows/blocks/import-data/database-block.component';
 import {FileBlockComponent} from './components/workflows/blocks/import-data/file-block.component';
 import {BlockService} from './services/block.service';
@@ -53,6 +53,7 @@ import {ModelSelectionComponent} from "./components/model-selection/model-select
 import {RecommenderRestService} from "./rest/recommender.rest.service";
 import {DistributionsModalComponent} from "./components/model-selection/distributions-modal/distributions-modal.component";
 import {PlotsModalComponent} from "./components/model-selection/plots-modal/plots-modal.component";
+import {VarDirective} from "./directives/var.directive";
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import {PlotsModalComponent} from "./components/model-selection/plots-modal/plot
     CheckboxParameterComponent,
     ModelSelectionComponent,
     DistributionsModalComponent,
-    PlotsModalComponent
+    PlotsModalComponent,
+    VarDirective
   ],
   imports: [
     CommonModule,

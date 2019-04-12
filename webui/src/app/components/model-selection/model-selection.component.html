@@ -81,26 +81,32 @@
         <br/>
         <hr/>
         <div class="container" *ngIf="algorithmRecommendations != null && algorithmRecommendations.length > 0">
-          <h4>Recommendations:</h4>
-          <div class="accordion" id="recommendationsAccordion">
+          <div>
+            <h4>Recommendations:</h4>
+          </div>
+          <div id="recommendationsAccordion">
             <div class="card" *ngFor="let algo of algorithmRecommendations">
-              <h5>
-                <button [ngClass]="(algorithmRecommendations.indexOf(algo) == 0)?'btn':'btn collapsed'"
-                        id="{{'header-' + algorithmRecommendations.indexOf(algo)}}"
-                        type="button"
-                        data-toggle="collapse"
-                        [attr.data-target]="'#card-' + algorithmRecommendations.indexOf(algo)" aria-expanded="true"
-                        [attr.aria-controls]="'card-' + algorithmRecommendations.indexOf(algo)">
-                  {{algo.name}}
-                </button>
-              </h5>
-              <div id="{{'card-' + algorithmRecommendations.indexOf(algo)}}" [ngClass]="(algorithmRecommendations.indexOf(algo) == 0)?'collapse show':'collapse'" [attr.aria-labelledby]="'header-' + algorithmRecommendations.indexOf(algo)" data-parent="#recommendationsAccordion">
-              <hr/>
-                <div class="card-body">
-                  <div>
-                    ----> Parameters here
+              <div *ngVar="algorithmRecommendations.indexOf(algo) as index">
+                <h5>
+                  <button [ngClass]="(index == 0)?'btn':'btn collapsed'"
+                          id="{{'header-' + index}}"
+                          type="button"
+                          data-toggle="collapse"
+                          [attr.data-target]="'#card-' + index" aria-expanded="true"
+                          [attr.aria-controls]="'card-' + index">
+                    {{algo.name}}
+                  </button>
+                </h5>
+                <div id="{{'card-' + index}}" [ngClass]="(index == 0)?'collapse show':'collapse'"
+                     [attr.aria-labelledby]="'header-' + index"
+                     data-parent="#recommendationsAccordion">
+                  <hr/>
+                  <div class="card-body">
+                    <div>
+                      ----> Parameters here
+                    </div>
+                    <button class="btn btn-info">Train</button>
                   </div>
-                  <button>Train</button>
                 </div>
               </div>
             </div>

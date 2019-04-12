@@ -2,7 +2,7 @@ import {Component, ComponentFactoryResolver, ComponentRef, Type, ViewChild} from
 import {BlockComponent} from './blocks/block.component';
 import {LinearRegressionBlockComponent} from './blocks/machine-learning/regression/linear-regression-block.component';
 import {PoissonRegressionBlockComponent} from './blocks/machine-learning/regression/poisson-regression-block.component';
-import {WorkflowDirective} from './workflow.directive';
+import {WorkflowDirective} from '../../directives/workflow.directive';
 import {BlockPosition} from './blocks/block-position';
 import {DatabaseBlockComponent} from './blocks/import-data/database-block.component';
 import {FileBlockComponent} from './blocks/import-data/file-block.component';

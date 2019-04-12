@@ -23,6 +23,21 @@ button {
   margin: 7.5px;
 }
 
-.accordion {
-  width: 50%;
+#recommendationsAccordion {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 7.5px;
+}
+
+.card {
+  margin-bottom: 5px;
+
+  h5 {
+    button {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
 }

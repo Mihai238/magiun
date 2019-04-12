@@ -12,6 +12,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {Column, ColumnType, DataSet, Schema} from "../../model/data-set.model";
 import {Observable} from "rxjs";
 import {NavigationEnd, Router} from "@angular/router";
+import {VarDirective} from "../../directives/var.directive";
 
 describe("ModelSelectionComponent", () => {
 
@@ -23,7 +24,8 @@ describe("ModelSelectionComponent", () => {
     TestBed.configureTestingModule({
       declarations: [
         ModelSelectionComponent,
-        DistributionsModalComponent
+        DistributionsModalComponent,
+        VarDirective
       ],
       imports: [
         HttpClientModule,

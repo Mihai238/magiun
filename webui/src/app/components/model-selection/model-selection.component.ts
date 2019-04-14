@@ -15,7 +15,7 @@ import {RecommenderRequest} from "../../model/recommender-request.model";
 import {DialogService} from 'ng2-bootstrap-modal';
 import {DistributionsModalComponent} from "./distributions-modal/distributions-modal.component";
 import {Distribution} from "../../model/statistics/distribution.type.model";
-import {Algorithm} from "../../model/algorithm.model";
+import {Algorithm} from "../../model/algorithm/algorithm.model";
 
 @Component({
   selector: 'app-model-selection',
@@ -25,6 +25,7 @@ import {Algorithm} from "../../model/algorithm.model";
 export class ModelSelectionComponent {
 
   private logger: MagiunLogger;
+  Number = Number;
   datasets: DataSet[] = [];
   selectedDataset: DataSet;
   explanatoryVariables: Column[] = [];

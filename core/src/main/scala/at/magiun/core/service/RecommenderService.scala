@@ -1,6 +1,6 @@
 package at.magiun.core.service
 
-import at.magiun.core.model.algorithm.Algorithm
+import at.magiun.core.model.algorithm.{Algorithm, GeneralizedLinearRegressionAlgorithm, LinearRegressionAlgorithm}
 import at.magiun.core.model.data.DatasetMetadata
 import at.magiun.core.model.ontology.OntologyClass
 import at.magiun.core.model.request.RecommenderRequest
@@ -28,7 +28,9 @@ class RecommenderService(
         val magiunDataset = Await.result(dataSetService.find(request.datasetId.toString), 10.seconds).get
         val metadata = createMetadata(request, dataset, magiunDataset)
         val recommendations = algorithmRecommender.recommend(metadata)
-        recommendationsRanker.rank(recommendations).map(mapOntologyClassToAlgorithm)
+        val r = recommendationsRanker.rank(recommendations).map(mapOntologyClassToAlgorithm).toSeq
+        val a = r(2)
+        r.toSet
       }
     }
   }
@@ -48,6 +50,12 @@ class RecommenderService(
   }
 
   private def mapOntologyClassToAlgorithm(ontology: OntologyClass): Algorithm = {
-    Algorithm(ontology.name, "", Map())
+    val r = Math.round(Math.random() * 10)
+
+    if (r % 2 == 0) {
+      GeneralizedLinearRegressionAlgorithm(ontology.name, "")
+    } else {
+      LinearRegressionAlgorithm(ontology.name, "")
+    }
   }
 }

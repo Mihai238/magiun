@@ -4,8 +4,9 @@ import {HttpClient} from "@angular/common/http";
 import {NGXLogger} from "ngx-logger";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
-import {Algorithm} from "../model/algorithm.model";
+import {Algorithm} from "../model/algorithm/algorithm.model";
 import {RecommenderRequest} from "../model/recommender-request.model";
+import {AlgorithmParameter} from "../model/algorithm/algorithm.parameter.model";
 
 @Injectable()
 export class RecommenderRestService {
@@ -18,10 +19,19 @@ export class RecommenderRestService {
     this.logger = new MagiunLogger(RecommenderRestService.name, ngxLogger);
   }
 
-  recommend(body: RecommenderRequest): Observable<Algorithm[]> {
+  recommend<T extends Algorithm>(body: RecommenderRequest): Observable<T[]> {
     this.logger.info("getting algorithm recommendations for dataset " + body.datasetId);
 
-    return this.http.post(environment.baseUrl + this.recommenderPath + this.algoRecommendationsPath, JSON.stringify(body))
+    return this.http.post<T[]>(environment.baseUrl + this.recommenderPath + this.algoRecommendationsPath, JSON.stringify(body))
+      .map(algorithms => algorithms.map(algorithm => {
+        let a = <Algorithm>Object.values(algorithm)[0];
+        if (a.parameters != null) {
+          a.parameters = a.parameters.map(p => <AlgorithmParameter<any>>Object.values(p)[0]);
+        } else {
+          a.parameters = [];
+        }
+        return a
+      }))
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 }

@@ -103,7 +103,24 @@
                   <hr/>
                   <div class="card-body">
                     <div>
-                      ----> Parameters here
+                      <div *ngIf="algo.parameters.length > 0">
+                        <div class="form-group form-inline" *ngFor="let param of algo.parameters">
+                          <div class="col">
+                            <label>{{param.name}}</label>
+                          </div>
+                          <div class="col" *ngIf="param.selectOptions.length > 0">
+                            <select>
+                              <option *ngFor="let o of param.selectOptions">{{o}}</option>
+                            </select>
+                          </div>
+                          <div class="col" *ngIf="param.selectOptions == null || param.selectOptions.length == 0">
+                            <input type="number" value="{{param.value}}" [attr.step]="Number.isInteger(param.value) ? 1 : 0.00001">
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="algo.parameters.length == 0">
+                        ----> no parameters available
+                      </div>
                     </div>
                     <button class="btn btn-info">Train</button>
                   </div>

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {NGXLogger} from "ngx-logger";
 import {DataService} from "../../services/data.service";
 import {NavigationEnd, Router} from "@angular/router";
@@ -16,6 +16,7 @@ import {DialogService} from 'ng2-bootstrap-modal';
 import {DistributionsModalComponent} from "./distributions-modal/distributions-modal.component";
 import {Distribution} from "../../model/statistics/distribution.type.model";
 import {Algorithm} from "../../model/algorithm/algorithm.model";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-model-selection',
@@ -43,7 +44,8 @@ export class ModelSelectionComponent {
     private router: Router,
     private translate: TranslateService,
     private dialogService: DialogService,
-    ngxLogger: NGXLogger
+    ngxLogger: NGXLogger,
+    @Inject(DOCUMENT) document
   ) {
     this.logger = new MagiunLogger(ModelSelectionComponent.name, ngxLogger);
     this.router.events.subscribe((val) => {
@@ -222,5 +224,16 @@ export class ModelSelectionComponent {
   private validateExplanatoryVariablesDistributions(): boolean {
     return this.explanatoryVariables.map(c => c.distribution)
       .filter(d => Distribution.isNullOrUnknown(d)).length == 0
+  }
+
+  train(index: number): void {
+    console.log("train algorithm " + index);
+    this.algorithmRecommendations[index].parameters.forEach(p => {
+      const element: HTMLElement = document.getElementById(p.name + "-" + index);
+      p.value = (<HTMLInputElement>element).value;
+    });
+
+
+    // todo send train-request
   }
 }

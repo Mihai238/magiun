@@ -97,7 +97,8 @@
                     {{algo.name}}
                   </button>
                 </h5>
-                <div id="{{'card-' + index}}" [ngClass]="(index == 0)?'collapse show':'collapse'"
+                <div id="{{'card-' + index}}"
+                     [ngClass]="(index == 0)?'collapse show':'collapse'"
                      [attr.aria-labelledby]="'header-' + index"
                      data-parent="#recommendationsAccordion">
                   <hr/>
@@ -109,12 +110,15 @@
                             <label>{{param.name}}</label>
                           </div>
                           <div class="col" *ngIf="param.selectOptions.length > 0">
-                            <select>
-                              <option *ngFor="let o of param.selectOptions">{{o}}</option>
+                            <select [attr.id]="param.name + '-' + index" required>
+                              <option *ngFor="let o of param.selectOptions" [attr.selected]="o == param.value ? true : null">{{o}}</option>
                             </select>
                           </div>
                           <div class="col" *ngIf="param.selectOptions == null || param.selectOptions.length == 0">
-                            <input type="number" value="{{param.value}}" [attr.step]="Number.isInteger(param.value) ? 1 : 0.00001">
+                            <input [attr.id]="param.name + '-' + index"
+                                   type="number" value="{{param.value}}"
+                                   [attr.step]="Number.isInteger(param.value) ? 1 : 0.0000001"
+                                   required>
                           </div>
                         </div>
                       </div>
@@ -122,7 +126,7 @@
                         ----> no parameters available
                       </div>
                     </div>
-                    <button class="btn btn-info">Train</button>
+                    <button class="btn btn-info" (click)="train(index)">Train</button>
                   </div>
                 </div>
               </div>

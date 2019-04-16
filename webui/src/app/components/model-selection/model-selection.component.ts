@@ -174,6 +174,10 @@ export class ModelSelectionComponent {
       .recommend(this.createRecommenderRequest())
       .subscribe((result) => {
         this.algorithmRecommendations = result;
+
+        if (result.length == 0 && this.goal == "GoalClassification" && !Distribution.isDiscrete(this.definedDistributions[0])) {
+          alert(this.translate.instant("MODEL_SELECTION.EMPTY_CLASSIFICATION_RECOMMENDATIONS"))
+        }
       });
   }
 

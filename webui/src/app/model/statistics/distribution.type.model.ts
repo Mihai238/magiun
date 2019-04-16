@@ -17,7 +17,7 @@ export namespace Distribution {
     return Object.keys(Distribution).filter(
       (type) => {
         return !(d != null && d.toString().toUpperCase() != "UNKNOWN" && type == "UNKNOWN") &&
-          isNaN(<any>type) && type !== 'values' && type !== `value` && type !== `isNullOrUnknown`;
+          isNaN(<any>type) && type !== 'values' && type !== `value` && type !== `isNullOrUnknown` && type !== `isDiscrete`;
       }
     );
   }
@@ -48,5 +48,9 @@ export namespace Distribution {
 
   export function isNullOrUnknown(d: Distribution): boolean {
     return d == null || d == Distribution.UNKNOWN || Distribution[d.toString().toUpperCase()] == Distribution.UNKNOWN;
+  }
+
+  export function isDiscrete(d: Distribution): boolean {
+    return d == Distribution.BERNOULLI_DISTRIBUTION || d == Distribution.BINOMIAL_DISTRIBUTION || d == Distribution.POISSON_DISTRIBUTION
   }
 }

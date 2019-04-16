@@ -23,35 +23,35 @@ case class GeneralizedLinearRegressionAlgorithm(name: String,
 
 case class BinaryLogisticRegressionAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.LogisticRegressionParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }
 
 case class OrdinalLogisticRegressionAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.LogisticRegressionParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }
 
 case class IsotonicRegressionAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.IsotonicRegressionParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }
 
 case class SurvivalRegressionAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.SurvivalRegressionParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }
 
 case class GradientBoostTreeRegressionAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.GradientBoostTreeRegressionParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }
@@ -93,7 +93,7 @@ case class GaussianNaiveBayesClassificationAlgorithm(name: String,
 
 case class LinearSupportVectorMachineAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.LinearSVMParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }

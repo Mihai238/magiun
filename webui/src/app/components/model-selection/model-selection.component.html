@@ -11,9 +11,9 @@
           <form>
             <div class="form-group">
               <label for="goal">{{ 'MODEL_SELECTION.GOAL' | translate }}</label>
-              <select class="form-control" id="goal" (change)="updateGoal($event.target.value)">
-                <option value="GoalRegression">{{ 'MODEL_SELECTION.REGRESSION' | translate }}</option>
-                <option value="GoalClassification">{{ 'MODEL_SELECTION.CLASSIFICATION' | translate }}</option>
+              <select class="form-control" id="goal" (change)="updateGoal($event.target.value, $event)">
+                <option [attr.value]="GoalRegression.value">{{ GoalRegression.displayName }}</option>
+                <option [attr.value]="GoalClassification.value">{{ GoalClassification.displayName }}</option>
               </select>
             </div>
           </form>

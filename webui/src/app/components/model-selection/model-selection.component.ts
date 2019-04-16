@@ -17,6 +17,7 @@ import {DistributionsModalComponent} from "./distributions-modal/distributions-m
 import {Distribution} from "../../model/statistics/distribution.type.model";
 import {Algorithm} from "../../model/algorithm/algorithm.model";
 import {DOCUMENT} from "@angular/common";
+import {AlgorithmGoal, GoalClassification, GoalRegression} from "../../model/algorithm/algorithm.goal.model";
 
 @Component({
   selector: 'app-model-selection',
@@ -27,12 +28,15 @@ export class ModelSelectionComponent {
 
   private logger: MagiunLogger;
   Number = Number;
+  GoalRegression = GoalRegression;
+  GoalClassification = GoalClassification;
+
   datasets: DataSet[] = [];
   selectedDataset: DataSet;
   explanatoryVariables: Column[] = [];
   possibleExplanatoryVariables: Column[] = [];
   targetVariable: Column;
-  goal: string = "GoalRegression";
+  goal: string = GoalRegression.value;
   tradeOff: string = "";
   definedDistributions: Distribution[] = [];
   checkedDistributions: boolean = false;
@@ -145,8 +149,8 @@ export class ModelSelectionComponent {
     this.possibleExplanatoryVariables = CollectionsUtils.withoutElement(this.selectedDataset.schema.columns, this.targetVariable)
   }
 
-  updateGoal(goal: any) {
-    this.goal = <string>goal;
+  updateGoal(goal: string) {
+    this.goal = goal;
     this.logger.info(`the selected goal is "${this.goal}"`);
   }
 
@@ -175,7 +179,7 @@ export class ModelSelectionComponent {
       .subscribe((result) => {
         this.algorithmRecommendations = result;
 
-        if (result.length == 0 && this.goal == "GoalClassification" && !Distribution.isDiscrete(this.definedDistributions[0])) {
+        if (result.length == 0 && this.goal == GoalClassification.value && !Distribution.isDiscrete(this.definedDistributions[0])) {
           alert(this.translate.instant("MODEL_SELECTION.EMPTY_CLASSIFICATION_RECOMMENDATIONS"))
         }
       });

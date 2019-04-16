@@ -1,6 +1,6 @@
 package at.magiun.core.service
 
-import at.magiun.core.model.algorithm.{Algorithm, GeneralizedLinearRegressionAlgorithm, LinearRegressionAlgorithm}
+import at.magiun.core.model.algorithm._
 import at.magiun.core.model.data.DatasetMetadata
 import at.magiun.core.model.ontology.OntologyClass
 import at.magiun.core.model.request.RecommenderRequest
@@ -28,9 +28,7 @@ class RecommenderService(
         val magiunDataset = Await.result(dataSetService.find(request.datasetId.toString), 10.seconds).get
         val metadata = createMetadata(request, dataset, magiunDataset)
         val recommendations = algorithmRecommender.recommend(metadata)
-        val r = recommendationsRanker.rank(recommendations).map(mapOntologyClassToAlgorithm).toSeq
-        val a = r(2)
-        r.toSet
+        recommendationsRanker.rank(recommendations).map(mapOntologyClassToAlgorithm)
       }
     }
   }
@@ -50,12 +48,26 @@ class RecommenderService(
   }
 
   private def mapOntologyClassToAlgorithm(ontology: OntologyClass): Algorithm = {
-    val r = Math.round(Math.random() * 10)
-
-    if (r % 2 == 0) {
-      GeneralizedLinearRegressionAlgorithm(ontology.name, "")
-    } else {
-      LinearRegressionAlgorithm(ontology.name, "")
+    ontology match {
+      case OntologyClass.LinearLeastRegressionPartial | OntologyClass.LinearLeastRegressionComplete => LinearRegressionAlgorithm(ontology.name, "")
+      case OntologyClass.GeneralizedLinearRegressionPartial | OntologyClass.GeneralizedLinearRegressionComplete => GeneralizedLinearRegressionAlgorithm(ontology.name, "")
+      case OntologyClass.BinaryLogisticRegressionPartial | OntologyClass.BinaryLogisticRegressionComplete => BinaryLogisticRegressionAlgorithm(ontology.name, "")
+      case OntologyClass.OrdinalLogisticRegressionPartial | OntologyClass.OrdinalLogisticRegressionComplete => OrdinalLogisticRegressionAlgorithm(ontology.name, "")
+      case OntologyClass.IsotonicRegression => IsotonicRegressionAlgorithm(ontology.name, "")
+      case OntologyClass.SurvivalRegression => SurvivalRegressionAlgorithm(ontology.name, "")
+      case OntologyClass.GradientBoostTreeRegressionPartial | OntologyClass.GradientBoostTreeRegressionComplete => GradientBoostTreeRegressionAlgorithm(ontology.name, "")
+      case OntologyClass.RandomForestRegressionPartial | OntologyClass.RandomForestRegressionComplete => RandomForestRegressionAlgorithm(ontology.name, "")
+      case OntologyClass.DecisionTreeRegressionPartial | OntologyClass.DecisionTreeRegressionComplete => DecisionTreeRegressionAlgorithm(ontology.name, "")
+      case OntologyClass.MultinomialNaiveBayesClassification => MultinomialNaiveBayesClassificationAlgorithm(ontology.name, "")
+      case OntologyClass.BernoulliNaiveBayesClassification => BernoulliNaiveBayesClassificationAlgorithm(ontology.name, "")
+      case OntologyClass.GaussianNaiveBayesClassification => GaussianNaiveBayesClassificationAlgorithm(ontology.name, "")
+      case OntologyClass.LinearSupportVectorMachine => LinearSupportVectorMachineAlgorithm(ontology.name, "")
+      case OntologyClass.MultilayerPerceptronClassification => MultilayerPerceptronClassificationAlgorithm(ontology.name, "")
+      case OntologyClass.GradientBoostTreeClassification => GradientBoostTreeClassificationAlgorithm(ontology.name, "")
+      case OntologyClass.RandomForestClassificationPartial | OntologyClass.RandomForestClassificationComplete => RandomForestClassificationAlgorithm(ontology.name, "")
+      case OntologyClass.DecisionTreeClassificationPartial | OntologyClass.DecisionTreeClassificationComplete => DecisionTreeClassificationAlgorithm(ontology.name, "")
+      case _ => null
     }
+
   }
 }

@@ -35,7 +35,7 @@ case class LogisticThreshold(name: String = "threshold", value: Double = 0.5, se
 /** ISOTONIC REGRESSION */
 case class Isotonic(name: String = "isotonic", value: Boolean = true, selectOptions: Set[Boolean] = Set(true, false)) extends AlgorithmParameter[Boolean] {}
 
-/** GRADIENT BOOST TREE REGRESSION */
+/** GRADIENT BOOST TREE REGRESSION / CLASSIFICATION - RANDOM FORREST REGRESSION / CLASSIFICATION - DECISION TREE REGRESSION / CLASSIFICATION */
 case class CacheNodeIds(name: String = "cacheNodeIds", value: Boolean = true, selectOptions: Set[Boolean] = Set(true, false)) extends AlgorithmParameter[Boolean] {}
 case class CheckpointInterval(name: String = "checkpointInterval", value: Int = 10, selectOptions: Set[Int] = Set.empty) extends AlgorithmParameter[Int] {}
 case class FeatureSubsetStrategy(name: String = "featureSubsetStrategy", value: String = "auto", selectOptions: Set[String] = Set("auto", "all", "onethird", "sqrt", "log2")) extends AlgorithmParameter[String] {}
@@ -45,12 +45,20 @@ case class MaxDepth(name: String = "maxDepth", value: Int = 5, selectOptions: Se
 case class MaxMemoryInMB(name: String = "maxMemoryInMB", value: Int = 256, selectOptions: Set[Int] = Set.empty) extends AlgorithmParameter[Int] {}
 case class MinInfoGain(name: String = "minInfoGain", value: Double = 0.0, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
 case class MinInstancesPerNode(name: String = "minInstancesPerNode", value: Int = 1, selectOptions: Set[Int] = Set.empty) extends AlgorithmParameter[Int] {}
-case class Seed(name: String = "seed", value: Long = Seed.getClass.getName.hashCode.toLong, selectOptions: Set[Long] = Set.empty) extends AlgorithmParameter[Long] {}
+case class Seed(name: String = "seed", value: Long = Long.MaxValue, selectOptions: Set[Long] = Set.empty) extends AlgorithmParameter[Long] {}
 case class StepSize(name: String = "stepSize", value: Double = 0.1, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
 case class SubsamplingRate(name: String = "subsamplingRate", value: Double = 1.0, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
+case class NumTrees(name: String = "numTrees", value: Int = 20, selectOptions: Set[Int] = Set.empty) extends AlgorithmParameter[Int] {}
 
 /** SVM */
 case class SVMThreshold(name: String = "threshold", value: Double = 0, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
+
+/** NAIVE BAYES */
+case class Smoothing(name: String = "smoothing", value: Double = 1.0, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
+
+/** MULTILAYER PERCEPTRON CLASSIFIER */
+case class BlockSize(name: String = "blockSize", value: Int = 128, selectOptions: Set[Int] = Set.empty) extends AlgorithmParameter[Int] {}
+case class MultilayerPerceptronSolver(name: String = "solver", value: String = "l-bfgs", selectOptions: Set[String] = Set("l-bfgs", "gd")) extends AlgorithmParameter[String] {}
 
 object AlgorithmParameter {
 
@@ -62,6 +70,7 @@ object AlgorithmParameter {
   private val TOLERANCE = Tolerance()
   private val STANDARDIZATION = Standardization()
   private val SOLVER = Solver()
+  private val STEP_SIZE = StepSize()
 
   /** LINEAR REGRESSION */
   private val ELASTIC_NET = ElasticNet()
@@ -80,7 +89,7 @@ object AlgorithmParameter {
   /** ISOTONIC REGRESSION */
   private val ISOTONIC = Isotonic()
 
-  /** GRADIENT BOOST TREE REGRESSION */
+  /** GRADIENT BOOST TREE REGRESSION / CLASSIFICATION - RANDOM FORREST REGRESSION / CLASSIFICATION - DECISION TREE REGRESSION / CLASSIFICATION */
   private val CACHE_NODE_IDS = CacheNodeIds()
   private val CHECKPOINT_INTERVAL = CheckpointInterval()
   private val FEATURE_SUBSET_STRATEGY = FeatureSubsetStrategy()
@@ -91,17 +100,30 @@ object AlgorithmParameter {
   private val MIN_INFO_GAIN = MinInfoGain()
   private val MIN_INSTANCES_PER_NODE = MinInstancesPerNode()
   private val SEED = Seed()
-  private val STEP_SIZE = StepSize()
   private val SUBSAMPLING_RATE = SubsamplingRate()
+  private val NUM_TREES = NumTrees()
 
   /** SVM */
   private val SVM_THRESHOLD = SVMThreshold()
+
+  /** NAIVE BAYES */
+  private val SMOOTHING = Smoothing()
+
+  /** MULTILAYER PERCEPTRON CLASSIFIER */
+  private val BLOCK_SIZE = BlockSize()
+  private val MULTILAYER_PERCEPTRON_SOLVER = MultilayerPerceptronSolver()
+
 
   val LinearRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET, EPSILON, FIT_INTERCEPT, REG_PARAM, TOLERANCE, STANDARDIZATION, LOSS, SOLVER)
   val GeneralizedLinearRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, FIT_INTERCEPT, REG_PARAM, GLM_FAMILY, LINK, LINK_POWER, TOLERANCE, SOLVER )
   val LogisticRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET,  FIT_INTERCEPT, REG_PARAM, LOGISTIC_FAMILY, TOLERANCE, STANDARDIZATION, LOGISTIC_THRESHOLD )
   val IsotonicRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(ISOTONIC)
   val SurvivalRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, FIT_INTERCEPT, TOLERANCE)
-  val GradientBoostTreeRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, LOSS_TYPE, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED, STEP_SIZE, SUBSAMPLING_RATE)
+  val GradientBoostTreeRegressionClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, LOSS_TYPE, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED, STEP_SIZE, SUBSAMPLING_RATE)
+  val RandomForestRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED, SUBSAMPLING_RATE)
+  val DecisionTreeRegressionClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED)
   val LinearSVMParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, FIT_INTERCEPT, REG_PARAM, STANDARDIZATION, TOLERANCE, SVM_THRESHOLD)
+  val NaiveBayesParameters: Set[AlgorithmParameter[_ <: Any]] = Set(SMOOTHING)
+  val MultilayerPerceptronClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, BLOCK_SIZE, SEED, TOLERANCE, MULTILAYER_PERCEPTRON_SOLVER, STEP_SIZE)
+  val RandomForestClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED, SUBSAMPLING_RATE, NUM_TREES)
 }

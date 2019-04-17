@@ -147,7 +147,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations should contain(OntologyClass.GeneralizedLinearRegressionPartial)
   }
 
-  it should s"recommend ${OntologyClass.GaussianNaiveBayesClassification.name} for dataset metadata of a small dataset" in {
+  it should s"recommend ${OntologyClass.GradientBoostTreeClassification.name} for dataset metadata of a small dataset" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalClassification,
       VariableType.Binary,
@@ -164,20 +164,19 @@ class AlgorithmRecommenderTest extends UnitTest {
 
     val recommendations = algorithmRecommender.recommend(datasetMetadata)
 
-    recommendations.size should be(10)
+    recommendations.size should be(9)
     recommendations should contain(OntologyClass.Algorithm)
     recommendations should contain(OntologyClass.Classification)
     recommendations should contain(OntologyClass.LinearSupportVectorMachine)
     recommendations should contain(OntologyClass.DecisionTreeClassificationPartial)
     recommendations should contain(OntologyClass.DecisionTreeClassificationComplete)
-    recommendations should contain(OntologyClass.GaussianNaiveBayesClassification)
     recommendations should contain(OntologyClass.RandomForestClassificationPartial)
     recommendations should contain(OntologyClass.RandomForestClassificationComplete)
     recommendations should contain(OntologyClass.GradientBoostTreeClassification)
     recommendations should contain(OntologyClass.MultilayerPerceptronClassification)
   }
 
-  it should s"not recommend ${OntologyClass.GaussianNaiveBayesClassification.name} for dataset metadata of a small dataset with multicollinearity" in {
+  it should s"not recommend ${OntologyClass.MultilayerPerceptronClassification.name} for dataset metadata of a small dataset with multicollinearity" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalClassification,
       VariableType.Binary,
@@ -201,7 +200,6 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations should contain(OntologyClass.DecisionTreeClassificationPartial)
     recommendations should contain(OntologyClass.RandomForestClassificationPartial)
     recommendations should contain(OntologyClass.MultilayerPerceptronClassification)
-    recommendations shouldNot contain(OntologyClass.GaussianNaiveBayesClassification)
   }
 
   it should s"recommend ${OntologyClass.BernoulliNaiveBayesClassification.name} for dataset metadata of a small dataset" in {

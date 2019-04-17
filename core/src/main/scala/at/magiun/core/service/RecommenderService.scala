@@ -60,7 +60,6 @@ class RecommenderService(
       case OntologyClass.DecisionTreeRegressionPartial | OntologyClass.DecisionTreeRegressionComplete => DecisionTreeRegressionAlgorithm(ontology.name, "")
       case OntologyClass.MultinomialNaiveBayesClassification => MultinomialNaiveBayesClassificationAlgorithm(ontology.name, "")
       case OntologyClass.BernoulliNaiveBayesClassification => BernoulliNaiveBayesClassificationAlgorithm(ontology.name, "")
-      case OntologyClass.GaussianNaiveBayesClassification => GaussianNaiveBayesClassificationAlgorithm(ontology.name, "")
       case OntologyClass.LinearSupportVectorMachine => LinearSupportVectorMachineAlgorithm(ontology.name, "")
       case OntologyClass.MultilayerPerceptronClassification => MultilayerPerceptronClassificationAlgorithm(ontology.name, "")
       case OntologyClass.GradientBoostTreeClassification => GradientBoostTreeClassificationAlgorithm(ontology.name, "")

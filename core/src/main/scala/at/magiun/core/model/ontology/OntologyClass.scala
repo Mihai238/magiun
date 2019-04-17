@@ -31,7 +31,6 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
   case object Classification extends OntologyClass(NS + "Classification", "Classification")
   case object MultinomialNaiveBayesClassification extends OntologyClass(NS + "MultinomialNaiveBayesClassification", "Multinomial Naiuve Bayes Classification")
   case object BernoulliNaiveBayesClassification extends OntologyClass(NS + "BernoulliNaiveBayesClassification", "Bernoulli Naiuve Bayes Classification")
-  case object GaussianNaiveBayesClassification extends OntologyClass(NS + "GaussianNaiveBayesClassification", "Gaussian Naiuve Bayes Classification")
   case object LinearSupportVectorMachine extends OntologyClass(NS + "LinearSupportVectorMachine", "Linear Support Vector Machine")
   case object MultilayerPerceptronClassification extends OntologyClass(NS + "MultilayerPerceptronClassification", "Multilayer Perceptron Classification")
   case object RandomForestClassificationComplete extends OntologyClass(NS + "RandomForestClassificationComplete", "Random Forest Classification Complete")

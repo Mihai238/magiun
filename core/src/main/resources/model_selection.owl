@@ -802,64 +802,6 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
-    <!-- http://www.magiun.io/ontologies/model-selection#GaussianNaiveBayesClassification -->
-
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GaussianNaiveBayesClassification">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Classification"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
-                        <owl:allValuesFrom>
-                            <owl:Class>
-                                <owl:intersectionOf rdf:parseType="Collection">
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Binary"/>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
-                                        <owl:allValuesFrom>
-                                            <rdfs:Datatype>
-                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
-                                                <owl:withRestrictions rdf:parseType="Collection">
-                                                    <rdf:Description>
-                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">80.0</xsd:minInclusive>
-                                                    </rdf:Description>
-                                                </owl:withRestrictions>
-                                            </rdfs:Datatype>
-                                        </owl:allValuesFrom>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasContinuousVariableTypePercentage"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</owl:hasValue>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasMulticollinearity"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasNormalDistributionPercentage"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</owl:hasValue>
-                                    </owl:Restriction>
-                                </owl:intersectionOf>
-                            </owl:Class>
-                        </owl:allValuesFrom>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Classification"/>
-        <rdfs:seeAlso>http://www.statsoft.com/textbook/naive-bayes-classifier</rdfs:seeAlso>
-        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Naive_Bayes_classifier</rdfs:seeAlso>
-        <rdfs:seeAlso>https://towardsdatascience.com/introduction-to-naive-bayes-classification-4cffabb1ae54</rdfs:seeAlso>
-        <rdfs:seeAlso>https://www.analyticsvidhya.com/blog/2017/09/naive-bayes-explained/</rdfs:seeAlso>
-        <rdfs:seeAlso>https://www.saedsayad.com/naive_bayesian.htm</rdfs:seeAlso>
-    </owl:Class>
-    
-
-
     <!-- http://www.magiun.io/ontologies/model-selection#GeneralizedLinearRegressionComplete -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#GeneralizedLinearRegressionComplete">

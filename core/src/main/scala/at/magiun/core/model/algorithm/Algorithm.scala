@@ -51,44 +51,41 @@ case class SurvivalRegressionAlgorithm(name: String,
 
 case class GradientBoostTreeRegressionAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.GradientBoostTreeRegressionParameters
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.GradientBoostTreeRegressionClassificationParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }
 
 case class RandomForestRegressionAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.RandomForestRegressionParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }
 
 case class DecisionTreeRegressionAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.DecisionTreeRegressionClassificationParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }
 
 case class MultinomialNaiveBayesClassificationAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.NaiveBayesParameters
                                             ) extends Algorithm {
-  override def enhanceAlgorithm[T](algorithm: T): Unit = ???
+  override def enhanceAlgorithm[NaiveBayes](algorithm: NaiveBayes): Unit = {
+    algorithm.asInstanceOf[org.apache.spark.ml.classification.NaiveBayes].setModelType("multinomial")
+  }
 }
 
 case class BernoulliNaiveBayesClassificationAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.NaiveBayesParameters
                                             ) extends Algorithm {
-  override def enhanceAlgorithm[T](algorithm: T): Unit = ???
-}
-
-case class GaussianNaiveBayesClassificationAlgorithm(name: String,
-                                             formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
-                                            ) extends Algorithm {
-  override def enhanceAlgorithm[T](algorithm: T): Unit = ???
+  override def enhanceAlgorithm[NaiveBayes](algorithm: NaiveBayes): Unit = {
+    algorithm.asInstanceOf[org.apache.spark.ml.classification.NaiveBayes].setModelType("bernoulli")
+  }
 }
 
 case class LinearSupportVectorMachineAlgorithm(name: String,
@@ -100,28 +97,28 @@ case class LinearSupportVectorMachineAlgorithm(name: String,
 
 case class MultilayerPerceptronClassificationAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.MultilayerPerceptronClassificationParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }
 
 case class RandomForestClassificationAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.RandomForestClassificationParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }
 
 case class GradientBoostTreeClassificationAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.GradientBoostTreeRegressionClassificationParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }
 
 case class DecisionTreeClassificationAlgorithm(name: String,
                                              formula: String,
-                                             parameters: Set[AlgorithmParameter[_ <: Any]] = Set.empty
+                                             parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.DecisionTreeRegressionClassificationParameters
                                             ) extends Algorithm {
   override def enhanceAlgorithm[T](algorithm: T): Unit = ???
 }

@@ -1,0 +1,44 @@
+$backdrop-background-color:	#696969 !default;
+
+#spinner {
+  top: 50% ;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  z-index: 9999;
+  color: #ffffff;
+
+  &.backdrop {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: $backdrop-background-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: none;
+
+    span {
+      font-family: Consolas, Menlo, Monaco, monospace;
+      font-weight: bold;
+      font-size: 30vh;
+      opacity: 0.8;
+
+      display: inline-block;
+      animation: pulse 0.6s alternate infinite ease-in-out;
+
+      &:nth-child(odd) {
+        animation-delay: 0.6s;
+      }
+    }
+
+  }
+}
+
+@keyframes pulse {
+  to {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+}

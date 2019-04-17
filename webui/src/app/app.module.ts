@@ -2,7 +2,7 @@ import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouteReuseStrategy} from '@angular/router';
 import {DragDropDirectiveModule} from 'angular4-drag-drop';
 import {ClickOutsideModule} from 'ng-click-outside';
@@ -54,6 +54,9 @@ import {RecommenderRestService} from "./rest/recommender.rest.service";
 import {DistributionsModalComponent} from "./components/model-selection/distributions-modal/distributions-modal.component";
 import {PlotsModalComponent} from "./components/model-selection/plots-modal/plots-modal.component";
 import {VarDirective} from "./directives/var.directive";
+import {LoadingIndicatorService} from "./services/loading.indicator.service";
+import {LoadingIndicatorInterceptor} from "./interceptor/loading.indicator.interceptor";
+import {HttpLoaderComponent} from "./components/shared/http-loader/http-loader.component";
 
 @NgModule({
   declarations: [
@@ -89,7 +92,8 @@ import {VarDirective} from "./directives/var.directive";
     ModelSelectionComponent,
     DistributionsModalComponent,
     PlotsModalComponent,
-    VarDirective
+    VarDirective,
+    HttpLoaderComponent
   ],
   imports: [
     CommonModule,
@@ -114,7 +118,14 @@ import {VarDirective} from "./directives/var.directive";
     BlockRestService,
     ExecutionService,
     RecommenderRestService,
-    {provide: RouteReuseStrategy, useClass: RoutingReuseStrategy}
+    {provide: RouteReuseStrategy, useClass: RoutingReuseStrategy},
+    LoadingIndicatorService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingIndicatorInterceptor,
+      multi: true,
+      deps: [LoadingIndicatorService]
+    }
   ],
   entryComponents: [
     DatabaseBlockComponent,

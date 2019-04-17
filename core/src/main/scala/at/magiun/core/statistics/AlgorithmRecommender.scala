@@ -63,6 +63,7 @@ class AlgorithmRecommender(ontology: OntModel @@ AlgorithmSelectionOntology) {
       case Distribution.Exponential => createIndividualForOntClass(OntologyClass.ExponentialDistribution.ontologyUri)
       case Distribution.Multinomial => createIndividualForOntClass(OntologyClass.MultinomialDistribution.ontologyUri)
       case Distribution.Poisson => createIndividualForOntClass(OntologyClass.PoissonDistribution.ontologyUri)
+      case Distribution.Uniform => createIndividualForOntClass(OntologyClass.UniformDistribution.ontologyUri)
       case _ => throw new IllegalArgumentException(s"Unknown distribution ${distribution.toString} !")
     }
   }

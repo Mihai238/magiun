@@ -23,6 +23,7 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
   case object CategoricalDistribution extends  OntologyClass(NS + "CategoricalDistribution", "Categorical Distribution")
   case object GammaDistribution extends OntologyClass(NS + "GammaDistribution", "Gamma Distribution")
   case object PoissonDistribution extends OntologyClass(NS + "PoissonDistribution", "Poisson Distribution")
+  case object UniformDistribution extends OntologyClass(NS + "UniformDistribution", "Uniform Distribution")
 
   /** Algorithm */
   case object Algorithm extends OntologyClass(NS + "Algorithm", "Algorithm")

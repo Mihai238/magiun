@@ -2060,6 +2060,14 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
+    <!-- http://www.magiun.io/ontologies/model-selection#UniformDistribution -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#UniformDistribution">
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.magiun.io/ontologies/model-selection#VariableType -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#VariableType">

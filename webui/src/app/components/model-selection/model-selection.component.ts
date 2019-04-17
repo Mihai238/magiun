@@ -77,7 +77,6 @@ export class ModelSelectionComponent {
           this.selectedDataset.schema.columns
             .filter(c => c.name == key)
             .forEach(c => {
-              console.log(result[key]);
               c.distribution = result[key];
             })
         }

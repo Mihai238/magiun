@@ -5,6 +5,9 @@ import {NavbarComponent} from './components/shared/navbar/navbar.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {FooterComponent} from './components/shared/footer/footer.component';
 import {TranslateModule} from '@ngx-translate/core';
+import {HttpLoaderComponent} from "./components/shared/http-loader/http-loader.component";
+import {LoadingIndicatorService} from "./services/loading.indicator.service";
+import {LoadingIndicatorInterceptor} from "./interceptor/loading.indicator.interceptor";
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -12,11 +15,16 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         NavbarComponent,
-        FooterComponent
+        FooterComponent,
+        HttpLoaderComponent
       ],
       imports: [
         RouterTestingModule,
         TranslateModule.forRoot()
+      ],
+      providers: [
+        LoadingIndicatorService,
+        LoadingIndicatorInterceptor
       ]
     }).compileComponents();
   }));

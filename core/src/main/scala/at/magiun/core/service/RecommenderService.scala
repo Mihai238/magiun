@@ -19,7 +19,7 @@ class RecommenderService(
                           recommendationsRanker: RecommendationsRanker
                         ) {
 
-  def recommend(request: RecommenderRequest): Future[Option[Set[Algorithm]]] = {
+  def recommend(request: RecommenderRequest): Future[Option[Set[Algorithm[_ <:Any]]]] = {
     import scala.concurrent.duration._
 
     Future {
@@ -47,7 +47,7 @@ class RecommenderService(
     datasetMetadataCalculator.compute(request, cleanDataset, cleanMagiunDataset)
   }
 
-  private def mapOntologyClassToAlgorithm(ontology: OntologyClass): Algorithm = {
+  private def mapOntologyClassToAlgorithm(ontology: OntologyClass): Algorithm[_ <:Any] = {
     ontology match {
       case OntologyClass.LinearLeastRegressionPartial | OntologyClass.LinearLeastRegressionComplete => LinearRegressionAlgorithm(ontology.name, "")
       case OntologyClass.GeneralizedLinearRegressionPartial | OntologyClass.GeneralizedLinearRegressionComplete => GeneralizedLinearRegressionAlgorithm(ontology.name, "")
@@ -67,6 +67,5 @@ class RecommenderService(
       case OntologyClass.DecisionTreeClassificationPartial | OntologyClass.DecisionTreeClassificationComplete => DecisionTreeClassificationAlgorithm(ontology.name, "")
       case _ => null
     }
-
   }
 }

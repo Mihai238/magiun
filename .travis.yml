@@ -14,4 +14,4 @@ before_script:
 script:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
   - mvn test -B
-  - cd webui && npm install &   & npm run test
+  - cd webui && npm install && npm run test

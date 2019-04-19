@@ -4,5 +4,6 @@ export interface Algorithm {
 
   readonly name: string;
   readonly formula: string;
+  implementation: string;
   parameters: AlgorithmParameter<any>[];
 }

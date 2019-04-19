@@ -27,6 +27,7 @@ export class RecommenderRestService {
     return this.http.post<T[]>(environment.baseUrl + this.recommenderPath + this.algoRecommendationsPath, JSON.stringify(body))
       .map(algorithms => algorithms.map(algorithm => {
         let a = <Algorithm>Object.values(algorithm)[0];
+        a.implementation = Object.keys(algorithm)[0];
         if (a.parameters != null) {
           a.parameters = a.parameters.map(p => <AlgorithmParameter<any>>Object.values(p)[0]);
         } else {

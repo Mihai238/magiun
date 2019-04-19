@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 import {Algorithm} from "../model/algorithm/algorithm.model";
 import {RecommenderRequest} from "../model/recommender-request.model";
 import {AlgorithmParameter} from "../model/algorithm/algorithm.parameter.model";
+import {TrainAlgorithmRequest} from "../model/algorithm/train/train.algorithm.request.model";
 
 @Injectable()
 export class RecommenderRestService {
@@ -14,6 +15,7 @@ export class RecommenderRestService {
   private logger: MagiunLogger;
   private readonly recommenderPath = '/recommender';
   private readonly algoRecommendationsPath = '/algo-recommendations';
+  private readonly trainAlgorithmPath = '/train';
 
   constructor(private http: HttpClient, ngxLogger: NGXLogger) {
     this.logger = new MagiunLogger(RecommenderRestService.name, ngxLogger);
@@ -33,5 +35,12 @@ export class RecommenderRestService {
         return a
       }))
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
+
+  train(body: TrainAlgorithmRequest): Observable<any> {
+    this.logger.info(`sending train request for dataset ${body.datasetId} and algorithm ${body.algorithm.name}`);
+
+    return this.http.post(environment.baseUrl + this.recommenderPath + this.trainAlgorithmPath, JSON.stringify(body))
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 }

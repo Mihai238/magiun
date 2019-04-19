@@ -18,6 +18,7 @@ import {Distribution} from "../../model/statistics/distribution.type.model";
 import {Algorithm} from "../../model/algorithm/algorithm.model";
 import {DOCUMENT} from "@angular/common";
 import {AlgorithmGoal, GoalClassification, GoalRegression} from "../../model/algorithm/algorithm.goal.model";
+import {TrainAlgorithmRequest} from "../../model/algorithm/train/train.algorithm.request.model";
 
 @Component({
   selector: 'app-model-selection',
@@ -121,6 +122,8 @@ export class ModelSelectionComponent {
     this.targetVariable = this.selectedDataset.schema.columns[event];
     this.possibleExplanatoryVariables = CollectionsUtils.withoutElement(this.selectedDataset.schema.columns, this.targetVariable);
     this.explanatoryVariables = CollectionsUtils.withoutElement(this.explanatoryVariables, this.targetVariable);
+    this.algorithmRecommendations = [];
+    this.checkedDistributions = false;
     this.logTargetVariable();
   }
 
@@ -164,6 +167,8 @@ export class ModelSelectionComponent {
     } else {
       this.explanatoryVariables = CollectionsUtils.deleteEntryFromArray(this.explanatoryVariables, <Column>column);
     }
+    this.algorithmRecommendations = [];
+    this.checkedDistributions = false;
     this.logger.info(`${(checked) ? "adding" : "removing"} column "${column.name}" ${(checked) ? "to" : "from"} the explanatory variable list`);
   }
 
@@ -240,7 +245,15 @@ export class ModelSelectionComponent {
       p.value = (<HTMLInputElement>element).value;
     });
 
+    const request = new TrainAlgorithmRequest(
+      this.selectedDataset.id,
+      this.targetVariable.index,
+      this.explanatoryVariables.map(c => c.index),
+      this.algorithmRecommendations[index]
+    );
 
-    // todo send train-request
+    this.recommenderService.train(request).subscribe((resp) => {
+      console.log(resp);
+    })
   }
 }

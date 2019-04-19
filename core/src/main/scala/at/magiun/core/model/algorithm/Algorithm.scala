@@ -79,6 +79,7 @@ case class MultinomialNaiveBayesClassificationAlgorithm(name: String,
                                                        ) extends Algorithm[NaiveBayes] {
   override def enhanceAlgorithm(algorithm: NaiveBayes): Unit = {
     algorithm.setModelType("multinomial")
+    val parametersMap = parameters.map(p => p.name -> p.value)
   }
 }
 

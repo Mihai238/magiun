@@ -6,7 +6,7 @@ node_js:
 addons:
   apt:
     packages:
-      - oracle-java8-set-default
+      - oracle-java8-installer
 
 before_script:
   - npm install -g @angular/cli
@@ -14,4 +14,4 @@ before_script:
 script:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
   - mvn test -B
-  - cd webui && npm install && npm run test
+  - cd webui && npm install &   & npm run test

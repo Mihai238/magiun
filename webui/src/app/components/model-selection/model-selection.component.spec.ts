@@ -1,7 +1,7 @@
 import {ModelSelectionComponent} from "./model-selection.component";
 import {async, ComponentFixture, getTestBed, TestBed} from "@angular/core/testing";
 import {DataService} from "../../services/data.service";
-import {RecommenderRestService} from "../../rest/recommender.rest.service";
+import {AlgorithmRestService} from "../../rest/algorithm-rest.service";
 import {TranslateService} from "@ngx-translate/core";
 import {DialogService} from 'ng2-bootstrap-modal';
 import {DistributionsModalComponent} from "./distributions-modal/distributions-modal.component";
@@ -34,7 +34,7 @@ describe("ModelSelectionComponent", () => {
       ],
       providers: [
         DataService,
-        RecommenderRestService,
+        AlgorithmRestService,
         DialogService,
         TranslateService,
         [{provide: Router, useClass: RouterMock}]

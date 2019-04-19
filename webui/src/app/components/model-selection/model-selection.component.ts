@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/first';
 import {CollectionsUtils} from "../../util/collections.utils";
 import {TranslateService} from "@ngx-translate/core";
-import {RecommenderRestService} from "../../rest/recommender.rest.service";
+import {AlgorithmRestService} from "../../rest/algorithm-rest.service";
 import {RecommenderRequest} from "../../model/recommender-request.model";
 import {DialogService} from 'ng2-bootstrap-modal';
 import {DistributionsModalComponent} from "./distributions-modal/distributions-modal.component";
@@ -45,7 +45,7 @@ export class ModelSelectionComponent {
 
   constructor(
     private dataService: DataService,
-    private recommenderService: RecommenderRestService,
+    private recommenderService: AlgorithmRestService,
     private router: Router,
     private translate: TranslateService,
     private dialogService: DialogService,

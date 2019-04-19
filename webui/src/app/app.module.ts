@@ -50,7 +50,7 @@ import {BlockRestService} from './rest/block.rest.service';
 import { BarSettingsComponent } from './components/data/chart/bar-settings/bar-settings.component';
 import {ExecutionService} from "./services/execution.service";
 import {ModelSelectionComponent} from "./components/model-selection/model-selection.component";
-import {RecommenderRestService} from "./rest/recommender.rest.service";
+import {AlgorithmRestService} from "./rest/algorithm-rest.service";
 import {DistributionsModalComponent} from "./components/model-selection/distributions-modal/distributions-modal.component";
 import {PlotsModalComponent} from "./components/model-selection/plots-modal/plots-modal.component";
 import {VarDirective} from "./directives/var.directive";
@@ -117,7 +117,7 @@ import {HttpLoaderComponent} from "./components/shared/http-loader/http-loader.c
     LineService,
     BlockRestService,
     ExecutionService,
-    RecommenderRestService,
+    AlgorithmRestService,
     {provide: RouteReuseStrategy, useClass: RoutingReuseStrategy},
     LoadingIndicatorService,
     {

@@ -10,15 +10,15 @@ import {AlgorithmParameter} from "../model/algorithm/algorithm.parameter.model";
 import {TrainAlgorithmRequest} from "../model/algorithm/train/train.algorithm.request.model";
 
 @Injectable()
-export class RecommenderRestService {
+export class AlgorithmRestService {
 
   private logger: MagiunLogger;
-  private readonly recommenderPath = '/recommender';
-  private readonly algoRecommendationsPath = '/algo-recommendations';
+  private readonly recommenderPath = '/algorithm';
+  private readonly algoRecommendationsPath = '/recommend';
   private readonly trainAlgorithmPath = '/train';
 
   constructor(private http: HttpClient, ngxLogger: NGXLogger) {
-    this.logger = new MagiunLogger(RecommenderRestService.name, ngxLogger);
+    this.logger = new MagiunLogger(AlgorithmRestService.name, ngxLogger);
   }
 
   recommend<T extends Algorithm>(body: RecommenderRequest): Observable<T[]> {

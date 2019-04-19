@@ -11,7 +11,7 @@ import io.finch.{Application, Output}
 class RestApi(blockController: BlockController,
               dataSetController: DataSetController,
               executionController: ExecutionController,
-              recommenderController: RecommenderController
+              recommenderController: AlgorithmController
              ) extends LazyLogging {
 
   private val api = blockController.api :+:

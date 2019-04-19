@@ -11,10 +11,10 @@ import io.finch.circe._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class RecommenderController(recommenderService: RecommenderService) extends LazyLogging {
+class AlgorithmController(recommenderService: RecommenderService) extends LazyLogging {
 
-  private val BASE_PATH = "recommender"
-  private val ALGORITHM_RECOMMENDATIONS_PATH = "algo-recommendations"
+  private val BASE_PATH = "algorithm"
+  private val ALGORITHM_RECOMMENDATIONS_PATH = "recommend"
   private val TRAIN_ALGORITHM_PATH = "train"
 
   //noinspection TypeAnnotation

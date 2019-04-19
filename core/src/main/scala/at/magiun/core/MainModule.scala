@@ -19,7 +19,7 @@ trait MainModule {
   lazy val dataSetController = wire[DataSetController]
   lazy val blockController = wire[BlockController]
   lazy val executionController = wire[ExecutionController]
-  lazy val recommenderController = wire[RecommenderController]
+  lazy val recommenderController = wire[AlgorithmController]
   lazy val restApi = wire[RestApi]
 
   // Services

@@ -19,6 +19,7 @@ import {Algorithm} from "../../model/algorithm/algorithm.model";
 import {DOCUMENT} from "@angular/common";
 import {GoalClassification, GoalRegression} from "../../model/algorithm/algorithm.goal.model";
 import {TrainAlgorithmRequest} from "../../model/algorithm/train/train.algorithm.request.model";
+import {ModelService} from "../../services/model.service";
 
 @Component({
   selector: 'app-model-selection',
@@ -49,6 +50,7 @@ export class ModelSelectionComponent {
     private router: Router,
     private translate: TranslateService,
     private dialogService: DialogService,
+    private modelService: ModelService,
     ngxLogger: NGXLogger,
     @Inject(DOCUMENT) document
   ) {
@@ -67,7 +69,6 @@ export class ModelSelectionComponent {
     this.dataService.getDataSets().subscribe(value => {
       this.datasets = value;
       this.refreshSelectedDataset();
-      this.getDistributions();
     });
   }
 
@@ -149,6 +150,7 @@ export class ModelSelectionComponent {
     this.targetVariable = this.selectedDataset.schema.columns[0];
     this.explanatoryVariables = [];
     this.possibleExplanatoryVariables = CollectionsUtils.withoutElement(this.selectedDataset.schema.columns, this.targetVariable)
+    this.getDistributions();
   }
 
   updateGoal(goal: string) {
@@ -253,7 +255,11 @@ export class ModelSelectionComponent {
     );
 
     this.recommenderService.train(request).subscribe((resp) => {
-      console.log(resp);
+      if (resp.errorMessage != "") {
+        alert(resp.errorMessage);
+      } else {
+        this.modelService.modelArrived(resp);
+      }
     })
   }
 }

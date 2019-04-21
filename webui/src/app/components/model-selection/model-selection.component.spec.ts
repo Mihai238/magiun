@@ -13,6 +13,7 @@ import {Column, ColumnType, DataSet, Schema} from "../../model/data-set.model";
 import {Observable} from "rxjs";
 import {NavigationEnd, Router} from "@angular/router";
 import {VarDirective} from "../../directives/var.directive";
+import {ModelService} from "../../services/model.service";
 
 describe("ModelSelectionComponent", () => {
 
@@ -37,6 +38,7 @@ describe("ModelSelectionComponent", () => {
         AlgorithmRestService,
         DialogService,
         TranslateService,
+        ModelService,
         [{provide: Router, useClass: RouterMock}]
       ]
     }).compileComponents();

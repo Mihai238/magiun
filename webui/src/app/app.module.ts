@@ -58,6 +58,7 @@ import {LoadingIndicatorService} from "./services/loading.indicator.service";
 import {LoadingIndicatorInterceptor} from "./interceptor/loading.indicator.interceptor";
 import {HttpLoaderComponent} from "./components/shared/http-loader/http-loader.component";
 import {ModelVisualizationComponent} from "./components/model-visualization/model-visualization.component";
+import {ModelService} from "./services/model.service";
 
 @NgModule({
   declarations: [
@@ -127,7 +128,8 @@ import {ModelVisualizationComponent} from "./components/model-visualization/mode
       useClass: LoadingIndicatorInterceptor,
       multi: true,
       deps: [LoadingIndicatorService]
-    }
+    },
+    ModelService
   ],
   entryComponents: [
     DatabaseBlockComponent,

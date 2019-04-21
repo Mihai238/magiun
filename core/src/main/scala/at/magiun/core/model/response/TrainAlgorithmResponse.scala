@@ -1,6 +1,7 @@
 package at.magiun.core.model.response
 
 case class TrainAlgorithmResponse(
+                                   id: String,
                                    intercept: CoefficientResponse,
                                    coefficients: Set[CoefficientResponse],
                                    degreesOfFreedom: Long,
@@ -13,7 +14,7 @@ case class TrainAlgorithmResponse(
                                    errorMessage: String = ""
                                  ) {
   def this(errorMessage: String) {
-    this(CoefficientResponse("", -1, -1, -1, -1), Set.empty, -1, -1, -1, -1, -1, -1, -1, errorMessage)
+    this("", CoefficientResponse("", -1, -1, -1, -1), Set.empty, -1, -1, -1, -1, -1, -1, -1, errorMessage)
   }
 }
 

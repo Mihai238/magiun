@@ -4,6 +4,7 @@
   "NAVBAR": {
     "DATA": "Feature Engineering",
     "MODEL_SELECTION": "Model Selection",
+    "MODEL_VISUALIZATION": "Model Visualization",
     "WORKFLOWS": "Workflows"
   },
   "FOOTER": {
@@ -50,6 +51,9 @@
     "PLOTS_MODAL": {
       "TITLE": "statistical plots"
     }
+  },
+  "MODEL_VISUALIZATION": {
+    "NO_MODELS": "There are no models available at the moment!"
   },
   "WORKFLOWS": {
     "PLACE_HOLDER": "To create your workflow, drag and drop datasets and modules here!",

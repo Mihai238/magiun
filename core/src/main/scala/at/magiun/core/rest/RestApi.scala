@@ -26,7 +26,7 @@ class RestApi(blockController: BlockController,
   })
     .toServiceAs[Application.Json]
 
-  private  val policy: Cors.Policy = Cors.Policy(
+  private val policy: Cors.Policy = Cors.Policy(
     allowsOrigin = _ => Some("*"),
     allowsMethods = _ => Some(Seq("*")),
     allowsHeaders = _ => Some(Seq("*"))

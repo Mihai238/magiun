@@ -27,10 +27,9 @@ case class LinkPower(name: String = "linkPower", value: Double = 0, selectOption
 
 /** LOGISTIC REGRESSION */
 /**
-  * todo: upper an lower bounds on coefficients and intercept are not modeled at the moment
+  * todo: upper an lower bounds on coefficients and intercept are not modeled at the moment & family
   */
-case class LogisticFamily(name: String = "family", value: String = "auto", selectOptions: Set[String] = Set("auto", "binomial", "multinomial")) extends AlgorithmParameter[String] {}
-case class LogisticThreshold(name: String = "threshold", value: Double = 0.5, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
+case class Threshold(name: String = "threshold", value: Double = 0.5, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
 
 /** ISOTONIC REGRESSION */
 case class Isotonic(name: String = "isotonic", value: Boolean = true, selectOptions: Set[Boolean] = Set(true, false)) extends AlgorithmParameter[Boolean] {}
@@ -45,13 +44,10 @@ case class MaxDepth(name: String = "maxDepth", value: Int = 5, selectOptions: Se
 case class MaxMemoryInMB(name: String = "maxMemoryInMB", value: Int = 256, selectOptions: Set[Int] = Set.empty) extends AlgorithmParameter[Int] {}
 case class MinInfoGain(name: String = "minInfoGain", value: Double = 0.0, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
 case class MinInstancesPerNode(name: String = "minInstancesPerNode", value: Int = 1, selectOptions: Set[Int] = Set.empty) extends AlgorithmParameter[Int] {}
-case class Seed(name: String = "seed", value: Long = Long.MaxValue, selectOptions: Set[Long] = Set.empty) extends AlgorithmParameter[Long] {}
+case class Seed(name: String = "seed", value: Long = 123, selectOptions: Set[Long] = Set.empty) extends AlgorithmParameter[Long] {}
 case class StepSize(name: String = "stepSize", value: Double = 0.1, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
 case class SubsamplingRate(name: String = "subsamplingRate", value: Double = 1.0, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
 case class NumTrees(name: String = "numTrees", value: Int = 20, selectOptions: Set[Int] = Set.empty) extends AlgorithmParameter[Int] {}
-
-/** SVM */
-case class SVMThreshold(name: String = "threshold", value: Double = 0, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
 
 /** NAIVE BAYES */
 case class Smoothing(name: String = "smoothing", value: Double = 1.0, selectOptions: Set[Double] = Set.empty) extends AlgorithmParameter[Double] {}
@@ -83,8 +79,7 @@ object AlgorithmParameter {
   private val LINK_POWER = LinkPower()
 
   /** LOGISTIC REGRESSION */
-  private val LOGISTIC_FAMILY = LogisticFamily()
-  private val LOGISTIC_THRESHOLD = LogisticThreshold()
+  private val THRESHOLD = Threshold()
 
   /** ISOTONIC REGRESSION */
   private val ISOTONIC = Isotonic()
@@ -103,9 +98,6 @@ object AlgorithmParameter {
   private val SUBSAMPLING_RATE = SubsamplingRate()
   private val NUM_TREES = NumTrees()
 
-  /** SVM */
-  private val SVM_THRESHOLD = SVMThreshold()
-
   /** NAIVE BAYES */
   private val SMOOTHING = Smoothing()
 
@@ -116,14 +108,51 @@ object AlgorithmParameter {
 
   val LinearRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET, EPSILON, FIT_INTERCEPT, REG_PARAM, TOLERANCE, STANDARDIZATION, LOSS, SOLVER)
   val GeneralizedLinearRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, FIT_INTERCEPT, REG_PARAM, GLM_FAMILY, LINK, LINK_POWER, TOLERANCE, SOLVER )
-  val LogisticRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET,  FIT_INTERCEPT, REG_PARAM, LOGISTIC_FAMILY, TOLERANCE, STANDARDIZATION, LOGISTIC_THRESHOLD )
+  val LogisticRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET,  FIT_INTERCEPT, REG_PARAM, TOLERANCE, STANDARDIZATION, THRESHOLD )
   val IsotonicRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(ISOTONIC)
   val SurvivalRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, FIT_INTERCEPT, TOLERANCE)
   val GradientBoostTreeRegressionClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, LOSS_TYPE, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED, STEP_SIZE, SUBSAMPLING_RATE)
   val RandomForestRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED, SUBSAMPLING_RATE)
   val DecisionTreeRegressionClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED)
-  val LinearSVMParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, FIT_INTERCEPT, REG_PARAM, STANDARDIZATION, TOLERANCE, SVM_THRESHOLD)
+  val LinearSVMParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, FIT_INTERCEPT, REG_PARAM, STANDARDIZATION, TOLERANCE, THRESHOLD)
   val NaiveBayesParameters: Set[AlgorithmParameter[_ <: Any]] = Set(SMOOTHING)
   val MultilayerPerceptronClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, BLOCK_SIZE, SEED, TOLERANCE, MULTILAYER_PERCEPTRON_SOLVER, STEP_SIZE)
   val RandomForestClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED, SUBSAMPLING_RATE, NUM_TREES)
+
+  def createParameterWithValueByName(name: String, stringValue: String): AlgorithmParameter[_ <: Any] = {
+    name match {
+      case "maxIter" => MaxIter(value = stringValue.toInt)
+      case "fitIntercept" => FitIntercept(value = stringValue.toBoolean)
+      case "regParam" => RegParam(value = stringValue.toDouble)
+      case "tol" => Tolerance(value = stringValue.toDouble)
+      case "solver" => Solver(value = stringValue)
+      case "aggregationDepth" => AggregationDepth(value = stringValue.toInt)
+      case "standardization" => Standardization(value = stringValue.toBoolean)
+      case "elasticNet" => ElasticNet(value = stringValue.toDouble)
+      case "epsilon" => Epsilon(value = stringValue.toDouble)
+      case "loss" => Loss(value = stringValue)
+      case "family" => GLMFamily(value = stringValue)
+      case "link" => Link(value = stringValue)
+      case "linkPower" => LinkPower(name = stringValue)
+      case "threshold" => Threshold(value = stringValue.toDouble)
+      case "isotonic" => Isotonic(value = stringValue.toBoolean)
+      case "cacheNodeIds" => CacheNodeIds(value = stringValue.toBoolean)
+      case "checkpointInterval" => CheckpointInterval(value = stringValue.toInt)
+      case "featureSubsetStrategy" => FeatureSubsetStrategy(value = stringValue)
+      case "lossType" => LossType(value = stringValue)
+      case "maxBins" => MaxBins(value = stringValue.toInt)
+      case "maxDepth" => MaxDepth(value = stringValue.toInt)
+      case "maxMemoryInMB" => MaxMemoryInMB(value = stringValue.toInt)
+      case "minInfoGain" => MinInfoGain(value = stringValue.toInt)
+      case "minInstancesPerNode" => MinInstancesPerNode(value = stringValue.toInt)
+      case "seed" => Seed(value = stringValue.toLong)
+      case "stepSize" => StepSize(value = stringValue.toDouble)
+      case "subsamplingRate" => SubsamplingRate(value = stringValue.toDouble)
+      case "numTrees" => NumTrees(value = stringValue.toInt)
+      case "smoothing" => Smoothing(value = stringValue.toDouble)
+      case "blockSize" => BlockSize(value = stringValue.toInt)
+      case "solver" => Solver(value = stringValue)
+      case _ => throw new IllegalArgumentException(s"Unknown parameter $name !")
+    }
+  }
 }

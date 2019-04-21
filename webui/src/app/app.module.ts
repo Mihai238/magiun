@@ -57,6 +57,7 @@ import {VarDirective} from "./directives/var.directive";
 import {LoadingIndicatorService} from "./services/loading.indicator.service";
 import {LoadingIndicatorInterceptor} from "./interceptor/loading.indicator.interceptor";
 import {HttpLoaderComponent} from "./components/shared/http-loader/http-loader.component";
+import {ModelVisualizationComponent} from "./components/model-visualization/model-visualization.component";
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import {HttpLoaderComponent} from "./components/shared/http-loader/http-loader.c
     DistributionsModalComponent,
     PlotsModalComponent,
     VarDirective,
-    HttpLoaderComponent
+    HttpLoaderComponent,
+    ModelVisualizationComponent
   ],
   imports: [
     CommonModule,

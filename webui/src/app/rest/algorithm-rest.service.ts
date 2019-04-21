@@ -8,6 +8,7 @@ import {Algorithm} from "../model/algorithm/algorithm.model";
 import {RecommenderRequest} from "../model/recommender-request.model";
 import {AlgorithmParameter} from "../model/algorithm/algorithm.parameter.model";
 import {TrainAlgorithmRequest} from "../model/algorithm/train/train.algorithm.request.model";
+import {TrainAlgorithmResponse} from "../model/response/train.algorithm.response.model";
 
 @Injectable()
 export class AlgorithmRestService {
@@ -38,10 +39,10 @@ export class AlgorithmRestService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
-  train(body: TrainAlgorithmRequest): Observable<any> {
+  train(body: TrainAlgorithmRequest): Observable<TrainAlgorithmResponse> {
     this.logger.info(`sending train request for dataset ${body.datasetId} and algorithm ${body.algorithm.name}`);
 
-    return this.http.post(environment.baseUrl + this.recommenderPath + this.trainAlgorithmPath, JSON.stringify(body))
+    return this.http.post<TrainAlgorithmResponse>(environment.baseUrl + this.recommenderPath + this.trainAlgorithmPath, JSON.stringify(body))
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 }

@@ -17,7 +17,7 @@ import {DistributionsModalComponent} from "./distributions-modal/distributions-m
 import {Distribution} from "../../model/statistics/distribution.type.model";
 import {Algorithm} from "../../model/algorithm/algorithm.model";
 import {DOCUMENT} from "@angular/common";
-import {AlgorithmGoal, GoalClassification, GoalRegression} from "../../model/algorithm/algorithm.goal.model";
+import {GoalClassification, GoalRegression} from "../../model/algorithm/algorithm.goal.model";
 import {TrainAlgorithmRequest} from "../../model/algorithm/train/train.algorithm.request.model";
 
 @Component({

@@ -1,0 +1,15 @@
+@import "../../../styles";
+
+.container {
+  min-height: 100vh;
+  overflow: scroll;
+  transition: all 0.2s ease;
+}
+
+.main-content {
+  margin-top: $header-height + 15px;
+  background-color: $default-white;
+  padding: 30px;
+  min-height: calc(100vh - 90px);
+  width: 100%;
+}

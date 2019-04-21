@@ -5,6 +5,7 @@ import at.magiun.core.feature._
 import at.magiun.core.repository.{BlockRepository, DataSetRepository, DatabaseInitializer}
 import at.magiun.core.rest._
 import at.magiun.core.service._
+import at.magiun.core.statistics.trainer.AlgorithmTrainer
 import at.magiun.core.statistics.{AlgorithmRecommender, ColumnMetadataCalculator, DatasetMetadataCalculator, StatisticsCalculator}
 import com.softwaremill.macwire._
 import com.typesafe.config.ConfigFactory
@@ -30,6 +31,7 @@ trait MainModule {
   lazy val executionContext = wire[ExecutionContext]
   lazy val recommenderService = wire[RecommenderService]
   lazy val recommendatiosRanker = wire[RecommendationsRanker]
+  lazy val algorithmService = wire[AlgorithmService]
 
   // Calculators
   lazy val columnMetadataCalculator = wire[ColumnMetadataCalculator]
@@ -40,6 +42,9 @@ trait MainModule {
   lazy val recommender = wire[Recommender]
   lazy val restrictionBuilder = wire[RestrictionBuilder]
   lazy val algorithmRecommender = wire[AlgorithmRecommender]
+
+  // Trainers
+  lazy val algorithmTrainer = wire[AlgorithmTrainer]
 
   // Repositories
   lazy val blockRepository = wire[BlockRepository]

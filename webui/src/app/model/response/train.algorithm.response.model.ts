@@ -1,4 +1,5 @@
 import {CoefficientResponse} from "./coefficient.response.model";
+import {DataRow} from "../data-row.model";
 
 export interface TrainAlgorithmResponse {
   id: string,
@@ -11,5 +12,7 @@ export interface TrainAlgorithmResponse {
   rSquared: number
   rSquaredAdjusted: number
   rootMeanSquaredError: number
+  predictions: number[]
+  residuals: number[]
   errorMessage: string
 }

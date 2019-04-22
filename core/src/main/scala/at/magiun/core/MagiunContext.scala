@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit
 
 import at.magiun.core.model.Schema
 import com.google.common.cache.CacheBuilder
+import org.apache.spark.ml.Model
 import org.apache.spark.sql.DataFrame
 
 class MagiunContext {
@@ -11,8 +12,7 @@ class MagiunContext {
   /** the current dataFrame and magiunDataset which are in use */
   private lazy val dataFrameCache = CacheBuilder.newBuilder().expireAfterWrite(15, TimeUnit.MINUTES).maximumSize(1).build[String, DataFrame]()
   private lazy val magiunSchemaCache = CacheBuilder.newBuilder().expireAfterWrite(15, TimeUnit.MINUTES).maximumSize(1).build[String, Schema]()
-  private lazy val predictionsCache = CacheBuilder.newBuilder().expireAfterWrite(60, TimeUnit.MINUTES).maximumSize(15).build[String, DataFrame]()
-  private lazy val residualsCache = CacheBuilder.newBuilder().expireAfterWrite(60, TimeUnit.MINUTES).maximumSize(15).build[String, DataFrame]()
+  private lazy val modelsCache = CacheBuilder.newBuilder().expireAfterWrite(60, TimeUnit.MINUTES).maximumSize(15).build[String, Model[_ <: Model[_]]]()
 
   def addDataFrameToCache(id: String, dataFrame: DataFrame): Unit = {
     dataFrameCache.put(id, dataFrame)
@@ -22,12 +22,8 @@ class MagiunContext {
     magiunSchemaCache.put(id, magiunDataSet)
   }
 
-  def addPredictionToCache(id: String, prediction: DataFrame): Unit = {
-    predictionsCache.put(id, prediction)
-  }
-
-  def addResidualsToCache(id: String, residuals: DataFrame): Unit = {
-    residualsCache.put(id, residuals)
+  def addModelToCache(id: String, model: Model[_ <: Model[_]]): Unit = {
+    modelsCache.put(id, model)
   }
 
   def getDataFrame(id: String): Option[DataFrame] = {
@@ -38,12 +34,9 @@ class MagiunContext {
     Option(magiunSchemaCache.getIfPresent(id))
   }
 
-  def getResiduals(id: String): Option[DataFrame] = {
-    Option(residualsCache.getIfPresent(id))
-  }
-
-  def getPredictions(id: String): Option[DataFrame] = {
-    Option(predictionsCache.getIfPresent(id))
+  def getModel(id: String): Option[Model[_ <: Any]] = {
+    //Option(modelsCache.getIfPresent(id)) TODO fixme
+    Option.empty
   }
 
   def sayHello(): Unit = {

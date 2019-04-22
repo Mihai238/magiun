@@ -1,9 +1,11 @@
 package at.magiun.core.model.response
 
+import at.magiun.core.model.DataRow
+
 case class TrainAlgorithmResponse(
                                    id: String,
                                    intercept: CoefficientResponse,
-                                   coefficients: Set[CoefficientResponse],
+                                   coefficients: Seq[CoefficientResponse],
                                    degreesOfFreedom: Long,
                                    explainedVariance: Double,
                                    meanAbsoluteError: Double,
@@ -11,10 +13,13 @@ case class TrainAlgorithmResponse(
                                    rSquared: Double,
                                    rSquaredAdjusted: Double,
                                    rootMeanSquaredError: Double,
+                                   predictions: Seq[Double],
+                                   residuals: Seq[Double],
                                    errorMessage: String = ""
                                  ) {
-  def this(errorMessage: String) {
-    this("", CoefficientResponse("", -1, -1, -1, -1), Set.empty, -1, -1, -1, -1, -1, -1, -1, errorMessage)
+
+def this(errorMessage: String) {
+    this("", CoefficientResponse("", -1, -1, -1, -1), Seq.empty, -1, -1, -1, -1, -1, -1, -1, Seq.empty, Seq.empty, errorMessage)
   }
 }
 

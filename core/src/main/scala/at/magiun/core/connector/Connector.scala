@@ -1,12 +1,12 @@
 package at.magiun.core.connector
 
 import at.magiun.core.model._
+import at.magiun.core.util.DatasetUtil
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.spark.sql.types.{DataType, StructType}
+import org.apache.spark.sql.types.DataType
 import org.apache.spark.sql.{DataFrame, Dataset, Row}
 
 import scala.Option.empty
-import scala.util.Random
 
 trait Connector extends LazyLogging {
 
@@ -21,7 +21,7 @@ trait Connector extends LazyLogging {
       ds.take(range.end).drop(range.start)
     }).getOrElse(ds.collect())
 
-    mapToRowValues(dsRows, ds.schema, columns)
+    DatasetUtil.mapToRowValues(dsRows, ds.schema, columns)
   }
 
   final def getRandomSample(source: DataSetSource, size: Option[Int] = Option(1000), columns: Option[Seq[String]] = empty): Seq[DataRow] = {
@@ -29,15 +29,16 @@ trait Connector extends LazyLogging {
     val dataCount = dataset.count().intValue()
 
     if (size.get > dataCount) {
-      return mapToRowValues(dataset.collect(), dataset.schema, columns)
+      return DatasetUtil.mapToRowValues(dataset.collect(), dataset.schema, columns)
     }
 
     val rows: Array[Row] = getRandomSample(dataset, size.get, dataCount)
 
-    mapToRowValues(rows, dataset.schema, columns)
+    DatasetUtil.mapToRowValues(rows, dataset.schema, columns)
   }
 
-  final def getRandomSampleDF(source: DataSetSource, size: Option[Int] = Option(1000)): DataFrame = {
+  final def getRandomSampleDF(source: DataSetSource, size: Option[Int] = Option
+  (1000)): DataFrame = {
     val dataset = getDataset(source)
     val dataCount = dataset.count().intValue()
 
@@ -52,10 +53,8 @@ trait Connector extends LazyLogging {
   }
 
   private def getRandomSample(dataset: DataFrame, size: Int, dataCount: Int): Array[Row] = {
-    val r = new Random()
-    val indices = (0 until size).map(_ => r.nextInt(dataCount))
-
-    dataset.rdd.zipWithIndex().filter{case (_, v) => indices.contains(v)}.map{case (k, _) => k}.collect()
+    val indices = DatasetUtil.getRandomIndices(size, dataCount)
+    DatasetUtil.getRowsByIndices(dataset, indices)
   }
 
   protected def mapToColumnType(dataType: DataType): ColumnType = {
@@ -70,27 +69,4 @@ trait Connector extends LazyLogging {
         ColumnType.Unknown
     }
   }
-
-  protected def mapToRowValues(dfRows: Array[Row], schema: StructType, columns: Option[Seq[String]] = empty): Array[DataRow] = {
-    dfRows
-      .zipWithIndex
-      .map { case (sparkRow, rowInd) =>
-
-        val values = if (columns.isDefined) {
-          columns.map(_.flatMap {
-            col =>
-              val colIndex = schema.zipWithIndex.find(e => e._1.name == col).get._2
-              Option(sparkRow.get(colIndex)).map(_.toString)
-          }).get
-        } else {
-          schema.zipWithIndex.flatMap {
-            case (col, colInd) =>
-              Option(sparkRow.get(colInd)).orElse(Option("")).map(_.toString)
-          }
-        }
-
-        DataRow(rowInd, values)
-      }
-  }
-
 }

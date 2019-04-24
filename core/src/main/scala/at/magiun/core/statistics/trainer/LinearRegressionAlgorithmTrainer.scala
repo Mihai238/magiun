@@ -70,7 +70,13 @@ object LinearRegressionAlgorithmTrainer {
                                  pValues: Array[Double],
                                  explanatoryVariablesNames: Array[String]): Seq[CoefficientResponse] = {
     explanatoryVariablesNames.indices
-      .map(i => CoefficientResponse(explanatoryVariablesNames(i), coefficients(i), standardErrors(i), tValues(i), pValues(i)))
+      .map(i => CoefficientResponse(
+        explanatoryVariablesNames(i),
+        coefficients(i),
+        standardErrors(i),
+        tValues(i),
+        pValues(i)
+      ))
   }
 
   private def getDataSampleFittedValuesAndResiduals(data: DataFrame, summary: LinearRegressionTrainingSummary, sampleSize: Int): (Seq[Double], Seq[Double], Seq[Double]) = {

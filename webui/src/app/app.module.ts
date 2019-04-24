@@ -60,6 +60,7 @@ import {HttpLoaderComponent} from "./components/shared/http-loader/http-loader.c
 import {ModelVisualizationComponent} from "./components/model-visualization/model-visualization.component";
 import {ModelService} from "./services/model.service";
 import { NotifierModule } from 'angular-notifier';
+import {RegressionSummaryComponent} from "./components/model-visualization/summary/regression-summary.component";
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { NotifierModule } from 'angular-notifier';
     PlotsModalComponent,
     VarDirective,
     HttpLoaderComponent,
-    ModelVisualizationComponent
+    ModelVisualizationComponent,
+    RegressionSummaryComponent
   ],
   imports: [
     CommonModule,

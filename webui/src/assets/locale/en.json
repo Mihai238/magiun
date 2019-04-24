@@ -54,7 +54,10 @@
     }
   },
   "MODEL_VISUALIZATION": {
-    "NO_MODELS": "There are no models available at the moment!"
+    "NO_MODELS": "There are no models available at the moment!",
+    "SUMMARY": {
+      "SUMMARY": "Summary"
+    }
   },
   "WORKFLOWS": {
     "PLACE_HOLDER": "To create your workflow, drag and drop datasets and modules here!",

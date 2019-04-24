@@ -3,6 +3,8 @@ import {TrainAlgorithmResponse} from "../../model/response/train.algorithm.respo
 import {MagiunLogger} from "../../util/magiun.logger";
 import {NGXLogger} from "ngx-logger";
 import {ModelService} from "../../services/model.service";
+import {AlgorithmImplementation} from "app/model/algorithm/train/algorithm.implementation.model";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-model-visualization',
@@ -12,10 +14,12 @@ import {ModelService} from "../../services/model.service";
 export class ModelVisualizationComponent {
 
   private logger: MagiunLogger;
+  AlgorithmImplementation = AlgorithmImplementation;
   models: TrainAlgorithmResponse[] = [];
 
   constructor(
     private modelService: ModelService,
+    private translate: TranslateService,
     ngxLogger: NGXLogger
   ) {
     this.logger = new MagiunLogger(ModelVisualizationComponent.name, ngxLogger);

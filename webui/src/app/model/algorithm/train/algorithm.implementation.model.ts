@@ -4,3 +4,10 @@ export enum AlgorithmImplementation {
 
 }
 
+export namespace AlgorithmImplementation {
+
+  export function isRegression(implementation: AlgorithmImplementation) {
+    return implementation == AlgorithmImplementation.LinearRegressionAlgorithm;
+  }
+}
+

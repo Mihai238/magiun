@@ -14,6 +14,11 @@ import {Observable} from "rxjs";
 import {NavigationEnd, Router} from "@angular/router";
 import {VarDirective} from "../../directives/var.directive";
 import {ModelService} from "../../services/model.service";
+import {NotifierService} from "angular-notifier";
+import {NotifierNotificationComponent} from "angular-notifier/src/components/notifier-notification.component";
+import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
+import {NotifierQueueService} from "angular-notifier/src/services/notifier-queue.service";
+import {NotifierModule} from "angular-notifier";
 
 describe("ModelSelectionComponent", () => {
 
@@ -30,6 +35,7 @@ describe("ModelSelectionComponent", () => {
       ],
       imports: [
         HttpClientModule,
+        NotifierModule,
         translate,
         logging
       ],
@@ -40,7 +46,8 @@ describe("ModelSelectionComponent", () => {
         TranslateService,
         ModelService,
         [{provide: Router, useClass: RouterMock}]
-      ]
+      ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
   }));
 

@@ -9,6 +9,9 @@ import {RecommenderRequest} from "../model/recommender-request.model";
 import {AlgorithmParameter} from "../model/algorithm/algorithm.parameter.model";
 import {TrainAlgorithmRequest} from "../model/algorithm/train/train.algorithm.request.model";
 import {TrainAlgorithmResponse} from "../model/response/train.algorithm.response.model";
+import {AlgorithmImplementation} from "../model/algorithm/train/algorithm.implementation.model";
+import {eraseStyles} from "@angular/animations/browser/src/util";
+import {error} from "util";
 
 @Injectable()
 export class AlgorithmRestService {
@@ -43,6 +46,26 @@ export class AlgorithmRestService {
     this.logger.info(`sending train request for dataset ${body.datasetId} and algorithm ${body.algorithm.name}`);
 
     return this.http.post<TrainAlgorithmResponse>(environment.baseUrl + this.recommenderPath + this.trainAlgorithmPath, JSON.stringify(body))
+      .map(response => {
+        return <TrainAlgorithmResponse> {
+          id: response.id,
+          algorithmImplementation: AlgorithmImplementation[response.algorithmImplementation],
+          intercept: response.intercept,
+          coefficients: response.coefficients,
+          degreesOfFreedom: response.degreesOfFreedom,
+          explainedVariance: response.explainedVariance,
+          meanAbsoluteError: response.meanAbsoluteError,
+          meanSquaredError: response.meanSquaredError,
+          rSquared: response.rSquared,
+          rSquaredAdjusted: response.rSquaredAdjusted,
+          rootMeanSquaredError: response.rootMeanSquaredError,
+          fittedValues: response.fittedValues,
+          residuals: response.residuals,
+          dataSample: response.dataSample,
+          errorMessage: response.errorMessage
+        };
+
+      })
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 }

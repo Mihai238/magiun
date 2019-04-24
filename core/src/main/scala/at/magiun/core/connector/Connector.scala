@@ -37,8 +37,7 @@ trait Connector extends LazyLogging {
     DatasetUtil.mapToRowValues(rows, dataset.schema, columns)
   }
 
-  final def getRandomSampleDF(source: DataSetSource, size: Option[Int] = Option
-  (1000)): DataFrame = {
+  final def getRandomSampleDF(source: DataSetSource, size: Option[Int] = Option(1000)): DataFrame = {
     val dataset = getDataset(source)
     val dataCount = dataset.count().intValue()
 

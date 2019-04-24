@@ -1,4 +1,4 @@
-package at.magiun.core.model.request
+package at.magiun.core.model.rest.request
 
 import at.magiun.core.model.data.Distribution
 

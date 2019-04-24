@@ -43,6 +43,7 @@
     "UNKNOWN_DISTRIBUTIONS": "Some explanatory variable(s) has/have an unknown distribution. Please check and validate the distributions in order to proceed!",
     "TARGET_VARIABLE_UNKNOWN_DISTRIBUTION": "The dependent variable has an unknown distribution. Please check and validate the distribution in order to proceed!",
     "EMPTY_CLASSIFICATION_RECOMMENDATIONS": "Please check the target variable and its distribution! The Classification algorithms are suited only for discrete variables!",
+    "ALGORITHM_WAS_TRAINED": "The algorithm was successfully trained and can be seen in the 'Model Visualization' tab!",
     "DISTRIBUTIONS_MODAL": {
       "TITLE": "Variables Distributions",
       "ICON_TITLE": "Plot variable's statistics",

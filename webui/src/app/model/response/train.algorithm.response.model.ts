@@ -1,8 +1,9 @@
 import {CoefficientResponse} from "./coefficient.response.model";
-import {DataRow} from "../data-row.model";
+import {AlgorithmImplementation} from "../algorithm/train/algorithm.implementation.model";
 
 export interface TrainAlgorithmResponse {
   id: string,
+  algorithmImplementation: AlgorithmImplementation,
   intercept: CoefficientResponse
   coefficients: CoefficientResponse[]
   degreesOfFreedom: number
@@ -12,7 +13,8 @@ export interface TrainAlgorithmResponse {
   rSquared: number
   rSquaredAdjusted: number
   rootMeanSquaredError: number
-  predictions: number[]
+  fittedValues: number[]
   residuals: number[]
+  dataSample: number[]
   errorMessage: string
 }

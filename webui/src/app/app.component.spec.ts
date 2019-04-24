@@ -8,6 +8,8 @@ import {TranslateModule} from '@ngx-translate/core';
 import {HttpLoaderComponent} from "./components/shared/http-loader/http-loader.component";
 import {LoadingIndicatorService} from "./services/loading.indicator.service";
 import {LoadingIndicatorInterceptor} from "./interceptor/loading.indicator.interceptor";
+import {NotifierService} from "angular-notifier";
+import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -24,8 +26,10 @@ describe('AppComponent', () => {
       ],
       providers: [
         LoadingIndicatorService,
-        LoadingIndicatorInterceptor
-      ]
+        LoadingIndicatorInterceptor,
+        NotifierService
+      ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
   }));
 

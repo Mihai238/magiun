@@ -2,7 +2,8 @@ package at.magiun.core.statistics.trainer
 
 import at.magiun.core.MagiunContext
 import at.magiun.core.model.algorithm.LinearRegressionAlgorithm
-import at.magiun.core.model.response.{CoefficientResponse, TrainAlgorithmResponse}
+import at.magiun.core.model.rest.AlgorithmImplementation
+import at.magiun.core.model.rest.response.{CoefficientResponse, TrainAlgorithmResponse}
 import at.magiun.core.util.DatasetUtil
 import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.ml.regression.{LinearRegression, LinearRegressionTrainingSummary}
@@ -40,10 +41,11 @@ object LinearRegressionAlgorithmTrainer {
       val interceptPValue = if (intercept != 0) pValues.last else 0.0
 
       magiunContext.addModelToCache(fit.uid, fit)
-      val predictionsAndResiduals = getPredictionsAndResiduals(summary, sampleSize, dataFrame.count().intValue())
+      val dataSamplePredictionsAndResiduals = getDataSampleFittedValuesAndResiduals(dataFrame.select(responseVariableName), summary, sampleSize)
 
       TrainAlgorithmResponse(
         fit.uid,
+        AlgorithmImplementation.LinearRegressionAlgorithm,
         CoefficientResponse(responseVariableName, intercept, interceptStandardError, interceptTValue, interceptPValue),
         createCoefficients(fit.coefficients.toArray, standardErrors, tValues, pValues,  explanatoryVariablesNames),
         summary.degreesOfFreedom,
@@ -53,8 +55,9 @@ object LinearRegressionAlgorithmTrainer {
         summary.r2,
         summary.r2adj,
         summary.rootMeanSquaredError,
-        predictionsAndResiduals._1,
-        predictionsAndResiduals._2
+        dataSamplePredictionsAndResiduals._1,
+        dataSamplePredictionsAndResiduals._2,
+        dataSamplePredictionsAndResiduals._3
       )
     } catch {
       case e: Throwable => new TrainAlgorithmResponse(s"An error occurred while trying to train the model! Cause: ${e.getCause}")
@@ -70,23 +73,28 @@ object LinearRegressionAlgorithmTrainer {
       .map(i => CoefficientResponse(explanatoryVariablesNames(i), coefficients(i), standardErrors(i), tValues(i), pValues(i)))
   }
 
-  private def getPredictionsAndResiduals(summary: LinearRegressionTrainingSummary, sampleSize: Int, dataCount: Int): (Seq[Double], Seq[Double]) = {
+  private def getDataSampleFittedValuesAndResiduals(data: DataFrame, summary: LinearRegressionTrainingSummary, sampleSize: Int): (Seq[Double], Seq[Double], Seq[Double]) = {
+    val dataCount: Int = data.count().intValue()
     val predictions: DataFrame = summary.predictions.select("prediction")
-    val residuals = summary.residuals.select("residuals")
+    val residuals: DataFrame = summary.residuals.select("residuals")
 
+    var dataSample: Array[Row] = Array.empty
     var predictionsArray: Array[Row] = Array.empty
     var residualsArray: Array[Row] = Array.empty
 
     if (sampleSize > dataCount) {
+      dataSample = data.collect()
       predictionsArray = predictions.collect()
       residualsArray = residuals.collect()
     } else {
       val randomIndices = DatasetUtil.getRandomIndices(sampleSize, dataCount)
+      dataSample = DatasetUtil.getRowsByIndices(data, randomIndices)
       predictionsArray = DatasetUtil.getRowsByIndices(predictions, randomIndices)
       residualsArray = DatasetUtil.getRowsByIndices(residuals, randomIndices)
     }
 
     (
+      dataSample.map(r => r.getDouble(0)),
       predictionsArray.map(r => r.getDouble(0)),
       residualsArray.map(r => r.getDouble(0))
     )

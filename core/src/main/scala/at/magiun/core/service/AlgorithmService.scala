@@ -3,8 +3,9 @@ package at.magiun.core.service
 import at.magiun.core.MagiunContext
 import at.magiun.core.model.Schema
 import at.magiun.core.model.algorithm._
-import at.magiun.core.model.request.{AlgorithmImplementation, AlgorithmParameterRequest, AlgorithmRequest, TrainAlgorithmRequest}
-import at.magiun.core.model.response.TrainAlgorithmResponse
+import at.magiun.core.model.rest.AlgorithmImplementation
+import at.magiun.core.model.rest.request.{AlgorithmParameterRequest, AlgorithmRequest, TrainAlgorithmRequest}
+import at.magiun.core.model.rest.response.TrainAlgorithmResponse
 import at.magiun.core.statistics.trainer.AlgorithmTrainer
 import at.magiun.core.util.{DatasetUtil, MagiunDatasetUtil}
 import com.typesafe.scalalogging.LazyLogging

@@ -1,8 +1,8 @@
 package at.magiun.core.rest
 
 import at.magiun.core.model.algorithm.Algorithm
-import at.magiun.core.model.request.{RecommenderRequest, TrainAlgorithmRequest}
-import at.magiun.core.model.response.TrainAlgorithmResponse
+import at.magiun.core.model.rest.request.{RecommenderRequest, TrainAlgorithmRequest}
+import at.magiun.core.model.rest.response.TrainAlgorithmResponse
 import at.magiun.core.rest.FutureConverter._
 import at.magiun.core.service.{AlgorithmService, RecommenderService}
 import com.typesafe.scalalogging.LazyLogging

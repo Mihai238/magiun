@@ -20,6 +20,7 @@ import {DOCUMENT} from "@angular/common";
 import {GoalClassification, GoalRegression} from "../../model/algorithm/algorithm.goal.model";
 import {TrainAlgorithmRequest} from "../../model/algorithm/train/train.algorithm.request.model";
 import {ModelService} from "../../services/model.service";
+import {NotifierService} from "angular-notifier";
 
 @Component({
   selector: 'app-model-selection',
@@ -51,6 +52,7 @@ export class ModelSelectionComponent {
     private translate: TranslateService,
     private dialogService: DialogService,
     private modelService: ModelService,
+    private notifier: NotifierService,
     ngxLogger: NGXLogger,
     @Inject(DOCUMENT) document
   ) {
@@ -259,6 +261,7 @@ export class ModelSelectionComponent {
         alert(resp.errorMessage);
       } else {
         this.modelService.modelArrived(resp);
+        this.notifier.notify('success', this.translate.instant("MODEL_SELECTION.ALGORITHM_WAS_TRAINED"));
       }
     })
   }

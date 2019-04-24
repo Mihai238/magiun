@@ -2,7 +2,7 @@ package at.magiun.core.statistics.trainer
 
 import at.magiun.core.MagiunContext
 import at.magiun.core.model.algorithm.{Algorithm, LinearRegressionAlgorithm}
-import at.magiun.core.model.response.TrainAlgorithmResponse
+import at.magiun.core.model.rest.response.TrainAlgorithmResponse
 import org.apache.spark.sql.DataFrame
 
 class AlgorithmTrainer(magiunContext: MagiunContext) {

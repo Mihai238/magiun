@@ -59,6 +59,7 @@ import {LoadingIndicatorInterceptor} from "./interceptor/loading.indicator.inter
 import {HttpLoaderComponent} from "./components/shared/http-loader/http-loader.component";
 import {ModelVisualizationComponent} from "./components/model-visualization/model-visualization.component";
 import {ModelService} from "./services/model.service";
+import { NotifierModule } from 'angular-notifier';
 
 @NgModule({
   declarations: [
@@ -110,6 +111,28 @@ import {ModelService} from "./services/model.service";
     DataTableModule,
     BrowserAnimationsModule,
     TagInputModule,
+    NotifierModule.withConfig(
+      {
+        position: {
+          horizontal: {
+            position: 'left',
+            distance: 12
+          },
+          vertical: {
+            position: 'top',
+            distance: 12,
+            gap: 10
+          }
+        },
+        behaviour: {
+          autoHide: 5000,
+          onClick: false,
+          onMouseover: 'pauseAutoHide',
+          showDismissButton: true,
+          stacking: 4
+        }
+      }
+    ),
     translate,
     logging,
     routing

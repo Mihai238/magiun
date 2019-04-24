@@ -1,9 +1,10 @@
-package at.magiun.core.model.response
+package at.magiun.core.model.rest.response
 
-import at.magiun.core.model.DataRow
+import at.magiun.core.model.rest.AlgorithmImplementation
 
 case class TrainAlgorithmResponse(
                                    id: String,
+                                   algorithmImplementation: AlgorithmImplementation,
                                    intercept: CoefficientResponse,
                                    coefficients: Seq[CoefficientResponse],
                                    degreesOfFreedom: Long,
@@ -13,13 +14,15 @@ case class TrainAlgorithmResponse(
                                    rSquared: Double,
                                    rSquaredAdjusted: Double,
                                    rootMeanSquaredError: Double,
-                                   predictions: Seq[Double],
+                                   fittedValues: Seq[Double],
                                    residuals: Seq[Double],
+                                   dataSample: Seq[Double],
                                    errorMessage: String = ""
                                  ) {
 
+
 def this(errorMessage: String) {
-    this("", CoefficientResponse("", -1, -1, -1, -1), Seq.empty, -1, -1, -1, -1, -1, -1, -1, Seq.empty, Seq.empty, errorMessage)
+    this("", AlgorithmImplementation.None, CoefficientResponse("", -1, -1, -1, -1), Seq.empty, -1, -1, -1, -1, -1, -1, -1, Seq.empty, Seq.empty, Seq.empty, errorMessage)
   }
 }
 

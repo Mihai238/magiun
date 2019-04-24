@@ -1,14 +1,8 @@
-package at.magiun.core.model.request
+package at.magiun.core.model.rest
 
-import enumeratum._
+import enumeratum.{CirceEnum, Enum, EnumEntry}
 
 import scala.collection.immutable
-
-case class TrainAlgorithmRequest(datasetId: Int, responseVariable: Int, explanatoryVariables: Seq[Int], algorithm: AlgorithmRequest) extends Serializable {}
-
-case class AlgorithmRequest(name: String, implementation: AlgorithmImplementation, parameters: Set[AlgorithmParameterRequest]) {}
-
-case class AlgorithmParameterRequest(name: String, value: String) {}
 
 sealed abstract class AlgorithmImplementation extends EnumEntry
 
@@ -32,4 +26,5 @@ object AlgorithmImplementation extends Enum[AlgorithmImplementation] with CirceE
   case object RandomForestClassificationAlgorithm extends AlgorithmImplementation
   case object GradientBoostTreeClassificationAlgorithm extends AlgorithmImplementation
   case object DecisionTreeClassificationAlgorithm extends AlgorithmImplementation
+  case object None extends AlgorithmImplementation
 }

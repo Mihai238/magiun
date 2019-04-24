@@ -5,7 +5,7 @@ import at.magiun.core.model.MagiunDataSet
 import at.magiun.core.model.algorithm._
 import at.magiun.core.model.data.DatasetMetadata
 import at.magiun.core.model.ontology.OntologyClass
-import at.magiun.core.model.request.RecommenderRequest
+import at.magiun.core.model.rest.request.RecommenderRequest
 import at.magiun.core.statistics.{AlgorithmRecommender, DatasetMetadataCalculator}
 import at.magiun.core.util.{DatasetUtil, MagiunDatasetUtil}
 import org.apache.spark.ml.Estimator

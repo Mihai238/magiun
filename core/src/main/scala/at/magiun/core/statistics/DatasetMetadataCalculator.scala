@@ -6,7 +6,7 @@ import at.magiun.core.model.{Column, ColumnType, MagiunDataSet}
 import at.magiun.core.model.algorithm.AlgorithmGoal
 import at.magiun.core.model.data.{DatasetMetadata, Distribution, VariableType}
 import at.magiun.core.model.math.MagiunMatrix
-import at.magiun.core.model.request.RecommenderRequest
+import at.magiun.core.model.rest.request.RecommenderRequest
 import com.softwaremill.tagging.@@
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.jena.ontology.OntModel

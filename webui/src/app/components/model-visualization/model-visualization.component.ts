@@ -12,7 +12,7 @@ import {ModelService} from "../../services/model.service";
 export class ModelVisualizationComponent {
 
   private logger: MagiunLogger;
-  models: TrainAlgorithmResponse[];
+  models: TrainAlgorithmResponse[] = [];
 
   constructor(
     private modelService: ModelService,
@@ -21,7 +21,9 @@ export class ModelVisualizationComponent {
     this.logger = new MagiunLogger(ModelVisualizationComponent.name, ngxLogger);
     this.models = this.modelService.models;
     this.modelService.change.subscribe(model => {
-      this.models.push(model);
+      if (this.models.indexOf(model) < 0) {
+        this.models.push(model);
+      }
     })
   }
 

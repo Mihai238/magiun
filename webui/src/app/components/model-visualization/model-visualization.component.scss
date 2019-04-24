@@ -13,3 +13,22 @@
   min-height: calc(100vh - 90px);
   width: 100%;
 }
+
+#modelsAccordion {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 7.5px;
+}
+
+.card {
+  margin-bottom: 5px;
+
+  h5 {
+    button {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}

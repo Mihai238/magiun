@@ -30,6 +30,7 @@ import {NotifierService} from "angular-notifier";
 export class ModelSelectionComponent {
 
   private logger: MagiunLogger;
+  private dataLoaded = false;
   Number = Number;
   GoalRegression = GoalRegression;
   GoalClassification = GoalClassification;
@@ -58,8 +59,9 @@ export class ModelSelectionComponent {
   ) {
     this.logger = new MagiunLogger(ModelSelectionComponent.name, ngxLogger);
     this.router.events.subscribe((val) => {
-      if (val instanceof NavigationEnd && val.url == '/model-selection') {
+      if (val instanceof NavigationEnd && val.url == '/model-selection' && !this.dataLoaded) {
         this.refreshTheDatasets();
+        this.dataLoaded = true;
       }
     });
     this.logger.info("created!");

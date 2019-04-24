@@ -5,8 +5,26 @@
         {{ 'MODEL_VISUALIZATION.NO_MODELS' | translate }}
       </p>
     </div>
-    <div *ngIf="models != null && models.length >= 0">
-
+    <div class="container" *ngIf="models != null && models.length > 0">
+      <div>
+        <h4>Trained Models:</h4>
+      </div>
+      <div id="modelsAccordion">
+        <div class="card" *ngFor="let model of models">
+          <div *ngVar="models.indexOf(model) as index">
+            <h5>
+              <button [ngClass]="(index == 0)?'btn':'btn collapsed'"
+                      id="{{'header-' + index}}"
+                      type="button"
+                      data-toggle="collapse"
+                      [attr.data-target]="'#card-' + index" aria-expanded="true"
+                      [attr.aria-controls]="'card-' + index">
+                {{model.algorithmImplementation}}
+              </button>
+            </h5>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

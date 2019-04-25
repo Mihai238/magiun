@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal';
 import {Column, DataSet} from "../../../model/data-set.model";
 import {Distribution} from "../../../model/statistics/distribution.type.model";
-import {PlotsModalComponent} from "../plots-modal/plots-modal.component";
+import {DistributionPlotsModalComponent} from "../distribution-plots-modal/distribution-plots-modal.component";
 import {DataService} from "../../../services/data.service";
 import {TranslateService} from "@ngx-translate/core";
 import {CollectionsUtils} from "../../../util/collections.utils";
@@ -45,7 +45,7 @@ export class DistributionsModalComponent extends DialogComponent<DistributionsMo
     this.dataService.getRandomSample(this.dataset,[c.name]).subscribe(
       rows => {
         this.dialogService.addDialog(
-          PlotsModalComponent,
+          DistributionPlotsModalComponent,
           {
             column: c,
             data: CollectionsUtils.cleanArray(rows.map(row => parseFloat(row.values.pop())))

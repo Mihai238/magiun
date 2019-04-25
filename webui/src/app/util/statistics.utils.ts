@@ -21,6 +21,16 @@ export class StatisticsUtils {
     return s/data.length;
   }
 
+  public static median(data: number[]): number {
+    data = data.filter(v => v != null && !Number.isNaN(v) && Number.isFinite(v));
+    const n = data.length;
+    if (n % 2 == 1) {
+      return data[(n + 1)/2];
+    } else {
+      return (data[n/2] + data[n/2 + 1]) / 2;
+    }
+  }
+
   public static sd(data: number[], mean: number = null): number {
     data = data.filter(v => v != null && !Number.isNaN(v) && Number.isFinite(v));
     if (mean == null) {

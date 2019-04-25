@@ -23,7 +23,7 @@
               </button>
             </h5>
             <div id="{{'card-' + index}}"
-                 [ngClass]="(index == 0)?'collapse show':'collapse'"
+                 [ngClass]="(index == models.length - 1)?'collapse show':'collapse'"
                  [attr.aria-labelledby]="'header-' + index"
                  data-parent="#modelsAccordion">
               <hr/>

@@ -52,7 +52,7 @@ import {ExecutionService} from "./services/execution.service";
 import {ModelSelectionComponent} from "./components/model-selection/model-selection.component";
 import {AlgorithmRestService} from "./rest/algorithm-rest.service";
 import {DistributionsModalComponent} from "./components/model-selection/distributions-modal/distributions-modal.component";
-import {PlotsModalComponent} from "./components/model-selection/plots-modal/plots-modal.component";
+import {DistributionPlotsModalComponent} from "./components/model-selection/distribution-plots-modal/distribution-plots-modal.component";
 import {VarDirective} from "./directives/var.directive";
 import {LoadingIndicatorService} from "./services/loading.indicator.service";
 import {LoadingIndicatorInterceptor} from "./interceptor/loading.indicator.interceptor";
@@ -60,7 +60,8 @@ import {HttpLoaderComponent} from "./components/shared/http-loader/http-loader.c
 import {ModelVisualizationComponent} from "./components/model-visualization/model-visualization.component";
 import {ModelService} from "./services/model.service";
 import { NotifierModule } from 'angular-notifier';
-import {RegressionSummaryComponent} from "./components/model-visualization/summary/regression-summary.component";
+import {RegressionSummaryComponent} from "./components/model-visualization/summary/regression/regression-summary.component";
+import {RegressionPlotsModalComponent} from "./components/model-visualization/plots/regression-plots-modal/regression-plots-modal.component";
 
 @NgModule({
   declarations: [
@@ -95,11 +96,12 @@ import {RegressionSummaryComponent} from "./components/model-visualization/summa
     CheckboxParameterComponent,
     ModelSelectionComponent,
     DistributionsModalComponent,
-    PlotsModalComponent,
+    DistributionPlotsModalComponent,
     VarDirective,
     HttpLoaderComponent,
     ModelVisualizationComponent,
-    RegressionSummaryComponent
+    RegressionSummaryComponent,
+    RegressionPlotsModalComponent
   ],
   imports: [
     CommonModule,
@@ -169,7 +171,8 @@ import {RegressionSummaryComponent} from "./components/model-visualization/summa
     InputParameterComponent,
     CheckboxParameterComponent,
     DistributionsModalComponent,
-    PlotsModalComponent
+    DistributionPlotsModalComponent,
+    RegressionPlotsModalComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

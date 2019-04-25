@@ -5,20 +5,21 @@ import {NormalDistribution} from "../../../model/statistics/normal.distribution.
 import {StatisticsUtils} from "../../../util/statistics.utils";
 import {ExponentialDistribution} from "../../../model/statistics/exponential.distribution.model";
 import {UniformDistribution} from "../../../model/statistics/uniform.distribution.model";
+import {PlotsUtil} from "../../../util/plots.util";
 
 declare var Plotly: any;
 
-export interface PlotsModal {
+export interface DistributionPlotsModal {
   column: Column
   data: number[]
 }
 
 @Component({
-  selector: 'app-plots-modal',
-  templateUrl: './plots-modal.component.html',
-  styleUrls: ['./plots-modal.component.scss']
+  selector: 'app-distribution-plots-modal',
+  templateUrl: './distribution-plots-modal.component.html',
+  styleUrls: ['./distribution-plots-modal.component.scss']
 })
-export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, number[]]> implements PlotsModal, AfterViewInit {
+export class DistributionPlotsModalComponent extends DialogComponent<DistributionPlotsModal, [Column, number[]]> implements DistributionPlotsModal, AfterViewInit {
 
   private static PLOT_WIDTH = 450;
   private static PLOT_HEIGHT = 350;
@@ -49,7 +50,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     const n = this.data.length;
     this.data = this.data.sort((n1, n2) => n2 - n1);
     let mean = StatisticsUtils.mean(this.data);
-    let sd  =StatisticsUtils.sd(this.data);
+    let sd  = StatisticsUtils.sd(this.data);
 
     this.normalDistribution = new NormalDistribution(mean, sd);
     this.normalDistributed = this.normalDistribution.sample(n).sort((n1, n2) => n2 - n1);
@@ -109,8 +110,8 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     const plotData = [histogramData, normalDistributionLine, exponentialDistributionLine, uniformDistributionLine];
 
     const layout = {
-      height: PlotsModalComponent.PLOT_HEIGHT,
-      width: PlotsModalComponent.PLOT_WIDTH,
+      height: DistributionPlotsModalComponent.PLOT_HEIGHT,
+      width: DistributionPlotsModalComponent.PLOT_WIDTH,
       bargap: 0.05,
       xaxis: {title: this.column.name, autorange: true, zeroline: false},
       yaxis: {title: "Density", autorange: true, showticklabels: true},
@@ -129,7 +130,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
 
     const plotData = [trace];
 
-    const layout = {height: PlotsModalComponent.PLOT_HEIGHT, width: PlotsModalComponent.PLOT_WIDTH, title: "Boxplot"};
+    const layout = {height: DistributionPlotsModalComponent.PLOT_HEIGHT, width: DistributionPlotsModalComponent.PLOT_WIDTH, title: "Boxplot"};
     this.plot("boxPlot", plotData, layout)
   }
 
@@ -149,7 +150,7 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       }
     };
 
-    const layout = {height: PlotsModalComponent.PLOT_HEIGHT, width: PlotsModalComponent.PLOT_WIDTH, title: "Violin Plot"};
+    const layout = {height: DistributionPlotsModalComponent.PLOT_HEIGHT, width: DistributionPlotsModalComponent.PLOT_WIDTH, title: "Violin Plot"};
     this.plot("violinPlot", [trace], layout)
   }
 
@@ -167,11 +168,11 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       mode: "markers",
       name: this.column.name,
       marker: {
-        size: 8
+        size: 4
       }
     };
 
-    const coordinates = this.calculateLineCoordinates(ydata, xdata);
+    const coordinates = PlotsUtil.calculateLineCoordinates(ydata, xdata);
 
     const straightLine = {
       x0: coordinates[0],
@@ -188,8 +189,8 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     const plotData = [trace];
 
     const layout = {
-      height: PlotsModalComponent.PLOT_HEIGHT,
-      width: PlotsModalComponent.PLOT_WIDTH,
+      height: DistributionPlotsModalComponent.PLOT_HEIGHT,
+      width: DistributionPlotsModalComponent.PLOT_WIDTH,
       title: title,
       xaxis: {
         showgrid: true,
@@ -229,11 +230,11 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       mode: "markers",
       name: this.column.name,
       marker: {
-        size: 8
+        size: 4
       }
     };
 
-    const coordinates = this.calculateLineCoordinates(ydata, xdata);
+    const coordinates = PlotsUtil.calculateLineCoordinates(ydata, xdata);
 
     const straightLine = {
       x0: coordinates[0],
@@ -250,8 +251,8 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
     const plotData = [trace];
 
     const layout = {
-      height: PlotsModalComponent.PLOT_HEIGHT,
-      width: PlotsModalComponent.PLOT_WIDTH,
+      height: DistributionPlotsModalComponent.PLOT_HEIGHT,
+      width: DistributionPlotsModalComponent.PLOT_WIDTH,
       title: title,
       xaxis: {
         showgrid: true,
@@ -288,15 +289,15 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
       mode: "markers",
       name: this.column.name,
       marker: {
-        size: 8
+        size: 4
       }
     };
 
     const plotData = [trace];
 
     const layout = {
-      height: PlotsModalComponent.PLOT_HEIGHT,
-      width: PlotsModalComponent.PLOT_WIDTH,
+      height: DistributionPlotsModalComponent.PLOT_HEIGHT,
+      width: DistributionPlotsModalComponent.PLOT_WIDTH,
       title: title,
       xaxis: {
         showgrid: true,
@@ -317,22 +318,4 @@ export class PlotsModalComponent extends DialogComponent<PlotsModal, [Column, nu
   private plot(target: String, data: any[], layout: any): void {
     Plotly.newPlot(target, data, layout)
   }
-
-  private calculateLineCoordinates(sample: number[], theoretical: number[]): [number, number, number, number] {
-    const dx = StatisticsUtils.percentile(theoretical, 75) - StatisticsUtils.percentile(theoretical, 25);
-    const dy = StatisticsUtils.percentile(sample, 75) - StatisticsUtils.percentile(sample, 25);
-
-    const b = dy / dx;
-
-    const xc = (StatisticsUtils.percentile(theoretical, 25) + StatisticsUtils.percentile(theoretical, 75)) / 2;
-    const yc = (StatisticsUtils.percentile(sample, 25) + StatisticsUtils.percentile(sample, 75)) / 2;
-
-    const xmax = Math.max.apply(Math, theoretical);
-    const xmin = Math.min.apply(Math, theoretical);
-    const ymax = yc + b * (xmax - xc);
-    const ymin = yc - b * (xc - xmin);
-
-    return [xmin, ymin, xmax, ymax]
-  }
-
 }

@@ -1,0 +1,95 @@
+<div class="container">
+  <div>
+    <h6>{{ 'MODEL_VISUALIZATION.SUMMARY.SUMMARY' | translate }}</h6>
+    <hr/>
+    <div class="container">
+      <div class="row">
+        <b>Residuals:</b>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="row"><h6>Min</h6></div>
+          <div class="row">{{Math.min.apply(Math, model.residuals) | number: numberFormat}}</div>
+        </div>
+        <div class="col">
+          <div class="row"><h6>1Q</h6></div>
+          <div class="row">{{StatisticsUtils.percentile(model.residuals, 25) | number: numberFormat}}</div>
+        </div>
+        <div class="col">
+          <div class="row"><h6>Median</h6></div>
+          <div class="row">{{StatisticsUtils.median(model.residuals) | number: numberFormat}}</div>
+        </div>
+        <div class="col">
+          <div class="row"><h6>3Q</h6></div>
+          <div class="row">{{StatisticsUtils.percentile(model.residuals, 75) | number: numberFormat}}</div>
+        </div>
+        <div class="col">
+          <div class="row"><h6>Max</h6></div>
+          <div class="row">{{Math.max.apply(Math, model.residuals) | number: numberFormat}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <hr class="small" />
+      <div class="row">
+        <b>Coefficients:</b>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="row"><h6>&nbsp;&nbsp;</h6></div>
+          <div class="row">{{"(" + model.intercept.name + ")"}}</div>
+          <div class="row" *ngFor="let c of model.coefficients">{{c.name}}</div>
+        </div>
+        <div class="col">
+          <div class="row"><h6>Estimate</h6></div>
+          <div class="row">{{model.intercept.value | number: numberFormat}}</div>
+          <div class="row" *ngFor="let c of model.coefficients">{{c.value | number: numberFormat}}</div>
+        </div>
+        <div class="col">
+          <div class="row"><h6>Std. Error</h6></div>
+          <div class="row">{{model.intercept.standardError | number: numberFormat}}</div>
+          <div class="row" *ngFor="let c of model.coefficients">{{c.standardError | number: numberFormat}}</div>
+        </div>
+        <div class="col">
+          <div class="row"><h6>t value</h6></div>
+          <div class="row">{{model.intercept.tValue | number: numberFormat}}</div>
+          <div class="row" *ngFor="let c of model.coefficients">{{c.tValue | number: numberFormat}}</div>
+        </div>
+        <div class="col">
+          <div class="row"><h6>p value</h6></div>
+          <div class="row">{{model.intercept.pValue | number: numberFormat}}</div>
+          <div class="row" *ngFor="let c of model.coefficients">{{c.pValue | number: numberFormat}}</div>
+        </div>
+        <div class="col">
+          <div class="row"><h6>&nbsp;&nbsp;</h6></div>
+          <div class="row">{{getSignificanceCode(model.intercept.pValue)}}</div>
+          <div class="row" *ngFor="let c of model.coefficients">{{getSignificanceCode(c.pValue)}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <hr class="small" />
+      <b>Signf. codes:</b> 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    </div>
+    <div class="container">
+      <hr class="small" />
+      <div class="row">
+        <div class="col-md-6"><div class="row"><b>degrees of freedom:</b> {{model.degreesOfFreedom | number: numberFormat}}</div></div>
+        <div class="col-md-6"><div class="row"><b>explained variance:</b> {{model.explainedVariance | number: numberFormat}}</div></div>
+      </div>
+      <div class="row">
+        <div class="col-md-6"><div class="row"><b>r-squared:</b> {{model.rSquared | number: '1.2-3'}}</div></div>
+        <div class="col-md-6"><div class="row"><b>adjusted r-squared:</b> {{model.rSquaredAdjusted | number: numberFormat}}</div></div>
+      </div>
+      <div class="row">
+        <div class="col-md-6"><div class="row"><b>mean squared error:</b> {{model.meanSquaredError | number: numberFormat}}</div></div>
+        <div class="col-md-6"><div class="row"><b>root mean squared error:</b> {{model.rootMeanSquaredError | number: numberFormat}}</div></div>
+      </div>
+      <div class="row">
+        <div class="col-md-6"><div class="row"><b>mean absolute error:</b> {{model.meanAbsoluteError | number: numberFormat}}</div></div>
+      </div>
+    </div>
+    <hr/>
+    <button class="btn btn-info" (click)="plot()">Plot</button>
+  </div>
+</div>

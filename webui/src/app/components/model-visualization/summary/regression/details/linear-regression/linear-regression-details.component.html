@@ -1,0 +1,18 @@
+<div class="container">
+  <hr class="small" />
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>DF:</b> {{model.degreesOfFreedom | number: numberFormat}}</div></div>
+    <div class="col-md-6"><div class="row"><b>explained variance:</b> {{model.explainedVariance | number: numberFormat}}</div></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>r-squared:</b> {{model.rSquared | number: '1.2-3'}}</div></div>
+    <div class="col-md-6"><div class="row"><b>adjusted r-squared:</b> {{model.rSquaredAdjusted | number: numberFormat}}</div></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>mean squared error:</b> {{model.meanSquaredError | number: numberFormat}}</div></div>
+    <div class="col-md-6"><div class="row"><b>root mean squared error:</b> {{model.rootMeanSquaredError | number: numberFormat}}</div></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>mean absolute error:</b> {{model.meanAbsoluteError | number: numberFormat}}</div></div>
+  </div>
+</div>

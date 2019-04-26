@@ -71,24 +71,8 @@
       <hr class="small" />
       <b>Signf. codes:</b> 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     </div>
-    <div class="container">
-      <hr class="small" />
-      <div class="row">
-        <div class="col-md-6"><div class="row"><b>degrees of freedom:</b> {{model.degreesOfFreedom | number: numberFormat}}</div></div>
-        <div class="col-md-6"><div class="row"><b>explained variance:</b> {{model.explainedVariance | number: numberFormat}}</div></div>
-      </div>
-      <div class="row">
-        <div class="col-md-6"><div class="row"><b>r-squared:</b> {{model.rSquared | number: '1.2-3'}}</div></div>
-        <div class="col-md-6"><div class="row"><b>adjusted r-squared:</b> {{model.rSquaredAdjusted | number: numberFormat}}</div></div>
-      </div>
-      <div class="row">
-        <div class="col-md-6"><div class="row"><b>mean squared error:</b> {{model.meanSquaredError | number: numberFormat}}</div></div>
-        <div class="col-md-6"><div class="row"><b>root mean squared error:</b> {{model.rootMeanSquaredError | number: numberFormat}}</div></div>
-      </div>
-      <div class="row">
-        <div class="col-md-6"><div class="row"><b>mean absolute error:</b> {{model.meanAbsoluteError | number: numberFormat}}</div></div>
-      </div>
-    </div>
+    <app-linear-regression-details *ngIf="model.algorithmImplementation == AlgorithmImplementation.LinearRegressionAlgorithm" [model]="model"></app-linear-regression-details>
+    <app-generalized-linear-regression-details *ngIf="model.algorithmImplementation == AlgorithmImplementation.GeneralizedLinearRegressionAlgorithm" [model]="model"></app-generalized-linear-regression-details>
     <hr/>
     <button class="btn btn-info" (click)="plot()">Plot</button>
   </div>

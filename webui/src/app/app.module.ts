@@ -62,6 +62,8 @@ import {ModelService} from "./services/model.service";
 import { NotifierModule } from 'angular-notifier';
 import {RegressionSummaryComponent} from "./components/model-visualization/summary/regression/regression-summary.component";
 import {RegressionPlotsModalComponent} from "./components/model-visualization/plots/regression-plots-modal/regression-plots-modal.component";
+import {LinearRegressionDetailsComponent} from "./components/model-visualization/summary/regression/details/linear-regression/linear-regression-details.component";
+import {GeneralizedLinearRegressionDetailsComponent} from "./components/model-visualization/summary/regression/details/generalized-linear-regression/generalized-linear-regression-details.component";
 
 @NgModule({
   declarations: [
@@ -101,7 +103,9 @@ import {RegressionPlotsModalComponent} from "./components/model-visualization/pl
     HttpLoaderComponent,
     ModelVisualizationComponent,
     RegressionSummaryComponent,
-    RegressionPlotsModalComponent
+    RegressionPlotsModalComponent,
+    LinearRegressionDetailsComponent,
+    GeneralizedLinearRegressionDetailsComponent
   ],
   imports: [
     CommonModule,

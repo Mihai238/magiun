@@ -3,6 +3,7 @@ import {TrainAlgorithmResponse} from "../../../../model/response/train.algorithm
 import {DialogService} from "ng2-bootstrap-modal";
 import {RegressionPlotsModalComponent} from "../../plots/regression-plots-modal/regression-plots-modal.component";
 import {StatisticsUtils} from "../../../../util/statistics.utils";
+import {AlgorithmImplementation} from "../../../../model/algorithm/train/algorithm.implementation.model";
 
 @Component({
   selector: 'app-regression-summary',
@@ -14,6 +15,7 @@ export class RegressionSummaryComponent {
   @Input() model: TrainAlgorithmResponse;
   Math = Math;
   StatisticsUtils = StatisticsUtils;
+  AlgorithmImplementation = AlgorithmImplementation;
   numberFormat: string = '1.2-3';
 
   constructor(private dialogService: DialogService) {

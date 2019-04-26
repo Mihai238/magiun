@@ -1,0 +1,19 @@
+<div class="container">
+  <hr class="small" />
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>DF:</b> {{model.degreesOfFreedom | number: numberFormat}}</div></div>
+    <div class="col-md-6"><div class="row"><b>AIC:</b> {{model.aic | number: numberFormat}}</div></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>deviance:</b> {{model.deviance | number: '1.2-3'}}</div></div>
+    <div class="col-md-6"><div class="row"><b>null deviance:</b> {{model.nullDeviance | number: numberFormat}}</div></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>dispersion:</b> {{model.dispersion | number: numberFormat}}</div></div>
+    <div class="col-md-6"><div class="row"><b>rank:</b> {{model.rank | number: numberFormat}}</div></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>residuals DF:</b> {{model.residualDegreeOfFreedom | number: numberFormat}}</div></div>
+    <div class="col-md-6"><div class="row"><b>residuals DF null:</b> {{model.residualDegreeOfFreedomNull | number: numberFormat}}</div></div>
+  </div>
+</div>

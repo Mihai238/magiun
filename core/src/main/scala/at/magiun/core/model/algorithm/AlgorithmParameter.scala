@@ -107,7 +107,7 @@ object AlgorithmParameter {
 
 
   val LinearRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET, EPSILON, FIT_INTERCEPT, REG_PARAM, TOLERANCE, STANDARDIZATION, LOSS, SOLVER)
-  val GeneralizedLinearRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, FIT_INTERCEPT, REG_PARAM, GLM_FAMILY, LINK, LINK_POWER, TOLERANCE, SOLVER )
+  val GeneralizedLinearRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, FIT_INTERCEPT, REG_PARAM, GLM_FAMILY, LINK, LINK_POWER, TOLERANCE )
   val LogisticRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET,  FIT_INTERCEPT, REG_PARAM, TOLERANCE, STANDARDIZATION, THRESHOLD )
   val IsotonicRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(ISOTONIC)
   val SurvivalRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, FIT_INTERCEPT, TOLERANCE)

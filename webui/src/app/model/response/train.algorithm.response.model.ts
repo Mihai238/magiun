@@ -13,6 +13,13 @@ export interface TrainAlgorithmResponse {
   rSquared: number
   rSquaredAdjusted: number
   rootMeanSquaredError: number
+  aic: number
+  deviance: number
+  nullDeviance: number
+  dispersion: number
+  residualDegreeOfFreedom: number
+  residualDegreeOfFreedomNull: number
+  rank: number
   fittedValues: number[]
   residuals: number[]
   dataSample: number[]

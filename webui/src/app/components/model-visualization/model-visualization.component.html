@@ -13,6 +13,9 @@
         <div class="card" *ngFor="let model of models">
           <div *ngVar="models.indexOf(model) as index">
             <h5>
+              <a href="javascript:void(0)" (click)="save(model.id)">
+                <i class="ti-save"></i>
+              </a>
               <button [ngClass]="(index == 0)?'btn':'btn collapsed'"
                       id="{{'header-' + index}}"
                       type="button"

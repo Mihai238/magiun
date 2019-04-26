@@ -35,7 +35,7 @@ export class RegressionPlotsModalComponent extends DialogComponent<RegressionPlo
 
   ngAfterViewInit(): void {
     this.prepareData();
-    this.plotBoxPlot();
+    this.boxPlots();
     this.scatterPlots();
   }
 
@@ -45,17 +45,23 @@ export class RegressionPlotsModalComponent extends DialogComponent<RegressionPlo
     this.sqrtStandardizedResiduals = this.standardizedResiduals.map(r => Math.sqrt(r));
   }
 
-  private plotBoxPlot() {
+  private boxPlots() {
+    this.plotBoxPlot(this.residuals, "residuals", "Residuals Boxplot", "residualsBoxPlot");
+    this.plotBoxPlot(this.standardizedResiduals, "standardized residuals", "Standardized Residuals Boxplot", "standardizedResidualsBoxPlot");
+    this.plotBoxPlot(this.sqrtStandardizedResiduals, "sqrt(standardized residuals)", "sqrt(Standardized Residuals) Boxplot", "sqrtStandardizedResidualsBoxPlot");
+  }
+
+  private plotBoxPlot(yData: number[], name: string, title: string, target: string) {
     const trace = {
-      y: this.residuals,
+      y: yData,
       type: 'box',
-      name: 'residuals'
+      name: name
     };
 
     const plotData = [trace];
 
-    const layout = {height: RegressionPlotsModalComponent.PLOT_HEIGHT, width: RegressionPlotsModalComponent.PLOT_WIDTH, title: "Residuals Boxplot"};
-    this.plot("residualsBoxPlot", plotData, layout);
+    const layout = {height: RegressionPlotsModalComponent.PLOT_HEIGHT, width: RegressionPlotsModalComponent.PLOT_WIDTH, title: title};
+    this.plot(target, plotData, layout);
   }
 
   private scatterPlots() {
@@ -66,8 +72,12 @@ export class RegressionPlotsModalComponent extends DialogComponent<RegressionPlo
     let normalDistributedByStandardizedResiduals = this.getSortedNormalDistributedData(this.standardizedResiduals);
     let sortedStandardizedResiduals = this.standardizedResiduals.sort((n1, n2) => n2 - n1);
 
+    let normalDistributedBySqrtStandardizedResiduals = this.getSortedNormalDistributedData(this.sqrtStandardizedResiduals);
+    let sortedSqrtStandardizedResiduals = this.sqrtStandardizedResiduals.sort((n1, n2) => n2 - n1);
+
     this.scatterPlotWithLine(normalDistributedByResiduals, sortedResiduals, "Normal Q-Q Plot", "Theoretical Quantiles", "Residuals", "residualsQQPlot");
     this.scatterPlotWithLine(normalDistributedByStandardizedResiduals, sortedStandardizedResiduals, "Normal Q-Q Plot", "Theoretical Quantiles", "Standardized Residuals", "standardizedResidualsQQPlot");
+    this.scatterPlotWithLine(normalDistributedBySqrtStandardizedResiduals, sortedSqrtStandardizedResiduals, "Normal Q-Q Plot", "Theoretical Quantiles", "sqrt(Standardized Residuals)", "sqrtStandardizedResidualsQQPlot");
     this.scatterPlotWithLine(this.fittedValues, this.residuals, "Residuals vs Fitted", "Fitted Values", "Residuals", "residualsVsFittedPlot");
     this.scatterPlotWithLine(this.fittedValues, this.standardizedResiduals, "Standardized Residuals vs Fitted", "Fitted Values", "Standardized Residuals", "standardizedResidualsVsFittedPlot");
     this.scatterPlotWithLine(this.fittedValues, this.dataSample, "Actual vs Fitted", "Fitted Values", "Actual Values", "actualVsFittedPlot");

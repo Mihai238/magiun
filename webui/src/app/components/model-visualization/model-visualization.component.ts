@@ -31,4 +31,8 @@ export class ModelVisualizationComponent {
     })
   }
 
+  save(id: string): void {
+    console.log("save model with id " + id);
+  }
+
 }

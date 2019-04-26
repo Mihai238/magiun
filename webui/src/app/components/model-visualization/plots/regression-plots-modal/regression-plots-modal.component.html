@@ -1,14 +1,19 @@
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
-      <h6>title</h6>
+      <h6>Diagnostic plots</h6>
       <button type="button" class="close float-right" (click)="close()">&times;</button>
     </div>
     <div class="modal-body">
       <div class="row">
         <div class="col-md-4 center-block" id="residualsBoxPlot"></div>
+        <div class="col-md-4 center-block" id="standardizedResidualsBoxPlot"></div>
+        <div class="col-md-4 center-block" id="sqrtStandardizedResidualsBoxPlot"></div>
+      </div>
+      <div class="row">
         <div class="col-md-4 center-block" id="residualsQQPlot"></div>
         <div class="col-md-4 center-block" id="standardizedResidualsQQPlot"></div>
+        <div class="col-md-4 center-block" id="sqrtStandardizedResidualsQQPlot"></div>
       </div>
       <div class="row">
         <div class="col-md-4 center-block" id="residualsVsFittedPlot"></div>

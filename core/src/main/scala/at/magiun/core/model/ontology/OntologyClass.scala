@@ -73,8 +73,50 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
 
   val values: immutable.IndexedSeq[OntologyClass] = findValues
 
+  private val COMPLETE_PARTIAL_ALGORITHMS_MAP = Map[OntologyClass, OntologyClass](
+    RandomForestClassificationComplete -> RandomForestClassificationPartial,
+    DecisionTreeClassificationComplete -> DecisionTreeClassificationPartial,
+    LinearLeastRegressionComplete -> LinearLeastRegressionPartial,
+    BinaryLogisticRegressionComplete -> BinaryLogisticRegressionPartial,
+    OrdinalLogisticRegressionComplete  -> OrdinalLogisticRegressionPartial,
+    GeneralizedLinearRegressionComplete -> GeneralizedLinearRegressionPartial,
+    GradientBoostTreeRegressionComplete -> GradientBoostTreeRegressionPartial,
+    RandomForestRegressionComplete -> RandomForestRegressionPartial,
+    DecisionTreeRegressionComplete -> DecisionTreeRegressionPartial
+  )
+
+  private val COMPLETE_ALGORITHMS = COMPLETE_PARTIAL_ALGORITHMS_MAP.keySet
+  private val PARTIAL_ALGORITHMS = COMPLETE_PARTIAL_ALGORITHMS_MAP.values.toSet
+
   def isAbstractType(ontologyClass: OntologyClass): Boolean = {
     ontologyClass.equals(Algorithm) || ontologyClass.equals(Classification) || ontologyClass.equals(Regression) || ontologyClass.equals(VariableType)
+  }
+
+  def isPartialAlgorithm(ontologyClass: OntologyClass): Boolean = {
+    PARTIAL_ALGORITHMS.contains(ontologyClass)
+  }
+
+  def isCompleteAlgorithm(ontologyClass: OntologyClass): Boolean = {
+    COMPLETE_ALGORITHMS.contains(ontologyClass)
+  }
+
+  def getPartialOfCompleteAlgorithm(ontologyClass: OntologyClass): OntologyClass = {
+    COMPLETE_PARTIAL_ALGORITHMS_MAP(ontologyClass)
+  }
+
+  def isSpecialCaseAlgorithm(ontologyClass: OntologyClass): Boolean = {
+    ontologyClass match {
+      case IsotonicRegression | SurvivalRegression => true
+      case _ => false
+    }
+  }
+
+  def isGenericAlgorithm(ontologyClass: OntologyClass): Boolean = {
+    ontologyClass match {
+      case LinearSupportVectorMachine | GradientBoostTreeRegressionPartial | GradientBoostTreeRegressionComplete | RandomForestRegressionPartial
+           | RandomForestRegressionComplete | DecisionTreeRegressionPartial | DecisionTreeRegressionComplete => true
+      case _ => false
+    }
   }
 
   def getOntologyClass(variableType: at.magiun.core.model.data.VariableType): OntologyClass = {

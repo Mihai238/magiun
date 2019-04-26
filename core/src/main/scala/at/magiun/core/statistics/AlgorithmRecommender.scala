@@ -10,7 +10,7 @@ import scala.collection.JavaConversions._
 
 class AlgorithmRecommender(ontology: OntModel @@ AlgorithmSelectionOntology) {
 
-  def recommend(metadata: DatasetMetadata): Set[OntologyClass] = {
+  def recommend(metadata: DatasetMetadata): List[OntologyClass] = {
     val dataset: Individual = createIndividualForOntClass(OntologyClass.Dataset.ontologyUri)
     val algorithm: Individual = createIndividualForOntClass(OntologyClass.Algorithm.ontologyUri)
     val goal: Individual = createIndividualForOntClass(metadata.goal.ontologyClass.ontologyUri)
@@ -44,7 +44,7 @@ class AlgorithmRecommender(ontology: OntModel @@ AlgorithmSelectionOntology) {
     val rdfTypes = asScalaSet(algorithm.listRDFTypes(false).toSet)
       .filter(p => p.getNameSpace.equals(AlgorithmOntologyConfig.NS))
 
-    val ontClasses = rdfTypes.map(a => OntologyClass.withName(a.getLocalName)).toSet
+    val ontClasses = rdfTypes.map(a => OntologyClass.withName(a.getLocalName)).toList
 
     for (i <- ontology.listIndividuals()) {
       ontology.removeAll(i.asResource(), null, null)

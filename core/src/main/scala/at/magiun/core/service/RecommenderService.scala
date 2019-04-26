@@ -23,7 +23,7 @@ class RecommenderService(
                           magiunContext: MagiunContext
                         ) {
 
-  def recommend(request: RecommenderRequest): Future[Option[Set[Algorithm[_ <: Estimator[_ <: Any]]]]] = {
+  def recommend(request: RecommenderRequest): Future[Option[List[Algorithm[_ <: Estimator[_ <: Any]]]]] = {
     import scala.concurrent.duration._
 
     Future {

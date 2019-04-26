@@ -22,7 +22,7 @@ class AlgorithmController(recommenderService: RecommenderService, algorithmServi
   //noinspection TypeAnnotation
   lazy val api = recommend :+: train
 
-  val recommend: Endpoint[Set[Algorithm[_ <: Estimator[_ <: Any]]]] = post(BASE_PATH :: ALGORITHM_RECOMMENDATIONS_PATH :: jsonBody[RecommenderRequest]) {
+  val recommend: Endpoint[List[Algorithm[_ <: Estimator[_ <: Any]]]] = post(BASE_PATH :: ALGORITHM_RECOMMENDATIONS_PATH :: jsonBody[RecommenderRequest]) {
     body: RecommenderRequest =>
       logger.info(body.toString)
 

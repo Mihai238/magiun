@@ -8,8 +8,18 @@ export enum AlgorithmImplementation {
 
 export namespace AlgorithmImplementation {
 
-  export function isRegressionWithCoefficients(implementation: AlgorithmImplementation) {
+  export function isRegression(implementation: AlgorithmImplementation) {
     return implementation == AlgorithmImplementation.LinearRegressionAlgorithm || 
+      implementation == AlgorithmImplementation.GeneralizedLinearRegressionAlgorithm ||
+      implementation == AlgorithmImplementation.DecisionTreeRegressionAlgorithm;
+  }
+
+  export function isTreeRegression(implementation: AlgorithmImplementation) {
+    return implementation == AlgorithmImplementation.DecisionTreeRegressionAlgorithm;
+  }
+
+  export function isRegressionWithCoefficients(implementation: AlgorithmImplementation) {
+    return implementation == AlgorithmImplementation.LinearRegressionAlgorithm ||
       implementation == AlgorithmImplementation.GeneralizedLinearRegressionAlgorithm;
   }
 }

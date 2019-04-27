@@ -1,0 +1,25 @@
+import {TrainAlgorithmResponse} from "../../../model/response/train.algorithm.response.model";
+import {Input} from "@angular/core";
+import {AlgorithmImplementation} from "../../../model/algorithm/train/algorithm.implementation.model";
+import {DialogService} from "ng2-bootstrap-modal";
+import {RegressionPlotsModalComponent} from "../plots/regression-plots-modal/regression-plots-modal.component";
+
+export abstract class SummaryComponent {
+  @Input() model: TrainAlgorithmResponse;
+
+  Math = Math;
+  AlgorithmImplementation = AlgorithmImplementation;
+
+  constructor(protected dialogService: DialogService) {}
+
+  plot(): void {
+    this.dialogService.addDialog(
+      RegressionPlotsModalComponent,
+      {
+        residuals: this.model.residuals,
+        fittedValues: this.model.fittedValues,
+        dataSample: this.model.dataSample
+      }
+    ).subscribe();
+  }
+}

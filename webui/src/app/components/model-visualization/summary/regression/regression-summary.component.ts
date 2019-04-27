@@ -1,50 +1,16 @@
-import {Component, Input} from "@angular/core";
-import {TrainAlgorithmResponse} from "../../../../model/response/train.algorithm.response.model";
+import {Component} from "@angular/core";
+import {SummaryComponent} from "../summary.component";
 import {DialogService} from "ng2-bootstrap-modal";
-import {RegressionPlotsModalComponent} from "../../plots/regression-plots-modal/regression-plots-modal.component";
-import {StatisticsUtils} from "../../../../util/statistics.utils";
-import {AlgorithmImplementation} from "../../../../model/algorithm/train/algorithm.implementation.model";
 
 @Component({
   selector: 'app-regression-summary',
-  templateUrl: "./regression-summary.component.html",
+  templateUrl: './regression-summary.component.html',
   styleUrls: ['./regression-summary.component.scss']
 })
-export class RegressionSummaryComponent {
+export class RegressionSummaryComponent extends SummaryComponent {
 
-  @Input() model: TrainAlgorithmResponse;
-  Math = Math;
-  StatisticsUtils = StatisticsUtils;
-  AlgorithmImplementation = AlgorithmImplementation;
-  numberFormat: string = '1.2-3';
-
-  constructor(private dialogService: DialogService) {
-
+  constructor(dialogService: DialogService) {
+    super(dialogService);
   }
 
-
-  getSignificanceCode(value: number): String {
-    if (value >= 0 && value < 0.001) {
-      return "***";
-    } else if (value >= 0.001 && value < 0.01) {
-      return "**"
-    } else if (value >= 0.01 && value < 0.05) {
-      return "*";
-    } else if (value >= 0.05 && value < 0.1) {
-      return ".";
-    } else {
-      return " ";
-    }
-  }
-
-  plot(): void {
-    this.dialogService.addDialog(
-      RegressionPlotsModalComponent,
-      {
-        residuals: this.model.residuals,
-        fittedValues: this.model.fittedValues,
-        dataSample: this.model.dataSample
-      }
-    ).subscribe();
-  }
 }

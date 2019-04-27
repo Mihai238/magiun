@@ -64,6 +64,8 @@ import {RegressionSummaryComponent} from "./components/model-visualization/summa
 import {RegressionPlotsModalComponent} from "./components/model-visualization/plots/regression-plots-modal/regression-plots-modal.component";
 import {LinearRegressionDetailsComponent} from "./components/model-visualization/summary/regression/details/linear-regression/linear-regression-details.component";
 import {GeneralizedLinearRegressionDetailsComponent} from "./components/model-visualization/summary/regression/details/generalized-linear-regression/generalized-linear-regression-details.component";
+import {RegressionCoefficientsComponent} from "./components/model-visualization/summary/regression/coefficients/regression-coefficients.component";
+import {TreeRegressionDetailsComponent} from "app/components/model-visualization/summary/regression/details/tree-regression/tree-regression-details.component";
 
 @NgModule({
   declarations: [
@@ -105,7 +107,9 @@ import {GeneralizedLinearRegressionDetailsComponent} from "./components/model-vi
     RegressionSummaryComponent,
     RegressionPlotsModalComponent,
     LinearRegressionDetailsComponent,
-    GeneralizedLinearRegressionDetailsComponent
+    GeneralizedLinearRegressionDetailsComponent,
+    RegressionCoefficientsComponent,
+    TreeRegressionDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -1,9 +1,9 @@
 package at.magiun.core.statistics.trainer
 
 import at.magiun.core.MagiunContext
-import at.magiun.core.model.algorithm.{Algorithm, DecisionTreeRegressionAlgorithm, GeneralizedLinearRegressionAlgorithm, LinearRegressionAlgorithm, RandomForestRegressionAlgorithm}
+import at.magiun.core.model.algorithm.{Algorithm, DecisionTreeRegressionAlgorithm, GeneralizedLinearRegressionAlgorithm, GradientBoostTreeRegressionAlgorithm, LinearRegressionAlgorithm, RandomForestRegressionAlgorithm}
 import at.magiun.core.model.rest.response.TrainAlgorithmResponse
-import at.magiun.core.statistics.trainer.regression.{DecisionTreeRegressionTrainer, GeneralizedLinearRegressionAlgorithmTrainer, LinearRegressionAlgorithmTrainer, RandomForestRegressionTrainer}
+import at.magiun.core.statistics.trainer.regression.{DecisionTreeRegressionTrainer, GeneralizedLinearRegressionAlgorithmTrainer, GradientBoostTreeRegressionTrainer, LinearRegressionAlgorithmTrainer, RandomForestRegressionTrainer}
 import org.apache.spark.sql.DataFrame
 
 class AlgorithmTrainer(magiunContext: MagiunContext) {
@@ -21,6 +21,8 @@ class AlgorithmTrainer(magiunContext: MagiunContext) {
           DecisionTreeRegressionTrainer.train(algorithm.asInstanceOf[DecisionTreeRegressionAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
         case _: RandomForestRegressionAlgorithm =>
           RandomForestRegressionTrainer.train(algorithm.asInstanceOf[RandomForestRegressionAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
+        case _: GradientBoostTreeRegressionAlgorithm =>
+          GradientBoostTreeRegressionTrainer.train(algorithm.asInstanceOf[GradientBoostTreeRegressionAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
         case _ => new TrainAlgorithmResponse(s"Algorithm ${algorithm.name} is not implemented yet!")
       }
     } catch {

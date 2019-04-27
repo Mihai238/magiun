@@ -1,10 +1,22 @@
-package at.magiun.core.statistics.trainer
+package at.magiun.core.statistics.trainer.regression
 
 import at.magiun.core.model.rest.response.CoefficientResponse
 import at.magiun.core.util.DatasetUtil
+import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.sql.{DataFrame, Row}
 
 trait RegressionAlgorithmTrainer {
+
+  protected def transformDF(
+                            dataFrame: DataFrame,
+                            explanatoryVariablesNames: Array[String]
+                           ): DataFrame = {
+    val vectorAssembler = new VectorAssembler()
+      .setInputCols(explanatoryVariablesNames)
+      .setOutputCol("features")
+
+    vectorAssembler.transform(dataFrame)
+  }
 
   protected def createIntercept(
                                  responseVariableName: String,
@@ -38,8 +50,6 @@ trait RegressionAlgorithmTrainer {
       ))
   }
 
-
-
   protected def getDataSampleFittedValuesAndResiduals(
                                                        data: DataFrame,
                                                        predictions: DataFrame,
@@ -68,5 +78,29 @@ trait RegressionAlgorithmTrainer {
       residualsArray.map(r => r.getDouble(0)),
       dataSample.map(r => r.getDouble(0))
     )
+  }
+
+  protected def getDataSampleFittedValuesAndResiduals(
+                                                       data: Seq[Double],
+                                                       predictions: Seq[Double],
+                                                       residuals: Seq[Double],
+                                                       sampleSize: Int
+                                                     ): (Seq[Double], Seq[Double], Seq[Double]) = {
+    val dataCount: Int = data.size
+
+    if (sampleSize > dataCount) {
+      (
+        predictions,
+        residuals,
+        data
+      )
+    } else {
+      val randomIndices = DatasetUtil.getRandomIndices(sampleSize, dataCount)
+      (
+        DatasetUtil.getValuesByIndices(predictions, randomIndices),
+        DatasetUtil.getValuesByIndices(residuals, randomIndices),
+        DatasetUtil.getValuesByIndices(data, randomIndices)
+      )
+    }
   }
 }

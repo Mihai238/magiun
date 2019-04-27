@@ -24,13 +24,15 @@ case class TrainAlgorithmResponse(
                                    fittedValues: Seq[Double] = Seq.empty,
                                    residuals: Seq[Double] = Seq.empty,
                                    dataSample: Seq[Double] = Seq.empty,
+                                   treeDebugString: String = "",
                                    errorMessage: String = ""
                                  ) {
 
 
 def this(errorMessage: String) {
-    this(id = "", algorithmImplementation = AlgorithmImplementation.None, intercept = CoefficientResponse("", -1, -1, -1, -1), errorMessage = errorMessage)
+    this(id = "", algorithmImplementation = AlgorithmImplementation.None, intercept = CoefficientResponse(""), errorMessage = errorMessage)
   }
 }
 
-case class CoefficientResponse(name: String, value: Double, standardError: Double, tValue: Double, pValue: Double)
+case class CoefficientResponse(name: String, value: Double = -1, standardError: Double = -1, tValue: Double = -1, pValue: Double = -1) {
+}

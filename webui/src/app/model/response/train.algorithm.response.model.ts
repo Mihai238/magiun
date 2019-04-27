@@ -24,4 +24,5 @@ export interface TrainAlgorithmResponse {
   residuals: number[]
   dataSample: number[]
   errorMessage: string
+  treeDebugString: string
 }

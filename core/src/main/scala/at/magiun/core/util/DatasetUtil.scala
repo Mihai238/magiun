@@ -49,4 +49,8 @@ object DatasetUtil {
     dataset.rdd.zipWithIndex().filter{case (_, v) => indices.contains(v)}.map{case (k, _) => k}.collect()
   }
 
+  def getValuesByIndices(dataset: Seq[Double], indices: Seq[Int]): Seq[Double] = {
+    indices.map(dataset)
+  }
+
 }

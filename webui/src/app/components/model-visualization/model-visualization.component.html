@@ -30,7 +30,7 @@
                  [attr.aria-labelledby]="'header-' + index"
                  data-parent="#modelsAccordion">
               <hr/>
-              <app-regression-summary [model]="model" *ngIf="AlgorithmImplementation.isRegression(model.algorithmImplementation)"></app-regression-summary>
+              <app-regression-summary [model]="model" *ngIf="AlgorithmImplementation.isRegressionWithCoefficients(model.algorithmImplementation)"></app-regression-summary>
             </div>
           </div>
         </div>

@@ -1,22 +1,23 @@
 package at.magiun.core.statistics.trainer.regression
 
 import at.magiun.core.MagiunContext
-import at.magiun.core.model.algorithm.DecisionTreeRegressionAlgorithm
+import at.magiun.core.model.algorithm.RandomForestRegressionAlgorithm
 import at.magiun.core.model.rest.AlgorithmImplementation
 import at.magiun.core.model.rest.response.{CoefficientResponse, TrainAlgorithmResponse}
-import org.apache.spark.ml.regression.{DecisionTreeRegressionModel, DecisionTreeRegressor}
+import org.apache.spark.ml.regression.{RandomForestRegressionModel, RandomForestRegressor}
 import org.apache.spark.sql.DataFrame
 
-object DecisionTreeRegressionTrainer extends TreeRegressionAlgorithmTrainer {
+object RandomForestRegressionTrainer extends TreeRegressionAlgorithmTrainer {
 
-  def train(algorithm: DecisionTreeRegressionAlgorithm,
+  def train(algorithm: RandomForestRegressionAlgorithm,
             dataFrame: DataFrame,
             responseVariableName: String,
             explanatoryVariablesNames: Array[String],
             magiunContext: MagiunContext,
             sampleSize: Int
            ): TrainAlgorithmResponse = {
-    val sparkAlgorithm: DecisionTreeRegressor = new DecisionTreeRegressor()
+    val sparkAlgorithm: RandomForestRegressor = new RandomForestRegressor()
+
     val transformedDF = transformDF(dataFrame, explanatoryVariablesNames)
 
     sparkAlgorithm.setLabelCol(responseVariableName)
@@ -24,7 +25,7 @@ object DecisionTreeRegressionTrainer extends TreeRegressionAlgorithmTrainer {
 
     val Array(trainingData, testData) = transformedDF.randomSplit(Array(0.7, 0.3))
 
-    val fit: DecisionTreeRegressionModel = sparkAlgorithm.fit(trainingData)
+    val fit: RandomForestRegressionModel = sparkAlgorithm.fit(trainingData)
     magiunContext.addModelToCache(fit.uid, fit)
 
     val predictions = fit.transform(testData)
@@ -33,7 +34,7 @@ object DecisionTreeRegressionTrainer extends TreeRegressionAlgorithmTrainer {
 
     TrainAlgorithmResponse(
       id = fit.uid,
-      algorithmImplementation = AlgorithmImplementation.DecisionTreeRegressionAlgorithm,
+      algorithmImplementation = AlgorithmImplementation.RandomForestRegressionAlgorithm,
       intercept = CoefficientResponse(responseVariableName),
       meanSquaredError = evaluateFit(predictions, responseVariableName, "mse"),
       meanAbsoluteError = evaluateFit(predictions, responseVariableName, "mae"),

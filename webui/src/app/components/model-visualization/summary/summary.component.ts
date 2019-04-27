@@ -3,14 +3,17 @@ import {Input} from "@angular/core";
 import {AlgorithmImplementation} from "../../../model/algorithm/train/algorithm.implementation.model";
 import {DialogService} from "ng2-bootstrap-modal";
 import {RegressionPlotsModalComponent} from "../plots/regression-plots-modal/regression-plots-modal.component";
+import {StatisticsUtils} from "../../../util/statistics.utils";
 
 export abstract class SummaryComponent {
   @Input() model: TrainAlgorithmResponse;
 
   Math = Math;
   AlgorithmImplementation = AlgorithmImplementation;
+  StatisticsUtils = StatisticsUtils;
+  numberFormat: string = '1.2-3';
 
-  constructor(protected dialogService: DialogService) {}
+  protected constructor(protected dialogService: DialogService) {}
 
   plot(): void {
     this.dialogService.addDialog(

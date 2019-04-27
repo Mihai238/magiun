@@ -1,6 +1,5 @@
 import {Component, Input} from "@angular/core";
 import {TrainAlgorithmResponse} from "../../../../../model/response/train.algorithm.response.model";
-import {StatisticsUtils} from "../../../../../util/statistics.utils";
 
 @Component({
   selector: 'app-regression-coefficients',
@@ -10,9 +9,7 @@ import {StatisticsUtils} from "../../../../../util/statistics.utils";
 export class RegressionCoefficientsComponent {
 
   @Input() model: TrainAlgorithmResponse;
-
   Math = Math;
-  StatisticsUtils = StatisticsUtils;
   numberFormat: string = '1.2-3';
 
   getSignificanceCode(value: number): String {

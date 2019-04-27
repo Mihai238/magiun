@@ -1,31 +1,4 @@
 <div class="container">
-  <div class="row">
-    <b>Residuals:</b>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="row"><h6>Min</h6></div>
-      <div class="row">{{Math.min.apply(Math, model.residuals) | number: numberFormat}}</div>
-    </div>
-    <div class="col">
-      <div class="row"><h6>1Q</h6></div>
-      <div class="row">{{StatisticsUtils.percentile(model.residuals, 25) | number: numberFormat}}</div>
-    </div>
-    <div class="col">
-      <div class="row"><h6>Median</h6></div>
-      <div class="row">{{StatisticsUtils.median(model.residuals) | number: numberFormat}}</div>
-    </div>
-    <div class="col">
-      <div class="row"><h6>3Q</h6></div>
-      <div class="row">{{StatisticsUtils.percentile(model.residuals, 75) | number: numberFormat}}</div>
-    </div>
-    <div class="col">
-      <div class="row"><h6>Max</h6></div>
-      <div class="row">{{Math.max.apply(Math, model.residuals) | number: numberFormat}}</div>
-    </div>
-  </div>
-</div>
-<div class="container">
   <hr class="small" />
   <div class="row">
     <b>Coefficients:</b>

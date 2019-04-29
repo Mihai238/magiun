@@ -81,9 +81,9 @@ object LogisticRegressionAlgorithmTrainer extends ClassificationAlgorithmTrainer
     val tpr = summary.truePositiveRateByLabel.zipWithIndex
     val precision = summary.precisionByLabel.zipWithIndex
     val recall = summary.recallByLabel.zipWithIndex
-    val fmeasure = summary.fMeasureByLabel.zipWithIndex
+    val fMeasure = summary.fMeasureByLabel.zipWithIndex
 
-    fpr.indices.map(i => ClassificationInterceptResponse(i.toString, fpr(i)._1, tpr(i)._1, precision(i)._1, recall(i)._1, fmeasure(i)._1))
+    fpr.indices.map(i => ClassificationInterceptResponse(i.toString, fpr(i)._1, tpr(i)._1, precision(i)._1, recall(i)._1, fMeasure(i)._1))
   }
 
   private def createCoefficients(coefficientsWithNames: Array[(String, Double)]): Seq[CoefficientResponse] = {

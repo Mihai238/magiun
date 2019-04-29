@@ -15,9 +15,10 @@ import {AlgorithmImplementation} from "../model/algorithm/train/algorithm.implem
 export class AlgorithmRestService {
 
   private logger: MagiunLogger;
-  private readonly recommenderPath = '/algorithm';
-  private readonly algoRecommendationsPath = '/recommend';
-  private readonly trainAlgorithmPath = '/train';
+  private readonly algorithmPath = '/algorithm';
+  private readonly recommendPath = '/recommend';
+  private readonly trainPath = '/train';
+  private readonly removePath = '/remove/';
 
   constructor(private http: HttpClient, ngxLogger: NGXLogger) {
     this.logger = new MagiunLogger(AlgorithmRestService.name, ngxLogger);
@@ -26,7 +27,7 @@ export class AlgorithmRestService {
   recommend<T extends Algorithm>(body: RecommenderRequest): Observable<T[]> {
     this.logger.info("getting algorithm recommendations for dataset " + body.datasetId);
 
-    return this.http.post<T[]>(environment.baseUrl + this.recommenderPath + this.algoRecommendationsPath, JSON.stringify(body))
+    return this.http.post<T[]>(environment.baseUrl + this.algorithmPath + this.recommendPath, JSON.stringify(body))
       .map(algorithms => algorithms.map(algorithm => {
         let a = <Algorithm>Object.values(algorithm)[0];
         a.implementation = Object.keys(algorithm)[0];
@@ -43,11 +44,18 @@ export class AlgorithmRestService {
   train(body: TrainAlgorithmRequest): Observable<TrainAlgorithmResponse> {
     this.logger.info(`sending train request for dataset ${body.datasetId} and algorithm ${body.algorithm.name}`);
 
-    return this.http.post<TrainAlgorithmResponse>(environment.baseUrl + this.recommenderPath + this.trainAlgorithmPath, JSON.stringify(body))
+    return this.http.post<TrainAlgorithmResponse>(environment.baseUrl + this.algorithmPath + this.trainPath, JSON.stringify(body))
       .map(response => {
         response.algorithmImplementation = AlgorithmImplementation[response.algorithmImplementation];
         return <TrainAlgorithmResponse> response;
       })
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  remove(id: string): Observable<any> {
+    this.logger.info(`Sending remove request for model ${id}`);
+
+    return this.http.post(environment.baseUrl + this.algorithmPath + this.removePath + id, null)
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 }

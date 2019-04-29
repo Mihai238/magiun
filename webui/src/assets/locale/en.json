@@ -55,6 +55,7 @@
   },
   "MODEL_VISUALIZATION": {
     "NO_MODELS": "There are no models available at the moment!",
+    "MODEL_WAS_DELETED": "The model was deleted!",
     "SUMMARY": {
       "SUMMARY": "Summary"
     }

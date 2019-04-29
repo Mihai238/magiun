@@ -82,4 +82,7 @@ class AlgorithmService (
     parameters.map{p => AlgorithmParameter.createParameterWithValueByName(p.name, p.value)}
   }
 
+  def remove(id: String): Unit = {
+    magiunContext.removeModel(id)
+  }
 }

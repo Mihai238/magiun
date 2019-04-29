@@ -39,6 +39,10 @@ class MagiunContext {
     Option.empty
   }
 
+  def removeModel(id: String): Unit = {
+    modelsCache.invalidate(id)
+  }
+
   def sayHello(): Unit = {
     println("Hello!")
   }

@@ -16,6 +16,9 @@
               <a href="javascript:void(0)" (click)="save(model.id)">
                 <i class="ti-save"></i>
               </a>
+              <a class="red" href="javascript:void(0)" (click)="delete(model.id)">
+                <i class="ti-trash red"></i>
+              </a>
               <button [ngClass]="(index == 0)?'btn':'btn collapsed'"
                       id="{{'header-' + index}}"
                       type="button"

@@ -34,11 +34,23 @@ case class GeneralizedLinearRegressionAlgorithm(name: String,
 
 case class BinaryLogisticRegressionAlgorithm(name: String,
                                              parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.LogisticRegressionParameters
-                                            ) extends Algorithm[LogisticRegression] {}
+                                            ) extends Algorithm[LogisticRegression] {
 
-case class OrdinalLogisticRegressionAlgorithm(name: String,
-                                              parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.LogisticRegressionParameters
-                                             ) extends Algorithm[LogisticRegression] {}
+  override def enhanceAlgorithm(algorithm: LogisticRegression): Unit = {
+    super.enhanceAlgorithm(algorithm)
+    algorithm.setFamily("binomial")
+  }
+}
+
+case class MultinomialLogisticRegressionAlgorithm(name: String,
+                                                  parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.LogisticRegressionParameters
+                                             ) extends Algorithm[LogisticRegression] {
+
+  override def enhanceAlgorithm(algorithm: LogisticRegression): Unit = {
+    super.enhanceAlgorithm(algorithm)
+    algorithm.setFamily("multinomial")
+  }
+}
 
 case class IsotonicRegressionAlgorithm(name: String,
                                        parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.IsotonicRegressionParameters

@@ -55,7 +55,7 @@ class RecommenderService(
       case OntologyClass.LinearLeastRegressionPartial | OntologyClass.LinearLeastRegressionComplete => LinearRegressionAlgorithm(ontology.name)
       case OntologyClass.GeneralizedLinearRegressionPartial | OntologyClass.GeneralizedLinearRegressionComplete => GeneralizedLinearRegressionAlgorithm(ontology.name)
       case OntologyClass.BinaryLogisticRegressionPartial | OntologyClass.BinaryLogisticRegressionComplete => BinaryLogisticRegressionAlgorithm(ontology.name)
-      case OntologyClass.OrdinalLogisticRegressionPartial | OntologyClass.OrdinalLogisticRegressionComplete => OrdinalLogisticRegressionAlgorithm(ontology.name)
+      case OntologyClass.MultinomialLogisticRegressionPartial | OntologyClass.MultinomialLogisticRegressionComplete => MultinomialLogisticRegressionAlgorithm(ontology.name)
       case OntologyClass.IsotonicRegression => IsotonicRegressionAlgorithm(ontology.name)
       case OntologyClass.SurvivalRegression => SurvivalRegressionAlgorithm(ontology.name)
       case OntologyClass.GradientBoostTreeRegressionPartial | OntologyClass.GradientBoostTreeRegressionComplete => GradientBoostTreeRegressionAlgorithm(ontology.name)

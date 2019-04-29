@@ -30,6 +30,10 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
 
   /** Algorithm - Classification */
   case object Classification extends OntologyClass(NS + "Classification", "Classification")
+  case object BinaryLogisticRegressionPartial extends OntologyClass(NS + "BinaryLogisticRegressionPartial", "Binary Logistic Regression Partial")
+  case object BinaryLogisticRegressionComplete extends OntologyClass(NS + "BinaryLogisticRegressionComplete", "Binary Logistic Regression Complete")
+  case object MultinomialLogisticRegressionPartial extends OntologyClass(NS + "MultinomialLogisticRegressionPartial", "Multinomial Logistic Regression Partial")
+  case object MultinomialLogisticRegressionComplete extends OntologyClass(NS + "MultinomialLogisticRegressionComplete", "Multinomial Logistic Regression Complete")
   case object MultinomialNaiveBayesClassification extends OntologyClass(NS + "MultinomialNaiveBayesClassification", "Multinomial Naiuve Bayes Classification")
   case object BernoulliNaiveBayesClassification extends OntologyClass(NS + "BernoulliNaiveBayesClassification", "Bernoulli Naiuve Bayes Classification")
   case object LinearSupportVectorMachine extends OntologyClass(NS + "LinearSupportVectorMachine", "Linear Support Vector Machine")
@@ -44,10 +48,6 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
   case object Regression extends OntologyClass(NS + "Regression", "Regression")
   case object LinearLeastRegressionPartial extends OntologyClass(NS + "LinearLeastRegressionPartial", "Linear Least Regression Partial")
   case object LinearLeastRegressionComplete extends OntologyClass(NS + "LinearLeastRegressionComplete", "Linear Least Regression Complete")
-  case object BinaryLogisticRegressionPartial extends OntologyClass(NS + "BinaryLogisticRegressionPartial", "Binary Logistic Regression Partial")
-  case object BinaryLogisticRegressionComplete extends OntologyClass(NS + "BinaryLogisticRegressionComplete", "Binary Logistic Regression Complete")
-  case object OrdinalLogisticRegressionPartial extends OntologyClass(NS + "OrdinalLogisticRegressionPartial", "Ordinal Logistic Regression Partial")
-  case object OrdinalLogisticRegressionComplete extends OntologyClass(NS + "OrdinalLogisticRegressionComplete", "Ordinal Logistic Regression Complete")
   case object GeneralizedLinearRegressionPartial extends OntologyClass(NS + "GeneralizedLinearRegressionPartial", "Generalized Linear Regression Partial")
   case object GeneralizedLinearRegressionComplete extends OntologyClass(NS + "GeneralizedLinearRegressionComplete", "Generalized Linear Regression Complete")
   case object IsotonicRegression extends OntologyClass(NS + "IsotonicRegression", "Isotonic Regression")
@@ -78,7 +78,7 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
     DecisionTreeClassificationComplete -> DecisionTreeClassificationPartial,
     LinearLeastRegressionComplete -> LinearLeastRegressionPartial,
     BinaryLogisticRegressionComplete -> BinaryLogisticRegressionPartial,
-    OrdinalLogisticRegressionComplete  -> OrdinalLogisticRegressionPartial,
+    MultinomialLogisticRegressionComplete  -> MultinomialLogisticRegressionPartial,
     GeneralizedLinearRegressionComplete -> GeneralizedLinearRegressionPartial,
     GradientBoostTreeRegressionComplete -> GradientBoostTreeRegressionPartial,
     RandomForestRegressionComplete -> RandomForestRegressionPartial,
@@ -106,7 +106,7 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
 
   def isSpecialCaseAlgorithm(ontologyClass: OntologyClass): Boolean = {
     ontologyClass match {
-      case IsotonicRegression | SurvivalRegression => true
+      case IsotonicRegression | SurvivalRegression | MultilayerPerceptronClassification => true
       case _ => false
     }
   }
@@ -114,7 +114,9 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
   def isGenericAlgorithm(ontologyClass: OntologyClass): Boolean = {
     ontologyClass match {
       case LinearSupportVectorMachine | GradientBoostTreeRegressionPartial | GradientBoostTreeRegressionComplete | RandomForestRegressionPartial
-           | RandomForestRegressionComplete | DecisionTreeRegressionPartial | DecisionTreeRegressionComplete => true
+           | RandomForestRegressionComplete | DecisionTreeRegressionPartial | DecisionTreeRegressionComplete |
+      GradientBoostTreeClassification | RandomForestClassificationPartial | RandomForestClassificationComplete | DecisionTreeClassificationPartial
+      | DecisionTreeClassificationComplete => true
       case _ => false
     }
   }

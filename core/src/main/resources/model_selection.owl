@@ -313,7 +313,7 @@ It takes values between [0,1]</rdfs:comment>
     <!-- http://www.magiun.io/ontologies/model-selection#BernoulliDistribution -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution">
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Distribution"/>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#BinomialDistribution"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Bernoulli_distribution</rdfs:seeAlso>
     </owl:Class>
     
@@ -392,7 +392,7 @@ It takes values between [0,1]</rdfs:comment>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Classification"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
                         <owl:allValuesFrom>
@@ -401,10 +401,6 @@ It takes values between [0,1]</rdfs:comment>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
                                         <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution"/>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BinomialDistribution"/>
                                     </owl:Restriction>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
@@ -442,7 +438,7 @@ It takes values between [0,1]</rdfs:comment>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Classification"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Logistic_regression</rdfs:seeAlso>
         <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-logistic-regression/</rdfs:seeAlso>
     </owl:Class>
@@ -455,7 +451,7 @@ It takes values between [0,1]</rdfs:comment>
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Classification"/>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
                         <owl:allValuesFrom>
@@ -489,7 +485,7 @@ It takes values between [0,1]</rdfs:comment>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Classification"/>
         <rdfs:comment>the suffix &quot;Partial&quot; indicates that this method will be chosen if not all assumptions of the linear least regression are met</rdfs:comment>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Logistic_regression</rdfs:seeAlso>
         <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-logistic-regression/</rdfs:seeAlso>
@@ -1555,6 +1551,113 @@ It takes values between [0,1]</rdfs:comment>
     
 
 
+    <!-- http://www.magiun.io/ontologies/model-selection#MultinomialLogisticRegressionComplete -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#MultinomialLogisticRegressionComplete">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Classification"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BinomialDistribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Discrete"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">110.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasIndependentObservations"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasMulticollinearity"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasOutliers"/>
+                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Classification"/>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Logistic_regression</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-logistic-regression/</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://www.magiun.io/ontologies/model-selection#MultinomialLogisticRegressionPartial -->
+
+    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#MultinomialLogisticRegressionPartial">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Classification"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BinomialDistribution"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
+                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Discrete"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
+                                        <owl:allValuesFrom>
+                                            <rdfs:Datatype>
+                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                                                <owl:withRestrictions rdf:parseType="Collection">
+                                                    <rdf:Description>
+                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">90.0</xsd:minInclusive>
+                                                    </rdf:Description>
+                                                </owl:withRestrictions>
+                                            </rdfs:Datatype>
+                                        </owl:allValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Classification"/>
+        <rdfs:comment>the suffix &quot;Partial&quot; indicates that this method will be chosen if not all assumptions of the linear least regression are met</rdfs:comment>
+        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Logistic_regression</rdfs:seeAlso>
+        <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-logistic-regression/</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
     <!-- http://www.magiun.io/ontologies/model-selection#MultinomialNaiveBayesClassification -->
 
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#MultinomialNaiveBayesClassification">
@@ -1644,113 +1747,6 @@ It takes values between [0,1]</rdfs:comment>
     <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#Ordinal">
         <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Continuous"/>
         <rdfs:seeAlso>https://en.wikipedia.org/wiki/Ordinal_data</rdfs:seeAlso>
-    </owl:Class>
-    
-
-
-    <!-- http://www.magiun.io/ontologies/model-selection#OrdinalLogisticRegressionComplete -->
-
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#OrdinalLogisticRegressionComplete">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
-                        <owl:allValuesFrom>
-                            <owl:Class>
-                                <owl:intersectionOf rdf:parseType="Collection">
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution"/>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Ordinal"/>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
-                                        <owl:allValuesFrom>
-                                            <rdfs:Datatype>
-                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
-                                                <owl:withRestrictions rdf:parseType="Collection">
-                                                    <rdf:Description>
-                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">110.0</xsd:minInclusive>
-                                                    </rdf:Description>
-                                                </owl:withRestrictions>
-                                            </rdfs:Datatype>
-                                        </owl:allValuesFrom>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasIndependentObservations"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasMulticollinearity"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasOutliers"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
-                                    </owl:Restriction>
-                                </owl:intersectionOf>
-                            </owl:Class>
-                        </owl:allValuesFrom>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
-        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Logistic_regression</rdfs:seeAlso>
-        <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-logistic-regression/</rdfs:seeAlso>
-    </owl:Class>
-    
-
-
-    <!-- http://www.magiun.io/ontologies/model-selection#OrdinalLogisticRegressionPartial -->
-
-    <owl:Class rdf:about="http://www.magiun.io/ontologies/model-selection#OrdinalLogisticRegressionPartial">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.magiun.io/ontologies/model-selection#Regression"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasDataset"/>
-                        <owl:allValuesFrom>
-                            <owl:Class>
-                                <owl:intersectionOf rdf:parseType="Collection">
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableDistribution"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#BernoulliDistribution"/>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasResponseVariableType"/>
-                                        <owl:allValuesFrom rdf:resource="http://www.magiun.io/ontologies/model-selection#Ordinal"/>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="http://www.magiun.io/ontologies/model-selection#hasObservationVariableRatio"/>
-                                        <owl:allValuesFrom>
-                                            <rdfs:Datatype>
-                                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
-                                                <owl:withRestrictions rdf:parseType="Collection">
-                                                    <rdf:Description>
-                                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">90.0</xsd:minInclusive>
-                                                    </rdf:Description>
-                                                </owl:withRestrictions>
-                                            </rdfs:Datatype>
-                                        </owl:allValuesFrom>
-                                    </owl:Restriction>
-                                </owl:intersectionOf>
-                            </owl:Class>
-                        </owl:allValuesFrom>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="http://www.magiun.io/ontologies/model-selection#Regression"/>
-        <rdfs:comment>the suffix &quot;Partial&quot; indicates that this method will be chosen if not all assumptions of the linear least regression are met</rdfs:comment>
-        <rdfs:seeAlso>https://en.wikipedia.org/wiki/Logistic_regression</rdfs:seeAlso>
-        <rdfs:seeAlso>https://www.statisticssolutions.com/assumptions-of-logistic-regression/</rdfs:seeAlso>
     </owl:Class>
     
 

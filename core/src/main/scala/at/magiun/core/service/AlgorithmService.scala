@@ -61,7 +61,7 @@ class AlgorithmService (
       case AlgorithmImplementation.LinearRegressionAlgorithm => LinearRegressionAlgorithm(algorithmRequest.name, toParameters(algorithmRequest.parameters))
       case AlgorithmImplementation.GeneralizedLinearRegressionAlgorithm => GeneralizedLinearRegressionAlgorithm(algorithmRequest.name, toParameters(algorithmRequest.parameters))
       case AlgorithmImplementation.BinaryLogisticRegressionAlgorithm => BinaryLogisticRegressionAlgorithm(algorithmRequest.name, toParameters(algorithmRequest.parameters))
-      case AlgorithmImplementation.OrdinalLogisticRegressionAlgorithm => OrdinalLogisticRegressionAlgorithm(algorithmRequest.name, toParameters(algorithmRequest.parameters))
+      case AlgorithmImplementation.MultinomialLogisticRegressionAlgorithm => MultinomialLogisticRegressionAlgorithm(algorithmRequest.name, toParameters(algorithmRequest.parameters))
       case AlgorithmImplementation.IsotonicRegressionAlgorithm => IsotonicRegressionAlgorithm(algorithmRequest.name, toParameters(algorithmRequest.parameters))
       case AlgorithmImplementation.SurvivalRegressionAlgorithm => SurvivalRegressionAlgorithm(algorithmRequest.name, toParameters(algorithmRequest.parameters))
       case AlgorithmImplementation.GradientBoostTreeRegressionAlgorithm => GradientBoostTreeRegressionAlgorithm(algorithmRequest.name, toParameters(algorithmRequest.parameters))

@@ -5,7 +5,8 @@ import at.magiun.core.model.rest.AlgorithmImplementation
 case class TrainAlgorithmResponse(
                                    id: String,
                                    algorithmImplementation: AlgorithmImplementation,
-                                   intercept: CoefficientResponse,
+                                   intercept: CoefficientResponse = CoefficientResponse(),
+                                   classificationIntercept: Seq[ClassificationInterceptResponse] = Seq.empty,
                                    coefficients: Seq[CoefficientResponse] = Seq.empty,
                                    degreesOfFreedom: Long = -1,
                                    explainedVariance: Double = -1,
@@ -21,6 +22,12 @@ case class TrainAlgorithmResponse(
                                    residualDegreeOfFreedom: Double = -1,
                                    residualDegreeOfFreedomNull: Double = -1,
                                    rank: Double = -1,
+                                   accuracy: Double = -1,
+                                   falsePositiveRate: Double = -1,
+                                   truePositiveRate: Double = -1,
+                                   fMeasure: Double = -1,
+                                   precision: Double = -1,
+                                   recall: Double = -1,
                                    fittedValues: Seq[Double] = Seq.empty,
                                    residuals: Seq[Double] = Seq.empty,
                                    dataSample: Seq[Double] = Seq.empty,
@@ -30,9 +37,10 @@ case class TrainAlgorithmResponse(
 
 
 def this(errorMessage: String) {
-    this(id = "", algorithmImplementation = AlgorithmImplementation.None, intercept = CoefficientResponse(""), errorMessage = errorMessage)
+    this(id = "", algorithmImplementation = AlgorithmImplementation.None, errorMessage = errorMessage)
   }
 }
 
-case class CoefficientResponse(name: String, value: Double = -1, standardError: Double = -1, tValue: Double = -1, pValue: Double = -1) {
-}
+case class CoefficientResponse(name: String = "", value: Double = -1, standardError: Double = -1, tValue: Double = -1, pValue: Double = -1)
+
+case class ClassificationInterceptResponse(name: String = "", falsePositiveRate: Double = -1, truePositiveRate: Double = -1, precision: Double = -1, recall: Double = -1, fMeasure: Double = -1)

@@ -125,7 +125,7 @@ class AlgorithmRecommenderTest extends UnitTest {
 
   it should s"recommend ${OntologyClass.BinaryLogisticRegressionPartial.name} for dataset metadata of a small dataset" in {
     val datasetMetadata = DatasetMetadata(
-      AlgorithmGoal.GoalRegression,
+      AlgorithmGoal.GoalClassification,
       VariableType.Binary,
       Distribution.Bernoulli,
       0.9,
@@ -140,11 +140,11 @@ class AlgorithmRecommenderTest extends UnitTest {
 
     val recommendations = algorithmRecommender.recommend(datasetMetadata)
 
-    recommendations.size should be(4)
+    recommendations.size should be(11)
     recommendations should contain(OntologyClass.Algorithm)
-    recommendations should contain(OntologyClass.Regression)
+    recommendations should contain(OntologyClass.Classification)
     recommendations should contain(OntologyClass.BinaryLogisticRegressionPartial)
-    recommendations should contain(OntologyClass.GeneralizedLinearRegressionPartial)
+    recommendations should contain(OntologyClass.MultinomialLogisticRegressionPartial)
   }
 
   it should s"recommend ${OntologyClass.GradientBoostTreeClassification.name} for dataset metadata of a small dataset" in {
@@ -219,7 +219,7 @@ class AlgorithmRecommenderTest extends UnitTest {
 
     val recommendations = algorithmRecommender.recommend(datasetMetadata)
 
-    recommendations.size should be(10)
+    recommendations.size should be(12)
     recommendations should contain(OntologyClass.Algorithm)
     recommendations should contain(OntologyClass.Classification)
     recommendations should contain(OntologyClass.LinearSupportVectorMachine)
@@ -249,7 +249,7 @@ class AlgorithmRecommenderTest extends UnitTest {
 
     val recommendations = algorithmRecommender.recommend(datasetMetadata)
 
-    recommendations.size should be(6)
+    recommendations.size should be(8)
     recommendations should contain(OntologyClass.Algorithm)
     recommendations should contain(OntologyClass.Classification)
     recommendations should contain(OntologyClass.LinearSupportVectorMachine)
@@ -276,7 +276,7 @@ class AlgorithmRecommenderTest extends UnitTest {
 
     val recommendations = algorithmRecommender.recommend(datasetMetadata)
 
-    recommendations.size should be(10)
+    recommendations.size should be(12)
     recommendations should contain(OntologyClass.Algorithm)
     recommendations should contain(OntologyClass.Classification)
     recommendations should contain(OntologyClass.LinearSupportVectorMachine)
@@ -306,7 +306,7 @@ class AlgorithmRecommenderTest extends UnitTest {
 
     val recommendations = algorithmRecommender.recommend(datasetMetadata)
 
-    recommendations.size should be(6)
+    recommendations.size should be(8)
     recommendations should contain(OntologyClass.Algorithm)
     recommendations should contain(OntologyClass.Classification)
     recommendations should contain(OntologyClass.LinearSupportVectorMachine)

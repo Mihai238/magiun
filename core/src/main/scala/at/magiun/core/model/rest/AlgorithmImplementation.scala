@@ -13,7 +13,7 @@ object AlgorithmImplementation extends Enum[AlgorithmImplementation] with CirceE
   case object LinearRegressionAlgorithm extends AlgorithmImplementation
   case object GeneralizedLinearRegressionAlgorithm extends AlgorithmImplementation
   case object BinaryLogisticRegressionAlgorithm extends AlgorithmImplementation
-  case object OrdinalLogisticRegressionAlgorithm extends AlgorithmImplementation
+  case object MultinomialLogisticRegressionAlgorithm extends AlgorithmImplementation
   case object IsotonicRegressionAlgorithm extends AlgorithmImplementation
   case object SurvivalRegressionAlgorithm extends AlgorithmImplementation
   case object GradientBoostTreeRegressionAlgorithm extends AlgorithmImplementation

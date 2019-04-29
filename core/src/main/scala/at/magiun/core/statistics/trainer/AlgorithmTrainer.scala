@@ -1,8 +1,9 @@
 package at.magiun.core.statistics.trainer
 
 import at.magiun.core.MagiunContext
-import at.magiun.core.model.algorithm.{Algorithm, DecisionTreeRegressionAlgorithm, GeneralizedLinearRegressionAlgorithm, GradientBoostTreeRegressionAlgorithm, LinearRegressionAlgorithm, RandomForestRegressionAlgorithm}
+import at.magiun.core.model.algorithm.{Algorithm, BinaryLogisticRegressionAlgorithm, DecisionTreeRegressionAlgorithm, GeneralizedLinearRegressionAlgorithm, GradientBoostTreeRegressionAlgorithm, LinearRegressionAlgorithm, MultinomialLogisticRegressionAlgorithm, RandomForestRegressionAlgorithm}
 import at.magiun.core.model.rest.response.TrainAlgorithmResponse
+import at.magiun.core.statistics.trainer.classification.LogisticRegressionAlgorithmTrainer
 import at.magiun.core.statistics.trainer.regression.{DecisionTreeRegressionTrainer, GeneralizedLinearRegressionAlgorithmTrainer, GradientBoostTreeRegressionTrainer, LinearRegressionAlgorithmTrainer, RandomForestRegressionTrainer}
 import org.apache.spark.sql.DataFrame
 
@@ -23,6 +24,10 @@ class AlgorithmTrainer(magiunContext: MagiunContext) {
           RandomForestRegressionTrainer.train(algorithm.asInstanceOf[RandomForestRegressionAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
         case _: GradientBoostTreeRegressionAlgorithm =>
           GradientBoostTreeRegressionTrainer.train(algorithm.asInstanceOf[GradientBoostTreeRegressionAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
+        case _: BinaryLogisticRegressionAlgorithm =>
+          LogisticRegressionAlgorithmTrainer.train(algorithm.asInstanceOf[BinaryLogisticRegressionAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
+        case _: MultinomialLogisticRegressionAlgorithm =>
+          LogisticRegressionAlgorithmTrainer.train(algorithm.asInstanceOf[MultinomialLogisticRegressionAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
         case _ => new TrainAlgorithmResponse(s"Algorithm ${algorithm.name} is not implemented yet!")
       }
     } catch {

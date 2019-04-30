@@ -111,7 +111,7 @@ object AlgorithmParameter {
   val LogisticRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET,  FIT_INTERCEPT, REG_PARAM, TOLERANCE, STANDARDIZATION, THRESHOLD )
   val IsotonicRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(ISOTONIC)
   val SurvivalRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, FIT_INTERCEPT, TOLERANCE)
-  val GradientBoostTreeRegressionClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, LOSS_TYPE, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED, STEP_SIZE, SUBSAMPLING_RATE)
+  val GradientBoostTreeRegressionClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED, STEP_SIZE, SUBSAMPLING_RATE)
   val RandomForestRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED, SUBSAMPLING_RATE)
   val DecisionTreeRegressionClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED)
   val LinearSVMParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, FIT_INTERCEPT, REG_PARAM, STANDARDIZATION, TOLERANCE, THRESHOLD)

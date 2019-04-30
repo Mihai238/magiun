@@ -9,5 +9,6 @@ import {TrainAlgorithmResponse} from "../../../../../../model/response/train.alg
 export class TreeClassificationDetailsComponent {
 
   @Input() model: TrainAlgorithmResponse;
+  @Input() withLine: boolean;
   numberFormat: string = '1.2-3';
 }

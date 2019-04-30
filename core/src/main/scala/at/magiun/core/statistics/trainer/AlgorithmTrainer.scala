@@ -3,7 +3,7 @@ package at.magiun.core.statistics.trainer
 import at.magiun.core.MagiunContext
 import at.magiun.core.model.algorithm._
 import at.magiun.core.model.rest.response.TrainAlgorithmResponse
-import at.magiun.core.statistics.trainer.classification.{TreeClassificationTrainer, LogisticRegressionAlgorithmTrainer}
+import at.magiun.core.statistics.trainer.classification.{LinearSupportVectorMachineTrainer, LogisticRegressionAlgorithmTrainer, TreeClassificationTrainer}
 import at.magiun.core.statistics.trainer.regression._
 import org.apache.spark.sql.DataFrame
 
@@ -34,6 +34,8 @@ class AlgorithmTrainer(magiunContext: MagiunContext) {
           TreeClassificationTrainer.train(algorithm.asInstanceOf[RandomForestClassificationAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
         case _: GradientBoostTreeClassificationAlgorithm =>
           TreeClassificationTrainer.train(algorithm.asInstanceOf[GradientBoostTreeClassificationAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
+        case _: LinearSupportVectorMachineAlgorithm =>
+          LinearSupportVectorMachineTrainer.train(algorithm.asInstanceOf[LinearSupportVectorMachineAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
         case _ => new TrainAlgorithmResponse(s"Algorithm ${algorithm.name} is not implemented yet!")
       }
     } catch {

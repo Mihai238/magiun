@@ -61,6 +61,8 @@ object LogisticRegressionAlgorithmTrainer extends ClassificationAlgorithmTrainer
     val coeffsWithNames = featureNames.zip(coeffs)
     val intercept = coeffsWithNames.head
 
+    magiunContext.addModelToCache(fit.uid, fit)
+
     TrainAlgorithmResponse(
       id = fit.uid,
       algorithmImplementation = implementation,
@@ -84,9 +86,5 @@ object LogisticRegressionAlgorithmTrainer extends ClassificationAlgorithmTrainer
     val fMeasure = summary.fMeasureByLabel.zipWithIndex
 
     fpr.indices.map(i => ClassificationInterceptResponse(i.toString, fpr(i)._1, tpr(i)._1, precision(i)._1, recall(i)._1, fMeasure(i)._1))
-  }
-
-  private def createCoefficients(coefficientsWithNames: Array[(String, Double)]): Seq[CoefficientResponse] = {
-    coefficientsWithNames.map(c => CoefficientResponse(c._1, c._2))
   }
 }

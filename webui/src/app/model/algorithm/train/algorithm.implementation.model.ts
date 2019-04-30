@@ -9,7 +9,8 @@ export enum AlgorithmImplementation {
   BinaryLogisticRegressionAlgorithm = "Binary Logistic Regression",
   DecisionTreeClassificationAlgorithm = "Decision Tree Classification",
   RandomForestClassificationAlgorithm = "Random Forest Classification",
-  GradientBoostTreeClassificationAlgorithm = "Gradient Boost Tree Classification"
+  GradientBoostTreeClassificationAlgorithm = "Gradient Boost Tree Classification",
+  LinearSupportVectorMachineAlgorithm = "Linear Support Vector Machine"
 
 }
 
@@ -37,6 +38,7 @@ export namespace AlgorithmImplementation {
   export function isClassification(implementation: AlgorithmImplementation) {
     return implementation == AlgorithmImplementation.MultinomialLogisticRegressionAlgorithm ||
       implementation == AlgorithmImplementation.BinaryLogisticRegressionAlgorithm ||
+      implementation == AlgorithmImplementation.LinearSupportVectorMachineAlgorithm ||
       implementation == AlgorithmImplementation.DecisionTreeClassificationAlgorithm ||
       implementation == AlgorithmImplementation.RandomForestClassificationAlgorithm ||
       implementation == AlgorithmImplementation.GradientBoostTreeClassificationAlgorithm;
@@ -44,7 +46,8 @@ export namespace AlgorithmImplementation {
 
   export function isClassificationWithCoefficients(implementation: AlgorithmImplementation) {
     return implementation == AlgorithmImplementation.MultinomialLogisticRegressionAlgorithm ||
-      implementation == AlgorithmImplementation.BinaryLogisticRegressionAlgorithm;
+      implementation == AlgorithmImplementation.BinaryLogisticRegressionAlgorithm ||
+      implementation == AlgorithmImplementation.LinearSupportVectorMachineAlgorithm;
   }
 
   export function isClassificationWithMeasurementsByLabel(implementation: AlgorithmImplementation) {
@@ -60,7 +63,8 @@ export namespace AlgorithmImplementation {
   export function isTreeClassification(implementation: AlgorithmImplementation) {
     return implementation == AlgorithmImplementation.DecisionTreeClassificationAlgorithm ||
       implementation == AlgorithmImplementation.RandomForestClassificationAlgorithm ||
-      implementation == AlgorithmImplementation.GradientBoostTreeClassificationAlgorithm;
+      implementation == AlgorithmImplementation.GradientBoostTreeClassificationAlgorithm ||
+      implementation == AlgorithmImplementation.LinearSupportVectorMachineAlgorithm;
   }
 }
 

@@ -1,4 +1,5 @@
 <div class="container">
+  <hr *ngIf="withLine" class="small"/>
   <div class="row">
     <div class="col-md-6"><div class="row"><b>accuracy:</b> {{model.accuracy | number: numberFormat}}</div></div>
     <div class="col-md-6"><div class="row"><b>weighted precision:</b> {{model.weightedPrecision | number: numberFormat}}</div></div>

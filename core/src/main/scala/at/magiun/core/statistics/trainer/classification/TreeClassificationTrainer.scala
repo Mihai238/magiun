@@ -4,10 +4,8 @@ import at.magiun.core.MagiunContext
 import at.magiun.core.model.algorithm.{DecisionTreeClassificationAlgorithm, GradientBoostTreeClassificationAlgorithm, RandomForestClassificationAlgorithm}
 import at.magiun.core.model.rest.AlgorithmImplementation
 import at.magiun.core.model.rest.response.{CoefficientResponse, TrainAlgorithmResponse}
-import at.magiun.core.util.DatasetUtil
 import org.apache.spark.ml._
 import org.apache.spark.ml.classification._
-import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
 import org.apache.spark.ml.feature._
 import org.apache.spark.sql.DataFrame
 
@@ -75,15 +73,16 @@ object TreeClassificationTrainer extends ClassificationAlgorithmTrainer {
 
     val debutString = getDebugString(fit.stages(2), algorithmImplementation)
     val dataSampleAndPredictions = getDataSampleAndPredictedValues(testData.select(responseVariableName), predictions, sampleSize)
+    magiunContext.addModelToCache(fit.uid, fit)
 
     TrainAlgorithmResponse(
       id = fit.uid,
       algorithmImplementation = algorithmImplementation,
       intercept = CoefficientResponse(responseVariableName),
-      accuracy = evaluateFit(predictions, "accuracy"),
-      weightedPrecision = evaluateFit(predictions, "weightedPrecision"),
-      weightedRecall = evaluateFit(predictions, "weightedRecall"),
-      f1 = evaluateFit(predictions, "f1"),
+      accuracy = evaluateFit(predictions, "indexedLabel", "accuracy"),
+      weightedPrecision = evaluateFit(predictions, "indexedLabel", "weightedPrecision"),
+      weightedRecall = evaluateFit(predictions, "indexedLabel", "weightedRecall"),
+      f1 = evaluateFit(predictions, "indexedLabel", "f1"),
       fittedValues = dataSampleAndPredictions._1,
       dataSample = dataSampleAndPredictions._2,
       treeDebugString = debutString
@@ -118,34 +117,6 @@ object TreeClassificationTrainer extends ClassificationAlgorithmTrainer {
       case AlgorithmImplementation.RandomForestClassificationAlgorithm => model.asInstanceOf[RandomForestClassificationModel].toDebugString
       case AlgorithmImplementation.GradientBoostTreeClassificationAlgorithm => model.asInstanceOf[GBTClassificationModel].toDebugString
       case _ => "No debug string!"
-    }
-  }
-
-  private def evaluateFit(predictions: DataFrame, metric: String): Double = {
-    new MulticlassClassificationEvaluator()
-      .setLabelCol("indexedLabel")
-      .setPredictionCol("prediction")
-      .setMetricName(metric)
-      .evaluate(predictions)
-  }
-
-  private def getDataSampleAndPredictedValues(responseVariable: DataFrame, predictions: DataFrame, sampleSize: Int): (Seq[Double], Seq[Double]) = {
-    val predictionsSeq = predictions.select("prediction").collect().map(r => r.getDouble(0)).toSeq
-    val responseVariableSeq = responseVariable.collect().map(r => r.get(0).toString.toDouble).toSeq
-
-    val dataCount: Int = responseVariableSeq.size
-
-    if (sampleSize > dataCount) {
-      (
-        predictionsSeq,
-        responseVariableSeq
-      )
-    } else {
-      val randomIndices = DatasetUtil.getRandomIndices(sampleSize, dataCount)
-      (
-        DatasetUtil.getValuesByIndices(predictionsSeq, randomIndices),
-        DatasetUtil.getValuesByIndices(responseVariableSeq, randomIndices)
-      )
     }
   }
 }

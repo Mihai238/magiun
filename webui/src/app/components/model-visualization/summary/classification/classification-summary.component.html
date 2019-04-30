@@ -5,8 +5,11 @@
     <app-classification-coefficients *ngIf="AlgorithmImplementation.isClassificationWithCoefficients(model.algorithmImplementation)" [model]="model"></app-classification-coefficients>
     <app-classification-intercept-measurements *ngIf="AlgorithmImplementation.isClassificationWithMeasurementsByLabel(model.algorithmImplementation)" [model]="model"></app-classification-intercept-measurements>
 
-    <app-logistic-regression-detail *ngIf="AlgorithmImplementation.isLogisticRegression(model.algorithmImplementation)" [model]="model"></app-logistic-regression-detail>
-    <app-tree-classification-details *ngIf="AlgorithmImplementation.isTreeClassification(model.algorithmImplementation)" [model]="model"></app-tree-classification-details>
+    <app-logistic-regression-detail *ngIf="AlgorithmImplementation.isLogisticRegression(model.algorithmImplementation)" [model]="model">
+    </app-logistic-regression-detail>
+
+    <app-tree-classification-details *ngIf="AlgorithmImplementation.isTreeClassification(model.algorithmImplementation)" [model]="model" [withLine]="AlgorithmImplementation.LinearSupportVectorMachineAlgorithm == model.algorithmImplementation">
+    </app-tree-classification-details>
 
     <hr/>
     <button class="btn btn-info">Plot</button>

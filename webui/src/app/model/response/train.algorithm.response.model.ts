@@ -27,7 +27,10 @@ export interface TrainAlgorithmResponse {
   truePositiveRate: number
   fMeasure: number
   precision: number
-  recal: number
+  weightedPrecision: number
+  recall: number
+  weightedRecall: number
+  f1: number
   fittedValues: number[]
   residuals: number[]
   dataSample: number[]

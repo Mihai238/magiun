@@ -6,7 +6,7 @@ import org.apache.spark.sql.DataFrame
 trait TreeRegressionAlgorithmTrainer extends RegressionAlgorithmTrainer {
 
 
-  def evaluateFit(predictions: DataFrame, responseVariableName: String, metric: String): Double = {
+  protected def evaluateFit(predictions: DataFrame, responseVariableName: String, metric: String): Double = {
     new RegressionEvaluator()
       .setLabelCol(responseVariableName)
       .setPredictionCol("prediction")
@@ -14,7 +14,7 @@ trait TreeRegressionAlgorithmTrainer extends RegressionAlgorithmTrainer {
       .evaluate(predictions)
   }
 
-  def getDataSampleFittedValuesAndResiduals(responseVariable: DataFrame, predictions: DataFrame, sampleSize: Int): (Seq[Double], Seq[Double], Seq[Double]) = {
+  protected def getDataSampleFittedValuesAndResiduals(responseVariable: DataFrame, predictions: DataFrame, sampleSize: Int): (Seq[Double], Seq[Double], Seq[Double]) = {
     val predictionsSeq = predictions.select("prediction").collect().map(r => r.getDouble(0)).toSeq
     val responseVariableSeq = responseVariable.collect().map(r => r.getDouble(0)).toSeq
 

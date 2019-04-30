@@ -6,7 +6,10 @@ export enum AlgorithmImplementation {
   RandomForestRegressionAlgorithm = "Random Forest Regression",
   GradientBoostTreeRegressionAlgorithm = "Gradient Boost Tree Regression",
   MultinomialLogisticRegressionAlgorithm = "Multinomial Logistic Regression",
-  BinaryLogisticRegressionAlgorithm = "Binary Logistic Regression"
+  BinaryLogisticRegressionAlgorithm = "Binary Logistic Regression",
+  DecisionTreeClassificationAlgorithm = "Decision Tree Classification",
+  RandomForestClassificationAlgorithm = "Random Forest Classification",
+  GradientBoostTreeClassificationAlgorithm = "Gradient Boost Tree Classification"
 
 }
 
@@ -33,7 +36,10 @@ export namespace AlgorithmImplementation {
 
   export function isClassification(implementation: AlgorithmImplementation) {
     return implementation == AlgorithmImplementation.MultinomialLogisticRegressionAlgorithm ||
-      implementation == AlgorithmImplementation.BinaryLogisticRegressionAlgorithm;
+      implementation == AlgorithmImplementation.BinaryLogisticRegressionAlgorithm ||
+      implementation == AlgorithmImplementation.DecisionTreeClassificationAlgorithm ||
+      implementation == AlgorithmImplementation.RandomForestClassificationAlgorithm ||
+      implementation == AlgorithmImplementation.GradientBoostTreeClassificationAlgorithm;
   }
 }
 

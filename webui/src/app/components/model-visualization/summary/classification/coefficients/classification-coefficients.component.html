@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <b>Coefficients:</b>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="row"><h6>&nbsp;&nbsp;</h6></div>
+      <div class="row">{{"(" + model.intercept.name + ")"}}</div>
+      <div class="row" *ngFor="let c of model.coefficients">{{c.name}}</div>
+    </div>
+    <div class="col">
+      <div class="row"><h6>Estimate</h6></div>
+      <div class="row">{{model.intercept.value | number: numberFormat}}</div>
+      <div class="row" *ngFor="let c of model.coefficients">{{c.value | number: numberFormat}}</div>
+    </div>
+  </div>
+</div>

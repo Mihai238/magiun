@@ -67,6 +67,10 @@ import {GeneralizedLinearRegressionDetailsComponent} from "./components/model-vi
 import {RegressionCoefficientsComponent} from "./components/model-visualization/summary/regression/coefficients/regression-coefficients.component";
 import {TreeRegressionDetailsComponent} from "app/components/model-visualization/summary/regression/details/tree-regression/tree-regression-details.component";
 import {ClassificationSummaryComponent} from "app/components/model-visualization/summary/classification/classification-summary.component";
+import {ClassificationCoefficientsComponent} from "app/components/model-visualization/summary/classification/coefficients/classification-coefficients.component";
+import {ClassificationInterceptMeasurementsComponent} from "./components/model-visualization/summary/classification/measurments/intercept/classification-intercept-measurements.component";
+import {TreeClassificationDetailsComponent} from "./components/model-visualization/summary/classification/details/tree-classification/tree-classification-details.component";
+import {LogisticRegressionDetailComponent} from "./components/model-visualization/summary/classification/details/logistic-regression/logistic-regression-detail.component";
 
 @NgModule({
   declarations: [
@@ -111,7 +115,11 @@ import {ClassificationSummaryComponent} from "app/components/model-visualization
     GeneralizedLinearRegressionDetailsComponent,
     RegressionCoefficientsComponent,
     TreeRegressionDetailsComponent,
-    ClassificationSummaryComponent
+    ClassificationSummaryComponent,
+    ClassificationCoefficientsComponent,
+    ClassificationInterceptMeasurementsComponent,
+    TreeClassificationDetailsComponent,
+    LogisticRegressionDetailComponent
   ],
   imports: [
     CommonModule,

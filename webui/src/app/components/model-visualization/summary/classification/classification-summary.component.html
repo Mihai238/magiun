@@ -2,71 +2,12 @@
   <div>
     <h6>{{ 'MODEL_VISUALIZATION.SUMMARY.SUMMARY' | translate }}</h6>
     <hr/>
-    <div class="container">
-      <div class="row">
-        <b>Coefficients:</b>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="row"><h6>&nbsp;&nbsp;</h6></div>
-          <div class="row">{{"(" + model.intercept.name + ")"}}</div>
-          <div class="row" *ngFor="let c of model.coefficients">{{c.name}}</div>
-        </div>
-        <div class="col">
-          <div class="row"><h6>Estimate</h6></div>
-          <div class="row">{{model.intercept.value | number: numberFormat}}</div>
-          <div class="row" *ngFor="let c of model.coefficients">{{c.value | number: numberFormat}}</div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <hr class="small" />
-      <div class="row">
-        <b>Measurements by label:</b>
-      </div>
-      <br/>
-      <div class="row">
-        <div class="col">
-          <div class="row"><h6>&nbsp;&nbsp;</h6></div>
-          <div class="row" *ngFor="let i of model.classificationIntercept">{{i.name}}</div>
-        </div>
-        <div class="col">
-          <div class="row"><h6>F-P rate:</h6></div>
-          <div class="row" *ngFor="let i of model.classificationIntercept">{{i.falsePositiveRate | number: numberFormat}}</div>
-        </div>
-        <div class="col">
-          <div class="row"><h6>T-P rate:</h6></div>
-          <div class="row" *ngFor="let i of model.classificationIntercept">{{i.truePositiveRate | number: numberFormat}}</div>
-        </div>
-        <div class="col">
-          <div class="row"><h6>precision:</h6></div>
-          <div class="row" *ngFor="let i of model.classificationIntercept">{{i.precision | number: numberFormat}}</div>
-        </div>
-        <div class="col">
-          <div class="row"><h6>recall:</h6></div>
-          <div class="row" *ngFor="let i of model.classificationIntercept">{{i.recall | number: numberFormat}}</div>
-        </div>
-        <div class="col">
-          <div class="row"><h6>f measure:</h6></div>
-          <div class="row" *ngFor="let i of model.classificationIntercept">{{i.fMeasure | number: numberFormat}}</div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <hr class="small" />
-      <div class="row">
-        <div class="col-md-6"><div class="row"><b>accuracy:</b> {{model.accuracy | number: numberFormat}}</div></div>
-        <div class="col-md-6"><div class="row"><b>precision:</b> {{model.precision | number: numberFormat}}</div></div>
-      </div>
-      <div class="row">
-        <div class="col-md-6"><div class="row"><b>F-P rate:</b> {{model.falsePositiveRate | number: '1.2-3'}}</div></div>
-        <div class="col-md-6"><div class="row"><b>T-P rate:</b> {{model.truePositiveRate | number: numberFormat}}</div></div>
-      </div>
-      <div class="row">
-        <div class="col-md-6"><div class="row"><b>f measure:</b> {{model.fMeasure | number: numberFormat}}</div></div>
-        <div class="col-md-6"><div class="row"><b>precision:</b> {{model.precision | number: numberFormat}}</div></div>
-      </div>
-    </div>
+    <app-classification-coefficients *ngIf="AlgorithmImplementation.isClassificationWithCoefficients(model.algorithmImplementation)" [model]="model"></app-classification-coefficients>
+    <app-classification-intercept-measurements *ngIf="AlgorithmImplementation.isClassificationWithMeasurementsByLabel(model.algorithmImplementation)" [model]="model"></app-classification-intercept-measurements>
+
+    <app-logistic-regression-detail *ngIf="AlgorithmImplementation.isLogisticRegression(model.algorithmImplementation)" [model]="model"></app-logistic-regression-detail>
+    <app-tree-classification-details *ngIf="AlgorithmImplementation.isTreeClassification(model.algorithmImplementation)" [model]="model"></app-tree-classification-details>
+
     <hr/>
     <button class="btn btn-info">Plot</button>
   </div>

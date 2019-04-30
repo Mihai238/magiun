@@ -1,0 +1,33 @@
+<div class="container">
+  <hr class="small" />
+  <div class="row">
+    <b>Measurements by label:</b>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col">
+      <div class="row"><h6>&nbsp;&nbsp;</h6></div>
+      <div class="row" *ngFor="let i of model.classificationIntercept">{{i.name}}</div>
+    </div>
+    <div class="col">
+      <div class="row"><h6>F-P rate:</h6></div>
+      <div class="row" *ngFor="let i of model.classificationIntercept">{{i.falsePositiveRate | number: numberFormat}}</div>
+    </div>
+    <div class="col">
+      <div class="row"><h6>T-P rate:</h6></div>
+      <div class="row" *ngFor="let i of model.classificationIntercept">{{i.truePositiveRate | number: numberFormat}}</div>
+    </div>
+    <div class="col">
+      <div class="row"><h6>precision:</h6></div>
+      <div class="row" *ngFor="let i of model.classificationIntercept">{{i.precision | number: numberFormat}}</div>
+    </div>
+    <div class="col">
+      <div class="row"><h6>recall:</h6></div>
+      <div class="row" *ngFor="let i of model.classificationIntercept">{{i.recall | number: numberFormat}}</div>
+    </div>
+    <div class="col">
+      <div class="row"><h6>f measure:</h6></div>
+      <div class="row" *ngFor="let i of model.classificationIntercept">{{i.fMeasure | number: numberFormat}}</div>
+    </div>
+  </div>
+</div>

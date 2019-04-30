@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>accuracy:</b> {{model.accuracy | number: numberFormat}}</div></div>
+    <div class="col-md-6"><div class="row"><b>weighted precision:</b> {{model.weightedPrecision | number: numberFormat}}</div></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>weighted recall:</b> {{model.weightedRecall | number: numberFormat}}</div></div>
+    <div class="col-md-6"><div class="row"><b>f1:</b> {{model.f1 | number: numberFormat}}</div></div>
+  </div>
+</div>

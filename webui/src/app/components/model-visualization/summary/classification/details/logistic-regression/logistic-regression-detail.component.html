@@ -1,0 +1,15 @@
+<div class="container">
+  <hr class="small" />
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>accuracy:</b> {{model.accuracy | number: numberFormat}}</div></div>
+    <div class="col-md-6"><div class="row"><b>precision:</b> {{model.precision | number: numberFormat}}</div></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>F-P rate:</b> {{model.falsePositiveRate | number: '1.2-3'}}</div></div>
+    <div class="col-md-6"><div class="row"><b>T-P rate:</b> {{model.truePositiveRate | number: numberFormat}}</div></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"><div class="row"><b>f measure:</b> {{model.fMeasure | number: numberFormat}}</div></div>
+    <div class="col-md-6"><div class="row"><b>precision:</b> {{model.precision | number: numberFormat}}</div></div>
+  </div>
+</div>

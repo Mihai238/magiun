@@ -41,5 +41,26 @@ export namespace AlgorithmImplementation {
       implementation == AlgorithmImplementation.RandomForestClassificationAlgorithm ||
       implementation == AlgorithmImplementation.GradientBoostTreeClassificationAlgorithm;
   }
+
+  export function isClassificationWithCoefficients(implementation: AlgorithmImplementation) {
+    return implementation == AlgorithmImplementation.MultinomialLogisticRegressionAlgorithm ||
+      implementation == AlgorithmImplementation.BinaryLogisticRegressionAlgorithm;
+  }
+
+  export function isClassificationWithMeasurementsByLabel(implementation: AlgorithmImplementation) {
+    return implementation == AlgorithmImplementation.MultinomialLogisticRegressionAlgorithm ||
+      implementation == AlgorithmImplementation.BinaryLogisticRegressionAlgorithm;
+  }
+
+  export function isLogisticRegression(implementation: AlgorithmImplementation) {
+    return implementation == AlgorithmImplementation.MultinomialLogisticRegressionAlgorithm ||
+      implementation == AlgorithmImplementation.BinaryLogisticRegressionAlgorithm;
+  }
+
+  export function isTreeClassification(implementation: AlgorithmImplementation) {
+    return implementation == AlgorithmImplementation.DecisionTreeClassificationAlgorithm ||
+      implementation == AlgorithmImplementation.RandomForestClassificationAlgorithm ||
+      implementation == AlgorithmImplementation.GradientBoostTreeClassificationAlgorithm;
+  }
 }
 

@@ -10,7 +10,8 @@ export enum AlgorithmImplementation {
   DecisionTreeClassificationAlgorithm = "Decision Tree Classification",
   RandomForestClassificationAlgorithm = "Random Forest Classification",
   GradientBoostTreeClassificationAlgorithm = "Gradient Boost Tree Classification",
-  LinearSupportVectorMachineAlgorithm = "Linear Support Vector Machine"
+  LinearSupportVectorMachineAlgorithm = "Linear Support Vector Machine",
+  MultilayerPerceptronClassificationAlgorithm = "Multilayer Perceptron Classification"
 
 }
 
@@ -39,6 +40,7 @@ export namespace AlgorithmImplementation {
     return implementation == AlgorithmImplementation.MultinomialLogisticRegressionAlgorithm ||
       implementation == AlgorithmImplementation.BinaryLogisticRegressionAlgorithm ||
       implementation == AlgorithmImplementation.LinearSupportVectorMachineAlgorithm ||
+      implementation == AlgorithmImplementation.MultilayerPerceptronClassificationAlgorithm ||
       implementation == AlgorithmImplementation.DecisionTreeClassificationAlgorithm ||
       implementation == AlgorithmImplementation.RandomForestClassificationAlgorithm ||
       implementation == AlgorithmImplementation.GradientBoostTreeClassificationAlgorithm;
@@ -64,7 +66,8 @@ export namespace AlgorithmImplementation {
     return implementation == AlgorithmImplementation.DecisionTreeClassificationAlgorithm ||
       implementation == AlgorithmImplementation.RandomForestClassificationAlgorithm ||
       implementation == AlgorithmImplementation.GradientBoostTreeClassificationAlgorithm ||
-      implementation == AlgorithmImplementation.LinearSupportVectorMachineAlgorithm;
+      implementation == AlgorithmImplementation.LinearSupportVectorMachineAlgorithm ||
+      implementation == AlgorithmImplementation.MultilayerPerceptronClassificationAlgorithm;
   }
 }
 

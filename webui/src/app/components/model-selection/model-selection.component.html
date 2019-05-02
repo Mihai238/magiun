@@ -120,8 +120,15 @@
                             </select>
                           </div>
                           <div class="col" *ngIf="param.selectOptions == null || param.selectOptions.length == 0">
-                            <input [attr.id]="param.name + '-' + index"
+                            <input *ngIf="param.name != 'layers'"
+                                   [attr.id]="param.name + '-' + index"
                                    type="number" value="{{param.value}}"
+                                   [attr.step]="Number.isInteger(param.value) ? 1 : 0.0000001"
+                                   required>
+
+                            <input *ngIf="param.name == 'layers'"
+                                   [attr.id]="param.name + '-' + index"
+                                   type="text" value="{{param.value}}"
                                    [attr.step]="Number.isInteger(param.value) ? 1 : 0.0000001"
                                    required>
                           </div>

@@ -3,7 +3,7 @@ package at.magiun.core.statistics.trainer
 import at.magiun.core.MagiunContext
 import at.magiun.core.model.algorithm._
 import at.magiun.core.model.rest.response.TrainAlgorithmResponse
-import at.magiun.core.statistics.trainer.classification.{LinearSupportVectorMachineTrainer, LogisticRegressionAlgorithmTrainer, TreeClassificationTrainer}
+import at.magiun.core.statistics.trainer.classification.{LinearSupportVectorMachineTrainer, LogisticRegressionAlgorithmTrainer, MultilayerPerceptronClassificationAlgorithmTrainer, TreeClassificationTrainer}
 import at.magiun.core.statistics.trainer.regression._
 import org.apache.spark.sql.DataFrame
 
@@ -36,6 +36,8 @@ class AlgorithmTrainer(magiunContext: MagiunContext) {
           TreeClassificationTrainer.train(algorithm.asInstanceOf[GradientBoostTreeClassificationAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
         case _: LinearSupportVectorMachineAlgorithm =>
           LinearSupportVectorMachineTrainer.train(algorithm.asInstanceOf[LinearSupportVectorMachineAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
+        case _: MultilayerPerceptronClassificationAlgorithm =>
+          MultilayerPerceptronClassificationAlgorithmTrainer.train(algorithm.asInstanceOf[MultilayerPerceptronClassificationAlgorithm], dataFrame, responseVariableName, explanatoryVariablesNames, magiunContext, SAMPLE_SIZE)
         case _ => new TrainAlgorithmResponse(s"Algorithm ${algorithm.name} is not implemented yet!")
       }
     } catch {

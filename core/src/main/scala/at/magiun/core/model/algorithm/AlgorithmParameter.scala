@@ -55,6 +55,8 @@ case class Smoothing(name: String = "smoothing", value: Double = 1.0, selectOpti
 /** MULTILAYER PERCEPTRON CLASSIFIER */
 case class BlockSize(name: String = "blockSize", value: Int = 128, selectOptions: Set[Int] = Set.empty) extends AlgorithmParameter[Int] {}
 case class MultilayerPerceptronSolver(name: String = "solver", value: String = "l-bfgs", selectOptions: Set[String] = Set("l-bfgs", "gd")) extends AlgorithmParameter[String] {}
+case class LayersUI(name: String = "layers", value: String = "insert the layers separated by comma", selectOptions: Set[String] = Set.empty) extends AlgorithmParameter[String] {}
+case class Layers(name: String = "layers", value: Array[Int] = Array.empty, selectOptions: Set[Array[Int]] = Set.empty) extends AlgorithmParameter[Array[Int]] {}
 
 object AlgorithmParameter {
 
@@ -104,6 +106,7 @@ object AlgorithmParameter {
   /** MULTILAYER PERCEPTRON CLASSIFIER */
   private val BLOCK_SIZE = BlockSize()
   private val MULTILAYER_PERCEPTRON_SOLVER = MultilayerPerceptronSolver()
+  private val LAYERS = LayersUI()
 
 
   val LinearRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET, EPSILON, FIT_INTERCEPT, REG_PARAM, TOLERANCE, STANDARDIZATION, LOSS, SOLVER)
@@ -116,7 +119,7 @@ object AlgorithmParameter {
   val DecisionTreeRegressionClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED)
   val LinearSVMParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, FIT_INTERCEPT, REG_PARAM, STANDARDIZATION, TOLERANCE, THRESHOLD)
   val NaiveBayesParameters: Set[AlgorithmParameter[_ <: Any]] = Set(SMOOTHING)
-  val MultilayerPerceptronClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, BLOCK_SIZE, SEED, TOLERANCE, MULTILAYER_PERCEPTRON_SOLVER, STEP_SIZE)
+  val MultilayerPerceptronClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, BLOCK_SIZE, SEED, TOLERANCE, MULTILAYER_PERCEPTRON_SOLVER, STEP_SIZE, LAYERS)
   val RandomForestClassificationParameters: Set[AlgorithmParameter[_ <: Any]] = Set(CACHE_NODE_IDS, CHECKPOINT_INTERVAL, FEATURE_SUBSET_STRATEGY, MAX_BINS, MAX_DEPTH, MAX_MEMORY_IN_MB, MIN_INFO_GAIN, MIN_INSTANCES_PER_NODE, SEED, SUBSAMPLING_RATE, NUM_TREES)
 
   def createParameterWithValueByName(name: String, stringValue: String): AlgorithmParameter[_ <: Any] = {
@@ -152,7 +155,12 @@ object AlgorithmParameter {
       case "smoothing" => Smoothing(value = stringValue.toDouble)
       case "blockSize" => BlockSize(value = stringValue.toInt)
       case "solver" => Solver(value = stringValue)
+      case "layers" => Layers(value = stringToArray(stringValue))
       case _ => throw new IllegalArgumentException(s"Unknown parameter $name !")
     }
+  }
+
+  private def stringToArray(value: String): Array[Int] = {
+    value.split(',').map(x => x.toInt)
   }
 }

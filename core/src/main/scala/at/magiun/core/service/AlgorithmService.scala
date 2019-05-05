@@ -8,9 +8,9 @@ import at.magiun.core.model.rest.request.{AlgorithmParameterRequest, AlgorithmRe
 import at.magiun.core.model.rest.response.TrainAlgorithmResponse
 import at.magiun.core.statistics.trainer.AlgorithmTrainer
 import at.magiun.core.util.{DatasetUtil, MagiunDatasetUtil}
+import com.typesafe.config.Config
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.spark.ml.util.MLWritable
-import org.apache.spark.ml.{Estimator, Model}
+import org.apache.spark.ml.Estimator
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -21,7 +21,8 @@ class AlgorithmService (
                          spark: SparkSession,
                          dataSetService: DataSetService,
                          algorithmTrainer: AlgorithmTrainer,
-                         magiunContext: MagiunContext
+                         magiunContext: MagiunContext,
+                         config: Config
                        ) extends LazyLogging {
 
   def train(trainAlgorithmRequest: TrainAlgorithmRequest): Future[Option[TrainAlgorithmResponse]] = {
@@ -90,7 +91,7 @@ class AlgorithmService (
   def save(id: String): Unit = {
     val model = Option(magiunContext.getModel(id))
     model.foreach { m =>
-      m.asInstanceOf[Model[_ <: Model[_]] with MLWritable].save(System.getProperty("user.dir").concat("/spark-models/").concat(m.uid))
+      m.save(System.getProperty("user.dir").concat(config.getString("models.saveFolder")).concat(m.uid))
     }
   }
 }

@@ -14,16 +14,18 @@ export class LoadingIndicatorService {
   /**
    * Adds request to the storage and notifies observers
    */
-  onStarted(req: HttpRequest<any>): void {
-    this.requests.push(req);
-    this.notify();
+  onStarted(request: HttpRequest<any>): void {
+    this.requests.push(request);
+    if (request.url.indexOf("/remove/") < 0) {
+      this.notify();
+    }
   }
 
   /**
    * Removes request from the storage and notifies observers
    */
-  onFinished(req: HttpRequest<any>): void {
-    const index = this.requests.indexOf(req);
+  onFinished(request: HttpRequest<any>): void {
+    const index = this.requests.indexOf(request);
     if (index !== -1) {
       this.requests.splice(index, 1);
     }

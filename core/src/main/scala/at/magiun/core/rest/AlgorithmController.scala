@@ -18,10 +18,11 @@ class AlgorithmController(recommenderService: RecommenderService, algorithmServi
   private val BASE_PATH = "algorithm"
   private val ALGORITHM_RECOMMENDATIONS_PATH = "recommend"
   private val TRAIN_ALGORITHM_PATH = "train"
+  private val SAVE_PATH = "save"
   private val REMOVE_PATH = "remove"
 
   //noinspection TypeAnnotation
-  lazy val api = recommend :+: train :+: remove
+  lazy val api = recommend :+: train :+: save :+: remove
 
   val recommend: Endpoint[List[Algorithm[_ <: Estimator[_ <: Any]]]] = post(BASE_PATH :: ALGORITHM_RECOMMENDATIONS_PATH :: jsonBody[RecommenderRequest]) {
     body: RecommenderRequest =>
@@ -41,6 +42,13 @@ class AlgorithmController(recommenderService: RecommenderService, algorithmServi
         .asTwitter
         .map(_.get)
         .map(Ok)
+  }
+
+  val save: Endpoint[Unit] = post(BASE_PATH :: SAVE_PATH :: path[String]) { id: String =>
+
+    algorithmService.save(id)
+
+    Ok()
   }
 
   val remove: Endpoint[Unit] = post(BASE_PATH :: REMOVE_PATH :: path[String]) { id: String =>

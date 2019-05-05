@@ -8,7 +8,7 @@ export class LoadingIndicatorInterceptor implements HttpInterceptor {
 
   constructor(private loadingIndicatorService: LoadingIndicatorService) {}
 
-  intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.loadingIndicatorService.onStarted(request);
 
     return next.handle(request)

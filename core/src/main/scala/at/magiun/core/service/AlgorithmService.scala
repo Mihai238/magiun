@@ -9,12 +9,13 @@ import at.magiun.core.model.rest.response.TrainAlgorithmResponse
 import at.magiun.core.statistics.trainer.AlgorithmTrainer
 import at.magiun.core.util.{DatasetUtil, MagiunDatasetUtil}
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.spark.ml.Estimator
+import org.apache.spark.ml.util.MLWritable
+import org.apache.spark.ml.{Estimator, Model}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-import scala.concurrent.ExecutionContext.Implicits.global
 
 class AlgorithmService (
                          spark: SparkSession,
@@ -84,5 +85,12 @@ class AlgorithmService (
 
   def remove(id: String): Unit = {
     magiunContext.removeModel(id)
+  }
+
+  def save(id: String): Unit = {
+    val model = Option(magiunContext.getModel(id))
+    model.foreach { m =>
+      m.asInstanceOf[Model[_ <: Model[_]] with MLWritable].save(System.getProperty("user.dir").concat("/spark-models/").concat(m.uid))
+    }
   }
 }

@@ -38,6 +38,9 @@ export class ModelVisualizationComponent {
 
   save(id: string): void {
     console.log("save model with id " + id);
+    this.algorithmRestService.save(id).subscribe(() => {
+      this.notifier.notify('success', this.translate.instant("MODEL_VISUALIZATION.MODEL_WAS_SAVED"));
+    });
   }
 
   delete(id: string): void {

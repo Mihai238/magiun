@@ -18,6 +18,7 @@ export class AlgorithmRestService {
   private readonly algorithmPath = '/algorithm';
   private readonly recommendPath = '/recommend';
   private readonly trainPath = '/train';
+  private readonly savePath = '/save/';
   private readonly removePath = '/remove/';
 
   constructor(private http: HttpClient, ngxLogger: NGXLogger) {
@@ -50,6 +51,13 @@ export class AlgorithmRestService {
         return <TrainAlgorithmResponse> response;
       })
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  save(id: string): Observable<any> {
+    this.logger.info(`Sending save request for model ${id}`);
+
+    return this.http.post(environment.baseUrl + this.algorithmPath + this.savePath + id, null)
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
   remove(id: string): Observable<any> {

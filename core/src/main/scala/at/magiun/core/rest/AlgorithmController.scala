@@ -60,7 +60,7 @@ class AlgorithmController(recommenderService: RecommenderService, algorithmServi
 
   val like: Endpoint[Unit] = post(BASE_PATH :: LIKE_PATH :: path[String] :: path[String]) {
     (requestId: String, recommendationId: String) =>
-      recommenderService.like(requestId, recommendationId)
+      recommenderService.feedback(like = true, requestId, recommendationId)
 
       Ok()
 
@@ -68,7 +68,7 @@ class AlgorithmController(recommenderService: RecommenderService, algorithmServi
 
   val dislike: Endpoint[Unit] = post(BASE_PATH :: DISLIKE_PATH :: path[String] :: path[String]) {
     (requestId: String, recommendationId: String) =>
-      recommenderService.dislike(requestId, recommendationId)
+      recommenderService.feedback(like = false, requestId, recommendationId)
 
       Ok()
   }

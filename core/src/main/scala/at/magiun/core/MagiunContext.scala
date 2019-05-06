@@ -17,7 +17,7 @@ class MagiunContext {
   private lazy val magiunSchemaCache = CacheBuilder.newBuilder().expireAfterWrite(15, TimeUnit.MINUTES).maximumSize(1).build[String, Schema]()
   private lazy val modelsCache = CacheBuilder.newBuilder().expireAfterWrite(60, TimeUnit.MINUTES).maximumSize(15).build[String, Model[_ <: Model[_]] with MLWritable]()
   private lazy val recommenderRequestCache = CacheBuilder.newBuilder().expireAfterWrite(60, TimeUnit.MINUTES).maximumSize(15).build[String, RecommenderRequest]()
-  private lazy val recommendationsCache = CacheBuilder.newBuilder().expireAfterWrite(60, TimeUnit.MINUTES).maximumSize(35).build[String, Algorithm[_ <: Estimator[_ <: Any]]]()
+  private lazy val recommendationsCache = CacheBuilder.newBuilder().expireAfterWrite(60, TimeUnit.MINUTES).maximumSize(35).build[String, Algorithm[_ <: Estimator[_ <: Model[_ <: Model[_]]]]]()
 
   def addDataFrameToCache(id: String, dataFrame: DataFrame): Unit = {
     dataFrameCache.put(id, dataFrame)
@@ -39,8 +39,8 @@ class MagiunContext {
     Option(magiunSchemaCache.getIfPresent(id))
   }
 
-  def getModel(id: String): Model[_ <: Model[_]] with MLWritable = {
-    modelsCache.getIfPresent(id)
+  def getModel(id: String): Option[Model[_ <: Model[_]] with MLWritable] = {
+    Option(modelsCache.getIfPresent(id))
   }
 
   def removeModel(id: String): Unit = {
@@ -55,12 +55,12 @@ class MagiunContext {
     Option(recommenderRequestCache.getIfPresent(id))
   }
 
-  def addRecommendation(recommendation: Algorithm[_ <: Estimator[_ <: Any]]): Unit = {
+  def addRecommendation(recommendation: Algorithm[_ <: Estimator[_ <: Model[_ <: Model[_]]]]): Unit = {
     recommendationsCache.put(recommendation.uid, recommendation)
   }
 
-  def getRecommendation(id: String): Algorithm[_ <: Estimator[_ <: Any]] = {
-    recommendationsCache.getIfPresent(id)
+  def getRecommendation(id: String): Option[Algorithm[_ <: Estimator[_ <: Model[_ <: Model[_]]]]] = {
+    Option(recommendationsCache.getIfPresent(id))
   }
 
   def sayHello(): Unit = {

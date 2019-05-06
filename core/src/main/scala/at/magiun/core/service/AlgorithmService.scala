@@ -89,7 +89,7 @@ class AlgorithmService (
   }
 
   def save(id: String): Unit = {
-    val model = Option(magiunContext.getModel(id))
+    val model = magiunContext.getModel(id)
     model.foreach { m =>
       m.save(System.getProperty("user.dir").concat(config.getString("models.saveFolder")).concat(m.uid))
     }

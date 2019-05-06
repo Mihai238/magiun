@@ -7,8 +7,9 @@ import org.apache.spark.ml.classification._
 import org.apache.spark.ml.regression._
 
 import scala.reflect._
+import _root_.io.circe.generic.JsonCodec
 
-sealed trait Algorithm[T <: Estimator[_ <: Model[_ <: Any]]] extends Serializable {
+sealed trait Algorithm[T <: Estimator[_ <: Model[_ <: Model[_]]]] extends Serializable {
   val uid: String
   val name: String
   val parameters: Set[AlgorithmParameter[_ <: Any]]

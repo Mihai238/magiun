@@ -1,17 +1,23 @@
 package at.magiun.core.service
 
+import java.io.File
+import java.time.LocalDate
+
 import at.magiun.core.MagiunContext
-import at.magiun.core.model.MagiunDataSet
-import at.magiun.core.model.algorithm._
+import at.magiun.core.model.algorithm.{Algorithm, _}
 import at.magiun.core.model.data.DatasetMetadata
 import at.magiun.core.model.ontology.OntologyClass
 import at.magiun.core.model.rest.request.RecommenderRequest
 import at.magiun.core.model.rest.response.RecommenderResponse
+import at.magiun.core.model.{LikeDislike, MagiunDataSet}
 import at.magiun.core.statistics.{AlgorithmRecommender, DatasetMetadataCalculator}
 import at.magiun.core.util.{DatasetUtil, MagiunDatasetUtil}
-import org.apache.spark.ml.Estimator
+import com.typesafe.config.Config
+import io.circe.syntax._
+import org.apache.commons.io.FileUtils
+import org.apache.spark.ml.{Estimator, Model}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
-
+import io.circe.generic.encoding.DerivedObjectEncoder._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Await, Future}
 
@@ -21,7 +27,8 @@ class RecommenderService(
                           datasetMetadataCalculator: DatasetMetadataCalculator,
                           algorithmRecommender: AlgorithmRecommender,
                           recommendationsRanker: RecommendationsRanker,
-                          magiunContext: MagiunContext
+                          magiunContext: MagiunContext,
+                          config: Config
                         ) {
 
   def recommend(request: RecommenderRequest): Future[Option[RecommenderResponse]] = {
@@ -59,8 +66,8 @@ class RecommenderService(
     datasetMetadataCalculator.compute(request, cleanDataset, cleanMagiunDataset)
   }
 
-  private def mapOntologyClassToAlgorithm(ontology: OntologyClass): Algorithm[_ <: Estimator[_ <: Any]] = {
-    ontology match {
+  private def mapOntologyClassToAlgorithm(ontology: OntologyClass): Algorithm[_ <: Estimator[_ <: Model[_ <: Model[_]]]] = {
+    (ontology match {
       case OntologyClass.LinearLeastRegressionPartial | OntologyClass.LinearLeastRegressionComplete => LinearRegressionAlgorithm(name = ontology.name)
       case OntologyClass.GeneralizedLinearRegressionPartial | OntologyClass.GeneralizedLinearRegressionComplete => GeneralizedLinearRegressionAlgorithm(name = ontology.name)
       case OntologyClass.BinaryLogisticRegressionPartial | OntologyClass.BinaryLogisticRegressionComplete => BinaryLogisticRegressionAlgorithm(name = ontology.name)
@@ -78,17 +85,27 @@ class RecommenderService(
       case OntologyClass.RandomForestClassificationPartial | OntologyClass.RandomForestClassificationComplete => RandomForestClassificationAlgorithm(name = ontology.name)
       case OntologyClass.DecisionTreeClassificationPartial | OntologyClass.DecisionTreeClassificationComplete => DecisionTreeClassificationAlgorithm(name = ontology.name)
       case _ => null
-    }
+    }).asInstanceOf[Algorithm[_ <: Estimator[_ <: Model[_ <: Model[_]]]]]
   }
 
-  def like(requestId: String, recommendationId: String): Unit = {
+
+
+  def feedback(like: Boolean, requestId: String, recommendationId: String): Unit = {
     val request = magiunContext.getRecommenderRequest(requestId)
-    val recommendation = Option(magiunContext.getRecommendation(recommendationId))
+    val recommendation = magiunContext.getRecommendation(recommendationId)
 
-    print("sss")
-  }
+    if (request.nonEmpty && recommendation.nonEmpty) {
+      val path = System.getProperty("user.dir")
+        .concat(config.getString("feedback.saveFolder"))
+        .concat(LocalDate.now.toString)
+        .concat("/")
+        .concat(recommendation.get.uid)
+        .concat(".json")
 
-  def dislike(requestId: String, recommendationId: String): Unit = {
-
+      FileUtils.writeStringToFile(
+        new File(path),
+        LikeDislike(like, request.get, recommendation.get).asJson.toString()
+      )
+    }
   }
 }

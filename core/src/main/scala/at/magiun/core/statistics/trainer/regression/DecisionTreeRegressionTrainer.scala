@@ -16,11 +16,10 @@ object DecisionTreeRegressionTrainer extends TreeRegressionAlgorithmTrainer {
             magiunContext: MagiunContext,
             sampleSize: Int
            ): TrainAlgorithmResponse = {
-    val sparkAlgorithm: DecisionTreeRegressor = new DecisionTreeRegressor()
-    val transformedDF = transformDF(dataFrame, explanatoryVariablesNames)
-
-    sparkAlgorithm.setLabelCol(responseVariableName)
+    val sparkAlgorithm: DecisionTreeRegressor = algorithm.createAndEnhanceAlgorithm.setLabelCol(responseVariableName)
       .setFeaturesCol("features")
+
+    val transformedDF = transformDF(dataFrame, explanatoryVariablesNames)
 
     val Array(trainingData, testData) = transformedDF.randomSplit(Array(0.7, 0.3))
 

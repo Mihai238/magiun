@@ -249,7 +249,7 @@ export class ModelSelectionComponent {
 
   train(index: number): void {
     console.log("train algorithm " + index);
-    this.recommenderResponse[index].parameters.forEach(p => {
+    this.recommenderResponse.recommendations[index].parameters.forEach(p => {
       const element: HTMLElement = document.getElementById(p.name + "-" + index);
       p.value = (<HTMLInputElement>element).value;
     });
@@ -258,7 +258,7 @@ export class ModelSelectionComponent {
       this.selectedDataset.id,
       this.targetVariable.index,
       this.explanatoryVariables.map(c => c.index),
-      this.recommenderResponse[index]
+      this.recommenderResponse.recommendations[index]
     );
 
     this.algorithmRestService.train(request).subscribe((resp) => {

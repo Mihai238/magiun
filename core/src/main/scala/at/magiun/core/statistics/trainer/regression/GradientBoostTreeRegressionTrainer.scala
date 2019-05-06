@@ -16,11 +16,10 @@ object GradientBoostTreeRegressionTrainer extends TreeRegressionAlgorithmTrainer
             magiunContext: MagiunContext,
             sampleSize: Int
            ): TrainAlgorithmResponse = {
-    val sparkAlgorithm: GBTRegressor = new GBTRegressor()
-    val transformedDF = transformDF(dataFrame, explanatoryVariablesNames)
-
-    sparkAlgorithm.setLabelCol(responseVariableName)
+    val sparkAlgorithm: GBTRegressor = algorithm.createAndEnhanceAlgorithm.setLabelCol(responseVariableName)
       .setFeaturesCol("features")
+
+    val transformedDF = transformDF(dataFrame, explanatoryVariablesNames)
 
     val Array(trainingData, testData) = transformedDF.randomSplit(Array(0.7, 0.3))
 

@@ -1,5 +1,7 @@
 package at.magiun.core.model.algorithm
 
+import java.util.UUID
+
 import org.apache.spark.ml.{Estimator, Model}
 import org.apache.spark.ml.classification._
 import org.apache.spark.ml.regression._
@@ -7,6 +9,7 @@ import org.apache.spark.ml.regression._
 import scala.reflect._
 
 sealed trait Algorithm[T <: Estimator[_ <: Model[_ <: Any]]] extends Serializable {
+  val uid: String
   val name: String
   val parameters: Set[AlgorithmParameter[_ <: Any]]
 
@@ -26,13 +29,16 @@ sealed trait Algorithm[T <: Estimator[_ <: Model[_ <: Any]]] extends Serializabl
   }
 }
 
-case class LinearRegressionAlgorithm(name: String,
+case class LinearRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
+                                      name: String,
                                      parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.LinearRegressionParameters) extends Algorithm[LinearRegression] {}
 
-case class GeneralizedLinearRegressionAlgorithm(name: String,
+case class GeneralizedLinearRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
+                                                 name: String,
                                                 parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.GeneralizedLinearRegressionParameters) extends Algorithm[GeneralizedLinearRegression] {}
 
-case class BinaryLogisticRegressionAlgorithm(name: String,
+case class BinaryLogisticRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
+                                             name: String,
                                              parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.LogisticRegressionParameters
                                             ) extends Algorithm[LogisticRegression] {
 
@@ -42,7 +48,8 @@ case class BinaryLogisticRegressionAlgorithm(name: String,
   }
 }
 
-case class MultinomialLogisticRegressionAlgorithm(name: String,
+case class MultinomialLogisticRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
+                                                  name: String,
                                                   parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.LogisticRegressionParameters
                                              ) extends Algorithm[LogisticRegression] {
 
@@ -52,27 +59,33 @@ case class MultinomialLogisticRegressionAlgorithm(name: String,
   }
 }
 
-case class IsotonicRegressionAlgorithm(name: String,
+case class IsotonicRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
+                                       name: String,
                                        parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.IsotonicRegressionParameters
                                       ) extends Algorithm[IsotonicRegression] {}
 
-case class SurvivalRegressionAlgorithm(name: String,
+case class SurvivalRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
+                                       name: String,
                                        parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.SurvivalRegressionParameters
                                       ) extends Algorithm[AFTSurvivalRegression] {}
 
-case class GradientBoostTreeRegressionAlgorithm(name: String,
+case class GradientBoostTreeRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
+                                                name: String,
                                                 parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.GradientBoostTreeRegressionClassificationParameters
                                                ) extends Algorithm[GBTRegressor] {}
 
-case class RandomForestRegressionAlgorithm(name: String,
+case class RandomForestRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
+                                           name: String,
                                            parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.RandomForestRegressionParameters
                                           ) extends Algorithm[RandomForestRegressor] {}
 
-case class DecisionTreeRegressionAlgorithm(name: String,
+case class DecisionTreeRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
+                                           name: String,
                                            parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.DecisionTreeRegressionClassificationParameters
                                           ) extends Algorithm[DecisionTreeRegressor] {}
 
-case class MultinomialNaiveBayesClassificationAlgorithm(name: String,
+case class MultinomialNaiveBayesClassificationAlgorithm(uid: String = UUID.randomUUID().toString,
+                                                        name: String,
                                                         parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.NaiveBayesParameters
                                                        ) extends Algorithm[NaiveBayes] {
   override def enhanceAlgorithm(algorithm: NaiveBayes): Unit = {
@@ -81,7 +94,8 @@ case class MultinomialNaiveBayesClassificationAlgorithm(name: String,
   }
 }
 
-case class BernoulliNaiveBayesClassificationAlgorithm(name: String,
+case class BernoulliNaiveBayesClassificationAlgorithm(uid: String = UUID.randomUUID().toString,
+                                                      name: String,
                                                       parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.NaiveBayesParameters
                                                      ) extends Algorithm[NaiveBayes] {
   override def enhanceAlgorithm(algorithm: NaiveBayes): Unit = {
@@ -90,22 +104,27 @@ case class BernoulliNaiveBayesClassificationAlgorithm(name: String,
   }
 }
 
-case class LinearSupportVectorMachineAlgorithm(name: String,
+case class LinearSupportVectorMachineAlgorithm(uid: String = UUID.randomUUID().toString,
+                                               name: String,
                                                parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.LinearSVMParameters
                                               ) extends Algorithm[LinearSVC] {}
 
-case class MultilayerPerceptronClassificationAlgorithm(name: String,
+case class MultilayerPerceptronClassificationAlgorithm(uid: String = UUID.randomUUID().toString,
+                                                       name: String,
                                                        parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.MultilayerPerceptronClassificationParameters
                                                       ) extends Algorithm[MultilayerPerceptronClassifier] {}
 
-case class RandomForestClassificationAlgorithm(name: String,
+case class RandomForestClassificationAlgorithm(uid: String = UUID.randomUUID().toString,
+                                               name: String,
                                                parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.RandomForestClassificationParameters
                                               ) extends Algorithm[RandomForestClassifier] {}
 
-case class GradientBoostTreeClassificationAlgorithm(name: String,
+case class GradientBoostTreeClassificationAlgorithm(uid: String = UUID.randomUUID().toString,
+                                                    name: String,
                                                     parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.GradientBoostTreeRegressionClassificationParameters
                                                    ) extends Algorithm[GBTClassifier] {}
 
-case class DecisionTreeClassificationAlgorithm(name: String,
+case class DecisionTreeClassificationAlgorithm(uid: String = UUID.randomUUID().toString,
+                                               name: String,
                                                parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.DecisionTreeRegressionClassificationParameters
                                               ) extends Algorithm[DecisionTreeClassifier] {}

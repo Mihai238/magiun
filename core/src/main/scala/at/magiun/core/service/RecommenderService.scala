@@ -6,6 +6,7 @@ import at.magiun.core.model.algorithm._
 import at.magiun.core.model.data.DatasetMetadata
 import at.magiun.core.model.ontology.OntologyClass
 import at.magiun.core.model.rest.request.RecommenderRequest
+import at.magiun.core.model.rest.response.RecommenderResponse
 import at.magiun.core.statistics.{AlgorithmRecommender, DatasetMetadataCalculator}
 import at.magiun.core.util.{DatasetUtil, MagiunDatasetUtil}
 import org.apache.spark.ml.Estimator
@@ -23,7 +24,7 @@ class RecommenderService(
                           magiunContext: MagiunContext
                         ) {
 
-  def recommend(request: RecommenderRequest): Future[Option[List[Algorithm[_ <: Estimator[_ <: Any]]]]] = {
+  def recommend(request: RecommenderRequest): Future[Option[RecommenderResponse]] = {
     import scala.concurrent.duration._
 
     Future {
@@ -32,7 +33,15 @@ class RecommenderService(
         val magiunDataset = Await.result(dataSetService.find(request.datasetId.toString), 30.seconds).get
         val metadata = createMetadata(request, dataset, magiunDataset)
         val recommendations = algorithmRecommender.recommend(metadata)
-        recommendationsRanker.rank(recommendations).map(mapOntologyClassToAlgorithm)
+        val algos = recommendationsRanker.rank(recommendations).map(mapOntologyClassToAlgorithm)
+
+        magiunContext.addRecommenderRequest(request)
+        algos.foreach(magiunContext.addRecommendation)
+
+        RecommenderResponse(
+          request.uid,
+          algos
+        )
       }
     }
   }
@@ -52,23 +61,34 @@ class RecommenderService(
 
   private def mapOntologyClassToAlgorithm(ontology: OntologyClass): Algorithm[_ <: Estimator[_ <: Any]] = {
     ontology match {
-      case OntologyClass.LinearLeastRegressionPartial | OntologyClass.LinearLeastRegressionComplete => LinearRegressionAlgorithm(ontology.name)
-      case OntologyClass.GeneralizedLinearRegressionPartial | OntologyClass.GeneralizedLinearRegressionComplete => GeneralizedLinearRegressionAlgorithm(ontology.name)
-      case OntologyClass.BinaryLogisticRegressionPartial | OntologyClass.BinaryLogisticRegressionComplete => BinaryLogisticRegressionAlgorithm(ontology.name)
-      case OntologyClass.MultinomialLogisticRegressionPartial | OntologyClass.MultinomialLogisticRegressionComplete => MultinomialLogisticRegressionAlgorithm(ontology.name)
-      case OntologyClass.IsotonicRegression => IsotonicRegressionAlgorithm(ontology.name)
-      case OntologyClass.SurvivalRegression => SurvivalRegressionAlgorithm(ontology.name)
-      case OntologyClass.GradientBoostTreeRegressionPartial | OntologyClass.GradientBoostTreeRegressionComplete => GradientBoostTreeRegressionAlgorithm(ontology.name)
-      case OntologyClass.RandomForestRegressionPartial | OntologyClass.RandomForestRegressionComplete => RandomForestRegressionAlgorithm(ontology.name)
-      case OntologyClass.DecisionTreeRegressionPartial | OntologyClass.DecisionTreeRegressionComplete => DecisionTreeRegressionAlgorithm(ontology.name)
-      case OntologyClass.MultinomialNaiveBayesClassification => MultinomialNaiveBayesClassificationAlgorithm(ontology.name)
-      case OntologyClass.BernoulliNaiveBayesClassification => BernoulliNaiveBayesClassificationAlgorithm(ontology.name)
-      case OntologyClass.LinearSupportVectorMachine => LinearSupportVectorMachineAlgorithm(ontology.name)
-      case OntologyClass.MultilayerPerceptronClassification => MultilayerPerceptronClassificationAlgorithm(ontology.name)
-      case OntologyClass.GradientBoostTreeClassification => GradientBoostTreeClassificationAlgorithm(ontology.name)
-      case OntologyClass.RandomForestClassificationPartial | OntologyClass.RandomForestClassificationComplete => RandomForestClassificationAlgorithm(ontology.name)
-      case OntologyClass.DecisionTreeClassificationPartial | OntologyClass.DecisionTreeClassificationComplete => DecisionTreeClassificationAlgorithm(ontology.name)
+      case OntologyClass.LinearLeastRegressionPartial | OntologyClass.LinearLeastRegressionComplete => LinearRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.GeneralizedLinearRegressionPartial | OntologyClass.GeneralizedLinearRegressionComplete => GeneralizedLinearRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.BinaryLogisticRegressionPartial | OntologyClass.BinaryLogisticRegressionComplete => BinaryLogisticRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.MultinomialLogisticRegressionPartial | OntologyClass.MultinomialLogisticRegressionComplete => MultinomialLogisticRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.IsotonicRegression => IsotonicRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.SurvivalRegression => SurvivalRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.GradientBoostTreeRegressionPartial | OntologyClass.GradientBoostTreeRegressionComplete => GradientBoostTreeRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.RandomForestRegressionPartial | OntologyClass.RandomForestRegressionComplete => RandomForestRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.DecisionTreeRegressionPartial | OntologyClass.DecisionTreeRegressionComplete => DecisionTreeRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.MultinomialNaiveBayesClassification => MultinomialNaiveBayesClassificationAlgorithm(name = ontology.name)
+      case OntologyClass.BernoulliNaiveBayesClassification => BernoulliNaiveBayesClassificationAlgorithm(name = ontology.name)
+      case OntologyClass.LinearSupportVectorMachine => LinearSupportVectorMachineAlgorithm(name = ontology.name)
+      case OntologyClass.MultilayerPerceptronClassification => MultilayerPerceptronClassificationAlgorithm(name = ontology.name)
+      case OntologyClass.GradientBoostTreeClassification => GradientBoostTreeClassificationAlgorithm(name = ontology.name)
+      case OntologyClass.RandomForestClassificationPartial | OntologyClass.RandomForestClassificationComplete => RandomForestClassificationAlgorithm(name = ontology.name)
+      case OntologyClass.DecisionTreeClassificationPartial | OntologyClass.DecisionTreeClassificationComplete => DecisionTreeClassificationAlgorithm(name = ontology.name)
       case _ => null
     }
+  }
+
+  def like(requestId: String, recommendationId: String): Unit = {
+    val request = magiunContext.getRecommenderRequest(requestId)
+    val recommendation = Option(magiunContext.getRecommendation(recommendationId))
+
+    print("sss")
+  }
+
+  def dislike(requestId: String, recommendationId: String): Unit = {
+
   }
 }

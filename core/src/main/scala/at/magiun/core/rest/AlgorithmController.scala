@@ -1,15 +1,13 @@
 package at.magiun.core.rest
 
-import at.magiun.core.model.algorithm.Algorithm
 import at.magiun.core.model.rest.request.{RecommenderRequest, TrainAlgorithmRequest}
-import at.magiun.core.model.rest.response.TrainAlgorithmResponse
+import at.magiun.core.model.rest.response.{RecommenderResponse, TrainAlgorithmResponse}
 import at.magiun.core.rest.FutureConverter._
 import at.magiun.core.service.{AlgorithmService, RecommenderService}
 import com.typesafe.scalalogging.LazyLogging
 import io.circe.generic.auto._
 import io.finch._
 import io.finch.circe._
-import org.apache.spark.ml.Estimator
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -20,11 +18,13 @@ class AlgorithmController(recommenderService: RecommenderService, algorithmServi
   private val TRAIN_ALGORITHM_PATH = "train"
   private val SAVE_PATH = "save"
   private val REMOVE_PATH = "remove"
+  private val LIKE_PATH = "like"
+  private val DISLIKE_PATH = "dislike"
 
   //noinspection TypeAnnotation
-  lazy val api = recommend :+: train :+: save :+: remove
+  lazy val api = recommend :+: train :+: save :+: remove :+: like :+: dislike
 
-  val recommend: Endpoint[List[Algorithm[_ <: Estimator[_ <: Any]]]] = post(BASE_PATH :: ALGORITHM_RECOMMENDATIONS_PATH :: jsonBody[RecommenderRequest]) {
+  val recommend: Endpoint[RecommenderResponse] = post(BASE_PATH :: ALGORITHM_RECOMMENDATIONS_PATH :: jsonBody[RecommenderRequest]) {
     body: RecommenderRequest =>
       logger.info(body.toString)
 
@@ -56,6 +56,21 @@ class AlgorithmController(recommenderService: RecommenderService, algorithmServi
     algorithmService.remove(id)
 
     Ok()
+  }
+
+  val like: Endpoint[Unit] = post(BASE_PATH :: LIKE_PATH :: path[String] :: path[String]) {
+    (requestId: String, recommendationId: String) =>
+      recommenderService.like(requestId, recommendationId)
+
+      Ok()
+
+  }
+
+  val dislike: Endpoint[Unit] = post(BASE_PATH :: DISLIKE_PATH :: path[String] :: path[String]) {
+    (requestId: String, recommendationId: String) =>
+      recommenderService.dislike(requestId, recommendationId)
+
+      Ok()
   }
 
 }

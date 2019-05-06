@@ -85,21 +85,21 @@
         </div>
         <br/>
         <hr/>
-        <div class="container" *ngIf="algorithmRecommendations != null && algorithmRecommendations.length > 0">
+        <div class="container" *ngIf="recommenderResponse != null">
           <div>
             <h4>Recommendations:</h4>
           </div>
           <div id="recommendationsAccordion">
-            <div class="card" *ngFor="let algo of algorithmRecommendations">
-              <div *ngVar="algorithmRecommendations.indexOf(algo) as index">
+            <div class="card" *ngFor="let algo of recommenderResponse.recommendations">
+              <div *ngVar="recommenderResponse.recommendations.indexOf(algo) as index">
                 <h5>
                   <span  data-toggle="tooltip" data-placement="top" title="Like Recommendation">
-                    <a class="red" href="javascript:void(0)">
+                    <a class="red" href="javascript:void(0)" (click)="like(recommenderResponse.requestId, algo.uid)">
                       <i class="ti-thumb-up green"></i>
                     </a>
                   </span>
                   <span  data-toggle="tooltip" data-placement="top" title="Dislike Recommendation">
-                    <a class="red" href="javascript:void(0)">
+                    <a class="red" href="javascript:void(0)" (click)="dislike(recommenderResponse.requestId, algo.uid)">
                       <i class="ti-thumb-down red"></i>
                     </a>
                   </span>

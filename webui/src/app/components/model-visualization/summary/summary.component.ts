@@ -1,6 +1,6 @@
 import {TrainAlgorithmResponse} from "../../../model/response/train.algorithm.response.model";
 import {Input} from "@angular/core";
-import {AlgorithmImplementation} from "../../../model/algorithm/train/algorithm.implementation.model";
+import {AlgorithmImplementation} from "../../../model/algorithm/algorithm.implementation.model";
 import {DialogService} from "ng2-bootstrap-modal";
 import {RegressionPlotsModalComponent} from "../plots/regression-plots-modal/regression-plots-modal.component";
 import {StatisticsUtils} from "../../../util/statistics.utils";

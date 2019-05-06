@@ -2,7 +2,8 @@ package at.magiun.core.model.rest.request
 
 import at.magiun.core.model.data.Distribution
 
-case class RecommenderRequest(datasetId: Int,
+case class RecommenderRequest(uid: String,
+                              datasetId: Int,
                               goal: String,
                               tradeOff: String,
                               responseVariable: Int,

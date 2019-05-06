@@ -3,7 +3,7 @@ import {TrainAlgorithmResponse} from "../../model/response/train.algorithm.respo
 import {MagiunLogger} from "../../util/magiun.logger";
 import {NGXLogger} from "ngx-logger";
 import {ModelService} from "../../services/model.service";
-import {AlgorithmImplementation} from "app/model/algorithm/train/algorithm.implementation.model";
+import {AlgorithmImplementation} from "app/model/algorithm/algorithm.implementation.model";
 import {TranslateService} from "@ngx-translate/core";
 import {AlgorithmRestService} from "../../rest/algorithm-rest.service";
 import {NotifierService} from "angular-notifier";

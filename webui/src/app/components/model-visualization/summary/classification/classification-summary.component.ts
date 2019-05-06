@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {SummaryComponent} from "../summary.component";
 import {DialogService} from "ng2-bootstrap-modal";
-import {AlgorithmImplementation} from "../../../../model/algorithm/train/algorithm.implementation.model";
+import {AlgorithmImplementation} from "../../../../model/algorithm/algorithm.implementation.model";
 
 @Component({
   selector: 'app-classification-summary',

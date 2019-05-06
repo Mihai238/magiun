@@ -1,5 +1,5 @@
 import {CoefficientResponse} from "./coefficient.response.model";
-import {AlgorithmImplementation} from "../algorithm/train/algorithm.implementation.model";
+import {AlgorithmImplementation} from "../algorithm/algorithm.implementation.model";
 import {ClassificationInterceptResponse} from "./classification.intercept.response.model";
 
 export interface TrainAlgorithmResponse {

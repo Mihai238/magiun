@@ -11,16 +11,18 @@ import 'rxjs/add/operator/first';
 import {CollectionsUtils} from "../../util/collections.utils";
 import {TranslateService} from "@ngx-translate/core";
 import {AlgorithmRestService} from "../../rest/algorithm-rest.service";
-import {RecommenderRequest} from "../../model/recommender-request.model";
+import {RecommenderRequest} from "../../model/request/recommender.request.model";
 import {DialogService} from 'ng2-bootstrap-modal';
 import {DistributionsModalComponent} from "./distributions-modal/distributions-modal.component";
 import {Distribution} from "../../model/statistics/distribution.type.model";
 import {Algorithm} from "../../model/algorithm/algorithm.model";
 import {DOCUMENT} from "@angular/common";
 import {GoalClassification, GoalRegression} from "../../model/algorithm/algorithm.goal.model";
-import {TrainAlgorithmRequest} from "../../model/algorithm/train/train.algorithm.request.model";
+import {TrainAlgorithmRequest} from "../../model/request/train.algorithm.request.model";
 import {ModelService} from "../../services/model.service";
 import {NotifierService} from "angular-notifier";
+import {UUID} from "angular2-uuid";
+import {RecommenderResponse} from "../../model/response/recommender.response.model";
 
 @Component({
   selector: 'app-model-selection',
@@ -44,11 +46,11 @@ export class ModelSelectionComponent {
   tradeOff: string = "";
   definedDistributions: Distribution[] = [];
   checkedDistributions: boolean = false;
-  algorithmRecommendations: Algorithm[] = [];
+  recommenderResponse: RecommenderResponse;
 
   constructor(
     private dataService: DataService,
-    private recommenderService: AlgorithmRestService,
+    private algorithmRestService: AlgorithmRestService,
     private router: Router,
     private translate: TranslateService,
     private dialogService: DialogService,
@@ -127,7 +129,7 @@ export class ModelSelectionComponent {
     this.targetVariable = this.selectedDataset.schema.columns[event];
     this.possibleExplanatoryVariables = CollectionsUtils.withoutElement(this.selectedDataset.schema.columns, this.targetVariable);
     this.explanatoryVariables = CollectionsUtils.withoutElement(this.explanatoryVariables, this.targetVariable);
-    this.algorithmRecommendations = [];
+    this.recommenderResponse = null;
     this.checkedDistributions = false;
     this.logTargetVariable();
   }
@@ -173,7 +175,7 @@ export class ModelSelectionComponent {
     } else {
       this.explanatoryVariables = CollectionsUtils.deleteEntryFromArray(this.explanatoryVariables, <Column>column);
     }
-    this.algorithmRecommendations = [];
+    this.recommenderResponse = null;
     this.checkedDistributions = false;
     this.logger.info(`${(checked) ? "adding" : "removing"} column "${column.name}" ${(checked) ? "to" : "from"} the explanatory variable list`);
   }
@@ -184,12 +186,12 @@ export class ModelSelectionComponent {
       return;
     }
 
-    this.recommenderService
+    this.algorithmRestService
       .recommend(this.createRecommenderRequest())
       .subscribe((result) => {
-        this.algorithmRecommendations = result;
+        this.recommenderResponse = result;
 
-        if (result.length == 0 && this.goal == GoalClassification.value && !Distribution.isDiscrete(this.definedDistributions[0])) {
+        if (result == null && this.goal == GoalClassification.value && !Distribution.isDiscrete(this.definedDistributions[0])) {
           alert(this.translate.instant("MODEL_SELECTION.EMPTY_CLASSIFICATION_RECOMMENDATIONS"))
         }
       });
@@ -229,6 +231,7 @@ export class ModelSelectionComponent {
     }
 
     return new RecommenderRequest(
+      UUID.UUID(),
       this.selectedDataset.id,
       this.goal,
       this.tradeOff,
@@ -246,7 +249,7 @@ export class ModelSelectionComponent {
 
   train(index: number): void {
     console.log("train algorithm " + index);
-    this.algorithmRecommendations[index].parameters.forEach(p => {
+    this.recommenderResponse[index].parameters.forEach(p => {
       const element: HTMLElement = document.getElementById(p.name + "-" + index);
       p.value = (<HTMLInputElement>element).value;
     });
@@ -255,16 +258,26 @@ export class ModelSelectionComponent {
       this.selectedDataset.id,
       this.targetVariable.index,
       this.explanatoryVariables.map(c => c.index),
-      this.algorithmRecommendations[index]
+      this.recommenderResponse[index]
     );
 
-    this.recommenderService.train(request).subscribe((resp) => {
+    this.algorithmRestService.train(request).subscribe((resp) => {
       if (resp.errorMessage != "") {
         alert(resp.errorMessage);
       } else {
         this.modelService.modelArrived(resp);
         this.notifier.notify('success', this.translate.instant("MODEL_SELECTION.ALGORITHM_WAS_TRAINED"));
       }
-    })
+    });
+  }
+
+  like(requestId: string, recommendationId: string): void {
+    console.log(`liking recommendation ${recommendationId} of request ${requestId}`)
+    this.algorithmRestService.like(requestId, recommendationId).subscribe(() => {});
+  }
+
+  dislike(requestId: string, recommendationId: string): void {
+    console.log(`disliking recommendation ${recommendationId} of request ${requestId}`)
+    this.algorithmRestService.dislike(requestId, recommendationId).subscribe(() => {});
   }
 }

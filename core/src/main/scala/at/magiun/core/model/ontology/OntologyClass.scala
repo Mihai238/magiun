@@ -89,7 +89,8 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
   private val PARTIAL_ALGORITHMS = COMPLETE_PARTIAL_ALGORITHMS_MAP.values.toSet
 
   def isAbstractType(ontologyClass: OntologyClass): Boolean = {
-    ontologyClass.equals(Algorithm) || ontologyClass.equals(Classification) || ontologyClass.equals(Regression) || ontologyClass.equals(VariableType)
+    ontologyClass.equals(Algorithm) || ontologyClass.equals(Classification) || ontologyClass.equals(Regression) || ontologyClass.equals(VariableType) ||
+      ontologyClass.equals(IsotonicRegression) || ontologyClass.equals(SurvivalRegression)
   }
 
   def isPartialAlgorithm(ontologyClass: OntologyClass): Boolean = {
@@ -106,7 +107,7 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
 
   def isSpecialCaseAlgorithm(ontologyClass: OntologyClass): Boolean = {
     ontologyClass match {
-      case IsotonicRegression | SurvivalRegression | MultilayerPerceptronClassification => true
+      case  MultilayerPerceptronClassification => true
       case _ => false
     }
   }

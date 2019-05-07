@@ -8,3 +8,4 @@ core/src/main/resources/model_selection_backup.owl
 catalog-v001.xml
 spark-models
 spark-warehouse
+recommendations-feedback

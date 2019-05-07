@@ -16,7 +16,7 @@ export class LoadingIndicatorService {
    */
   onStarted(request: HttpRequest<any>): void {
     this.requests.push(request);
-    if (request.url.indexOf("/remove/") < 0) {
+    if (request.url.indexOf("/remove/") < 0 && request.url.indexOf("/like/") < 0 && request.url.indexOf("/dislike/") < 0) {
       this.notify();
     }
   }

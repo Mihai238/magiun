@@ -13,11 +13,12 @@ import at.magiun.core.model.{LikeDislike, MagiunDataSet}
 import at.magiun.core.statistics.{AlgorithmRecommender, DatasetMetadataCalculator}
 import at.magiun.core.util.{DatasetUtil, MagiunDatasetUtil}
 import com.typesafe.config.Config
+import io.circe.generic.encoding.DerivedObjectEncoder._
 import io.circe.syntax._
 import org.apache.commons.io.FileUtils
 import org.apache.spark.ml.{Estimator, Model}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
-import io.circe.generic.encoding.DerivedObjectEncoder._
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Await, Future}
 
@@ -67,9 +68,13 @@ class RecommenderService(
   }
 
   private def mapOntologyClassToAlgorithm(ontology: OntologyClass): Algorithm[_ <: Estimator[_ <: Model[_ <: Model[_]]]] = {
+    import at.magiun.core.model.algorithm.AlgorithmParameter._
+
     (ontology match {
       case OntologyClass.LinearLeastRegressionPartial | OntologyClass.LinearLeastRegressionComplete => LinearRegressionAlgorithm(name = ontology.name)
       case OntologyClass.GeneralizedLinearRegressionPartial | OntologyClass.GeneralizedLinearRegressionComplete => GeneralizedLinearRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.GeneralizedLinearRegressionIdentityPartial | OntologyClass.GeneralizedLinearRegressionIdentityComplete => GeneralizedLinearRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.GeneralizedLinearRegressionBinomialLogitPartial | OntologyClass.GeneralizedLinearRegressionBinomialLogitComplete => GeneralizedLinearRegressionAlgorithm(name = ontology.name, parameters = GeneralizedLinearRegressionBinomialLogitParameters)
       case OntologyClass.BinaryLogisticRegressionPartial | OntologyClass.BinaryLogisticRegressionComplete => BinaryLogisticRegressionAlgorithm(name = ontology.name)
       case OntologyClass.MultinomialLogisticRegressionPartial | OntologyClass.MultinomialLogisticRegressionComplete => MultinomialLogisticRegressionAlgorithm(name = ontology.name)
       case OntologyClass.IsotonicRegression => IsotonicRegressionAlgorithm(name = ontology.name)

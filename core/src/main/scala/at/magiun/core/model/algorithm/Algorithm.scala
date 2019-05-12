@@ -2,12 +2,11 @@ package at.magiun.core.model.algorithm
 
 import java.util.UUID
 
-import org.apache.spark.ml.{Estimator, Model}
 import org.apache.spark.ml.classification._
 import org.apache.spark.ml.regression._
+import org.apache.spark.ml.{Estimator, Model}
 
 import scala.reflect._
-import _root_.io.circe.generic.JsonCodec
 
 sealed trait Algorithm[T <: Estimator[_ <: Model[_ <: Model[_]]]] extends Serializable {
   val uid: String
@@ -36,7 +35,7 @@ case class LinearRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
 
 case class GeneralizedLinearRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
                                                  name: String,
-                                                parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.GeneralizedLinearRegressionParameters) extends Algorithm[GeneralizedLinearRegression] {}
+                                                parameters: Set[AlgorithmParameter[_ <: Any]] = AlgorithmParameter.GeneralizedLinearRegressionIdentityParameters) extends Algorithm[GeneralizedLinearRegression] {}
 
 case class BinaryLogisticRegressionAlgorithm(uid: String = UUID.randomUUID().toString,
                                              name: String,

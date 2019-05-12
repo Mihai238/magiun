@@ -12,6 +12,7 @@ object VariableType extends Enum[VariableType] with CirceEnum[VariableType] {
   case object Binary extends VariableType("Binary")
   case object Discrete extends VariableType("Discrete")
   case object Continuous extends VariableType("Continuous")
+  case object NonNegative extends VariableType("NonNegative")
   case object Text extends VariableType("Text")
 
   val values: immutable.IndexedSeq[VariableType] = findValues

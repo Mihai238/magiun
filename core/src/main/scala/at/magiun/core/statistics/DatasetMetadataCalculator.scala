@@ -35,7 +35,7 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
 
     DatasetMetadata(
       AlgorithmGoal.getFromString(request.goal),
-      computeVariableType(responseVariableColumn, responseVariableDistribution),
+      computeVariableType(responseVariableColumn, responseVariableDistribution, dataset.select(responseVariableColumn.name)),
       responseVariableDistribution,
       computeElementOccurrencePercentage(distributionsMap, Distribution.Normal, explanatoryVariablesCount),
       computeElementOccurrencePercentage(distributionsMap, Distribution.Bernoulli, explanatoryVariablesCount),
@@ -88,6 +88,27 @@ class DatasetMetadataCalculator(sparkSession: SparkSession,
       .map { row => Vectors.dense(row.toSeq.map(_.toString.toDouble).toArray) }
 
     MagiunMatrix(Statistics.corr(featureRDD, method), columnNames, columnNames)
+  }
+
+  private def computeVariableType(column: Column, distribution: Distribution, data: DataFrame): VariableType = {
+    if (column.`type` == ColumnType.Double || column.`type` == ColumnType.Int) {
+      if (Distribution.isItDiscrete(distribution)) {
+        if (distribution == Distribution.Bernoulli) {
+          VariableType.Binary
+        } else {
+          VariableType.Discrete
+        }
+      } else {
+        val doubleData = data.rdd.map(row => row.get(0).toString.toDouble)
+        if (doubleData.min() > 0) {
+          VariableType.NonNegative
+        } else {
+          VariableType.Continuous
+        }
+      }
+    } else {
+      VariableType.Text
+    }
   }
 
   private def computeVariableType(column: Column, distribution: Distribution): VariableType = {

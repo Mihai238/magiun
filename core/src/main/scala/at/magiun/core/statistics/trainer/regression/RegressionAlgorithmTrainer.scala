@@ -76,7 +76,7 @@ trait RegressionAlgorithmTrainer {
     (
       predictionsArray.map(r => r.getDouble(0)),
       residualsArray.map(r => r.getDouble(0)),
-      dataSample.map(r => r.getDouble(0))
+      dataSample.map(r => r.get(0).toString.toDouble)
     )
   }
 

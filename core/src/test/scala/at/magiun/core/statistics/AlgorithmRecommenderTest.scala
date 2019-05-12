@@ -31,7 +31,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations should contain(OntologyClass.Algorithm)
     recommendations should contain(OntologyClass.Regression)
     recommendations should contain(OntologyClass.LinearLeastRegressionPartial)
-    recommendations should contain(OntologyClass.GeneralizedLinearRegressionPartial)
+    recommendations should contain(OntologyClass.GeneralizedLinearRegressionIdentityPartial)
     recommendations should contain(OntologyClass.GradientBoostTreeRegressionComplete)
     recommendations should contain(OntologyClass.GradientBoostTreeRegressionPartial)
     recommendations should contain(OntologyClass.IsotonicRegression)
@@ -62,7 +62,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations.size should be(11)
     recommendations shouldNot contain(OntologyClass.LinearLeastRegressionPartial)
     recommendations should contain(OntologyClass.Regression)
-    recommendations should contain(OntologyClass.GeneralizedLinearRegressionPartial)
+    recommendations should contain(OntologyClass.GeneralizedLinearRegressionIdentityPartial)
     recommendations should contain(OntologyClass.SurvivalRegression)
     recommendations should contain(OntologyClass.GradientBoostTreeRegressionPartial)
     recommendations should contain(OntologyClass.RandomForestRegressionPartial)
@@ -71,7 +71,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations should contain(OntologyClass.DecisionTreeRegressionComplete)
   }
 
-  it should s"not recommend ${OntologyClass.LinearLeastRegressionPartial.name} for dataset with percentage of continuous variably tye < 0.7" in {
+  it should s"not recommend ${OntologyClass.LinearLeastRegressionPartial.name} for dataset with percentage of continuous variable tye < 0.7" in {
     val datasetMetadata = DatasetMetadata(
       AlgorithmGoal.GoalRegression,
       VariableType.Continuous,
@@ -92,7 +92,7 @@ class AlgorithmRecommenderTest extends UnitTest {
     recommendations shouldNot contain(OntologyClass.LinearLeastRegressionPartial)
     recommendations should contain(OntologyClass.Algorithm)
     recommendations should contain(OntologyClass.Regression)
-    recommendations should contain(OntologyClass.GeneralizedLinearRegressionPartial)
+    recommendations should contain(OntologyClass.GeneralizedLinearRegressionIdentityPartial)
     recommendations should contain(OntologyClass.GradientBoostTreeRegressionPartial)
     recommendations should contain(OntologyClass.GradientBoostTreeRegressionComplete)
     recommendations should contain(OntologyClass.RandomForestRegressionPartial)

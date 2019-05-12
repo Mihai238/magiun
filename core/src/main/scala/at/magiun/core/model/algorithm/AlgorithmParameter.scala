@@ -76,8 +76,10 @@ object AlgorithmParameter {
   private val LOSS = Loss()
 
   /** GENERALIZED LINEAR REGRESSION */
-  private val GLM_FAMILY = GLMFamily()
-  private val LINK = Link()
+  private val GAUSSIAN_GLM_FAMILY = GLMFamily()
+  private val BINOMIAL_GLM_FAMILY = GLMFamily(value = "binomial")
+  private val IDENTITY_LINK = Link()
+  private val LOGIT_LINK = Link(value = "logit")
   private val LINK_POWER = LinkPower()
 
   /** LOGISTIC REGRESSION */
@@ -110,7 +112,8 @@ object AlgorithmParameter {
 
 
   val LinearRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET, EPSILON, FIT_INTERCEPT, REG_PARAM, TOLERANCE, STANDARDIZATION, LOSS, SOLVER)
-  val GeneralizedLinearRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, FIT_INTERCEPT, REG_PARAM, GLM_FAMILY, LINK, LINK_POWER, TOLERANCE )
+  val GeneralizedLinearRegressionIdentityParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, FIT_INTERCEPT, REG_PARAM, GAUSSIAN_GLM_FAMILY, IDENTITY_LINK, LINK_POWER, TOLERANCE )
+  val GeneralizedLinearRegressionBinomialLogitParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, FIT_INTERCEPT, REG_PARAM, BINOMIAL_GLM_FAMILY, LOGIT_LINK, LINK_POWER, TOLERANCE )
   val LogisticRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET,  FIT_INTERCEPT, REG_PARAM, TOLERANCE, STANDARDIZATION, THRESHOLD )
   val IsotonicRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(ISOTONIC)
   val SurvivalRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, FIT_INTERCEPT, TOLERANCE)

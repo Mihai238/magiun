@@ -120,7 +120,7 @@ class AlgorithmRecommenderTest extends UnitTest {
 
     recommendations.size should be(2)
     recommendations shouldNot contain(OntologyClass.LinearLeastRegressionPartial)
-    recommendations shouldNot contain(OntologyClass.GeneralizedLinearRegressionPartial)
+    recommendations shouldNot contain(OntologyClass.GeneralizedLinearRegressionIdentityPartial)
   }
 
   it should s"recommend ${OntologyClass.BinaryLogisticRegressionPartial.name} for dataset metadata of a small dataset" in {

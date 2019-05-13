@@ -48,12 +48,14 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
   case object Regression extends OntologyClass(NS + "Regression", "Regression")
   case object LinearLeastRegressionPartial extends OntologyClass(NS + "LinearLeastRegressionPartial", "Linear Least Regression Partial")
   case object LinearLeastRegressionComplete extends OntologyClass(NS + "LinearLeastRegressionComplete", "Linear Least Regression Complete")
-  case object GeneralizedLinearRegressionPartial extends OntologyClass(NS + "GeneralizedLinearRegressionPartial", "Generalized Linear Regression Partial")
-  case object GeneralizedLinearRegressionComplete extends OntologyClass(NS + "GeneralizedLinearRegressionComplete", "Generalized Linear Regression Complete")
   case object GeneralizedLinearRegressionIdentityPartial extends OntologyClass(NS + "GeneralizedLinearRegressionIdentityPartial", "Generalized Linear Regression Partial - family: gaussian & identity: link")
   case object GeneralizedLinearRegressionIdentityComplete extends OntologyClass(NS + "GeneralizedLinearRegressionIdentityComplete", "Generalized Linear Regression Complete - family: gaussian & identity: link")
   case object GeneralizedLinearRegressionBinomialLogitPartial extends OntologyClass(NS + "GeneralizedLinearRegressionBinomialLogitPartial", "Generalized Linear Regression Partial - family: binomial & identity: logit")
   case object GeneralizedLinearRegressionBinomialLogitComplete extends OntologyClass(NS + "GeneralizedLinearRegressionBinomialLogitComplete", "Generalized Linear Regression Complete - family: binomial & identity: logit")
+  case object GeneralizedLinearRegressionExponentialInversePartial extends OntologyClass(NS + "GeneralizedLinearRegressionExponentialInversePartial", "Generalized Linear Regression Partial - family: gamma & identity: inverse")
+  case object GeneralizedLinearRegressionExponentialInverseComplete extends OntologyClass(NS + "GeneralizedLinearRegressionExponentialInverseComplete", "Generalized Linear Regression Complete - family: gamma & identity: inverse")
+  case object GeneralizedLinearRegressionPoissonLogPartial extends OntologyClass(NS + "GeneralizedLinearRegressionPoissonLogPartial", "Generalized Linear Regression Complete - family: poisson & identity: log")
+  case object GeneralizedLinearRegressionPoissonLogComplete extends OntologyClass(NS + "GeneralizedLinearRegressionPoissonLogComplete", "Generalized Linear Regression Complete - family: poisson & identity: log")
   case object IsotonicRegression extends OntologyClass(NS + "IsotonicRegression", "Isotonic Regression")
   case object SurvivalRegression extends OntologyClass(NS + "SurvivalRegression", "Survival Regression")
   case object GradientBoostTreeRegressionPartial extends OntologyClass(NS + "GradientBoostTreeRegressionPartial", "Gradient Boost Tree Regression Partial")
@@ -83,7 +85,10 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
     LinearLeastRegressionComplete -> LinearLeastRegressionPartial,
     BinaryLogisticRegressionComplete -> BinaryLogisticRegressionPartial,
     MultinomialLogisticRegressionComplete  -> MultinomialLogisticRegressionPartial,
-    GeneralizedLinearRegressionComplete -> GeneralizedLinearRegressionPartial,
+    GeneralizedLinearRegressionIdentityComplete -> GeneralizedLinearRegressionIdentityPartial,
+    GeneralizedLinearRegressionBinomialLogitComplete -> GeneralizedLinearRegressionBinomialLogitPartial,
+    GeneralizedLinearRegressionExponentialInverseComplete -> GeneralizedLinearRegressionExponentialInversePartial,
+    GeneralizedLinearRegressionPoissonLogComplete -> GeneralizedLinearRegressionPoissonLogPartial,
     GradientBoostTreeRegressionComplete -> GradientBoostTreeRegressionPartial,
     RandomForestRegressionComplete -> RandomForestRegressionPartial,
     DecisionTreeRegressionComplete -> DecisionTreeRegressionPartial

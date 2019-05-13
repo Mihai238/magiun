@@ -78,8 +78,12 @@ object AlgorithmParameter {
   /** GENERALIZED LINEAR REGRESSION */
   private val GAUSSIAN_GLM_FAMILY = GLMFamily()
   private val BINOMIAL_GLM_FAMILY = GLMFamily(value = "binomial")
+  private val EXPO_GAMMA_GLM_FAMILY = GLMFamily(value = "gamma")
+  private val POISSON_GLM_FAMILY = GLMFamily(value = "poisson")
   private val IDENTITY_LINK = Link()
   private val LOGIT_LINK = Link(value = "logit")
+  private val INVERSE_LINK = Link(value = "inverse")
+  private val LOG_LINK = Link(value = "log")
   private val LINK_POWER = LinkPower()
 
   /** LOGISTIC REGRESSION */
@@ -114,6 +118,8 @@ object AlgorithmParameter {
   val LinearRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET, EPSILON, FIT_INTERCEPT, REG_PARAM, TOLERANCE, STANDARDIZATION, LOSS, SOLVER)
   val GeneralizedLinearRegressionIdentityParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, FIT_INTERCEPT, REG_PARAM, GAUSSIAN_GLM_FAMILY, IDENTITY_LINK, LINK_POWER, TOLERANCE )
   val GeneralizedLinearRegressionBinomialLogitParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, FIT_INTERCEPT, REG_PARAM, BINOMIAL_GLM_FAMILY, LOGIT_LINK, LINK_POWER, TOLERANCE )
+  val GeneralizedLinearRegressionExpoGammaInverseParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, FIT_INTERCEPT, REG_PARAM, EXPO_GAMMA_GLM_FAMILY, INVERSE_LINK, LINK_POWER, TOLERANCE )
+  val GeneralizedLinearRegressionPoissonLogParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, FIT_INTERCEPT, REG_PARAM, POISSON_GLM_FAMILY, LOG_LINK, LINK_POWER, TOLERANCE )
   val LogisticRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, ELASTIC_NET,  FIT_INTERCEPT, REG_PARAM, TOLERANCE, STANDARDIZATION, THRESHOLD )
   val IsotonicRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(ISOTONIC)
   val SurvivalRegressionParameters: Set[AlgorithmParameter[_ <: Any]] = Set(MAX_ITER, AGGREGATION_DEPTH, FIT_INTERCEPT, TOLERANCE)

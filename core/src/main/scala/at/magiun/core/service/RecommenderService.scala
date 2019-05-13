@@ -72,9 +72,10 @@ class RecommenderService(
 
     (ontology match {
       case OntologyClass.LinearLeastRegressionPartial | OntologyClass.LinearLeastRegressionComplete => LinearRegressionAlgorithm(name = ontology.name)
-      case OntologyClass.GeneralizedLinearRegressionPartial | OntologyClass.GeneralizedLinearRegressionComplete => GeneralizedLinearRegressionAlgorithm(name = ontology.name)
       case OntologyClass.GeneralizedLinearRegressionIdentityPartial | OntologyClass.GeneralizedLinearRegressionIdentityComplete => GeneralizedLinearRegressionAlgorithm(name = ontology.name)
+      case OntologyClass.GeneralizedLinearRegressionPoissonLogPartial | OntologyClass.GeneralizedLinearRegressionPoissonLogComplete => GeneralizedLinearRegressionAlgorithm(name = ontology.name, parameters = GeneralizedLinearRegressionPoissonLogParameters)
       case OntologyClass.GeneralizedLinearRegressionBinomialLogitPartial | OntologyClass.GeneralizedLinearRegressionBinomialLogitComplete => GeneralizedLinearRegressionAlgorithm(name = ontology.name, parameters = GeneralizedLinearRegressionBinomialLogitParameters)
+      case OntologyClass.GeneralizedLinearRegressionExponentialInversePartial | OntologyClass.GeneralizedLinearRegressionExponentialInverseComplete => GeneralizedLinearRegressionAlgorithm(name = ontology.name, parameters = GeneralizedLinearRegressionExpoGammaInverseParameters)
       case OntologyClass.BinaryLogisticRegressionPartial | OntologyClass.BinaryLogisticRegressionComplete => BinaryLogisticRegressionAlgorithm(name = ontology.name)
       case OntologyClass.MultinomialLogisticRegressionPartial | OntologyClass.MultinomialLogisticRegressionComplete => MultinomialLogisticRegressionAlgorithm(name = ontology.name)
       case OntologyClass.IsotonicRegression => IsotonicRegressionAlgorithm(name = ontology.name)

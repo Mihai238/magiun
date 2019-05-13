@@ -11,13 +11,13 @@ class RecommendationsRankerTest extends UnitTest {
   it should "rank correctly the given algorithms" in {
     cancel("skipped")
     // given
-    val recommendations = List(Algorithm, IsotonicRegression, GeneralizedLinearRegressionPartial, GeneralizedLinearRegressionComplete, SurvivalRegression)
+    val recommendations = List(Algorithm, IsotonicRegression, GeneralizedLinearRegressionIdentityPartial, GeneralizedLinearRegressionIdentityComplete, SurvivalRegression)
 
     // when
     val rankedRecommendations = ranker.rank(recommendations)
 
     // then
-    rankedRecommendations should equal (List(GeneralizedLinearRegressionComplete, IsotonicRegression, SurvivalRegression))
+    rankedRecommendations should equal (List(GeneralizedLinearRegressionIdentityComplete, IsotonicRegression, SurvivalRegression))
   }
 
   it should "rank correctly the given algorithms 2" in {
@@ -25,8 +25,8 @@ class RecommendationsRankerTest extends UnitTest {
     // given
     val recommendations = List(Algorithm,
       IsotonicRegression,
-      GeneralizedLinearRegressionPartial,
-      GeneralizedLinearRegressionComplete,
+      GeneralizedLinearRegressionIdentityPartial,
+      GeneralizedLinearRegressionIdentityComplete,
       SurvivalRegression,
       LinearLeastRegressionPartial,
       RandomForestRegressionComplete
@@ -36,7 +36,7 @@ class RecommendationsRankerTest extends UnitTest {
     val rankedRecommendations = ranker.rank(recommendations)
 
     // then
-    rankedRecommendations should equal (List(GeneralizedLinearRegressionComplete, LinearLeastRegressionPartial, RandomForestRegressionComplete, IsotonicRegression, SurvivalRegression))
+    rankedRecommendations should equal (List(GeneralizedLinearRegressionIdentityComplete, LinearLeastRegressionPartial, RandomForestRegressionComplete, IsotonicRegression, SurvivalRegression))
   }
 
 }

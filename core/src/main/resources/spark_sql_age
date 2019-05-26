@@ -1,0 +1,6 @@
+case
+  when (Age < 18) then 0
+  when (Age >= 18 and Age < 40) then 1
+  when (Age >= 40 and Age < 80) then 2
+  else 3
+end

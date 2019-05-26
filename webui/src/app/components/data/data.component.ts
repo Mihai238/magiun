@@ -33,6 +33,7 @@ export class DataComponent implements OnInit {
   newColumnIndex: number;
 
   showEditColumnComponent: boolean;
+  showRecommendSpinner: boolean;
 
   constructor(ngxLogger: NGXLogger,
               private dataService: DataService) {
@@ -43,6 +44,7 @@ export class DataComponent implements OnInit {
     this.getDataSets();
     this.showAddColumnSettingsComponent = false;
     this.showEditColumnComponent = false;
+    this.showRecommendSpinner = false;
   }
 
   getDataSets() {
@@ -117,6 +119,7 @@ export class DataComponent implements OnInit {
 
   onRecommendClicked() {
     const ds = this.selectedDataSet;
+    this.showRecommendSpinner = true;
     if (ds) {
       this.logger.info("Getting recommendations for dataset " + ds.id);
       this.dataService.getRecommendations(ds)
@@ -124,6 +127,7 @@ export class DataComponent implements OnInit {
           if (ds.id === this.selectedDataSet.id) {
             this.recommendations = resp;
           }
+          this.showRecommendSpinner = false;
         });
     }
 

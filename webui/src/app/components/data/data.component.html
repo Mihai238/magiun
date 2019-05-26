@@ -27,7 +27,10 @@
       </div>
 
       <div class="">
-        <button type="button" class="btn btn-primary" (click)="onRecommendClicked()">Recommend</button>
+        <button type="button" class="btn btn-primary" (click)="onRecommendClicked()">
+          <span *ngIf="showRecommendSpinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Recommend
+        </button>
       </div>
     </div>
   </div>

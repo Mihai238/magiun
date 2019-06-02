@@ -73,6 +73,11 @@
   float: right;
 }
 
+.column-recomm-icon {
+  font-size: 20px;
+  color: green;
+}
+
 /* cover: */
 
 .data-table-box {

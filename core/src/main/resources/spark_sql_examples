@@ -1,3 +1,14 @@
+regexp_extract(Name, '.*, (.*)\\..*', 1)
+
+
+
+case
+  when (Name like '%Mr.%') then 0
+  ...
+end
+
+
+
 case
   when (Age < 18) then 0
   when (Age >= 18 and Age < 40) then 1

@@ -21,6 +21,7 @@ class RecommenderTest extends UnitTest {
     recommendation(1).operations should be(List.empty)
 
     recommendation(3).colTypes should be(List.empty)
+    recommendation(3).operations should contain only "ExtractTitleSuitableColumn"
 
     recommendation(4).colTypes should contain only "GenderColumn"
     recommendation(4).operations should be(List.empty)

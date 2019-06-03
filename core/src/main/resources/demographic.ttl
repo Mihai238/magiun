@@ -56,6 +56,28 @@ ml:EmploymentStatusValue rdf:type owl:Class ;
               ] .
 
 
+###  http://www.magiun.io/ontologies/ml#PersonTitleValue
+ml:PersonTitleValue rdf:type owl:Class ;
+                rdfs:subClassOf ml:Value ;
+                sh:property [ sh:or (
+                    [sh:pattern ".*Mr\\..*"]
+                    [sh:pattern ".*Mrs\\..*"]
+                )] .
+
+
+ml:ExtractTitleSuitableColumn rdf:type owl:Class ;
+                 owl:equivalentClass [ owl:intersectionOf
+                    ( ml:OperationSuitableColumn
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty ml:hasValue ;
+                          owl:someValuesFrom ml:PersonTitleValue
+                        ]
+                    ) ;
+                    rdf:type owl:Class
+                 ] ;
+                 rdfs:subClassOf ml:OperationSuitableColumn .
+
+
 ###  http://www.magiun.io/ontologies/ml#GenderColumn
 ml:GenderColumn rdf:type owl:Class ;
               owl:equivalentClass [ owl:intersectionOf ( ml:Column

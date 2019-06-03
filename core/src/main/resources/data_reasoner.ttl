@@ -187,8 +187,7 @@ ml:BooleanValue rdf:type owl:Class ;
                     [sh:pattern "[Ff]alse"]
                     [sh:pattern "t"]
                     [sh:pattern "f"]
-                )
-                ] .
+                )] .
 
 
 ###  http://www.magiun.io/ontologies/ml#EmailValue

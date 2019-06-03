@@ -21,7 +21,7 @@
                 [ngOutletContext]="{column: column}"></span>
 
           <span class="ti-pencil clickable column-icon" (click)="columnEditClicked(column)"></span>
-          <span *ngIf="recommendations" class="ti-info-alt clickable column-icon column-recomm-icon" data-html="true" data-toggle="tooltip" data-placement="top"
+          <span *ngIf="recommendations" class="ti-info-alt clickable column-icon column-recomm-icon shakeit" data-html="true" data-toggle="tooltip" data-placement="top"
                 title="Types: [{{recommendations.map[column.index].colTypes}}].  Operations: [{{recommendations.map[column.index].operations}}]"></span>
 
         </th>

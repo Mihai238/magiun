@@ -71,6 +71,7 @@ import {ClassificationCoefficientsComponent} from "app/components/model-visualiz
 import {ClassificationInterceptMeasurementsComponent} from "./components/model-visualization/summary/classification/measurments/intercept/classification-intercept-measurements.component";
 import {TreeClassificationDetailsComponent} from "./components/model-visualization/summary/classification/details/tree-classification/tree-classification-details.component";
 import {LogisticRegressionDetailComponent} from "./components/model-visualization/summary/classification/details/logistic-regression/logistic-regression-detail.component";
+import {RecommendationExplanationModalComponent} from "./components/model-selection/recommendation-explanation-modal/recommendation-explanation-modal.component";
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import {LogisticRegressionDetailComponent} from "./components/model-visualizatio
     ClassificationCoefficientsComponent,
     ClassificationInterceptMeasurementsComponent,
     TreeClassificationDetailsComponent,
-    LogisticRegressionDetailComponent
+    LogisticRegressionDetailComponent,
+    RecommendationExplanationModalComponent
   ],
   imports: [
     CommonModule,
@@ -190,7 +192,8 @@ import {LogisticRegressionDetailComponent} from "./components/model-visualizatio
     CheckboxParameterComponent,
     DistributionsModalComponent,
     DistributionPlotsModalComponent,
-    RegressionPlotsModalComponent
+    RegressionPlotsModalComponent,
+    RecommendationExplanationModalComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

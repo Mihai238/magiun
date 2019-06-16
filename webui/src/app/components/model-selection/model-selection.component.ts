@@ -23,6 +23,7 @@ import {ModelService} from "../../services/model.service";
 import {NotifierService} from "angular-notifier";
 import {UUID} from "angular2-uuid";
 import {RecommenderResponse} from "../../model/response/recommender.response.model";
+import {RecommendationExplanationModalComponent} from "./recommendation-explanation-modal/recommendation-explanation-modal.component";
 
 @Component({
   selector: 'app-model-selection',
@@ -272,12 +273,17 @@ export class ModelSelectionComponent {
   }
 
   like(requestId: string, recommendationId: string): void {
-    console.log(`liking recommendation ${recommendationId} of request ${requestId}`)
+    console.log(`liking recommendation ${recommendationId} of request ${requestId}`);
     this.algorithmRestService.like(requestId, recommendationId).subscribe(() => {});
   }
 
   dislike(requestId: string, recommendationId: string): void {
-    console.log(`disliking recommendation ${recommendationId} of request ${requestId}`)
+    console.log(`disliking recommendation ${recommendationId} of request ${requestId}`);
     this.algorithmRestService.dislike(requestId, recommendationId).subscribe(() => {});
+  }
+
+  info(algoName: string): void {
+    this.dialogService.addDialog(RecommendationExplanationModalComponent, { algorithm: algoName})
+      .subscribe(() => {});
   }
 }

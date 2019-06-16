@@ -44,7 +44,7 @@ describe('EditColumnComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should only show relevant info based on action type', () => {
+  it('should only show relevant algorithm based on action type', () => {
     component.onActionTypeSelected('drop');
     expect(component.selectedActionType).toBe(ActionType.drop);
   })

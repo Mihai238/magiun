@@ -1,6 +1,7 @@
 package at.magiun.core.service
 
 import at.magiun.core.model.ontology.OntologyClass
+import scala.util.Random
 
 class RecommendationsRanker {
 
@@ -13,6 +14,6 @@ class RecommendationsRanker {
       .sortBy(OntologyClass.isGenericAlgorithm)
       .sortBy(OntologyClass.isSpecialCaseAlgorithm)
 
-    cleanedAlgorithms
+    Random.shuffle(cleanedAlgorithms)
   }
 }

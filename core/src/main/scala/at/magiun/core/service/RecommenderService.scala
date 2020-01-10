@@ -43,12 +43,16 @@ class RecommenderService(
         val recommendations = algorithmRecommender.recommend(metadata)
         val algos = recommendationsRanker.rank(recommendations).map(mapOntologyClassToAlgorithm)
 
+        val nonRecommendations = getNotRecommended(recommendations, request.goal)
+        val nonRecommendedAlgos = recommendationsRanker.rank(nonRecommendations).map(mapOntologyClassToAlgorithm)
+
         magiunContext.addRecommenderRequest(request)
         algos.foreach(magiunContext.addRecommendation)
 
         RecommenderResponse(
           request.uid,
-          algos
+          algos,
+          nonRecommendedAlgos
         )
       }
     }
@@ -112,6 +116,14 @@ class RecommenderService(
         new File(path),
         LikeDislike(like, request.get, recommendation.get).asJson.toString()
       )
+    }
+  }
+
+  private def getNotRecommended(recommendations: List[OntologyClass], goal: String): List[OntologyClass] = {
+    if (goal.equals(AlgorithmGoal.GoalClassification.name)) {
+      OntologyClass.classifications.filterNot(recommendations.contains(_))
+    } else {
+      OntologyClass.regressions.filterNot(recommendations.contains(_))
     }
   }
 }

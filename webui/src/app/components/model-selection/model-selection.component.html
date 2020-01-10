@@ -150,6 +150,74 @@
               </div>
             </div>
           </div>
+
+          <div *ngIf="recommenderResponse.nonRecommendations != null">
+            <div>
+              <h4>Non-Applicable Algorithms:</h4>
+            </div>
+            <div id="nonRecommendationsAccordion">
+              <div class="card" *ngFor="let algo of recommenderResponse.nonRecommendations">
+                <div *ngVar="recommenderResponse.nonRecommendations.indexOf(algo) as index">
+                  <h5>
+                  <span  data-toggle="tooltip" data-placement="top" title="Explanation">
+                    <a class="red" href="javascript:void(0)" (click)="info(algo.name)">
+                      <i class="ti-info-alt green"></i>
+                    </a>
+                  </span>
+                    <button [ngClass]="(index == 0)?'btn':'btn collapsed'"
+                            id="{{'non-header-' + index}}"
+                            type="button"
+                            data-toggle="collapse"
+                            [attr.data-target]="'#non-card-' + index" aria-expanded="true"
+                            [attr.aria-controls]="'non-card-' + index">
+                      {{algo.name}}
+                    </button>
+                  </h5>
+                  <div id="{{'non-card-' + index}}"
+                       [ngClass]="(index == 0)?'collapse show':'collapse'"
+                       [attr.aria-labelledby]="'non-header-' + index"
+                       data-parent="#recommendationsAccordion">
+                    <hr/>
+                    <div class="card-body">
+                      <div>
+                        <div *ngIf="algo.parameters.length > 0">
+                          <div class="form-group form-inline" *ngFor="let param of algo.parameters">
+                            <div class="col">
+                              <label>{{param.name}}</label>
+                            </div>
+                            <div class="col" *ngIf="param.selectOptions.length > 0">
+                              <select [attr.id]="param.name + '-' + index" required>
+                                <option *ngFor="let o of param.selectOptions" [attr.selected]="o == param.value ? true : null">{{o}}</option>
+                              </select>
+                            </div>
+                            <div class="col" *ngIf="param.selectOptions == null || param.selectOptions.length == 0">
+                              <input *ngIf="param.name != 'layers'"
+                                     [attr.id]="param.name + '-' + index"
+                                     type="number" value="{{param.value}}"
+                                     [attr.step]="Number.isInteger(param.value) ? 1 : 0.0000001"
+                                     required>
+
+                              <input *ngIf="param.name == 'layers'"
+                                     [attr.id]="param.name + '-' + index"
+                                     type="text" value="{{param.value}}"
+                                     [attr.step]="Number.isInteger(param.value) ? 1 : 0.0000001"
+                                     required>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="algo.parameters.length == 0">
+                          ----> no parameters available
+                        </div>
+                      </div>
+                      <hr/>
+                      <button class="btn btn-info" (click)="train(index)">Train</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
         <br/>
       </div>

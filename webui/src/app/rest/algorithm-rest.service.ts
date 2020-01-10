@@ -34,20 +34,13 @@ export class AlgorithmRestService {
     return this.http.post<RecommenderResponse>(environment.baseUrl + this.algorithmPath + this.recommendPath, JSON.stringify(body))
       .map(response => {
 
-        let rec = response.recommendations.map(algorithm => {
-          let a = <Algorithm>Object.values(algorithm)[0];
-          a.implementation = Object.keys(algorithm)[0];
-          if (a.parameters != null) {
-            a.parameters = a.parameters.map(p => <AlgorithmParameter<any>>Object.values(p)[0]);
-          } else {
-            a.parameters = [];
-          }
-          return a
-        });
+        let rec = this.convertAlgorithmsParameters(response.recommendations);
+        let nonRec = this.convertAlgorithmsParameters(response.nonRecommendations);
 
         return <RecommenderResponse> {
           requestId: response.requestId,
           recommendations: rec,
+          nonRecommendations: nonRec,
           message: response.message
         };
       })
@@ -87,5 +80,18 @@ export class AlgorithmRestService {
   dislike(requestId: string, recommendationId): Observable<any> {
     return this.http.post(environment.baseUrl + this.algorithmPath + this.dislikePath + requestId + "/" + recommendationId, null)
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
+
+  convertAlgorithmsParameters(algorithms:  Algorithm[]): Algorithm[] {
+    return algorithms.map(algorithm => {
+      let a = <Algorithm>Object.values(algorithm)[0];
+      a.implementation = Object.keys(algorithm)[0];
+      if (a.parameters != null) {
+        a.parameters = a.parameters.map(p => <AlgorithmParameter<any>>Object.values(p)[0]);
+      } else {
+        a.parameters = [];
+      }
+      return a
+    });
   }
 }

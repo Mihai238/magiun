@@ -5,7 +5,8 @@ import org.apache.spark.ml.Estimator
 
 case class RecommenderResponse(
                               requestId: String,
-                              recommendations: List[Algorithm[_ <: Estimator[_ <: Any]]],
+                              recommendations: Seq[Algorithm[_ <: Estimator[_ <: Any]]],
+                              nonRecommendations: Seq[Algorithm[_ <: Estimator[_ <: Any]]],
                               message: String = ""
                               ) {
 

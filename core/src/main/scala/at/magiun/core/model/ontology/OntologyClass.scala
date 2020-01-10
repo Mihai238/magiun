@@ -176,6 +176,21 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
     DecisionTreeRegressionComplete -> DecisionTreeRegressionPartial
   )
 
+  private val PARTIAL_COMPLETE_ALGORITHMS_MAP = Map[OntologyClass, OntologyClass](
+    RandomForestClassificationPartial -> RandomForestClassificationComplete,
+    DecisionTreeClassificationPartial -> DecisionTreeClassificationComplete,
+    LinearLeastRegressionPartial -> LinearLeastRegressionComplete,
+    BinaryLogisticRegressionPartial -> BinaryLogisticRegressionComplete,
+    MultinomialLogisticRegressionPartial -> MultinomialLogisticRegressionComplete,
+    GeneralizedLinearRegressionIdentityPartial -> GeneralizedLinearRegressionIdentityComplete,
+    GeneralizedLinearRegressionBinomialLogitPartial -> GeneralizedLinearRegressionBinomialLogitComplete,
+    GeneralizedLinearRegressionExponentialInversePartial -> GeneralizedLinearRegressionExponentialInverseComplete,
+    GeneralizedLinearRegressionPoissonLogPartial -> GeneralizedLinearRegressionPoissonLogComplete,
+    GradientBoostTreeRegressionPartial -> GradientBoostTreeRegressionComplete,
+    RandomForestRegressionPartial -> RandomForestRegressionComplete,
+    DecisionTreeRegressionPartial -> DecisionTreeRegressionComplete
+  )
+
   private val COMPLETE_ALGORITHMS = COMPLETE_PARTIAL_ALGORITHMS_MAP.keySet
   private val PARTIAL_ALGORITHMS = COMPLETE_PARTIAL_ALGORITHMS_MAP.values.toSet
 
@@ -194,6 +209,10 @@ object OntologyClass extends Enum[OntologyClass] with CirceEnum[OntologyClass] {
 
   def getPartialOfCompleteAlgorithm(ontologyClass: OntologyClass): OntologyClass = {
     COMPLETE_PARTIAL_ALGORITHMS_MAP(ontologyClass)
+  }
+
+  def getCompleteOfPartialAlgorithm(ontologyClass: OntologyClass): OntologyClass = {
+    PARTIAL_COMPLETE_ALGORITHMS_MAP(ontologyClass)
   }
 
   def isSpecialCaseAlgorithm(ontologyClass: OntologyClass): Boolean = {

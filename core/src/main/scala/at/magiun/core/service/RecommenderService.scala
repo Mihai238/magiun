@@ -120,10 +120,21 @@ class RecommenderService(
   }
 
   private def getNotRecommended(recommendations: List[OntologyClass], goal: String): List[OntologyClass] = {
+    var nonRecommendations:List[OntologyClass] = List()
     if (goal.equals(AlgorithmGoal.GoalClassification.name)) {
-      OntologyClass.classifications.filterNot(recommendations.contains(_))
+      nonRecommendations = OntologyClass.classifications.filterNot(recommendations.contains(_))
     } else {
-      OntologyClass.regressions.filterNot(recommendations.contains(_))
+      nonRecommendations = OntologyClass.regressions.filterNot(recommendations.contains(_))
     }
+
+    removeCompleteIfPartialIsPresent(recommendations, nonRecommendations)
+  }
+
+  private def removeCompleteIfPartialIsPresent(recommendations: List[OntologyClass], nonRecommendations: List[OntologyClass]): List[OntologyClass] = {
+    val completes = recommendations
+      .filter(OntologyClass.isPartialAlgorithm)
+      .map(OntologyClass.getCompleteOfPartialAlgorithm)
+
+    nonRecommendations.filterNot(completes.contains)
   }
 }

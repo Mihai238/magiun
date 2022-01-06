@@ -24,7 +24,7 @@
         <finch.version>0.15.1</finch.version>
         <typesafe.version>1.2.1</typesafe.version>
         <slick.version>3.2.1</slick.version>
-        <h2.version>1.4.196</h2.version>
+        <h2.version>2.0.206</h2.version>
         <circe.version>0.8.0</circe.version>
         <scala-logging>3.7.2</scala-logging>
         <enumeratum.version>1.5.12</enumeratum.version>
